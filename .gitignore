@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Schematix/bin/Debug
+/bin/Debug
+/obj/Debug
+/.vs/Schematix/v14

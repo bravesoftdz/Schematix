@@ -1,0 +1,343 @@
+﻿namespace Schematix
+{
+    partial class MainForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.tcMaps = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPageAddNew = new System.Windows.Forms.TabPage();
+            this.vScrollBar = new System.Windows.Forms.VScrollBar();
+            this.hScrollBar = new System.Windows.Forms.HScrollBar();
+            this.pnlMapOptions = new System.Windows.Forms.Panel();
+            this.pnlMaps = new System.Windows.Forms.Panel();
+            this.timerTools = new System.Windows.Forms.Timer(this.components);
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cmsMap = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnLibrary = new System.Windows.Forms.Button();
+            this.btnOptions = new System.Windows.Forms.Button();
+            this.btnCloseMap = new System.Windows.Forms.Button();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pbPullVScroll = new System.Windows.Forms.PictureBox();
+            this.pbPullMaps = new System.Windows.Forms.PictureBox();
+            this.pbMap = new System.Windows.Forms.PictureBox();
+            this.tsmiMapOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMapSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMapLoad = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMapReload = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMapClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.tcMaps.SuspendLayout();
+            this.pnlMaps.SuspendLayout();
+            this.cmsMap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPullVScroll)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPullMaps)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMap)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // tcMaps
+            // 
+            this.tcMaps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcMaps.Controls.Add(this.tabPage1);
+            this.tcMaps.Controls.Add(this.tabPageAddNew);
+            this.tcMaps.Location = new System.Drawing.Point(0, 4);
+            this.tcMaps.Name = "tcMaps";
+            this.tcMaps.SelectedIndex = 0;
+            this.tcMaps.Size = new System.Drawing.Size(396, 24);
+            this.tcMaps.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.tcMaps.TabIndex = 2;
+            this.tcMaps.Selected += new System.Windows.Forms.TabControlEventHandler(this.tcMaps_Selected);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.AutoScroll = true;
+            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(388, 0);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "New";
+            // 
+            // tabPageAddNew
+            // 
+            this.tabPageAddNew.BackColor = System.Drawing.Color.Transparent;
+            this.tabPageAddNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tabPageAddNew.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAddNew.Name = "tabPageAddNew";
+            this.tabPageAddNew.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAddNew.Size = new System.Drawing.Size(388, 0);
+            this.tabPageAddNew.TabIndex = 1;
+            this.tabPageAddNew.Text = "+";
+            this.tabPageAddNew.Enter += new System.EventHandler(this.tabPageAddNew_Enter);
+            // 
+            // vScrollBar
+            // 
+            this.vScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.vScrollBar.LargeChange = 5;
+            this.vScrollBar.Location = new System.Drawing.Point(464, 4);
+            this.vScrollBar.Maximum = 9;
+            this.vScrollBar.Name = "vScrollBar";
+            this.vScrollBar.Size = new System.Drawing.Size(17, 432);
+            this.vScrollBar.TabIndex = 5;
+            this.vScrollBar.Value = 1;
+            this.vScrollBar.Visible = false;
+            // 
+            // hScrollBar
+            // 
+            this.hScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hScrollBar.Location = new System.Drawing.Point(4, 440);
+            this.hScrollBar.Name = "hScrollBar";
+            this.hScrollBar.Size = new System.Drawing.Size(456, 17);
+            this.hScrollBar.TabIndex = 7;
+            this.hScrollBar.Visible = false;
+            // 
+            // pnlMapOptions
+            // 
+            this.pnlMapOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlMapOptions.BackColor = System.Drawing.Color.White;
+            this.pnlMapOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMapOptions.Location = new System.Drawing.Point(464, 440);
+            this.pnlMapOptions.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlMapOptions.Name = "pnlMapOptions";
+            this.pnlMapOptions.Size = new System.Drawing.Size(17, 17);
+            this.pnlMapOptions.TabIndex = 4;
+            this.pnlMapOptions.Click += new System.EventHandler(this.pnlMapOptions_Click);
+            // 
+            // pnlMaps
+            // 
+            this.pnlMaps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlMaps.BackColor = System.Drawing.Color.White;
+            this.pnlMaps.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMaps.Controls.Add(this.btnLibrary);
+            this.pnlMaps.Controls.Add(this.btnOptions);
+            this.pnlMaps.Controls.Add(this.btnCloseMap);
+            this.pnlMaps.Controls.Add(this.tcMaps);
+            this.pnlMaps.Location = new System.Drawing.Point(8, 0);
+            this.pnlMaps.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlMaps.Name = "pnlMaps";
+            this.pnlMaps.Size = new System.Drawing.Size(472, 28);
+            this.pnlMaps.TabIndex = 4;
+            this.pnlMaps.Visible = false;
+            // 
+            // timerTools
+            // 
+            this.timerTools.Tick += new System.EventHandler(this.timerTools_Tick);
+            // 
+            // cmsMap
+            // 
+            this.cmsMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiMapOptions,
+            this.tsmiMapSave,
+            this.tsmiMapLoad,
+            this.tsmiMapReload,
+            this.tsmiMapClose});
+            this.cmsMap.Name = "cmsMap";
+            this.cmsMap.Size = new System.Drawing.Size(117, 114);
+            // 
+            // btnLibrary
+            // 
+            this.btnLibrary.Image = global::Schematix.Properties.Resources.folderTree;
+            this.btnLibrary.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.btnLibrary.Location = new System.Drawing.Point(444, 0);
+            this.btnLibrary.Name = "btnLibrary";
+            this.btnLibrary.Size = new System.Drawing.Size(25, 25);
+            this.btnLibrary.TabIndex = 3;
+            this.btnLibrary.UseVisualStyleBackColor = true;
+            this.btnLibrary.Click += new System.EventHandler(this.btnLibrary_Click);
+            // 
+            // btnOptions
+            // 
+            this.btnOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOptions.Image")));
+            this.btnOptions.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.btnOptions.Location = new System.Drawing.Point(420, 0);
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(25, 25);
+            this.btnOptions.TabIndex = 3;
+            this.btnOptions.UseVisualStyleBackColor = true;
+            this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
+            // 
+            // btnCloseMap
+            // 
+            this.btnCloseMap.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCloseMap.BackgroundImage")));
+            this.btnCloseMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnCloseMap.Location = new System.Drawing.Point(396, 3);
+            this.btnCloseMap.Name = "btnCloseMap";
+            this.btnCloseMap.Size = new System.Drawing.Size(20, 20);
+            this.btnCloseMap.TabIndex = 3;
+            this.btnCloseMap.UseVisualStyleBackColor = true;
+            this.btnCloseMap.Click += new System.EventHandler(this.btnCloseMap_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox3.Image = global::Schematix.Properties.Resources.PullScrollH;
+            this.pictureBox3.Location = new System.Drawing.Point(233, 448);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(18, 7);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox3.TabIndex = 8;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.MouseEnter += new System.EventHandler(this.PullHScroll_Over);
+            // 
+            // pbPullVScroll
+            // 
+            this.pbPullVScroll.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pbPullVScroll.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbPullVScroll.Image = global::Schematix.Properties.Resources.PullScrollV;
+            this.pbPullVScroll.Location = new System.Drawing.Point(472, 221);
+            this.pbPullVScroll.Name = "pbPullVScroll";
+            this.pbPullVScroll.Size = new System.Drawing.Size(7, 18);
+            this.pbPullVScroll.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbPullVScroll.TabIndex = 8;
+            this.pbPullVScroll.TabStop = false;
+            this.pbPullVScroll.MouseEnter += new System.EventHandler(this.PullVScroll_Over);
+            // 
+            // pbPullMaps
+            // 
+            this.pbPullMaps.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbPullMaps.Image = global::Schematix.Properties.Resources.PullMenu;
+            this.pbPullMaps.Location = new System.Drawing.Point(233, 8);
+            this.pbPullMaps.Name = "pbPullMaps";
+            this.pbPullMaps.Size = new System.Drawing.Size(18, 7);
+            this.pbPullMaps.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbPullMaps.TabIndex = 8;
+            this.pbPullMaps.TabStop = false;
+            this.pbPullMaps.MouseEnter += new System.EventHandler(this.PullMaps_Over);
+            // 
+            // pbMap
+            // 
+            this.pbMap.BackColor = System.Drawing.Color.Gray;
+            this.pbMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbMap.ContextMenuStrip = this.cmsMap;
+            this.pbMap.Location = new System.Drawing.Point(4, 4);
+            this.pbMap.Name = "pbMap";
+            this.pbMap.Size = new System.Drawing.Size(284, 280);
+            this.pbMap.TabIndex = 3;
+            this.pbMap.TabStop = false;
+            // 
+            // tsmiMapOptions
+            // 
+            this.tsmiMapOptions.Image = global::Schematix.Properties.Resources.edit;
+            this.tsmiMapOptions.Name = "tsmiMapOptions";
+            this.tsmiMapOptions.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapOptions.Text = "Options";
+            // 
+            // tsmiMapSave
+            // 
+            this.tsmiMapSave.Image = global::Schematix.Properties.Resources.save;
+            this.tsmiMapSave.Name = "tsmiMapSave";
+            this.tsmiMapSave.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapSave.Text = "Save";
+            // 
+            // tsmiMapLoad
+            // 
+            this.tsmiMapLoad.Image = global::Schematix.Properties.Resources.load;
+            this.tsmiMapLoad.Name = "tsmiMapLoad";
+            this.tsmiMapLoad.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapLoad.Text = "Load";
+            // 
+            // tsmiMapReload
+            // 
+            this.tsmiMapReload.Image = global::Schematix.Properties.Resources.reload;
+            this.tsmiMapReload.Name = "tsmiMapReload";
+            this.tsmiMapReload.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapReload.Text = "Reload";
+            // 
+            // tsmiMapClose
+            // 
+            this.tsmiMapClose.Image = ((System.Drawing.Image)(resources.GetObject("tsmiMapClose.Image")));
+            this.tsmiMapClose.Name = "tsmiMapClose";
+            this.tsmiMapClose.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapClose.Text = "Close";
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LightGray;
+            this.ClientSize = new System.Drawing.Size(485, 461);
+            this.Controls.Add(this.pnlMaps);
+            this.Controls.Add(this.hScrollBar);
+            this.Controls.Add(this.vScrollBar);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.pbPullVScroll);
+            this.Controls.Add(this.pbPullMaps);
+            this.Controls.Add(this.pnlMapOptions);
+            this.Controls.Add(this.pbMap);
+            this.DoubleBuffered = true;
+            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(501, 499);
+            this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Schematix 0.0";
+            this.tcMaps.ResumeLayout(false);
+            this.pnlMaps.ResumeLayout(false);
+            this.cmsMap.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPullVScroll)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPullMaps)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMap)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+        private System.Windows.Forms.TabControl tcMaps;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPageAddNew;
+        private System.Windows.Forms.PictureBox pbMap;
+        private System.Windows.Forms.VScrollBar vScrollBar;
+        private System.Windows.Forms.HScrollBar hScrollBar;
+        private System.Windows.Forms.Panel pnlMapOptions;
+        private System.Windows.Forms.Panel pnlMaps;
+        private System.Windows.Forms.Timer timerTools;
+        private System.Windows.Forms.Button btnCloseMap;
+        private System.Windows.Forms.PictureBox pbPullMaps;
+        private System.Windows.Forms.PictureBox pbPullVScroll;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button btnLibrary;
+        private System.Windows.Forms.Button btnOptions;
+        private System.Windows.Forms.ContextMenuStrip cmsMap;
+        private System.Windows.Forms.ToolStripMenuItem tsmiMapOptions;
+        private System.Windows.Forms.ToolStripMenuItem tsmiMapSave;
+        private System.Windows.Forms.ToolStripMenuItem tsmiMapLoad;
+        private System.Windows.Forms.ToolStripMenuItem tsmiMapReload;
+        private System.Windows.Forms.ToolStripMenuItem tsmiMapClose;
+        private System.Windows.Forms.ToolTip toolTip;
+    }
+}
+
