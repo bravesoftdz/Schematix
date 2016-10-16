@@ -52,12 +52,16 @@ namespace Schematix
             GridColor = Color.FromArgb(0xFF, 0x00, 0x00, 0x00);
 
         // Background
-        static public bool   BackgroundStoreOwn = false;
-        static public int    BackgroundStyle = 0;
+        static public bool
+            BackgroundStoreOwn = false,
+            BackgroundImageFloat = false,
+            BackgroundImageBuildIn = false;
+        static public int
+            BackgroundStyle = 0,
+            BackgroundImageAlign = 0;
         static public Color  BackgroundColor = Color.FromArgb(0xFF, 0x00, 0x00, 0x80);
         static public Bitmap BackgroundImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
         static public String BackgroundImagePath = "";
-
 
         static public int SelectLanguage(String name)//Ok
         {
@@ -165,16 +169,16 @@ namespace Schematix
                             case "RootLinks":     RootLinks   = value;   break;
                             case "RootBoxes":     RootBoxes   = value;   break;
                             // Behavior
-                            case "OnStart":       OnStart = SetCounter(value, 2);                    break;//!!!
-                            case "OnClose":       OnClose = SetCounter(value, 2);                    break;//!!!
-                            case "PingOnn":       PingOnn = (value.ToUpper() == "YES");              break;
-                            case "PingPeriod":    OnStart = SetCounter(value, MAX_PING_PERIOD, 1);   break;
-                            case "PingCount":     OnStart = SetCounter(value, 10, 1);                break;
+                            case "OnStart":       OnStart    = SetCounter(value, 2);                    break;
+                            case "OnClose":       OnClose    = SetCounter(value, 2);                    break;
+                            case "PingOnn":       PingOnn    = (value.ToUpper() == "YES");              break;
+                            case "PingPeriod":    PingPeriod = SetCounter(value, MAX_PING_PERIOD, 1);   break;
+                            case "PingCount":     PingCount  = SetCounter(value, 10, 1);                break;
 
                             //# Map
                             // Grid
                             case "GridStoreOwn":  GridStoreOwn = (value.ToUpper() == "YES");                     break;
-                            case "GridStyle":     GridStyle = SetCounter(value, 4);                              break;//!!!
+                            case "GridStyle":     GridStyle = SetCounter(value, 4);                              break;
                             case "GridColor":     GridColor = Color.FromArgb(StrToInt(value));                   break;
                             case "GridStepX":     GridStepX = SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
                             case "GridStepY":     GridStepY = SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
@@ -182,13 +186,16 @@ namespace Schematix
                             case "GridAlign":     GridAlign = (value.ToUpper() == "YES");                        break;
                             // Background
                             case "BackgroundStoreOwn":  BackgroundStoreOwn  = (value.ToUpper() == "YES");        break;
-                            case "BackgroundStyle":     BackgroundStyle     = SetCounter(value, 4);              break;//!!!
+                            case "BackgroundStyle":     BackgroundStyle     = SetCounter(value, 5);              break;
                             case "BackgroundColor":     BackgroundColor     = Color.FromArgb(StrToInt(value));   break;
                             case "BackgroundImagePath":
                                 BackgroundImagePath = value;
                                 if (File.Exists(value))
                                     BackgroundImage = new Bitmap(value);
                                 break;
+                            case "BackgroundImageAlign":   BackgroundImageAlign   = SetCounter(value, 8);         break;
+                            case "BackgroundImageFloat":   BackgroundImageFloat   = (value.ToUpper() == "YES");   break;
+                            case "BackgroundImageBuildIn": BackgroundImageBuildIn = (value.ToUpper() == "YES");   break;
 
                             //# Map list
 
@@ -234,12 +241,15 @@ namespace Schematix
                     file.WriteLine("GridStepX\t"    + GridStepX);
                     file.WriteLine("GridStepY\t"    + GridStepY);
                     file.WriteLine("GridThick\t"    + GridThick);
-                    file.WriteLine("GridAlign\t"    + GridAlign);
+                    file.WriteLine("GridAlign\t"    + (GridAlign ? "yes" : "no"));
                     // Background
-                    file.WriteLine("BackgroundStoreOwn\t"  + (BackgroundStoreOwn ? "yes" : "no"));
-                    file.WriteLine("BackgroundStyle\t"     + BackgroundStyle);
-                    file.WriteLine("BackgroundColor\t"     + BackgroundColor.ToArgb());
-                    file.WriteLine("BackgroundImagePath\t" + BackgroundImagePath);
+                    file.WriteLine("BackgroundStoreOwn\t"     + (BackgroundStoreOwn ? "yes" : "no"));
+                    file.WriteLine("BackgroundStyle\t"        + BackgroundStyle);
+                    file.WriteLine("BackgroundColor\t"        + BackgroundColor.ToArgb());
+                    file.WriteLine("BackgroundImagePath\t"    + BackgroundImagePath);
+                    file.WriteLine("BackgroundImageAlign\t"   + BackgroundImageAlign);
+                    file.WriteLine("BackgroundImageFloat\t"   + (BackgroundImageFloat ? "yes" : "no"));
+                    file.WriteLine("BackgroundImageBuildIn\t" + (BackgroundImageBuildIn ? "yes" : "no"));
 
                     //# Map list
                 }

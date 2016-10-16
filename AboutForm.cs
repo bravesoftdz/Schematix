@@ -6,15 +6,15 @@ namespace Schematix
 {
     partial class AboutForm : Form
     {
-        public AboutForm(LanguageRecord lang)
+        public AboutForm()
         {
             InitializeComponent();
-            Text               = lang.lAbout;
-            lblAppName.Text    = lang.lAppName;
-            lblAppVersion.Text = lang.lAppVersion;
-            lblOwner.Text      = lang.lOwner;
-            lblContact.Text    = lang.lContact;
-            tbDescription.Text = lang.tDescription;
+            Text               = options.LangCur.lAbout;
+            lblAppName.Text    = options.LangCur.lAppName;
+            lblAppVersion.Text = options.LangCur.lAppVersion;
+            lblOwner.Text      = options.LangCur.lOwner;
+            lblContact.Text    = options.LangCur.lContact;
+            tbDescription.Text = options.LangCur.tDescription;
         }
     }
 }

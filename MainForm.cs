@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,34 +16,55 @@ namespace Schematix
         #region Main
         public MainForm()//!!!
         {
+            String eStr = "";
             InitializeComponent();
             //options.Init();
 
             //Loads
             options.Load();
-            String eStr = options.LoadLanguages(options.LangPath);
-            options.SelectLanguage(options.LangName);
-            SetText(options.LangCur);
+            // Check folders
+            if (Directory.Exists(options.LangPath))
+            {
+                eStr = options.LoadLanguages(options.LangPath);
+                options.SelectLanguage(options.LangName);
+                if (eStr != "")
+                    MessageBox.Show(
+                        options.LangCur.mErrorsOccurred + "\r\n" + eStr,
+                        options.LangCur.dLanguagesLoading);
+            }
+            else
+                eStr += "\r\n" + options.LangPath;
+            if (!Directory.Exists(options.RootMaps))
+                eStr += "\r\n" + options.RootMaps;
+            if (!Directory.Exists(options.RootObjects))
+                eStr += "\r\n" + options.RootObjects;
+            if (!Directory.Exists(options.RootLinks))
+                eStr += "\r\n" + options.RootLinks;
+            if (!Directory.Exists(options.RootBoxes))
+                eStr += "\r\n" + options.RootBoxes;
             if (eStr != "")
-                MessageBox.Show(options.LangCur.mOccurred + "\r\n" + eStr, options.LangCur.mLanguagesLoading, MessageBoxButtons.OK);
+                MessageBox.Show(
+                    options.LangCur.mNoFolders + eStr, 
+                    options.LangCur.dOptionsLoading);
+            SetText();
         }
 
-        private void SetText(LanguageRecord lang)//Ok
+        private void SetText()//Ok
         {
             toolTip.RemoveAll();
             //# Maps panel
-            toolTip.SetToolTip(tabPageAddNew, lang.hAppMapNew);
-            toolTip.SetToolTip(btnCloseMap,   lang.hAppMapClose);
-            toolTip.SetToolTip(btnOptions,    lang.hAppOptions);
-            toolTip.SetToolTip(btnLibrary,    lang.hAppLibrary);
+            toolTip.SetToolTip(tabPageAddNew, options.LangCur.hMFNewMap);
+            toolTip.SetToolTip(btnCloseMap,   options.LangCur.hMFCloseMap);
+            toolTip.SetToolTip(btnOptions,    options.LangCur.hMFOptions);
+            toolTip.SetToolTip(btnLibrary,    options.LangCur.hMFLibrary);
             //# Map
-            toolTip.SetToolTip(pnlMapOptions, lang.hMapOptions);
+            toolTip.SetToolTip(pnlMapOptions, options.LangCur.hMFMapOptions);
             // Context menu
-            tsmiMapOptions.Text = lang.lMapCMOptions;
-            tsmiMapSave.Text    = lang.lMapCMSave;
-            tsmiMapLoad.Text    = lang.lMapCMLoad;
-            tsmiMapReload.Text  = lang.lMapCMReload;
-            tsmiMapClose.Text   = lang.lMapCMClose;
+            tsmiMapOptions.Text = options.LangCur.lMFMapCMOptions;
+            tsmiMapSave.Text    = options.LangCur.lMFMapCMSave;
+            tsmiMapLoad.Text    = options.LangCur.lMFMapCMLoad;
+            tsmiMapReload.Text  = options.LangCur.lMFMapCMReload;
+            tsmiMapClose.Text   = options.LangCur.lMFMapCMClose;
         }
 
         private void btnLibrary_Click(object sender, EventArgs e)//!!!
@@ -52,13 +74,18 @@ namespace Schematix
 
         private void btnOptions_Click(object sender, EventArgs e)//!!!
         {
-            OptionsForm optionsForm = new OptionsForm();
-            if (optionsForm.ShowDialog() == DialogResult.OK)
+            var form = new OptionsForm();
+            if (form.ShowDialog() == DialogResult.OK)
             {
-                SetText(options.LangCur);
+                SetText();
                 //...
                 //.Draw();
             }
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)//Ok
+        {
+            new AboutForm().ShowDialog();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)//!!!

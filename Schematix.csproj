@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo_Schematix.ico" />
+    <None Include="Resources\help.png" />
     <None Include="Resources\open.png" />
     <None Include="Resources\save.png" />
     <None Include="Resources\reload.png" />

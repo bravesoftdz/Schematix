@@ -33,6 +33,13 @@
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.gbLanguage = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnGetLanguagePath = new System.Windows.Forms.Button();
+            this.tbLanguagePath = new System.Windows.Forms.TextBox();
+            this.lblLanguagePath = new System.Windows.Forms.Label();
+            this.cbbLanguage = new System.Windows.Forms.ComboBox();
             this.gbBehaiour = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cbbOnStart = new System.Windows.Forms.ComboBox();
@@ -61,18 +68,23 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.gbBackground = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.chkBackgroundImageBuildIn = new System.Windows.Forms.CheckBox();
             this.cbbBackgroundStyle = new System.Windows.Forms.ComboBox();
-            this.lblBackgroundImage = new System.Windows.Forms.Label();
+            this.lblBackgroundImagePath = new System.Windows.Forms.Label();
             this.pnlBackgroundColor = new System.Windows.Forms.Panel();
             this.btnGetBackgroundImage = new System.Windows.Forms.Button();
             this.tbBackgroundImagePath = new System.Windows.Forms.TextBox();
-            this.pbBackgroundPreview = new System.Windows.Forms.PictureBox();
             this.chkBackgroundStore = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.pbBackgroundPreview = new System.Windows.Forms.PictureBox();
+            this.cbbBackgroundImageAlign = new System.Windows.Forms.ComboBox();
+            this.lblBackgroundImageAlign = new System.Windows.Forms.Label();
+            this.chkBackgroundImageFloat = new System.Windows.Forms.CheckBox();
             this.gbGrid = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.chkGridAlign = new System.Windows.Forms.CheckBox();
             this.cbbGridStyle = new System.Windows.Forms.ComboBox();
-            this.lblGridThickness = new System.Windows.Forms.Label();
+            this.lblGridThick = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.nudGridThick = new System.Windows.Forms.NumericUpDown();
             this.pnlGridColor = new System.Windows.Forms.Panel();
@@ -82,17 +94,12 @@
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.gbLanguage = new System.Windows.Forms.GroupBox();
-            this.cbbLanguage = new System.Windows.Forms.ComboBox();
-            this.tbLanguagePath = new System.Windows.Forms.TextBox();
-            this.btnGetLanguagePath = new System.Windows.Forms.Button();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblLanguagePath = new System.Windows.Forms.Label();
-            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
+            this.tableLayoutPanel9.SuspendLayout();
+            this.gbLanguage.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.gbBehaiour.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPingPeriod)).BeginInit();
@@ -103,6 +110,7 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.gbBackground.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBackgroundPreview)).BeginInit();
             this.gbGrid.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -110,10 +118,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepX)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
-            this.tableLayoutPanel7.SuspendLayout();
-            this.gbLanguage.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
-            this.tableLayoutPanel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -137,6 +141,94 @@
             this.tpMain.Size = new System.Drawing.Size(422, 363);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
+            // 
+            // tableLayoutPanel9
+            // 
+            this.tableLayoutPanel9.ColumnCount = 1;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel9.Controls.Add(this.gbLanguage, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.gbBehaiour, 0, 2);
+            this.tableLayoutPanel9.Controls.Add(this.gbRoots, 0, 1);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
+            this.tableLayoutPanel9.RowCount = 3;
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(416, 357);
+            this.tableLayoutPanel9.TabIndex = 1;
+            // 
+            // gbLanguage
+            // 
+            this.gbLanguage.Controls.Add(this.tableLayoutPanel8);
+            this.gbLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbLanguage.Location = new System.Drawing.Point(3, 3);
+            this.gbLanguage.Name = "gbLanguage";
+            this.gbLanguage.Size = new System.Drawing.Size(410, 75);
+            this.gbLanguage.TabIndex = 1;
+            this.gbLanguage.TabStop = false;
+            this.gbLanguage.Text = "Language";
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 3;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel8.Controls.Add(this.btnGetLanguagePath, 2, 1);
+            this.tableLayoutPanel8.Controls.Add(this.tbLanguagePath, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.lblLanguagePath, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.cbbLanguage, 0, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 2;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(404, 56);
+            this.tableLayoutPanel8.TabIndex = 5;
+            // 
+            // btnGetLanguagePath
+            // 
+            this.btnGetLanguagePath.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGetLanguagePath.Image = global::Schematix.Properties.Resources.open;
+            this.btnGetLanguagePath.Location = new System.Drawing.Point(378, 30);
+            this.btnGetLanguagePath.Name = "btnGetLanguagePath";
+            this.btnGetLanguagePath.Size = new System.Drawing.Size(23, 23);
+            this.btnGetLanguagePath.TabIndex = 4;
+            this.btnGetLanguagePath.UseVisualStyleBackColor = true;
+            this.btnGetLanguagePath.Click += new System.EventHandler(this.btnGetRootLanguage_Click);
+            // 
+            // tbLanguagePath
+            // 
+            this.tbLanguagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbLanguagePath.Location = new System.Drawing.Point(63, 31);
+            this.tbLanguagePath.Name = "tbLanguagePath";
+            this.tbLanguagePath.Size = new System.Drawing.Size(309, 20);
+            this.tbLanguagePath.TabIndex = 3;
+            this.tbLanguagePath.TextChanged += new System.EventHandler(this.Path_TextChanged);
+            // 
+            // lblLanguagePath
+            // 
+            this.lblLanguagePath.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblLanguagePath.AutoSize = true;
+            this.lblLanguagePath.Location = new System.Drawing.Point(3, 35);
+            this.lblLanguagePath.Name = "lblLanguagePath";
+            this.lblLanguagePath.Size = new System.Drawing.Size(54, 13);
+            this.lblLanguagePath.TabIndex = 2;
+            this.lblLanguagePath.Text = "Load from";
+            // 
+            // cbbLanguage
+            // 
+            this.cbbLanguage.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tableLayoutPanel8.SetColumnSpan(this.cbbLanguage, 2);
+            this.cbbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbLanguage.FormattingEnabled = true;
+            this.cbbLanguage.Location = new System.Drawing.Point(3, 3);
+            this.cbbLanguage.Name = "cbbLanguage";
+            this.cbbLanguage.Size = new System.Drawing.Size(160, 21);
+            this.cbbLanguage.TabIndex = 0;
             // 
             // gbBehaiour
             // 
@@ -384,6 +476,7 @@
             this.tbRootMaps.Name = "tbRootMaps";
             this.tbRootMaps.Size = new System.Drawing.Size(318, 20);
             this.tbRootMaps.TabIndex = 3;
+            this.tbRootMaps.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // tbRootObjects
             // 
@@ -392,6 +485,7 @@
             this.tbRootObjects.Name = "tbRootObjects";
             this.tbRootObjects.Size = new System.Drawing.Size(318, 20);
             this.tbRootObjects.TabIndex = 3;
+            this.tbRootObjects.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // tbRootLinks
             // 
@@ -400,6 +494,7 @@
             this.tbRootLinks.Name = "tbRootLinks";
             this.tbRootLinks.Size = new System.Drawing.Size(318, 20);
             this.tbRootLinks.TabIndex = 3;
+            this.tbRootLinks.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // tbRootBoxes
             // 
@@ -408,6 +503,7 @@
             this.tbRootBoxes.Name = "tbRootBoxes";
             this.tbRootBoxes.Size = new System.Drawing.Size(318, 20);
             this.tbRootBoxes.TabIndex = 3;
+            this.tbRootBoxes.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // btnGetRootMaps
             // 
@@ -462,7 +558,7 @@
             this.tpMap.Padding = new System.Windows.Forms.Padding(3);
             this.tpMap.Size = new System.Drawing.Size(422, 363);
             this.tpMap.TabIndex = 1;
-            this.tpMap.Text = "Map";
+            this.tpMap.Text = "New map";
             // 
             // tableLayoutPanel3
             // 
@@ -492,28 +588,46 @@
             // 
             // tableLayoutPanel5
             // 
-            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnCount = 4;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel5.Controls.Add(this.chkBackgroundImageBuildIn, 0, 4);
             this.tableLayoutPanel5.Controls.Add(this.cbbBackgroundStyle, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.lblBackgroundImage, 0, 2);
+            this.tableLayoutPanel5.Controls.Add(this.lblBackgroundImagePath, 0, 2);
             this.tableLayoutPanel5.Controls.Add(this.pnlBackgroundColor, 1, 1);
-            this.tableLayoutPanel5.Controls.Add(this.btnGetBackgroundImage, 2, 2);
+            this.tableLayoutPanel5.Controls.Add(this.btnGetBackgroundImage, 3, 2);
             this.tableLayoutPanel5.Controls.Add(this.tbBackgroundImagePath, 1, 2);
             this.tableLayoutPanel5.Controls.Add(this.chkBackgroundStore, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 3);
+            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 5);
+            this.tableLayoutPanel5.Controls.Add(this.cbbBackgroundImageAlign, 1, 3);
+            this.tableLayoutPanel5.Controls.Add(this.lblBackgroundImageAlign, 0, 3);
+            this.tableLayoutPanel5.Controls.Add(this.chkBackgroundImageFloat, 2, 3);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 4;
+            this.tableLayoutPanel5.RowCount = 6;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.Size = new System.Drawing.Size(404, 234);
             this.tableLayoutPanel5.TabIndex = 1;
+            // 
+            // chkBackgroundImageBuildIn
+            // 
+            this.chkBackgroundImageBuildIn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkBackgroundImageBuildIn.AutoSize = true;
+            this.tableLayoutPanel5.SetColumnSpan(this.chkBackgroundImageBuildIn, 2);
+            this.chkBackgroundImageBuildIn.Location = new System.Drawing.Point(3, 109);
+            this.chkBackgroundImageBuildIn.Name = "chkBackgroundImageBuildIn";
+            this.chkBackgroundImageBuildIn.Size = new System.Drawing.Size(79, 17);
+            this.chkBackgroundImageBuildIn.TabIndex = 8;
+            this.chkBackgroundImageBuildIn.Text = "Save to file";
+            this.chkBackgroundImageBuildIn.UseVisualStyleBackColor = true;
             // 
             // cbbBackgroundStyle
             // 
@@ -532,15 +646,15 @@
             this.cbbBackgroundStyle.TabIndex = 1;
             this.cbbBackgroundStyle.SelectedIndexChanged += new System.EventHandler(this.cbbBackgroundStyle_SelectedIndexChanged);
             // 
-            // lblBackgroundImage
+            // lblBackgroundImagePath
             // 
-            this.lblBackgroundImage.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblBackgroundImage.AutoSize = true;
-            this.lblBackgroundImage.Location = new System.Drawing.Point(67, 58);
-            this.lblBackgroundImage.Name = "lblBackgroundImage";
-            this.lblBackgroundImage.Size = new System.Drawing.Size(56, 13);
-            this.lblBackgroundImage.TabIndex = 5;
-            this.lblBackgroundImage.Text = "Thickness";
+            this.lblBackgroundImagePath.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblBackgroundImagePath.AutoSize = true;
+            this.lblBackgroundImagePath.Location = new System.Drawing.Point(51, 58);
+            this.lblBackgroundImagePath.Name = "lblBackgroundImagePath";
+            this.lblBackgroundImagePath.Size = new System.Drawing.Size(72, 13);
+            this.lblBackgroundImagePath.TabIndex = 5;
+            this.lblBackgroundImagePath.Text = "Path to image";
             // 
             // pnlBackgroundColor
             // 
@@ -567,20 +681,11 @@
             // tbBackgroundImagePath
             // 
             this.tbBackgroundImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel5.SetColumnSpan(this.tbBackgroundImagePath, 2);
             this.tbBackgroundImagePath.Location = new System.Drawing.Point(129, 54);
             this.tbBackgroundImagePath.Name = "tbBackgroundImagePath";
             this.tbBackgroundImagePath.Size = new System.Drawing.Size(243, 20);
             this.tbBackgroundImagePath.TabIndex = 9;
-            // 
-            // pbBackgroundPreview
-            // 
-            this.pbBackgroundPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbBackgroundPreview.Location = new System.Drawing.Point(3, 3);
-            this.pbBackgroundPreview.Margin = new System.Windows.Forms.Padding(0);
-            this.pbBackgroundPreview.Name = "pbBackgroundPreview";
-            this.pbBackgroundPreview.Size = new System.Drawing.Size(392, 143);
-            this.pbBackgroundPreview.TabIndex = 0;
-            this.pbBackgroundPreview.TabStop = false;
             // 
             // chkBackgroundStore
             // 
@@ -588,13 +693,80 @@
             this.chkBackgroundStore.AutoSize = true;
             this.chkBackgroundStore.Checked = true;
             this.chkBackgroundStore.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tableLayoutPanel5.SetColumnSpan(this.chkBackgroundStore, 3);
+            this.tableLayoutPanel5.SetColumnSpan(this.chkBackgroundStore, 4);
             this.chkBackgroundStore.Location = new System.Drawing.Point(3, 3);
             this.chkBackgroundStore.Name = "chkBackgroundStore";
-            this.chkBackgroundStore.Size = new System.Drawing.Size(133, 17);
+            this.chkBackgroundStore.Size = new System.Drawing.Size(122, 17);
             this.chkBackgroundStore.TabIndex = 8;
-            this.chkBackgroundStore.Text = "Map store own options";
+            this.chkBackgroundStore.Text = "Save options in map";
             this.chkBackgroundStore.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.AutoSize = true;
+            this.tableLayoutPanel7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel7.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetPartial;
+            this.tableLayoutPanel7.ColumnCount = 1;
+            this.tableLayoutPanel5.SetColumnSpan(this.tableLayoutPanel7, 4);
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.Controls.Add(this.pbBackgroundPreview, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 132);
+            this.tableLayoutPanel7.MinimumSize = new System.Drawing.Size(16, 16);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(398, 99);
+            this.tableLayoutPanel7.TabIndex = 10;
+            // 
+            // pbBackgroundPreview
+            // 
+            this.pbBackgroundPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbBackgroundPreview.Location = new System.Drawing.Point(3, 3);
+            this.pbBackgroundPreview.Margin = new System.Windows.Forms.Padding(0);
+            this.pbBackgroundPreview.Name = "pbBackgroundPreview";
+            this.pbBackgroundPreview.Size = new System.Drawing.Size(392, 93);
+            this.pbBackgroundPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbBackgroundPreview.TabIndex = 0;
+            this.pbBackgroundPreview.TabStop = false;
+            // 
+            // cbbBackgroundImageAlign
+            // 
+            this.cbbBackgroundImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbbBackgroundImageAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbBackgroundImageAlign.FormattingEnabled = true;
+            this.cbbBackgroundImageAlign.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"});
+            this.cbbBackgroundImageAlign.Location = new System.Drawing.Point(129, 82);
+            this.cbbBackgroundImageAlign.Name = "cbbBackgroundImageAlign";
+            this.cbbBackgroundImageAlign.Size = new System.Drawing.Size(120, 21);
+            this.cbbBackgroundImageAlign.TabIndex = 1;
+            this.cbbBackgroundImageAlign.SelectedIndexChanged += new System.EventHandler(this.cbbBackgroundStyle_SelectedIndexChanged);
+            // 
+            // lblBackgroundImageAlign
+            // 
+            this.lblBackgroundImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblBackgroundImageAlign.AutoSize = true;
+            this.lblBackgroundImageAlign.Location = new System.Drawing.Point(62, 86);
+            this.lblBackgroundImageAlign.Name = "lblBackgroundImageAlign";
+            this.lblBackgroundImageAlign.Size = new System.Drawing.Size(61, 13);
+            this.lblBackgroundImageAlign.TabIndex = 5;
+            this.lblBackgroundImageAlign.Text = "Image align";
+            // 
+            // chkBackgroundImageFloat
+            // 
+            this.chkBackgroundImageFloat.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkBackgroundImageFloat.AutoSize = true;
+            this.chkBackgroundImageFloat.Location = new System.Drawing.Point(255, 84);
+            this.chkBackgroundImageFloat.Name = "chkBackgroundImageFloat";
+            this.chkBackgroundImageFloat.Size = new System.Drawing.Size(80, 17);
+            this.chkBackgroundImageFloat.TabIndex = 8;
+            this.chkBackgroundImageFloat.Text = "Float image";
+            this.chkBackgroundImageFloat.UseVisualStyleBackColor = true;
             // 
             // gbGrid
             // 
@@ -619,7 +791,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.chkGridAlign, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.cbbGridStyle, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.lblGridThickness, 5, 1);
+            this.tableLayoutPanel4.Controls.Add(this.lblGridThick, 5, 1);
             this.tableLayoutPanel4.Controls.Add(this.label1, 3, 1);
             this.tableLayoutPanel4.Controls.Add(this.nudGridThick, 6, 1);
             this.tableLayoutPanel4.Controls.Add(this.pnlGridColor, 1, 1);
@@ -640,7 +812,7 @@
             // 
             this.chkGridAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.chkGridAlign.AutoSize = true;
-            this.tableLayoutPanel4.SetColumnSpan(this.chkGridAlign, 2);
+            this.tableLayoutPanel4.SetColumnSpan(this.chkGridAlign, 5);
             this.chkGridAlign.Location = new System.Drawing.Point(3, 53);
             this.chkGridAlign.Name = "chkGridAlign";
             this.chkGridAlign.Size = new System.Drawing.Size(126, 17);
@@ -658,16 +830,16 @@
             this.cbbGridStyle.Size = new System.Drawing.Size(120, 21);
             this.cbbGridStyle.TabIndex = 1;
             // 
-            // lblGridThickness
+            // lblGridThick
             // 
-            this.lblGridThickness.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblGridThickness.AutoSize = true;
-            this.lblGridThickness.Location = new System.Drawing.Point(295, 30);
-            this.lblGridThickness.Name = "lblGridThickness";
-            this.lblGridThickness.Size = new System.Drawing.Size(56, 13);
-            this.lblGridThickness.TabIndex = 5;
-            this.lblGridThickness.Text = "Thickness";
-            this.lblGridThickness.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblGridThick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblGridThick.AutoSize = true;
+            this.lblGridThick.Location = new System.Drawing.Point(295, 30);
+            this.lblGridThick.Name = "lblGridThick";
+            this.lblGridThick.Size = new System.Drawing.Size(56, 13);
+            this.lblGridThick.TabIndex = 5;
+            this.lblGridThick.Text = "Thickness";
+            this.lblGridThick.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label1
             // 
@@ -773,9 +945,9 @@
             this.tableLayoutPanel4.SetColumnSpan(this.chkGridStore, 7);
             this.chkGridStore.Location = new System.Drawing.Point(3, 3);
             this.chkGridStore.Name = "chkGridStore";
-            this.chkGridStore.Size = new System.Drawing.Size(133, 17);
+            this.chkGridStore.Size = new System.Drawing.Size(122, 17);
             this.chkGridStore.TabIndex = 8;
-            this.chkGridStore.Text = "Map store own options";
+            this.chkGridStore.Text = "Save options in map";
             this.chkGridStore.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel6
@@ -804,109 +976,6 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetPartial;
-            this.tableLayoutPanel7.ColumnCount = 1;
-            this.tableLayoutPanel5.SetColumnSpan(this.tableLayoutPanel7, 3);
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Controls.Add(this.pbBackgroundPreview, 0, 0);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 82);
-            this.tableLayoutPanel7.MinimumSize = new System.Drawing.Size(16, 16);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(398, 149);
-            this.tableLayoutPanel7.TabIndex = 10;
-            // 
-            // gbLanguage
-            // 
-            this.gbLanguage.Controls.Add(this.tableLayoutPanel8);
-            this.gbLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbLanguage.Location = new System.Drawing.Point(3, 3);
-            this.gbLanguage.Name = "gbLanguage";
-            this.gbLanguage.Size = new System.Drawing.Size(410, 75);
-            this.gbLanguage.TabIndex = 1;
-            this.gbLanguage.TabStop = false;
-            this.gbLanguage.Text = "Language";
-            // 
-            // cbbLanguage
-            // 
-            this.cbbLanguage.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.tableLayoutPanel8.SetColumnSpan(this.cbbLanguage, 2);
-            this.cbbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbLanguage.FormattingEnabled = true;
-            this.cbbLanguage.Location = new System.Drawing.Point(3, 3);
-            this.cbbLanguage.Name = "cbbLanguage";
-            this.cbbLanguage.Size = new System.Drawing.Size(160, 21);
-            this.cbbLanguage.TabIndex = 0;
-            // 
-            // tbLanguagePath
-            // 
-            this.tbLanguagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbLanguagePath.Location = new System.Drawing.Point(63, 31);
-            this.tbLanguagePath.Name = "tbLanguagePath";
-            this.tbLanguagePath.Size = new System.Drawing.Size(309, 20);
-            this.tbLanguagePath.TabIndex = 3;
-            // 
-            // btnGetLanguagePath
-            // 
-            this.btnGetLanguagePath.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetLanguagePath.Image = global::Schematix.Properties.Resources.open;
-            this.btnGetLanguagePath.Location = new System.Drawing.Point(378, 30);
-            this.btnGetLanguagePath.Name = "btnGetLanguagePath";
-            this.btnGetLanguagePath.Size = new System.Drawing.Size(23, 23);
-            this.btnGetLanguagePath.TabIndex = 4;
-            this.btnGetLanguagePath.UseVisualStyleBackColor = true;
-            this.btnGetLanguagePath.Click += new System.EventHandler(this.btnGetRootLanguage_Click);
-            // 
-            // tableLayoutPanel8
-            // 
-            this.tableLayoutPanel8.ColumnCount = 3;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.Controls.Add(this.btnGetLanguagePath, 2, 1);
-            this.tableLayoutPanel8.Controls.Add(this.tbLanguagePath, 1, 1);
-            this.tableLayoutPanel8.Controls.Add(this.lblLanguagePath, 0, 1);
-            this.tableLayoutPanel8.Controls.Add(this.cbbLanguage, 0, 0);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 2;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(404, 56);
-            this.tableLayoutPanel8.TabIndex = 5;
-            // 
-            // lblLanguagePath
-            // 
-            this.lblLanguagePath.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblLanguagePath.AutoSize = true;
-            this.lblLanguagePath.Location = new System.Drawing.Point(3, 35);
-            this.lblLanguagePath.Name = "lblLanguagePath";
-            this.lblLanguagePath.Size = new System.Drawing.Size(54, 13);
-            this.lblLanguagePath.TabIndex = 2;
-            this.lblLanguagePath.Text = "Load from";
-            // 
-            // tableLayoutPanel9
-            // 
-            this.tableLayoutPanel9.ColumnCount = 1;
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.Controls.Add(this.gbLanguage, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.gbBehaiour, 0, 2);
-            this.tableLayoutPanel9.Controls.Add(this.gbRoots, 0, 1);
-            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
-            this.tableLayoutPanel9.RowCount = 3;
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(416, 357);
-            this.tableLayoutPanel9.TabIndex = 1;
-            // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -919,9 +988,14 @@
             this.Name = "OptionsForm";
             this.Padding = new System.Windows.Forms.Padding(4);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "OptionsForm";
+            this.Text = "Main options";
             this.tabControl.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.tableLayoutPanel9.PerformLayout();
+            this.gbLanguage.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel8.PerformLayout();
             this.gbBehaiour.ResumeLayout(false);
             this.gbBehaiour.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -937,6 +1011,8 @@
             this.gbBackground.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBackgroundPreview)).EndInit();
             this.gbGrid.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
@@ -945,12 +1021,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepX)).EndInit();
             this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.gbLanguage.ResumeLayout(false);
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
-            this.tableLayoutPanel9.ResumeLayout(false);
-            this.tableLayoutPanel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -994,7 +1064,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.ComboBox cbbGridStyle;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblGridThickness;
+        private System.Windows.Forms.Label lblGridThick;
         private System.Windows.Forms.NumericUpDown nudGridThick;
         private System.Windows.Forms.Panel pnlGridColor;
         private System.Windows.Forms.CheckBox chkGridAlign;
@@ -1002,7 +1072,7 @@
         private System.Windows.Forms.NumericUpDown nudGridStepX;
         private System.Windows.Forms.TextBox tbBackgroundImagePath;
         private System.Windows.Forms.Button btnGetBackgroundImage;
-        private System.Windows.Forms.Label lblBackgroundImage;
+        private System.Windows.Forms.Label lblBackgroundImagePath;
         private System.Windows.Forms.OpenFileDialog dlgOpen;
         private System.Windows.Forms.GroupBox gbBehaiour;
         private System.Windows.Forms.PictureBox pbBackgroundPreview;
@@ -1019,5 +1089,9 @@
         private System.Windows.Forms.Label lblLanguagePath;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.CheckBox chkBackgroundImageBuildIn;
+        private System.Windows.Forms.ComboBox cbbBackgroundImageAlign;
+        private System.Windows.Forms.Label lblBackgroundImageAlign;
+        private System.Windows.Forms.CheckBox chkBackgroundImageFloat;
     }
 }
