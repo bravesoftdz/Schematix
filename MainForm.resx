@@ -138,29 +138,11 @@
   <metadata name="btnOptions.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="btnCloseMap.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="timerTools.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>126, 17</value>
-  </metadata>
-  <metadata name="cmsMap.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>216, 17</value>
-  </metadata>
-  <metadata name="btnLibrary.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="btnOptions.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADr8AAA6/ATgFUyQAAALGSURBVDhPbZNbU5JRFIb3n6rbarrurrv+hTE1ajAUWSgp
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAALGSURBVDhPbZNbU5JRFIb3n6rbarrurrv+hTE1ajAUWSgp
         GCInpdLwgBaOecKJkwQxgCgDCoMgB0VFVJA4CAhv394lyUwXa2Z/s773We9ae21SrVZJaGcHuVwO9Nxs
         NgmAdhwcHBC9fgqT0wa8EvUhEomQi4sL0mq1WJ4sr67BuxXExOcpWCwWZLNZ0mg0WLJQKJAvxgVEYims
         fTdjdc0Er9dLTk5ObgNMuKzUcfHrCh8nJuH3+0Er0KTjhxPlWhPd3d2w2WwIBALYDYfx7CmPFcrn84SM
@@ -181,7 +163,7 @@
   <data name="btnCloseMap.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADr8AAA6/ATgFUyQAAAFWSURBVChTY/j//z/Da3UgxQBi/gfzkfH7XesZQHJgNUA+
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAFWSURBVChTY/j//z/Da3UgxQBi/gfzkfH7XesZQHJgNUA+
         XPGvta3/3+uyggVfXb3I8PfvX4ZX6xaDFX9b3AeWA6kFC3yOEv3/q0r7/9/9E+Ca7kxuBct9mVL8/3tP
         HlgchCHWAhm/CmX+/+3Q/f9/ZylEE8igzqj/PxqC/3+y44YbxPD25lW4pj91iv//dQNtmh30/2e31/8f
         lTb/v/rxwxWDNYDc+gLoZmRNvysV//8sUv3/PUYERTFYA4gAaboyqQPs5u8Fsv9/Fcj8/5Eq8f9bhDB2
@@ -190,10 +172,19 @@
         wzDF////ZwAAEJlo8s1rtyAAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="timerTools.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>126, 17</value>
+  </metadata>
+  <metadata name="cmsMap.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>216, 17</value>
+  </metadata>
   <data name="tsmiMapClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAFWSURBVChTY/j//z/Da3UgxQBi/gfzkfH7XesZQHJgNUA+
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAFWSURBVChTY/j//z/Da3UgxQBi/gfzkfH7XesZQHJgNUA+
         XPGvta3/3+uyggVfXb3I8PfvX4ZX6xaDFX9b3AeWA6kFC3yOEv3/q0r7/9/9E+Ca7kxuBct9mVL8/3tP
         HlgchCHWAhm/CmX+/+3Q/f9/ZylEE8igzqj/PxqC/3+y44YbxPD25lW4pj91iv//dQNtmh30/2e31/8f
         lTb/v/rxwxWDNYDc+gLoZmRNvysV//8sUv3/PUYERTFYA4gAaboyqQPs5u8Fsv9/Fcj8/5Eq8f9bhDB2
@@ -202,6 +193,12 @@
         wzDF////ZwAAEJlo8s1rtyAAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="dlgMapOpen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>314, 17</value>
+  </metadata>
+  <metadata name="dlgMapSave.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>438, 17</value>
+  </metadata>
   <metadata name="$this.DrawGrid" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
