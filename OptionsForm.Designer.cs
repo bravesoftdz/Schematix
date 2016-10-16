@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dlgFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -56,7 +57,7 @@
             this.btnGetRootObjects = new System.Windows.Forms.Button();
             this.btnGetRootLinks = new System.Windows.Forms.Button();
             this.btnGetRootBoxes = new System.Windows.Forms.Button();
-            this.tpNewMap = new System.Windows.Forms.TabPage();
+            this.tpMap = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.gbBackground = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -64,20 +65,20 @@
             this.lblBackgroundImage = new System.Windows.Forms.Label();
             this.pnlBackgroundColor = new System.Windows.Forms.Panel();
             this.btnGetBackgroundImage = new System.Windows.Forms.Button();
-            this.tbBackgroundImage = new System.Windows.Forms.TextBox();
+            this.tbBackgroundImagePath = new System.Windows.Forms.TextBox();
             this.pbBackgroundPreview = new System.Windows.Forms.PictureBox();
-            this.chkBackgroudDefault = new System.Windows.Forms.CheckBox();
+            this.chkBackgroundStore = new System.Windows.Forms.CheckBox();
             this.gbGrid = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.chkAlign = new System.Windows.Forms.CheckBox();
+            this.chkGridAlign = new System.Windows.Forms.CheckBox();
             this.cbbGridStyle = new System.Windows.Forms.ComboBox();
             this.lblGridThickness = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.nudGridThickness = new System.Windows.Forms.NumericUpDown();
+            this.nudGridThick = new System.Windows.Forms.NumericUpDown();
             this.pnlGridColor = new System.Windows.Forms.Panel();
             this.nudGridStepY = new System.Windows.Forms.NumericUpDown();
             this.nudGridStepX = new System.Windows.Forms.NumericUpDown();
-            this.chkGridDefault = new System.Windows.Forms.CheckBox();
+            this.chkGridStore = new System.Windows.Forms.CheckBox();
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
@@ -89,6 +90,7 @@
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.lblLanguagePath = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
             this.gbBehaiour.SuspendLayout();
@@ -97,14 +99,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudPingCount)).BeginInit();
             this.gbRoots.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tpNewMap.SuspendLayout();
+            this.tpMap.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.gbBackground.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBackgroundPreview)).BeginInit();
             this.gbGrid.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudGridThickness)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGridThick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepX)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
@@ -117,7 +119,7 @@
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tpMain);
-            this.tabControl.Controls.Add(this.tpNewMap);
+            this.tabControl.Controls.Add(this.tpMap);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(3, 3);
             this.tabControl.Name = "tabControl";
@@ -141,7 +143,7 @@
             this.gbBehaiour.AutoSize = true;
             this.gbBehaiour.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.gbBehaiour.Controls.Add(this.tableLayoutPanel1);
-            this.gbBehaiour.Location = new System.Drawing.Point(3, 84);
+            this.gbBehaiour.Location = new System.Drawing.Point(3, 229);
             this.gbBehaiour.Name = "gbBehaiour";
             this.gbBehaiour.Size = new System.Drawing.Size(349, 125);
             this.gbBehaiour.TabIndex = 3;
@@ -238,12 +240,12 @@
             0});
             this.nudPingPeriod.Location = new System.Drawing.Point(260, 57);
             this.nudPingPeriod.Maximum = new decimal(new int[] {
-            1000000,
+            3600000,
             0,
             0,
             0});
             this.nudPingPeriod.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -295,7 +297,7 @@
             // 
             this.gbRoots.Controls.Add(this.tableLayoutPanel2);
             this.gbRoots.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbRoots.Location = new System.Drawing.Point(4, 216);
+            this.gbRoots.Location = new System.Drawing.Point(4, 85);
             this.gbRoots.Margin = new System.Windows.Forms.Padding(4);
             this.gbRoots.Name = "gbRoots";
             this.gbRoots.Size = new System.Drawing.Size(408, 137);
@@ -451,16 +453,16 @@
             this.btnGetRootBoxes.UseVisualStyleBackColor = true;
             this.btnGetRootBoxes.Click += new System.EventHandler(this.btnGetRootBoxes_Click);
             // 
-            // tpNewMap
+            // tpMap
             // 
-            this.tpNewMap.BackColor = System.Drawing.SystemColors.Control;
-            this.tpNewMap.Controls.Add(this.tableLayoutPanel3);
-            this.tpNewMap.Location = new System.Drawing.Point(4, 22);
-            this.tpNewMap.Name = "tpNewMap";
-            this.tpNewMap.Padding = new System.Windows.Forms.Padding(3);
-            this.tpNewMap.Size = new System.Drawing.Size(422, 363);
-            this.tpNewMap.TabIndex = 1;
-            this.tpNewMap.Text = "New map";
+            this.tpMap.BackColor = System.Drawing.SystemColors.Control;
+            this.tpMap.Controls.Add(this.tableLayoutPanel3);
+            this.tpMap.Location = new System.Drawing.Point(4, 22);
+            this.tpMap.Name = "tpMap";
+            this.tpMap.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMap.Size = new System.Drawing.Size(422, 363);
+            this.tpMap.TabIndex = 1;
+            this.tpMap.Text = "Map";
             // 
             // tableLayoutPanel3
             // 
@@ -498,8 +500,8 @@
             this.tableLayoutPanel5.Controls.Add(this.lblBackgroundImage, 0, 2);
             this.tableLayoutPanel5.Controls.Add(this.pnlBackgroundColor, 1, 1);
             this.tableLayoutPanel5.Controls.Add(this.btnGetBackgroundImage, 2, 2);
-            this.tableLayoutPanel5.Controls.Add(this.tbBackgroundImage, 1, 2);
-            this.tableLayoutPanel5.Controls.Add(this.chkBackgroudDefault, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.tbBackgroundImagePath, 1, 2);
+            this.tableLayoutPanel5.Controls.Add(this.chkBackgroundStore, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 3);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
@@ -562,13 +564,13 @@
             this.btnGetBackgroundImage.UseVisualStyleBackColor = true;
             this.btnGetBackgroundImage.Click += new System.EventHandler(this.btnGetImage_Click);
             // 
-            // tbBackgroundImage
+            // tbBackgroundImagePath
             // 
-            this.tbBackgroundImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbBackgroundImage.Location = new System.Drawing.Point(129, 54);
-            this.tbBackgroundImage.Name = "tbBackgroundImage";
-            this.tbBackgroundImage.Size = new System.Drawing.Size(243, 20);
-            this.tbBackgroundImage.TabIndex = 9;
+            this.tbBackgroundImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbBackgroundImagePath.Location = new System.Drawing.Point(129, 54);
+            this.tbBackgroundImagePath.Name = "tbBackgroundImagePath";
+            this.tbBackgroundImagePath.Size = new System.Drawing.Size(243, 20);
+            this.tbBackgroundImagePath.TabIndex = 9;
             // 
             // pbBackgroundPreview
             // 
@@ -580,19 +582,19 @@
             this.pbBackgroundPreview.TabIndex = 0;
             this.pbBackgroundPreview.TabStop = false;
             // 
-            // chkBackgroudDefault
+            // chkBackgroundStore
             // 
-            this.chkBackgroudDefault.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkBackgroudDefault.AutoSize = true;
-            this.chkBackgroudDefault.Checked = true;
-            this.chkBackgroudDefault.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tableLayoutPanel5.SetColumnSpan(this.chkBackgroudDefault, 3);
-            this.chkBackgroudDefault.Location = new System.Drawing.Point(3, 3);
-            this.chkBackgroudDefault.Name = "chkBackgroudDefault";
-            this.chkBackgroudDefault.Size = new System.Drawing.Size(134, 17);
-            this.chkBackgroudDefault.TabIndex = 8;
-            this.chkBackgroudDefault.Text = "Use default backgroud";
-            this.chkBackgroudDefault.UseVisualStyleBackColor = true;
+            this.chkBackgroundStore.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkBackgroundStore.AutoSize = true;
+            this.chkBackgroundStore.Checked = true;
+            this.chkBackgroundStore.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tableLayoutPanel5.SetColumnSpan(this.chkBackgroundStore, 3);
+            this.chkBackgroundStore.Location = new System.Drawing.Point(3, 3);
+            this.chkBackgroundStore.Name = "chkBackgroundStore";
+            this.chkBackgroundStore.Size = new System.Drawing.Size(133, 17);
+            this.chkBackgroundStore.TabIndex = 8;
+            this.chkBackgroundStore.Text = "Map store own options";
+            this.chkBackgroundStore.UseVisualStyleBackColor = true;
             // 
             // gbGrid
             // 
@@ -615,15 +617,15 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.chkAlign, 0, 2);
+            this.tableLayoutPanel4.Controls.Add(this.chkGridAlign, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.cbbGridStyle, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.lblGridThickness, 5, 1);
             this.tableLayoutPanel4.Controls.Add(this.label1, 3, 1);
-            this.tableLayoutPanel4.Controls.Add(this.nudGridThickness, 6, 1);
+            this.tableLayoutPanel4.Controls.Add(this.nudGridThick, 6, 1);
             this.tableLayoutPanel4.Controls.Add(this.pnlGridColor, 1, 1);
             this.tableLayoutPanel4.Controls.Add(this.nudGridStepY, 4, 1);
             this.tableLayoutPanel4.Controls.Add(this.nudGridStepX, 2, 1);
-            this.tableLayoutPanel4.Controls.Add(this.chkGridDefault, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.chkGridStore, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -634,17 +636,17 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(404, 73);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
-            // chkAlign
+            // chkGridAlign
             // 
-            this.chkAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkAlign.AutoSize = true;
-            this.tableLayoutPanel4.SetColumnSpan(this.chkAlign, 2);
-            this.chkAlign.Location = new System.Drawing.Point(3, 53);
-            this.chkAlign.Name = "chkAlign";
-            this.chkAlign.Size = new System.Drawing.Size(126, 17);
-            this.chkAlign.TabIndex = 8;
-            this.chkAlign.Text = "Align elements to grid";
-            this.chkAlign.UseVisualStyleBackColor = true;
+            this.chkGridAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkGridAlign.AutoSize = true;
+            this.tableLayoutPanel4.SetColumnSpan(this.chkGridAlign, 2);
+            this.chkGridAlign.Location = new System.Drawing.Point(3, 53);
+            this.chkGridAlign.Name = "chkGridAlign";
+            this.chkGridAlign.Size = new System.Drawing.Size(126, 17);
+            this.chkGridAlign.TabIndex = 8;
+            this.chkGridAlign.Text = "Align elements to grid";
+            this.chkGridAlign.UseVisualStyleBackColor = true;
             // 
             // cbbGridStyle
             // 
@@ -679,25 +681,25 @@
             this.label1.Text = "x";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // nudGridThickness
+            // nudGridThick
             // 
-            this.nudGridThickness.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nudGridThickness.Location = new System.Drawing.Point(357, 26);
-            this.nudGridThickness.Maximum = new decimal(new int[] {
+            this.nudGridThick.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.nudGridThick.Location = new System.Drawing.Point(357, 26);
+            this.nudGridThick.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.nudGridThickness.Minimum = new decimal(new int[] {
+            this.nudGridThick.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nudGridThickness.Name = "nudGridThickness";
-            this.nudGridThickness.Size = new System.Drawing.Size(40, 20);
-            this.nudGridThickness.TabIndex = 6;
-            this.nudGridThickness.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudGridThickness.Value = new decimal(new int[] {
+            this.nudGridThick.Name = "nudGridThick";
+            this.nudGridThick.Size = new System.Drawing.Size(40, 20);
+            this.nudGridThick.TabIndex = 6;
+            this.nudGridThick.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudGridThick.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -718,8 +720,13 @@
             // 
             this.nudGridStepY.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.nudGridStepY.Location = new System.Drawing.Point(249, 26);
+            this.nudGridStepY.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nudGridStepY.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -728,7 +735,7 @@
             this.nudGridStepY.TabIndex = 5;
             this.nudGridStepY.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudGridStepY.Value = new decimal(new int[] {
-            1,
+            32,
             0,
             0,
             0});
@@ -737,8 +744,13 @@
             // 
             this.nudGridStepX.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.nudGridStepX.Location = new System.Drawing.Point(191, 26);
+            this.nudGridStepX.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nudGridStepX.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -747,24 +759,24 @@
             this.nudGridStepX.TabIndex = 5;
             this.nudGridStepX.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudGridStepX.Value = new decimal(new int[] {
-            1,
+            32,
             0,
             0,
             0});
             // 
-            // chkGridDefault
+            // chkGridStore
             // 
-            this.chkGridDefault.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkGridDefault.AutoSize = true;
-            this.chkGridDefault.Checked = true;
-            this.chkGridDefault.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tableLayoutPanel4.SetColumnSpan(this.chkGridDefault, 7);
-            this.chkGridDefault.Location = new System.Drawing.Point(3, 3);
-            this.chkGridDefault.Name = "chkGridDefault";
-            this.chkGridDefault.Size = new System.Drawing.Size(100, 17);
-            this.chkGridDefault.TabIndex = 8;
-            this.chkGridDefault.Text = "Use default grid";
-            this.chkGridDefault.UseVisualStyleBackColor = true;
+            this.chkGridStore.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkGridStore.AutoSize = true;
+            this.chkGridStore.Checked = true;
+            this.chkGridStore.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tableLayoutPanel4.SetColumnSpan(this.chkGridStore, 7);
+            this.chkGridStore.Location = new System.Drawing.Point(3, 3);
+            this.chkGridStore.Name = "chkGridStore";
+            this.chkGridStore.Size = new System.Drawing.Size(133, 17);
+            this.chkGridStore.TabIndex = 8;
+            this.chkGridStore.Text = "Map store own options";
+            this.chkGridStore.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel6
             // 
@@ -883,8 +895,8 @@
             this.tableLayoutPanel9.ColumnCount = 1;
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel9.Controls.Add(this.gbLanguage, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.gbRoots, 0, 2);
-            this.tableLayoutPanel9.Controls.Add(this.gbBehaiour, 0, 1);
+            this.tableLayoutPanel9.Controls.Add(this.gbBehaiour, 0, 2);
+            this.tableLayoutPanel9.Controls.Add(this.gbRoots, 0, 1);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
@@ -920,7 +932,7 @@
             this.gbRoots.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.tpNewMap.ResumeLayout(false);
+            this.tpMap.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.gbBackground.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
@@ -929,7 +941,7 @@
             this.gbGrid.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudGridThickness)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGridThick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepX)).EndInit();
             this.tableLayoutPanel6.ResumeLayout(false);
@@ -958,7 +970,7 @@
         private System.Windows.Forms.ComboBox cbbOnClose;
         private System.Windows.Forms.CheckBox chkPingPeriod;
         private System.Windows.Forms.NumericUpDown nudPingPeriod;
-        private System.Windows.Forms.TabPage tpNewMap;
+        private System.Windows.Forms.TabPage tpMap;
         private System.Windows.Forms.NumericUpDown nudPingCount;
         private System.Windows.Forms.Label lblPingCount;
         private System.Windows.Forms.Label lblRootMaps;
@@ -983,12 +995,12 @@
         private System.Windows.Forms.ComboBox cbbGridStyle;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblGridThickness;
-        private System.Windows.Forms.NumericUpDown nudGridThickness;
+        private System.Windows.Forms.NumericUpDown nudGridThick;
         private System.Windows.Forms.Panel pnlGridColor;
-        private System.Windows.Forms.CheckBox chkAlign;
+        private System.Windows.Forms.CheckBox chkGridAlign;
         private System.Windows.Forms.NumericUpDown nudGridStepY;
         private System.Windows.Forms.NumericUpDown nudGridStepX;
-        private System.Windows.Forms.TextBox tbBackgroundImage;
+        private System.Windows.Forms.TextBox tbBackgroundImagePath;
         private System.Windows.Forms.Button btnGetBackgroundImage;
         private System.Windows.Forms.Label lblBackgroundImage;
         private System.Windows.Forms.OpenFileDialog dlgOpen;
@@ -996,8 +1008,8 @@
         private System.Windows.Forms.PictureBox pbBackgroundPreview;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.CheckBox chkBackgroudDefault;
-        private System.Windows.Forms.CheckBox chkGridDefault;
+        private System.Windows.Forms.CheckBox chkBackgroundStore;
+        private System.Windows.Forms.CheckBox chkGridStore;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.GroupBox gbLanguage;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
@@ -1006,5 +1018,6 @@
         private System.Windows.Forms.TextBox tbLanguagePath;
         private System.Windows.Forms.Label lblLanguagePath;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

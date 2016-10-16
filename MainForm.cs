@@ -11,10 +11,9 @@ namespace Schematix
     public partial class MainForm : Form
     {
         const int TOOLS_HIDE_DELAY = 500; // mseconds
-        OptionsForm optionsForm = new OptionsForm();
 
         #region Main
-        public MainForm()
+        public MainForm()//!!!
         {
             InitializeComponent();
             //options.Init();
@@ -28,26 +27,44 @@ namespace Schematix
                 MessageBox.Show(options.LangCur.mOccurred + "\r\n" + eStr, options.LangCur.mLanguagesLoading, MessageBoxButtons.OK);
         }
 
-        private void SetText(LanguageRecord lang)//!!!
+        private void SetText(LanguageRecord lang)//Ok
         {
-            //toolTip.RemoveAll();
-            //Main
-            //tpFiles.Text = lang.lblFiles;
-            //toolTip.SetToolTip(btnOptions, lang.hintOptions);
+            toolTip.RemoveAll();
+            //# Maps panel
+            toolTip.SetToolTip(tabPageAddNew, lang.hAppMapNew);
+            toolTip.SetToolTip(btnCloseMap,   lang.hAppMapClose);
+            toolTip.SetToolTip(btnOptions,    lang.hAppOptions);
+            toolTip.SetToolTip(btnLibrary,    lang.hAppLibrary);
+            //# Map
+            toolTip.SetToolTip(pnlMapOptions, lang.hMapOptions);
+            // Context menu
+            tsmiMapOptions.Text = lang.lMapCMOptions;
+            tsmiMapSave.Text    = lang.lMapCMSave;
+            tsmiMapLoad.Text    = lang.lMapCMLoad;
+            tsmiMapReload.Text  = lang.lMapCMReload;
+            tsmiMapClose.Text   = lang.lMapCMClose;
         }
 
-        private void btnLibrary_Click(object sender, EventArgs e)
+        private void btnLibrary_Click(object sender, EventArgs e)//!!!
         {
             //
         }
 
         private void btnOptions_Click(object sender, EventArgs e)//!!!
         {
+            OptionsForm optionsForm = new OptionsForm();
             if (optionsForm.ShowDialog() == DialogResult.OK)
             {
                 SetText(options.LangCur);
                 //...
+                //.Draw();
             }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)//!!!
+        {
+            //...
+            options.Save();
         }
         #endregion
 
@@ -120,13 +137,14 @@ namespace Schematix
         #endregion
 
         #region Map tabs
-        private void tabPageAddNew_Enter(object sender, EventArgs e)//Ok
+        private void tabPageAddNew_Enter(object sender, EventArgs e)//
         {
             // Get appendix number
             int i = (tabPageAddNew.Tag != null) ? (int)tabPageAddNew.Tag : 2;
             tabPageAddNew.Tag = i + 1;
             // Add new tab
             int idx = tcMaps.SelectedIndex;
+            //...
             tcMaps.TabPages.Insert(idx, "New " + i);
             // Select new tab
             tcMaps.SelectedIndex = idx;
@@ -146,7 +164,13 @@ namespace Schematix
 
         private void tsmiMapOptions_Click(object sender, EventArgs e)//!!!
         {
-            //
+            /*
+            MapOptionsForm mapOptionsForm = new MapOptionsForm(/.../);
+            if (mapOptionsForm.ShowDialog() == DialogResult.OK)
+            {
+                //...
+            }
+            */
         }
 
         private void tsmiMapSave_Click(object sender, EventArgs e)//!!!
@@ -176,6 +200,40 @@ namespace Schematix
                     idx--;
             tcMaps.TabPages.Remove(tcMaps.SelectedTab);
             tcMaps.SelectedIndex = idx;
+        }
+        #endregion
+
+        #region Map pad
+        private void pbMap_MouseDown(object sender, MouseEventArgs e)//!!!
+        {
+            //
+            //pbMap.Cursor = (...) ? Cursors.NoMove2D : Cursors.SizeAll;
+            pbMap.Cursor = 
+                (hScrollBar.LargeChange < hScrollBar.Maximum || vScrollBar.LargeChange < vScrollBar.Maximum)
+                ? Cursors.NoMove2D
+                : Cursors.No;
+        }
+
+        private void pbMap_MouseUp(object sender, MouseEventArgs e)//!!!
+        {
+            //
+            pbMap.Cursor = Cursors.Default;
+        }
+
+        private void pbMap_MouseMove(object sender, MouseEventArgs e)//!!!
+        {
+            //
+            //pbMap.Cursor = (...) ? Cursors.Default : Cursors.Hand;
+        }
+
+        private void pbMap_MouseDoubleClick(object sender, MouseEventArgs e)//!!!
+        {
+            //
+        }
+
+        private void pbMap_MouseClick(object sender, MouseEventArgs e)//!!!
+        {
+            //
         }
         #endregion
     }

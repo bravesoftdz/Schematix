@@ -7,21 +7,31 @@ namespace Schematix
 {
     class LanguageRecord
     {
-        public const String END_OF_TEXT = "\t\t\t";
+        const String END_OF_TEXT = "\t\t\t";
         public int Idx = 0;
-        public String name;
-        // Main
+        public String Name;
         public String
+            //# MainForm
+            hAppMapNew   = "Create new map",
+            hAppMapClose = "Close map",
+            hAppOptions  = "Open program options",
+            hAppLibrary  = "Open map objects catalog",
+            hAppAbout    = "Open about program",
+            hMapOptions  = "Open new options",
+            // Context menu
+            lMapCMOptions = "Options",
+            lMapCMSave    = "Save",
+            lMapCMLoad    = "Load",
+            lMapCMReload  = "Reload",
+            lMapCMClose   = "Close",
+
             //
-            hAbout          = "About program",
             lDeleting         = "Deleting:",
             lCopying          = "Copying:",
+
             // Dialongs
             mLanguagesLoading = "Language packs loading",
-            mOpenFolder       = "Open folder",
-            mRunFile          = "Open file",
             mOccurred         = "The following errors occurred:",
-            mDeleteRight      = "Delete from right:",
 
             // About form
             lAbout        = "About",
@@ -51,7 +61,7 @@ namespace Schematix
 
         public LanguageRecord(String languageName = "English", int newIdx = 0)//Ok
         {
-            name = languageName;
+            Name = languageName;
             Idx = newIdx;
         }
 
@@ -74,21 +84,29 @@ namespace Schematix
                     switch (lblName)
                     {
                         //# Main
-                        case "hAbout":         hAbout         = lblText;   break;
-                        case "lDeleting":      lDeleting      = lblText;   break;
-                        case "lCopying":       lCopying       = lblText;   break;
+                        case "hAppMapNew":        hAppMapNew        = lblText;   break;
+                        case "hAppMapClose":      hAppMapClose      = lblText;   break;
+                        case "hAppOptions":       hAppOptions       = lblText;   break;
+                        case "hAppLibrary":       hAppLibrary       = lblText;   break;
+                        case "hAppAbout":         hAppAbout         = lblText;   break;
+                        case "hMapOptions":       hMapOptions       = lblText;   break;
+                        // Context menu
+                        case "lMapCMOptions":     lMapCMOptions     = lblText;   break;
+                        case "lMapCMSave":        lMapCMSave        = lblText;   break;
+                        case "lMapCMLoad":        lMapCMLoad        = lblText;   break;
+                        case "lMapCMReload":      lMapCMReload      = lblText;   break;
+                        case "lMapCMClose":       lMapCMClose       = lblText;   break;
+
                         // Dialongs
                         case "mLanguagesLoading": mLanguagesLoading = lblText;   break;
-                        case "mOpenFolder":       mOpenFolder       = lblText;   break;
-                        case "mRunFile":          mRunFile          = lblText;   break;
-                        case "mDeleteRight":      mDeleteRight      = lblText;   break;
+                        case "mOccurred":         mOccurred         = lblText;   break;
 
                         //# About form
-                        case "lAbout":    lAbout        = lblText;         break;
-                        case "lAName":    lAppName      = lblText;         break;
-                        case "lAVertion": lAppVersion   = lblText;         break;
-                        case "lOwner":    lOwner        = lblText;         break;
-                        case "lContact":  lContact      = lblText;         break;
+                        case "lAbout":    lAbout       = lblText;          break;
+                        case "lAName":    lAppName     = lblText;          break;
+                        case "lAVertion": lAppVersion  = lblText;          break;
+                        case "lOwner":    lOwner       = lblText;          break;
+                        case "lContact":  lContact     = lblText;          break;
                         case "tAbout":    tDescription = ReadText(file);   break;
 
                         default:
