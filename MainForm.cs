@@ -12,6 +12,7 @@ namespace Schematix
     public partial class MainForm : Form
     {
         const int TOOLS_HIDE_DELAY = 500; // mseconds
+        LibraryForm LibraryForm = new LibraryForm();
 
         #region Main
         public MainForm()//!!!
@@ -69,7 +70,10 @@ namespace Schematix
 
         private void btnLibrary_Click(object sender, EventArgs e)//!!!
         {
-            //
+            if (LibraryForm.Visible)
+                LibraryForm.Hide();
+            else
+                LibraryForm.Show();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)//!!!

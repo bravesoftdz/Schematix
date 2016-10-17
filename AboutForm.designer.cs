@@ -29,6 +29,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.lblAppName = new System.Windows.Forms.Label();
             this.lblAppVersion = new System.Windows.Forms.Label();
             this.lblOwner = new System.Windows.Forms.Label();
@@ -38,7 +39,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -72,6 +72,18 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(319, 187);
             this.tableLayoutPanel.TabIndex = 0;
+            // 
+            // logoPictureBox
+            // 
+            this.logoPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.logoPictureBox.Image = global::Schematix.Properties.Resources.Kvozart;
+            this.logoPictureBox.Location = new System.Drawing.Point(3, 4);
+            this.logoPictureBox.Name = "logoPictureBox";
+            this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 4);
+            this.logoPictureBox.Size = new System.Drawing.Size(100, 100);
+            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.logoPictureBox.TabIndex = 12;
+            this.logoPictureBox.TabStop = false;
             // 
             // lblAppName
             // 
@@ -137,7 +149,8 @@
             this.tbDescription.Size = new System.Drawing.Size(313, 73);
             this.tbDescription.TabIndex = 23;
             this.tbDescription.TabStop = false;
-            this.tbDescription.Text = "Description\r\n\r\n...\r\n";
+            this.tbDescription.Text = "Description\r\n\r\nThis program designed for visualize and monitor computer network.\r" +
+    "\n";
             // 
             // label1
             // 
@@ -190,18 +203,6 @@
             this.label4.TabIndex = 19;
             this.label4.Text = "kvozart@i.ua";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // logoPictureBox
-            // 
-            this.logoPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.logoPictureBox.Image = global::Schematix.Properties.Resources.Kvozart;
-            this.logoPictureBox.Location = new System.Drawing.Point(3, 4);
-            this.logoPictureBox.Name = "logoPictureBox";
-            this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 4);
-            this.logoPictureBox.Size = new System.Drawing.Size(100, 100);
-            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.logoPictureBox.TabIndex = 12;
-            this.logoPictureBox.TabStop = false;
             // 
             // AboutForm
             // 

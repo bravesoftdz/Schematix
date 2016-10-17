@@ -26,7 +26,7 @@ namespace Schematix
             lMFMapCMClose   = "Close",
 
             //# Main Options
-            lOFTitle            = "Main options",
+            lOFTitle = "Main options",
             //* Main tab
             lOFMainTab = "Main",
             // Language
@@ -97,6 +97,7 @@ namespace Schematix
             dOptionsSaving     = "Saving options",
             mNoFolders         = "These folders doesn't exists:",
             mCreateThem        = "Create them?",
+            dImageLoading      = "Loading image",
 
             // About form
             lAbout        = "About",
@@ -104,7 +105,7 @@ namespace Schematix
             lAppVersion   = "Version:",
             lOwner        = "Owner:",
             lContact      = "Contact:",
-            tDescription  = "Description\n\nThis program designed for comparison and synchronization folders.";
+            tDescription  = "Description\n\nThis program designed for visualize and monitor computer network.";
 
         static public String ReadText(StreamReader file)//Ok
         {
@@ -232,6 +233,7 @@ namespace Schematix
                         case "dOptionsSaving":    dOptionsSaving    = lblText;   break;
                         case "mNoFolders":        mNoFolders        = lblText;   break;
                         case "mCreateThem":       mCreateThem       = lblText;   break;
+                        case "dImageLoading":     dImageLoading     = lblText;   break;
 
                         //# About form
                         case "lAbout":    lAbout       = lblText;          break;

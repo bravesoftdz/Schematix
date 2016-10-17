@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Schematix
 {
     public partial class OptionsForm : Form
     {
+        Bitmap image = new Bitmap(1,1);
+
         public OptionsForm()
         {
             InitializeComponent();
@@ -45,7 +44,7 @@ namespace Schematix
             // Grid
             chkGridStore.Checked       = options.GridStoreOwn;
             cbbGridStyle.SelectedIndex = options.GridStyle;
-            pnlGridColor.BackColor     = options.GridColor;
+            btnGridColor.BackColor     = options.GridColor;
             nudGridStepX.Maximum       = options.MAX_GRID_STEP;
             nudGridStepY.Maximum       = options.MAX_GRID_STEP;
             nudGridThick.Maximum       = options.MAX_GRID_THICK;
@@ -54,17 +53,21 @@ namespace Schematix
             nudGridThick.Value         = options.GridThick;
             chkGridAlign.Checked       = options.GridAlign;
             // Background
-            chkBackgroundStore.Checked            = options.BackgroundStoreOwn;
-            cbbBackgroundStyle.SelectedIndex      = options.BackgroundStyle;
-            pnlBackgroundColor.BackColor          = options.BackgroundColor;
-            tbBackgroundImagePath.Text            = options.BackgroundImagePath;
-            cbbBackgroundImageAlign.SelectedIndex = options.BackgroundImageAlign;
-            chkBackgroundImageFloat.Checked       = options.BackgroundImageFloat;
-            chkBackgroundImageBuildIn.Checked     = options.BackgroundImageBuildIn;
-            pbBackgroundPreview.BackgroundImage   = options.BackgroundImage;
+            chkBackStore.Checked            = options.BackgroundStoreOwn;
+            //
+            image = new Bitmap(options.BackgroundImage);
+            if (cbbBackStyle.SelectedIndex != 0)
+                pbBackPreview.BackgroundImage = image;
+            cbbBackStyle.SelectedIndex      = options.BackgroundStyle;
+            //
+            cbbBackImageAlign.SelectedIndex = options.BackgroundImageAlign;
+            btnBackColor.BackColor          = options.BackgroundColor;
+            tbBackgImagePath.Text           = options.BackgroundImagePath;
+            chkBackImageFloat.Checked       = options.BackgroundImageFloat;
+            chkBackImageBuildIn.Checked     = options.BackgroundImageBuildIn;
         }
 
-        private void SetText(LanguageRecord lang)//!!!
+        private void SetText(LanguageRecord lang)//
         {
             int idx;
             toolTip.RemoveAll();
@@ -117,42 +120,42 @@ namespace Schematix
             cbbGridStyle.Items.Add(lang.lOFMapGridStyle3Crosses);
             cbbGridStyle.Items.Add(lang.lOFMapGridStyle4Grid);
             cbbGridStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(pnlGridColor, options.LangCur.hOFMapGridColor);
+            toolTip.SetToolTip(btnGridColor, options.LangCur.hOFMapGridColor);
             lblGridThick.Text = lang.lOFMapGridThick;
             chkGridAlign.Text = lang.lOFMapGridAlign;
             // Background
-            gbBackground.Text = lang.lOFMapBack;
-            chkBackgroundStore.Text = lang.lOFMapStore;
-            idx = cbbBackgroundStyle.SelectedIndex;
-            cbbBackgroundStyle.Items.Clear();
-            cbbBackgroundStyle.Items.Add(lang.lOFMapBackStyle0Color);
-            cbbBackgroundStyle.Items.Add(lang.lOFMapBackStyle1ImageAlign);
-            cbbBackgroundStyle.Items.Add(lang.lOFMapBackStyle2ImageTile);
-            cbbBackgroundStyle.Items.Add(lang.lOFMapBackStyle3ImageStrech);
-            cbbBackgroundStyle.Items.Add(lang.lOFMapBackStyle4ImageZInner);
-            cbbBackgroundStyle.Items.Add(lang.lOFMapBackStyle5ImageZOutter);
-            cbbBackgroundStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(pnlBackgroundColor, options.LangCur.hOFMapBackColor);
-            lblBackgroundImagePath.Text = lang.lOFMapBackImagePath;
-            toolTip.SetToolTip(btnGetBackgroundImage, options.LangCur.hOFMapBackImageLoad);
-            lblBackgroundImageAlign.Text = lang.lOFMapBackImageAlign;
-            idx = cbbBackgroundImageAlign.SelectedIndex;
-            cbbBackgroundImageAlign.Items.Clear();
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign0TL);
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign1T);
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign2TR);
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign3L);
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign4C);
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign5R);
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign6BL);
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign7B);
-            cbbBackgroundImageAlign.Items.Add(lang.lOFMapBackImageAlign8BR);
-            cbbBackgroundImageAlign.SelectedIndex = idx;
-            chkBackgroundImageFloat.Text = lang.lOFMapBackImageFloat;
-            chkBackgroundImageBuildIn.Text = lang.lOFMapBackImageBuildIn;
+            gbBack.Text = lang.lOFMapBack;
+            chkBackStore.Text = lang.lOFMapStore;
+            idx = cbbBackStyle.SelectedIndex;
+            cbbBackStyle.Items.Clear();
+            cbbBackStyle.Items.Add(lang.lOFMapBackStyle0Color);
+            cbbBackStyle.Items.Add(lang.lOFMapBackStyle1ImageAlign);
+            cbbBackStyle.Items.Add(lang.lOFMapBackStyle2ImageTile);
+            cbbBackStyle.Items.Add(lang.lOFMapBackStyle3ImageStrech);
+            cbbBackStyle.Items.Add(lang.lOFMapBackStyle4ImageZInner);
+            cbbBackStyle.Items.Add(lang.lOFMapBackStyle5ImageZOutter);
+            cbbBackStyle.SelectedIndex = idx;
+            toolTip.SetToolTip(btnBackColor, options.LangCur.hOFMapBackColor);
+            lblBackgImagePath.Text = lang.lOFMapBackImagePath;
+            toolTip.SetToolTip(btnGetBackImage, options.LangCur.hOFMapBackImageLoad);
+            lblBackImageAlign.Text = lang.lOFMapBackImageAlign;
+            idx = cbbBackImageAlign.SelectedIndex;
+            cbbBackImageAlign.Items.Clear();
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign0TL);
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign1T);
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign2TR);
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign3L);
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign4C);
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign5R);
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign6BL);
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign7B);
+            cbbBackImageAlign.Items.Add(lang.lOFMapBackImageAlign8BR);
+            cbbBackImageAlign.SelectedIndex = idx;
+            chkBackImageFloat.Text = lang.lOFMapBackImageFloat;
+            chkBackImageBuildIn.Text = lang.lOFMapBackImageBuildIn;
         }
 
-        private void Path_TextChanged(object sender, EventArgs e)
+        private void Path_TextChanged(object sender, EventArgs e)//Ok
         {
             (sender as TextBox).BackColor = (
                 Directory.Exists((sender as TextBox).Text) 
@@ -162,7 +165,7 @@ namespace Schematix
 
         private void btnSave_Click(object sender, EventArgs e)//
         {
-            // Check existence
+            #region Check folders existence
             String eStr = "";
             if (!Directory.Exists(tbLanguagePath.Text))
                 eStr += "\r\n" + tbLanguagePath.Text;
@@ -182,7 +185,7 @@ namespace Schematix
                     options.LangCur.dOptionsSaving,
                     MessageBoxButtons.OKCancel))
                     return;
-                // Try to create
+                #region Try to create
                 eStr = "";
                 if (!Directory.Exists(tbLanguagePath.Text))
                     try
@@ -229,6 +232,7 @@ namespace Schematix
                     {
                         eStr += "\r\n" + ex.Message;
                     }
+                #endregion
                 // Where errors
                 if (eStr != "")
                 {
@@ -238,6 +242,8 @@ namespace Schematix
                     return;
                 }
             }
+            #endregion
+
             //# Main
             // Language
             options.LangPath = tbLanguagePath.Text;
@@ -259,18 +265,18 @@ namespace Schematix
             // Grid
             options.GridStoreOwn = chkGridStore.Checked;
             options.GridStyle = cbbGridStyle.SelectedIndex;
-            options.GridColor = pnlGridColor.BackColor;
+            options.GridColor = btnGridColor.BackColor;
             options.GridStepX = (int)nudGridStepX.Value;
             options.GridStepY = (int)nudGridStepY.Value;
             options.GridThick = (int)nudGridThick.Value;
             options.GridAlign = chkGridAlign.Checked;
             // Background
-            options.BackgroundStoreOwn = chkBackgroundStore.Checked;
-            options.BackgroundStyle = cbbBackgroundStyle.SelectedIndex;
-            options.BackgroundColor = pnlBackgroundColor.BackColor;
-            options.BackgroundImagePath = tbBackgroundImagePath.Text;
-            options.BackgroundImage = new Bitmap(pbBackgroundPreview.BackgroundImage);
-            options.BackgroundImageBuildIn = chkBackgroundImageBuildIn.Checked;
+            options.BackgroundStoreOwn = chkBackStore.Checked;
+            options.BackgroundStyle = cbbBackStyle.SelectedIndex;
+            options.BackgroundColor = btnBackColor.BackColor;
+            options.BackgroundImagePath = tbBackgImagePath.Text;
+            options.BackgroundImage = new Bitmap(pbBackPreview.BackgroundImage);
+            options.BackgroundImageBuildIn = chkBackImageBuildIn.Checked;
 
             // Out
             DialogResult = DialogResult.OK;
@@ -313,27 +319,64 @@ namespace Schematix
         }
         #endregion
 
-        #region New map
-        private void pnlColor_Click(object sender, EventArgs e)//Ok
+        #region Map tab
+        private void PickColor_Click(object sender, EventArgs e)//Ok
         {
             if (dlgColor.ShowDialog() == DialogResult.OK)
                 (sender as Panel).BackColor = dlgColor.Color;
-            if (sender == pnlBackgroundColor)
-                pbBackgroundPreview.BackColor = dlgColor.Color;
         }
 
-        private void cbbBackgroundStyle_SelectedIndexChanged(object sender, EventArgs e)//!!!
+        private void btnBackgroundColor_BackColorChanged(object sender, EventArgs e)//Ok
         {
-            pbBackgroundPreview.BackgroundImageLayout = (ImageLayout)cbbBackgroundStyle.SelectedIndex;
+            pbBackPreview.BackColor = btnBackColor.BackColor;
         }
 
-        private void btnGetImage_Click(object sender, EventArgs e)//
+        private void cbbBackgroundStyle_SelectedIndexChanged(object sender, EventArgs e)//!
         {
-            if (tbBackgroundImagePath.Text == "")
-                tbBackgroundImagePath.Text = Directory.GetCurrentDirectory();
+            if (cbbBackStyle.SelectedIndex == 0 && pbBackPreview.BackgroundImage != null)
+                pbBackPreview.BackgroundImage = null;
+            if (cbbBackStyle.SelectedIndex != 0 && pbBackPreview.BackgroundImage == null)
+                pbBackPreview.BackgroundImage = image;
+            switch (cbbBackStyle.SelectedIndex)
+            {
+                case 1:
+                    pbBackPreview.BackgroundImageLayout = ImageLayout.None;
+                    break;
+                case 2:
+                    pbBackPreview.BackgroundImageLayout = ImageLayout.Tile;
+                    break;
+                case 3:
+                    pbBackPreview.BackgroundImageLayout = ImageLayout.Stretch;
+                    break;
+                case 4:
+                    pbBackPreview.BackgroundImageLayout = ImageLayout.Zoom;
+                    break;
+                case 5:
+                    pbBackPreview.BackgroundImageLayout = ImageLayout.Zoom;
+                    break;
+            }
+        }
+
+        private void btnGetImage_Click(object sender, EventArgs e)//Ok
+        {
+            if (tbBackgImagePath.Text == "")
+                dlgOpen.InitialDirectory = Directory.GetCurrentDirectory();
+            else
+                dlgOpen.InitialDirectory = Path.GetDirectoryName(tbBackgImagePath.Text);
+            dlgOpen.FileName = Path.GetFileName(tbBackgImagePath.Text);
             if (dlgOpen.ShowDialog() == DialogResult.OK)
-                tbBackgroundImagePath.Text = dlgOpen.FileName;
-            pbBackgroundPreview.BackgroundImage = new Bitmap(dlgOpen.FileName);
+                try
+                {
+                    image = new Bitmap(dlgOpen.FileName);
+                    tbBackgImagePath.Text = dlgOpen.FileName;
+                    pbBackPreview.BackgroundImage = image;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        options.LangCur.mErrorsOccurred + "\r\n" + ex.Message + "\r\n" + dlgOpen.FileName,
+                        options.LangCur.dImageLoading);
+                }
         }
         #endregion
     }

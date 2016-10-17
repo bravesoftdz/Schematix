@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsForm));
             this.dlgFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -66,20 +67,20 @@
             this.btnGetRootBoxes = new System.Windows.Forms.Button();
             this.tpMap = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.gbBackground = new System.Windows.Forms.GroupBox();
+            this.gbBack = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.chkBackgroundImageBuildIn = new System.Windows.Forms.CheckBox();
-            this.cbbBackgroundStyle = new System.Windows.Forms.ComboBox();
-            this.lblBackgroundImagePath = new System.Windows.Forms.Label();
-            this.pnlBackgroundColor = new System.Windows.Forms.Panel();
-            this.btnGetBackgroundImage = new System.Windows.Forms.Button();
-            this.tbBackgroundImagePath = new System.Windows.Forms.TextBox();
-            this.chkBackgroundStore = new System.Windows.Forms.CheckBox();
+            this.chkBackImageBuildIn = new System.Windows.Forms.CheckBox();
+            this.cbbBackStyle = new System.Windows.Forms.ComboBox();
+            this.lblBackgImagePath = new System.Windows.Forms.Label();
+            this.btnGetBackImage = new System.Windows.Forms.Button();
+            this.tbBackgImagePath = new System.Windows.Forms.TextBox();
+            this.chkBackStore = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.pbBackgroundPreview = new System.Windows.Forms.PictureBox();
-            this.cbbBackgroundImageAlign = new System.Windows.Forms.ComboBox();
-            this.lblBackgroundImageAlign = new System.Windows.Forms.Label();
-            this.chkBackgroundImageFloat = new System.Windows.Forms.CheckBox();
+            this.pbBackPreview = new System.Windows.Forms.PictureBox();
+            this.cbbBackImageAlign = new System.Windows.Forms.ComboBox();
+            this.lblBackImageAlign = new System.Windows.Forms.Label();
+            this.chkBackImageFloat = new System.Windows.Forms.CheckBox();
+            this.btnBackColor = new System.Windows.Forms.Button();
             this.gbGrid = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.chkGridAlign = new System.Windows.Forms.CheckBox();
@@ -87,10 +88,10 @@
             this.lblGridThick = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.nudGridThick = new System.Windows.Forms.NumericUpDown();
-            this.pnlGridColor = new System.Windows.Forms.Panel();
             this.nudGridStepY = new System.Windows.Forms.NumericUpDown();
             this.nudGridStepX = new System.Windows.Forms.NumericUpDown();
             this.chkGridStore = new System.Windows.Forms.CheckBox();
+            this.btnGridColor = new System.Windows.Forms.Button();
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
@@ -108,10 +109,10 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.tpMap.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.gbBackground.SuspendLayout();
+            this.gbBack.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBackgroundPreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBackPreview)).BeginInit();
             this.gbGrid.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridThick)).BeginInit();
@@ -196,7 +197,7 @@
             this.btnGetLanguagePath.Location = new System.Drawing.Point(378, 30);
             this.btnGetLanguagePath.Name = "btnGetLanguagePath";
             this.btnGetLanguagePath.Size = new System.Drawing.Size(23, 23);
-            this.btnGetLanguagePath.TabIndex = 4;
+            this.btnGetLanguagePath.TabIndex = 2;
             this.btnGetLanguagePath.UseVisualStyleBackColor = true;
             this.btnGetLanguagePath.Click += new System.EventHandler(this.btnGetRootLanguage_Click);
             // 
@@ -206,7 +207,7 @@
             this.tbLanguagePath.Location = new System.Drawing.Point(63, 31);
             this.tbLanguagePath.Name = "tbLanguagePath";
             this.tbLanguagePath.Size = new System.Drawing.Size(309, 20);
-            this.tbLanguagePath.TabIndex = 3;
+            this.tbLanguagePath.TabIndex = 1;
             this.tbLanguagePath.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // lblLanguagePath
@@ -309,7 +310,7 @@
             this.cbbOnClose.Location = new System.Drawing.Point(180, 30);
             this.cbbOnClose.Name = "cbbOnClose";
             this.cbbOnClose.Size = new System.Drawing.Size(160, 21);
-            this.cbbOnClose.TabIndex = 0;
+            this.cbbOnClose.TabIndex = 1;
             // 
             // chkPingPeriod
             // 
@@ -318,7 +319,7 @@
             this.chkPingPeriod.Location = new System.Drawing.Point(3, 58);
             this.chkPingPeriod.Name = "chkPingPeriod";
             this.chkPingPeriod.Size = new System.Drawing.Size(154, 17);
-            this.chkPingPeriod.TabIndex = 3;
+            this.chkPingPeriod.TabIndex = 2;
             this.chkPingPeriod.Text = "Period of ping (miliseconds)";
             this.chkPingPeriod.UseVisualStyleBackColor = true;
             // 
@@ -343,7 +344,7 @@
             0});
             this.nudPingPeriod.Name = "nudPingPeriod";
             this.nudPingPeriod.Size = new System.Drawing.Size(80, 20);
-            this.nudPingPeriod.TabIndex = 4;
+            this.nudPingPeriod.TabIndex = 3;
             this.nudPingPeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudPingPeriod.Value = new decimal(new int[] {
             200,
@@ -475,7 +476,7 @@
             this.tbRootMaps.Location = new System.Drawing.Point(52, 4);
             this.tbRootMaps.Name = "tbRootMaps";
             this.tbRootMaps.Size = new System.Drawing.Size(318, 20);
-            this.tbRootMaps.TabIndex = 3;
+            this.tbRootMaps.TabIndex = 0;
             this.tbRootMaps.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // tbRootObjects
@@ -484,7 +485,7 @@
             this.tbRootObjects.Location = new System.Drawing.Point(52, 33);
             this.tbRootObjects.Name = "tbRootObjects";
             this.tbRootObjects.Size = new System.Drawing.Size(318, 20);
-            this.tbRootObjects.TabIndex = 3;
+            this.tbRootObjects.TabIndex = 2;
             this.tbRootObjects.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // tbRootLinks
@@ -493,7 +494,7 @@
             this.tbRootLinks.Location = new System.Drawing.Point(52, 62);
             this.tbRootLinks.Name = "tbRootLinks";
             this.tbRootLinks.Size = new System.Drawing.Size(318, 20);
-            this.tbRootLinks.TabIndex = 3;
+            this.tbRootLinks.TabIndex = 4;
             this.tbRootLinks.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // tbRootBoxes
@@ -502,7 +503,7 @@
             this.tbRootBoxes.Location = new System.Drawing.Point(52, 91);
             this.tbRootBoxes.Name = "tbRootBoxes";
             this.tbRootBoxes.Size = new System.Drawing.Size(318, 20);
-            this.tbRootBoxes.TabIndex = 3;
+            this.tbRootBoxes.TabIndex = 6;
             this.tbRootBoxes.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
             // btnGetRootMaps
@@ -512,7 +513,7 @@
             this.btnGetRootMaps.Location = new System.Drawing.Point(376, 3);
             this.btnGetRootMaps.Name = "btnGetRootMaps";
             this.btnGetRootMaps.Size = new System.Drawing.Size(23, 23);
-            this.btnGetRootMaps.TabIndex = 4;
+            this.btnGetRootMaps.TabIndex = 1;
             this.btnGetRootMaps.UseVisualStyleBackColor = true;
             this.btnGetRootMaps.Click += new System.EventHandler(this.btnGetRootMaps_Click);
             // 
@@ -523,7 +524,7 @@
             this.btnGetRootObjects.Location = new System.Drawing.Point(376, 32);
             this.btnGetRootObjects.Name = "btnGetRootObjects";
             this.btnGetRootObjects.Size = new System.Drawing.Size(23, 23);
-            this.btnGetRootObjects.TabIndex = 4;
+            this.btnGetRootObjects.TabIndex = 3;
             this.btnGetRootObjects.UseVisualStyleBackColor = true;
             this.btnGetRootObjects.Click += new System.EventHandler(this.btnGetRootObjects_Click);
             // 
@@ -534,7 +535,7 @@
             this.btnGetRootLinks.Location = new System.Drawing.Point(376, 61);
             this.btnGetRootLinks.Name = "btnGetRootLinks";
             this.btnGetRootLinks.Size = new System.Drawing.Size(23, 23);
-            this.btnGetRootLinks.TabIndex = 4;
+            this.btnGetRootLinks.TabIndex = 5;
             this.btnGetRootLinks.UseVisualStyleBackColor = true;
             this.btnGetRootLinks.Click += new System.EventHandler(this.btnGetRootLinks_Click);
             // 
@@ -545,7 +546,7 @@
             this.btnGetRootBoxes.Location = new System.Drawing.Point(376, 90);
             this.btnGetRootBoxes.Name = "btnGetRootBoxes";
             this.btnGetRootBoxes.Size = new System.Drawing.Size(23, 23);
-            this.btnGetRootBoxes.TabIndex = 4;
+            this.btnGetRootBoxes.TabIndex = 7;
             this.btnGetRootBoxes.UseVisualStyleBackColor = true;
             this.btnGetRootBoxes.Click += new System.EventHandler(this.btnGetRootBoxes_Click);
             // 
@@ -564,7 +565,7 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.gbBackground, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.gbBack, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.gbGrid, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
@@ -575,16 +576,16 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(416, 357);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
-            // gbBackground
+            // gbBack
             // 
-            this.gbBackground.Controls.Add(this.tableLayoutPanel5);
-            this.gbBackground.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbBackground.Location = new System.Drawing.Point(3, 101);
-            this.gbBackground.Name = "gbBackground";
-            this.gbBackground.Size = new System.Drawing.Size(410, 253);
-            this.gbBackground.TabIndex = 1;
-            this.gbBackground.TabStop = false;
-            this.gbBackground.Text = "Background";
+            this.gbBack.Controls.Add(this.tableLayoutPanel5);
+            this.gbBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbBack.Location = new System.Drawing.Point(3, 101);
+            this.gbBack.Name = "gbBack";
+            this.gbBack.Size = new System.Drawing.Size(410, 253);
+            this.gbBack.TabIndex = 1;
+            this.gbBack.TabStop = false;
+            this.gbBack.Text = "Background";
             // 
             // tableLayoutPanel5
             // 
@@ -593,17 +594,17 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel5.Controls.Add(this.chkBackgroundImageBuildIn, 0, 4);
-            this.tableLayoutPanel5.Controls.Add(this.cbbBackgroundStyle, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.lblBackgroundImagePath, 0, 2);
-            this.tableLayoutPanel5.Controls.Add(this.pnlBackgroundColor, 1, 1);
-            this.tableLayoutPanel5.Controls.Add(this.btnGetBackgroundImage, 3, 2);
-            this.tableLayoutPanel5.Controls.Add(this.tbBackgroundImagePath, 1, 2);
-            this.tableLayoutPanel5.Controls.Add(this.chkBackgroundStore, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.chkBackImageBuildIn, 0, 4);
+            this.tableLayoutPanel5.Controls.Add(this.cbbBackStyle, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.lblBackgImagePath, 0, 2);
+            this.tableLayoutPanel5.Controls.Add(this.btnGetBackImage, 3, 2);
+            this.tableLayoutPanel5.Controls.Add(this.tbBackgImagePath, 1, 2);
+            this.tableLayoutPanel5.Controls.Add(this.chkBackStore, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 5);
-            this.tableLayoutPanel5.Controls.Add(this.cbbBackgroundImageAlign, 1, 3);
-            this.tableLayoutPanel5.Controls.Add(this.lblBackgroundImageAlign, 0, 3);
-            this.tableLayoutPanel5.Controls.Add(this.chkBackgroundImageFloat, 2, 3);
+            this.tableLayoutPanel5.Controls.Add(this.cbbBackImageAlign, 1, 3);
+            this.tableLayoutPanel5.Controls.Add(this.lblBackImageAlign, 0, 3);
+            this.tableLayoutPanel5.Controls.Add(this.chkBackImageFloat, 2, 3);
+            this.tableLayoutPanel5.Controls.Add(this.btnBackColor, 1, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -617,89 +618,78 @@
             this.tableLayoutPanel5.Size = new System.Drawing.Size(404, 234);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
-            // chkBackgroundImageBuildIn
+            // chkBackImageBuildIn
             // 
-            this.chkBackgroundImageBuildIn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkBackgroundImageBuildIn.AutoSize = true;
-            this.tableLayoutPanel5.SetColumnSpan(this.chkBackgroundImageBuildIn, 2);
-            this.chkBackgroundImageBuildIn.Location = new System.Drawing.Point(3, 109);
-            this.chkBackgroundImageBuildIn.Name = "chkBackgroundImageBuildIn";
-            this.chkBackgroundImageBuildIn.Size = new System.Drawing.Size(79, 17);
-            this.chkBackgroundImageBuildIn.TabIndex = 8;
-            this.chkBackgroundImageBuildIn.Text = "Save to file";
-            this.chkBackgroundImageBuildIn.UseVisualStyleBackColor = true;
+            this.chkBackImageBuildIn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkBackImageBuildIn.AutoSize = true;
+            this.tableLayoutPanel5.SetColumnSpan(this.chkBackImageBuildIn, 2);
+            this.chkBackImageBuildIn.Location = new System.Drawing.Point(3, 109);
+            this.chkBackImageBuildIn.Name = "chkBackImageBuildIn";
+            this.chkBackImageBuildIn.Size = new System.Drawing.Size(79, 17);
+            this.chkBackImageBuildIn.TabIndex = 7;
+            this.chkBackImageBuildIn.Text = "Save to file";
+            this.chkBackImageBuildIn.UseVisualStyleBackColor = true;
             // 
-            // cbbBackgroundStyle
+            // cbbBackStyle
             // 
-            this.cbbBackgroundStyle.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cbbBackgroundStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbBackgroundStyle.FormattingEnabled = true;
-            this.cbbBackgroundStyle.Items.AddRange(new object[] {
+            this.cbbBackStyle.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbbBackStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbBackStyle.FormattingEnabled = true;
+            this.cbbBackStyle.Items.AddRange(new object[] {
             "0",
             "1",
             "2",
             "3",
             "4"});
-            this.cbbBackgroundStyle.Location = new System.Drawing.Point(3, 26);
-            this.cbbBackgroundStyle.Name = "cbbBackgroundStyle";
-            this.cbbBackgroundStyle.Size = new System.Drawing.Size(120, 21);
-            this.cbbBackgroundStyle.TabIndex = 1;
-            this.cbbBackgroundStyle.SelectedIndexChanged += new System.EventHandler(this.cbbBackgroundStyle_SelectedIndexChanged);
+            this.cbbBackStyle.Location = new System.Drawing.Point(3, 26);
+            this.cbbBackStyle.Name = "cbbBackStyle";
+            this.cbbBackStyle.Size = new System.Drawing.Size(120, 21);
+            this.cbbBackStyle.TabIndex = 1;
+            this.cbbBackStyle.SelectedIndexChanged += new System.EventHandler(this.cbbBackgroundStyle_SelectedIndexChanged);
             // 
-            // lblBackgroundImagePath
+            // lblBackgImagePath
             // 
-            this.lblBackgroundImagePath.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblBackgroundImagePath.AutoSize = true;
-            this.lblBackgroundImagePath.Location = new System.Drawing.Point(51, 58);
-            this.lblBackgroundImagePath.Name = "lblBackgroundImagePath";
-            this.lblBackgroundImagePath.Size = new System.Drawing.Size(72, 13);
-            this.lblBackgroundImagePath.TabIndex = 5;
-            this.lblBackgroundImagePath.Text = "Path to image";
+            this.lblBackgImagePath.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblBackgImagePath.AutoSize = true;
+            this.lblBackgImagePath.Location = new System.Drawing.Point(51, 58);
+            this.lblBackgImagePath.Name = "lblBackgImagePath";
+            this.lblBackgImagePath.Size = new System.Drawing.Size(72, 13);
+            this.lblBackgImagePath.TabIndex = 5;
+            this.lblBackgImagePath.Text = "Path to image";
             // 
-            // pnlBackgroundColor
+            // btnGetBackImage
             // 
-            this.pnlBackgroundColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pnlBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlBackgroundColor.Location = new System.Drawing.Point(141, 26);
-            this.pnlBackgroundColor.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
-            this.pnlBackgroundColor.Name = "pnlBackgroundColor";
-            this.pnlBackgroundColor.Size = new System.Drawing.Size(32, 21);
-            this.pnlBackgroundColor.TabIndex = 7;
-            this.pnlBackgroundColor.Click += new System.EventHandler(this.pnlColor_Click);
+            this.btnGetBackImage.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGetBackImage.Image = global::Schematix.Properties.Resources.load;
+            this.btnGetBackImage.Location = new System.Drawing.Point(378, 53);
+            this.btnGetBackImage.Name = "btnGetBackImage";
+            this.btnGetBackImage.Size = new System.Drawing.Size(23, 23);
+            this.btnGetBackImage.TabIndex = 4;
+            this.btnGetBackImage.UseVisualStyleBackColor = true;
+            this.btnGetBackImage.Click += new System.EventHandler(this.btnGetImage_Click);
             // 
-            // btnGetBackgroundImage
+            // tbBackgImagePath
             // 
-            this.btnGetBackgroundImage.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetBackgroundImage.Image = global::Schematix.Properties.Resources.load;
-            this.btnGetBackgroundImage.Location = new System.Drawing.Point(378, 53);
-            this.btnGetBackgroundImage.Name = "btnGetBackgroundImage";
-            this.btnGetBackgroundImage.Size = new System.Drawing.Size(23, 23);
-            this.btnGetBackgroundImage.TabIndex = 8;
-            this.btnGetBackgroundImage.UseVisualStyleBackColor = true;
-            this.btnGetBackgroundImage.Click += new System.EventHandler(this.btnGetImage_Click);
+            this.tbBackgImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel5.SetColumnSpan(this.tbBackgImagePath, 2);
+            this.tbBackgImagePath.Location = new System.Drawing.Point(129, 54);
+            this.tbBackgImagePath.Name = "tbBackgImagePath";
+            this.tbBackgImagePath.Size = new System.Drawing.Size(243, 20);
+            this.tbBackgImagePath.TabIndex = 3;
             // 
-            // tbBackgroundImagePath
+            // chkBackStore
             // 
-            this.tbBackgroundImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel5.SetColumnSpan(this.tbBackgroundImagePath, 2);
-            this.tbBackgroundImagePath.Location = new System.Drawing.Point(129, 54);
-            this.tbBackgroundImagePath.Name = "tbBackgroundImagePath";
-            this.tbBackgroundImagePath.Size = new System.Drawing.Size(243, 20);
-            this.tbBackgroundImagePath.TabIndex = 9;
-            // 
-            // chkBackgroundStore
-            // 
-            this.chkBackgroundStore.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkBackgroundStore.AutoSize = true;
-            this.chkBackgroundStore.Checked = true;
-            this.chkBackgroundStore.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tableLayoutPanel5.SetColumnSpan(this.chkBackgroundStore, 4);
-            this.chkBackgroundStore.Location = new System.Drawing.Point(3, 3);
-            this.chkBackgroundStore.Name = "chkBackgroundStore";
-            this.chkBackgroundStore.Size = new System.Drawing.Size(122, 17);
-            this.chkBackgroundStore.TabIndex = 8;
-            this.chkBackgroundStore.Text = "Save options in map";
-            this.chkBackgroundStore.UseVisualStyleBackColor = true;
+            this.chkBackStore.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkBackStore.AutoSize = true;
+            this.chkBackStore.Checked = true;
+            this.chkBackStore.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tableLayoutPanel5.SetColumnSpan(this.chkBackStore, 4);
+            this.chkBackStore.Location = new System.Drawing.Point(3, 3);
+            this.chkBackStore.Name = "chkBackStore";
+            this.chkBackStore.Size = new System.Drawing.Size(122, 17);
+            this.chkBackStore.TabIndex = 0;
+            this.chkBackStore.Text = "Save options in map";
+            this.chkBackStore.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel7
             // 
@@ -709,7 +699,7 @@
             this.tableLayoutPanel7.ColumnCount = 1;
             this.tableLayoutPanel5.SetColumnSpan(this.tableLayoutPanel7, 4);
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Controls.Add(this.pbBackgroundPreview, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.pbBackPreview, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 132);
             this.tableLayoutPanel7.MinimumSize = new System.Drawing.Size(16, 16);
@@ -719,54 +709,65 @@
             this.tableLayoutPanel7.Size = new System.Drawing.Size(398, 99);
             this.tableLayoutPanel7.TabIndex = 10;
             // 
-            // pbBackgroundPreview
+            // pbBackPreview
             // 
-            this.pbBackgroundPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbBackgroundPreview.Location = new System.Drawing.Point(3, 3);
-            this.pbBackgroundPreview.Margin = new System.Windows.Forms.Padding(0);
-            this.pbBackgroundPreview.Name = "pbBackgroundPreview";
-            this.pbBackgroundPreview.Size = new System.Drawing.Size(392, 93);
-            this.pbBackgroundPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbBackgroundPreview.TabIndex = 0;
-            this.pbBackgroundPreview.TabStop = false;
+            this.pbBackPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbBackPreview.Location = new System.Drawing.Point(3, 3);
+            this.pbBackPreview.Margin = new System.Windows.Forms.Padding(0);
+            this.pbBackPreview.Name = "pbBackPreview";
+            this.pbBackPreview.Size = new System.Drawing.Size(392, 93);
+            this.pbBackPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbBackPreview.TabIndex = 0;
+            this.pbBackPreview.TabStop = false;
             // 
-            // cbbBackgroundImageAlign
+            // cbbBackImageAlign
             // 
-            this.cbbBackgroundImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cbbBackgroundImageAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbBackgroundImageAlign.FormattingEnabled = true;
-            this.cbbBackgroundImageAlign.Items.AddRange(new object[] {
+            this.cbbBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbbBackImageAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbBackImageAlign.FormattingEnabled = true;
+            this.cbbBackImageAlign.Items.AddRange(new object[] {
             "0",
             "1",
             "2",
             "3",
             "4"});
-            this.cbbBackgroundImageAlign.Location = new System.Drawing.Point(129, 82);
-            this.cbbBackgroundImageAlign.Name = "cbbBackgroundImageAlign";
-            this.cbbBackgroundImageAlign.Size = new System.Drawing.Size(120, 21);
-            this.cbbBackgroundImageAlign.TabIndex = 1;
-            this.cbbBackgroundImageAlign.SelectedIndexChanged += new System.EventHandler(this.cbbBackgroundStyle_SelectedIndexChanged);
+            this.cbbBackImageAlign.Location = new System.Drawing.Point(129, 82);
+            this.cbbBackImageAlign.Name = "cbbBackImageAlign";
+            this.cbbBackImageAlign.Size = new System.Drawing.Size(120, 21);
+            this.cbbBackImageAlign.TabIndex = 5;
+            this.cbbBackImageAlign.SelectedIndexChanged += new System.EventHandler(this.cbbBackgroundStyle_SelectedIndexChanged);
             // 
-            // lblBackgroundImageAlign
+            // lblBackImageAlign
             // 
-            this.lblBackgroundImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblBackgroundImageAlign.AutoSize = true;
-            this.lblBackgroundImageAlign.Location = new System.Drawing.Point(62, 86);
-            this.lblBackgroundImageAlign.Name = "lblBackgroundImageAlign";
-            this.lblBackgroundImageAlign.Size = new System.Drawing.Size(61, 13);
-            this.lblBackgroundImageAlign.TabIndex = 5;
-            this.lblBackgroundImageAlign.Text = "Image align";
+            this.lblBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblBackImageAlign.AutoSize = true;
+            this.lblBackImageAlign.Location = new System.Drawing.Point(62, 86);
+            this.lblBackImageAlign.Name = "lblBackImageAlign";
+            this.lblBackImageAlign.Size = new System.Drawing.Size(61, 13);
+            this.lblBackImageAlign.TabIndex = 5;
+            this.lblBackImageAlign.Text = "Image align";
             // 
-            // chkBackgroundImageFloat
+            // chkBackImageFloat
             // 
-            this.chkBackgroundImageFloat.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkBackgroundImageFloat.AutoSize = true;
-            this.chkBackgroundImageFloat.Location = new System.Drawing.Point(255, 84);
-            this.chkBackgroundImageFloat.Name = "chkBackgroundImageFloat";
-            this.chkBackgroundImageFloat.Size = new System.Drawing.Size(80, 17);
-            this.chkBackgroundImageFloat.TabIndex = 8;
-            this.chkBackgroundImageFloat.Text = "Float image";
-            this.chkBackgroundImageFloat.UseVisualStyleBackColor = true;
+            this.chkBackImageFloat.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkBackImageFloat.AutoSize = true;
+            this.chkBackImageFloat.Location = new System.Drawing.Point(255, 84);
+            this.chkBackImageFloat.Name = "chkBackImageFloat";
+            this.chkBackImageFloat.Size = new System.Drawing.Size(80, 17);
+            this.chkBackImageFloat.TabIndex = 6;
+            this.chkBackImageFloat.Text = "Float image";
+            this.chkBackImageFloat.UseVisualStyleBackColor = true;
+            // 
+            // btnBackColor
+            // 
+            this.btnBackColor.Location = new System.Drawing.Point(137, 26);
+            this.btnBackColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
+            this.btnBackColor.Name = "btnBackColor";
+            this.btnBackColor.Size = new System.Drawing.Size(32, 21);
+            this.btnBackColor.TabIndex = 2;
+            this.btnBackColor.UseVisualStyleBackColor = true;
+            this.btnBackColor.BackColorChanged += new System.EventHandler(this.btnBackgroundColor_BackColorChanged);
+            this.btnBackColor.Click += new System.EventHandler(this.PickColor_Click);
             // 
             // gbGrid
             // 
@@ -794,10 +795,10 @@
             this.tableLayoutPanel4.Controls.Add(this.lblGridThick, 5, 1);
             this.tableLayoutPanel4.Controls.Add(this.label1, 3, 1);
             this.tableLayoutPanel4.Controls.Add(this.nudGridThick, 6, 1);
-            this.tableLayoutPanel4.Controls.Add(this.pnlGridColor, 1, 1);
             this.tableLayoutPanel4.Controls.Add(this.nudGridStepY, 4, 1);
             this.tableLayoutPanel4.Controls.Add(this.nudGridStepX, 2, 1);
             this.tableLayoutPanel4.Controls.Add(this.chkGridStore, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.btnGridColor, 1, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -816,7 +817,7 @@
             this.chkGridAlign.Location = new System.Drawing.Point(3, 53);
             this.chkGridAlign.Name = "chkGridAlign";
             this.chkGridAlign.Size = new System.Drawing.Size(126, 17);
-            this.chkGridAlign.TabIndex = 8;
+            this.chkGridAlign.TabIndex = 6;
             this.chkGridAlign.Text = "Align elements to grid";
             this.chkGridAlign.UseVisualStyleBackColor = true;
             // 
@@ -834,7 +835,7 @@
             // 
             this.lblGridThick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGridThick.AutoSize = true;
-            this.lblGridThick.Location = new System.Drawing.Point(295, 30);
+            this.lblGridThick.Location = new System.Drawing.Point(287, 30);
             this.lblGridThick.Name = "lblGridThick";
             this.lblGridThick.Size = new System.Drawing.Size(56, 13);
             this.lblGridThick.TabIndex = 5;
@@ -845,7 +846,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(234, 30);
+            this.label1.Location = new System.Drawing.Point(226, 30);
             this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(12, 13);
@@ -856,7 +857,7 @@
             // nudGridThick
             // 
             this.nudGridThick.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nudGridThick.Location = new System.Drawing.Point(357, 26);
+            this.nudGridThick.Location = new System.Drawing.Point(349, 26);
             this.nudGridThick.Maximum = new decimal(new int[] {
             5,
             0,
@@ -869,7 +870,7 @@
             0});
             this.nudGridThick.Name = "nudGridThick";
             this.nudGridThick.Size = new System.Drawing.Size(40, 20);
-            this.nudGridThick.TabIndex = 6;
+            this.nudGridThick.TabIndex = 5;
             this.nudGridThick.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudGridThick.Value = new decimal(new int[] {
             1,
@@ -877,21 +878,10 @@
             0,
             0});
             // 
-            // pnlGridColor
-            // 
-            this.pnlGridColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pnlGridColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlGridColor.Location = new System.Drawing.Point(141, 26);
-            this.pnlGridColor.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
-            this.pnlGridColor.Name = "pnlGridColor";
-            this.pnlGridColor.Size = new System.Drawing.Size(32, 21);
-            this.pnlGridColor.TabIndex = 7;
-            this.pnlGridColor.Click += new System.EventHandler(this.pnlColor_Click);
-            // 
             // nudGridStepY
             // 
             this.nudGridStepY.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.nudGridStepY.Location = new System.Drawing.Point(249, 26);
+            this.nudGridStepY.Location = new System.Drawing.Point(241, 26);
             this.nudGridStepY.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -904,7 +894,7 @@
             0});
             this.nudGridStepY.Name = "nudGridStepY";
             this.nudGridStepY.Size = new System.Drawing.Size(40, 20);
-            this.nudGridStepY.TabIndex = 5;
+            this.nudGridStepY.TabIndex = 4;
             this.nudGridStepY.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudGridStepY.Value = new decimal(new int[] {
             32,
@@ -915,7 +905,7 @@
             // nudGridStepX
             // 
             this.nudGridStepX.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.nudGridStepX.Location = new System.Drawing.Point(191, 26);
+            this.nudGridStepX.Location = new System.Drawing.Point(183, 26);
             this.nudGridStepX.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -928,7 +918,7 @@
             0});
             this.nudGridStepX.Name = "nudGridStepX";
             this.nudGridStepX.Size = new System.Drawing.Size(40, 20);
-            this.nudGridStepX.TabIndex = 5;
+            this.nudGridStepX.TabIndex = 3;
             this.nudGridStepX.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudGridStepX.Value = new decimal(new int[] {
             32,
@@ -946,9 +936,23 @@
             this.chkGridStore.Location = new System.Drawing.Point(3, 3);
             this.chkGridStore.Name = "chkGridStore";
             this.chkGridStore.Size = new System.Drawing.Size(122, 17);
-            this.chkGridStore.TabIndex = 8;
+            this.chkGridStore.TabIndex = 0;
             this.chkGridStore.Text = "Save options in map";
             this.chkGridStore.UseVisualStyleBackColor = true;
+            // 
+            // btnGridColor
+            // 
+            this.btnGridColor.Location = new System.Drawing.Point(137, 26);
+            this.btnGridColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
+            this.btnGridColor.Name = "btnGridColor";
+            this.btnGridColor.Size = new System.Drawing.Size(32, 21);
+            this.btnGridColor.TabIndex = 2;
+            this.btnGridColor.UseVisualStyleBackColor = true;
+            this.btnGridColor.Click += new System.EventHandler(this.PickColor_Click);
+            // 
+            // dlgOpen
+            // 
+            this.dlgOpen.SupportMultiDottedExtensions = true;
             // 
             // tableLayoutPanel6
             // 
@@ -983,6 +987,7 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(444, 432);
             this.Controls.Add(this.tableLayoutPanel6);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(720, 990);
             this.MinimumSize = new System.Drawing.Size(460, 470);
             this.Name = "OptionsForm";
@@ -1008,12 +1013,12 @@
             this.tableLayoutPanel2.PerformLayout();
             this.tpMap.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.gbBackground.ResumeLayout(false);
+            this.gbBack.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBackgroundPreview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBackPreview)).EndInit();
             this.gbGrid.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
@@ -1056,29 +1061,27 @@
         private System.Windows.Forms.Button btnGetRootLinks;
         private System.Windows.Forms.Button btnGetRootBoxes;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.GroupBox gbBackground;
+        private System.Windows.Forms.GroupBox gbBack;
         private System.Windows.Forms.GroupBox gbGrid;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.ComboBox cbbBackgroundStyle;
-        private System.Windows.Forms.Panel pnlBackgroundColor;
+        private System.Windows.Forms.ComboBox cbbBackStyle;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.ComboBox cbbGridStyle;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblGridThick;
         private System.Windows.Forms.NumericUpDown nudGridThick;
-        private System.Windows.Forms.Panel pnlGridColor;
         private System.Windows.Forms.CheckBox chkGridAlign;
         private System.Windows.Forms.NumericUpDown nudGridStepY;
         private System.Windows.Forms.NumericUpDown nudGridStepX;
-        private System.Windows.Forms.TextBox tbBackgroundImagePath;
-        private System.Windows.Forms.Button btnGetBackgroundImage;
-        private System.Windows.Forms.Label lblBackgroundImagePath;
+        private System.Windows.Forms.TextBox tbBackgImagePath;
+        private System.Windows.Forms.Button btnGetBackImage;
+        private System.Windows.Forms.Label lblBackgImagePath;
         private System.Windows.Forms.OpenFileDialog dlgOpen;
         private System.Windows.Forms.GroupBox gbBehaiour;
-        private System.Windows.Forms.PictureBox pbBackgroundPreview;
+        private System.Windows.Forms.PictureBox pbBackPreview;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.CheckBox chkBackgroundStore;
+        private System.Windows.Forms.CheckBox chkBackStore;
         private System.Windows.Forms.CheckBox chkGridStore;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.GroupBox gbLanguage;
@@ -1089,9 +1092,11 @@
         private System.Windows.Forms.Label lblLanguagePath;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.CheckBox chkBackgroundImageBuildIn;
-        private System.Windows.Forms.ComboBox cbbBackgroundImageAlign;
-        private System.Windows.Forms.Label lblBackgroundImageAlign;
-        private System.Windows.Forms.CheckBox chkBackgroundImageFloat;
+        private System.Windows.Forms.CheckBox chkBackImageBuildIn;
+        private System.Windows.Forms.ComboBox cbbBackImageAlign;
+        private System.Windows.Forms.Label lblBackImageAlign;
+        private System.Windows.Forms.CheckBox chkBackImageFloat;
+        private System.Windows.Forms.Button btnBackColor;
+        private System.Windows.Forms.Button btnGridColor;
     }
 }
