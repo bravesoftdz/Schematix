@@ -16,6 +16,8 @@ namespace Schematix
         public const int MIN_GRID_STEP   =    2;
         public const int MAX_GRID_THICK  =    5;
 
+        static public MainForm mainForm = null;
+
         // Language
         static public LanguageRecord LangCur = new LanguageRecord();
         static public List<LanguageRecord> Langs = new List<LanguageRecord>() { LangCur };

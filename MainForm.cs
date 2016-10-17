@@ -12,16 +12,17 @@ namespace Schematix
     public partial class MainForm : Form
     {
         const int TOOLS_HIDE_DELAY = 500; // mseconds
-        LibraryForm LibraryForm = new LibraryForm();
+        LibraryForm libraryForm = new LibraryForm();
 
         #region Main
         public MainForm()//!!!
         {
-            String eStr = "";
             InitializeComponent();
+            options.mainForm = this;
             //options.Init();
 
             //Loads
+            String eStr = "";
             options.Load();
             // Check folders
             if (Directory.Exists(options.LangPath))
@@ -70,10 +71,14 @@ namespace Schematix
 
         private void btnLibrary_Click(object sender, EventArgs e)//!!!
         {
-            if (LibraryForm.Visible)
-                LibraryForm.Hide();
+            if (libraryForm.Visible)
+                libraryForm.Hide();
             else
-                LibraryForm.Show();
+            {
+                libraryForm.Show();
+                libraryForm.bind = true;
+                MainForm_Move(null, null);
+            }
         }
 
         private void btnOptions_Click(object sender, EventArgs e)//!!!
@@ -90,6 +95,21 @@ namespace Schematix
         private void btnAbout_Click(object sender, EventArgs e)//Ok
         {
             new AboutForm().ShowDialog();
+        }
+
+        public void MainForm_Move(object sender, EventArgs e)
+        {
+            if (libraryForm.Visible && libraryForm.bind)
+            {
+                int x = Location.X + Width;
+                int y = Location.Y;
+                var bar = Screen.GetWorkingArea(new Point(x, y));
+                if (bar.Right < x + libraryForm.Width)
+                    x = bar.Right - libraryForm.Width;
+                if (x < 0)
+                    x = 0;
+                libraryForm.Location = new Point(x, y);
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)//!!!
