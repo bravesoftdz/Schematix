@@ -55,8 +55,8 @@ namespace Schematix
         {
             toolTip.RemoveAll();
             //# Maps panel
-            toolTip.SetToolTip(tabPageAddNew, options.LangCur.hMFNewMap);
-            toolTip.SetToolTip(btnCloseMap,   options.LangCur.hMFCloseMap);
+            toolTip.SetToolTip(tabPageAddNew, options.LangCur.hMFTabNew);
+            toolTip.SetToolTip(btnCloseMap,   options.LangCur.hMFTabClose);
             toolTip.SetToolTip(btnOptions,    options.LangCur.hMFOptions);
             toolTip.SetToolTip(btnLibrary,    options.LangCur.hMFLibrary);
             //# Map
@@ -87,6 +87,8 @@ namespace Schematix
             if (form.ShowDialog() == DialogResult.OK)
             {
                 SetText();
+                if (libraryForm.Visible)
+                    libraryForm.SetText();
                 //...
                 //.Draw();
             }
@@ -97,19 +99,15 @@ namespace Schematix
             new AboutForm().ShowDialog();
         }
 
-        public void MainForm_Move(object sender, EventArgs e)
+        private void MainForm_Move(object sender, EventArgs e)
+        {
+            MoveLibraryForm();
+        }
+
+        public void MoveLibraryForm()
         {
             if (libraryForm.Visible && libraryForm.bind)
-            {
-                int x = Location.X + Width;
-                int y = Location.Y;
-                var bar = Screen.GetWorkingArea(new Point(x, y));
-                if (bar.Right < x + libraryForm.Width)
-                    x = bar.Right - libraryForm.Width;
-                if (x < 0)
-                    x = 0;
-                libraryForm.Location = new Point(x, y);
-            }
+                libraryForm.Location = new Point(Location.X + Width, Location.Y);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)//!!!

@@ -45,6 +45,7 @@
             System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Link", new System.Windows.Forms.TreeNode[] {
             treeNode6,
             treeNode7});
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryForm));
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("link");
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("link 2");
             System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Node2");
@@ -56,7 +57,6 @@
             treeNode11});
             System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("box");
             System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("box 2");
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblObjectsCatalog = new System.Windows.Forms.Label();
@@ -66,7 +66,9 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblUsedObjects = new System.Windows.Forms.Label();
             this.lvObjects = new System.Windows.Forms.ListView();
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmObjectName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmObjectCatalog = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmObjectLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedObjectEdit = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tvLinks = new System.Windows.Forms.TreeView();
@@ -76,7 +78,9 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.lblUsedLinks = new System.Windows.Forms.Label();
             this.lvLinks = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkCatalog = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedLinkEdit = new System.Windows.Forms.Button();
             this.tcCatalog = new System.Windows.Forms.TabControl();
             this.tpObjects = new System.Windows.Forms.TabPage();
@@ -92,9 +96,15 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.lblUsedBoxes = new System.Windows.Forms.Label();
             this.lvBoxes = new System.Windows.Forms.ListView();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxCatalog = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedBoxEdit = new System.Windows.Forms.Button();
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.imageListTab = new System.Windows.Forms.ImageList(this.components);
+            this.chkPin = new System.Windows.Forms.CheckBox();
+            this.imageListPin = new System.Windows.Forms.ImageList(this.components);
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -242,15 +252,17 @@
             this.lblUsedObjects.Location = new System.Drawing.Point(3, 2);
             this.lblUsedObjects.MinimumSize = new System.Drawing.Size(0, 21);
             this.lblUsedObjects.Name = "lblUsedObjects";
-            this.lblUsedObjects.Size = new System.Drawing.Size(73, 21);
+            this.lblUsedObjects.Size = new System.Drawing.Size(70, 21);
             this.lblUsedObjects.TabIndex = 2;
-            this.lblUsedObjects.Text = "Used on map:";
+            this.lblUsedObjects.Text = "Used on map";
             this.lblUsedObjects.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lvObjects
             // 
             this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader2});
+            this.clmObjectName,
+            this.clmObjectCatalog,
+            this.clmObjectLocation});
             this.tableLayoutPanel4.SetColumnSpan(this.lvObjects, 2);
             this.lvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvObjects.HideSelection = false;
@@ -258,6 +270,7 @@
             listViewItem1,
             listViewItem2});
             this.lvObjects.Location = new System.Drawing.Point(3, 28);
+            this.lvObjects.MultiSelect = false;
             this.lvObjects.Name = "lvObjects";
             this.lvObjects.Size = new System.Drawing.Size(255, 69);
             this.lvObjects.TabIndex = 1;
@@ -265,9 +278,20 @@
             this.lvObjects.View = System.Windows.Forms.View.Details;
             this.lvObjects.SelectedIndexChanged += new System.EventHandler(this.lvObjects_SelectedIndexChanged);
             // 
-            // columnHeader2
+            // clmObjectName
             // 
-            this.columnHeader2.Width = 115;
+            this.clmObjectName.Text = "Name";
+            this.clmObjectName.Width = 100;
+            // 
+            // clmObjectCatalog
+            // 
+            this.clmObjectCatalog.Text = "In catalog";
+            this.clmObjectCatalog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // clmObjectLocation
+            // 
+            this.clmObjectLocation.Text = "Location";
+            this.clmObjectLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnUsedObjectEdit
             // 
@@ -336,7 +360,7 @@
             // 
             this.btnLinkEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkEdit.Enabled = false;
-            this.btnLinkEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnLinkEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkEdit.Image")));
             this.btnLinkEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.btnLinkEdit.Location = new System.Drawing.Point(204, 0);
             this.btnLinkEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
@@ -389,7 +413,9 @@
             // lvLinks
             // 
             this.lvLinks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
+            this.clmLinkName,
+            this.clmLinkCatalog,
+            this.clmLinkLocation});
             this.tableLayoutPanel5.SetColumnSpan(this.lvLinks, 2);
             this.lvLinks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvLinks.HideSelection = false;
@@ -397,6 +423,7 @@
             listViewItem3,
             listViewItem4});
             this.lvLinks.Location = new System.Drawing.Point(3, 28);
+            this.lvLinks.MultiSelect = false;
             this.lvLinks.Name = "lvLinks";
             this.lvLinks.Size = new System.Drawing.Size(255, 69);
             this.lvLinks.TabIndex = 1;
@@ -404,11 +431,26 @@
             this.lvLinks.View = System.Windows.Forms.View.Details;
             this.lvLinks.SelectedIndexChanged += new System.EventHandler(this.lvLinks_SelectedIndexChanged);
             // 
+            // clmLinkName
+            // 
+            this.clmLinkName.Text = "Name";
+            this.clmLinkName.Width = 100;
+            // 
+            // clmLinkCatalog
+            // 
+            this.clmLinkCatalog.Text = "In catalog";
+            this.clmLinkCatalog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // clmLinkLocation
+            // 
+            this.clmLinkLocation.Text = "Location";
+            this.clmLinkLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // btnUsedLinkEdit
             // 
             this.btnUsedLinkEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUsedLinkEdit.Enabled = false;
-            this.btnUsedLinkEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnUsedLinkEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnUsedLinkEdit.Image")));
             this.btnUsedLinkEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.btnUsedLinkEdit.Location = new System.Drawing.Point(234, 0);
             this.btnUsedLinkEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
@@ -423,7 +465,7 @@
             this.tcCatalog.Controls.Add(this.tpLinks);
             this.tcCatalog.Controls.Add(this.tpBoxes);
             this.tcCatalog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcCatalog.ImageList = this.imageList;
+            this.tcCatalog.ImageList = this.imageListTab;
             this.tcCatalog.Location = new System.Drawing.Point(4, 4);
             this.tcCatalog.Margin = new System.Windows.Forms.Padding(0);
             this.tcCatalog.Name = "tcCatalog";
@@ -569,7 +611,7 @@
             // 
             this.btnBoxEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBoxEdit.Enabled = false;
-            this.btnBoxEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnBoxEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnBoxEdit.Image")));
             this.btnBoxEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.btnBoxEdit.Location = new System.Drawing.Point(204, 0);
             this.btnBoxEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
@@ -622,7 +664,9 @@
             // lvBoxes
             // 
             this.lvBoxes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3});
+            this.clmBoxName,
+            this.clmBoxCatalog,
+            this.clmBoxLocation});
             this.tableLayoutPanel6.SetColumnSpan(this.lvBoxes, 2);
             this.lvBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvBoxes.HideSelection = false;
@@ -630,6 +674,7 @@
             listViewItem5,
             listViewItem6});
             this.lvBoxes.Location = new System.Drawing.Point(3, 28);
+            this.lvBoxes.MultiSelect = false;
             this.lvBoxes.Name = "lvBoxes";
             this.lvBoxes.Size = new System.Drawing.Size(255, 69);
             this.lvBoxes.TabIndex = 1;
@@ -637,15 +682,26 @@
             this.lvBoxes.View = System.Windows.Forms.View.Details;
             this.lvBoxes.SelectedIndexChanged += new System.EventHandler(this.lvBoxes_SelectedIndexChanged);
             // 
-            // columnHeader3
+            // clmBoxName
             // 
-            this.columnHeader3.Width = 109;
+            this.clmBoxName.Text = "Name";
+            this.clmBoxName.Width = 100;
+            // 
+            // clmBoxCatalog
+            // 
+            this.clmBoxCatalog.Text = "In catalog";
+            this.clmBoxCatalog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // clmBoxLocation
+            // 
+            this.clmBoxLocation.Text = "Location";
+            this.clmBoxLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnUsedBoxEdit
             // 
             this.btnUsedBoxEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUsedBoxEdit.Enabled = false;
-            this.btnUsedBoxEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnUsedBoxEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnUsedBoxEdit.Image")));
             this.btnUsedBoxEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.btnUsedBoxEdit.Location = new System.Drawing.Point(234, 0);
             this.btnUsedBoxEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
@@ -654,19 +710,46 @@
             this.btnUsedBoxEdit.TabIndex = 4;
             this.btnUsedBoxEdit.UseVisualStyleBackColor = true;
             // 
-            // imageList
+            // imageListTab
             // 
-            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList.Images.SetKeyName(0, "toolObject.png");
-            this.imageList.Images.SetKeyName(1, "toolLine.png");
-            this.imageList.Images.SetKeyName(2, "toolPrimitive.png");
+            this.imageListTab.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTab.ImageStream")));
+            this.imageListTab.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTab.Images.SetKeyName(0, "toolObject.png");
+            this.imageListTab.Images.SetKeyName(1, "toolLine.png");
+            this.imageListTab.Images.SetKeyName(2, "toolPrimitive.png");
+            // 
+            // chkPin
+            // 
+            this.chkPin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkPin.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkPin.BackgroundImage = global::Schematix.Properties.Resources.PinUp;
+            this.chkPin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.chkPin.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.chkPin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkPin.Location = new System.Drawing.Point(268, 0);
+            this.chkPin.Name = "chkPin";
+            this.chkPin.Size = new System.Drawing.Size(12, 12);
+            this.chkPin.TabIndex = 2;
+            this.chkPin.UseVisualStyleBackColor = true;
+            this.chkPin.CheckedChanged += new System.EventHandler(this.chkPin_CheckedChanged);
+            // 
+            // imageListPin
+            // 
+            this.imageListPin.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPin.ImageStream")));
+            this.imageListPin.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListPin.Images.SetKeyName(0, "PinUp.png");
+            this.imageListPin.Images.SetKeyName(1, "PinDown.png");
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Location";
             // 
             // LibraryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(283, 263);
+            this.Controls.Add(this.chkPin);
             this.Controls.Add(this.tcCatalog);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(299, 301);
@@ -719,16 +802,16 @@
         private System.Windows.Forms.TreeView tvLinks;
         private System.Windows.Forms.TreeView tvBoxes;
         private System.Windows.Forms.ListView lvLinks;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader clmLinkName;
         private System.Windows.Forms.ListView lvObjects;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader clmObjectName;
         private System.Windows.Forms.ListView lvBoxes;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader clmBoxName;
         private System.Windows.Forms.Label lblObjectsCatalog;
         private System.Windows.Forms.Label lblUsedObjects;
         private System.Windows.Forms.Button btnObjectAdd;
         private System.Windows.Forms.Button btnObjectEdit;
-        private System.Windows.Forms.ImageList imageList;
+        private System.Windows.Forms.ImageList imageListTab;
         private System.Windows.Forms.Button btnUsedObjectEdit;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.SplitContainer splitContainer2;
@@ -748,5 +831,15 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Label lblUsedBoxes;
         private System.Windows.Forms.Button btnUsedBoxEdit;
+        private System.Windows.Forms.CheckBox chkPin;
+        private System.Windows.Forms.ImageList imageListPin;
+        private System.Windows.Forms.ColumnHeader clmObjectCatalog;
+        private System.Windows.Forms.ColumnHeader clmObjectLocation;
+        private System.Windows.Forms.ColumnHeader clmLinkCatalog;
+        private System.Windows.Forms.ColumnHeader clmLinkLocation;
+        private System.Windows.Forms.ColumnHeader clmBoxCatalog;
+        private System.Windows.Forms.ColumnHeader clmBoxLocation;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
