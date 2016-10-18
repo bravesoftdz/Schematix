@@ -357,26 +357,15 @@ namespace Schematix
             }
         }
 
-        private void btnGetImage_Click(object sender, EventArgs e)//Ok
+        private void btnGetImage_Click(object sender, EventArgs e)//
         {
-            if (tbBackgImagePath.Text == "")
-                dlgOpen.InitialDirectory = Directory.GetCurrentDirectory();
-            else
-                dlgOpen.InitialDirectory = Path.GetDirectoryName(tbBackgImagePath.Text);
-            dlgOpen.FileName = Path.GetFileName(tbBackgImagePath.Text);
-            if (dlgOpen.ShowDialog() == DialogResult.OK)
-                try
-                {
-                    image = new Bitmap(dlgOpen.FileName);
-                    tbBackgImagePath.Text = dlgOpen.FileName;
-                    pbBackPreview.BackgroundImage = image;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(
-                        options.LangCur.mErrorsOccurred + "\r\n" + ex.Message + "\r\n" + dlgOpen.FileName,
-                        options.LangCur.dImageLoading);
-                }
+            Share.GetImage(tbBackgImagePath, GotImage);
+        }
+
+        private void GotImage(Image img)//!!!
+        {
+            pbBackPreview.BackgroundImage = img;
+            //...
         }
         #endregion
     }

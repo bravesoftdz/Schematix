@@ -61,7 +61,6 @@ namespace Schematix
 
         private void btnStyle_Click(object sender, EventArgs e)
         {
-            var dlgFont = new FontDialog();
             if (dlgFont.ShowDialog() == DialogResult.OK)
             {
                 //...

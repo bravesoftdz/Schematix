@@ -47,6 +47,7 @@
             this.lblAlign = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbDescription = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.lblNode = new System.Windows.Forms.Label();
@@ -56,7 +57,7 @@
             this.lblID = new System.Windows.Forms.Label();
             this.lblRevision = new System.Windows.Forms.Label();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
-            this.tbDescription = new System.Windows.Forms.TextBox();
+            this.dlgFont = new System.Windows.Forms.FontDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudThick)).BeginInit();
@@ -227,13 +228,6 @@
             this.tableLayoutPanel3.SetColumnSpan(this.cbbType, 3);
             this.cbbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbType.FormattingEnabled = true;
-            this.cbbType.Items.AddRange(new object[] {
-            "–",
-            "– –",
-            "•",
-            "• –",
-            "• – –",
-            "• • –"});
             this.cbbType.Location = new System.Drawing.Point(65, 3);
             this.cbbType.Name = "cbbType";
             this.cbbType.Size = new System.Drawing.Size(113, 21);
@@ -334,6 +328,18 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(378, 164);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
+            // tbDescription
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 4);
+            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDescription.Location = new System.Drawing.Point(3, 81);
+            this.tbDescription.MaxLength = 8096;
+            this.tbDescription.Multiline = true;
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbDescription.Size = new System.Drawing.Size(372, 80);
+            this.tbDescription.TabIndex = 9;
+            // 
             // lblName
             // 
             this.lblName.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -421,18 +427,6 @@
             this.lblRevision.Text = "rev.";
             this.lblRevision.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tbDescription
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 4);
-            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDescription.Location = new System.Drawing.Point(3, 81);
-            this.tbDescription.MaxLength = 8096;
-            this.tbDescription.Multiline = true;
-            this.tbDescription.Name = "tbDescription";
-            this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDescription.Size = new System.Drawing.Size(372, 80);
-            this.tbDescription.TabIndex = 9;
-            // 
             // BoxEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -486,5 +480,6 @@
         private System.Windows.Forms.Label lblAlign;
         private System.Windows.Forms.ColorDialog dlgColor;
         private System.Windows.Forms.TextBox tbDescription;
+        private System.Windows.Forms.FontDialog dlgFont;
     }
 }

@@ -92,7 +92,6 @@
             this.nudGridStepX = new System.Windows.Forms.NumericUpDown();
             this.chkGridStore = new System.Windows.Forms.CheckBox();
             this.btnGridColor = new System.Windows.Forms.Button();
-            this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -635,12 +634,6 @@
             this.cbbBackStyle.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cbbBackStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbBackStyle.FormattingEnabled = true;
-            this.cbbBackStyle.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4"});
             this.cbbBackStyle.Location = new System.Drawing.Point(3, 26);
             this.cbbBackStyle.Name = "cbbBackStyle";
             this.cbbBackStyle.Size = new System.Drawing.Size(120, 21);
@@ -725,12 +718,6 @@
             this.cbbBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cbbBackImageAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbBackImageAlign.FormattingEnabled = true;
-            this.cbbBackImageAlign.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4"});
             this.cbbBackImageAlign.Location = new System.Drawing.Point(129, 82);
             this.cbbBackImageAlign.Name = "cbbBackImageAlign";
             this.cbbBackImageAlign.Size = new System.Drawing.Size(120, 21);
@@ -950,10 +937,6 @@
             this.btnGridColor.UseVisualStyleBackColor = true;
             this.btnGridColor.Click += new System.EventHandler(this.PickColor_Click);
             // 
-            // dlgOpen
-            // 
-            this.dlgOpen.SupportMultiDottedExtensions = true;
-            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 1;
@@ -1076,7 +1059,6 @@
         private System.Windows.Forms.TextBox tbBackgImagePath;
         private System.Windows.Forms.Button btnGetBackImage;
         private System.Windows.Forms.Label lblBackgImagePath;
-        private System.Windows.Forms.OpenFileDialog dlgOpen;
         private System.Windows.Forms.GroupBox gbBehaiour;
         private System.Windows.Forms.PictureBox pbBackPreview;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
