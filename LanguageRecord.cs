@@ -134,6 +134,7 @@ namespace Schematix
 
             //...
 
+        #region Dialongs & About
             // Dialongs
             dLanguagesLoading = "Language packs loading",
             mErrorsOccurred    = "The following errors occurred:",
@@ -150,6 +151,7 @@ namespace Schematix
             lOwner        = "Owner:",
             lContact      = "Contact:",
             tDescription  = "Description\n\nThis program designed for visualize and monitor computer network.";
+        #endregion
 
         static public String ReadText(StreamReader file)//Ok
         {

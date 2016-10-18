@@ -28,18 +28,18 @@ namespace Schematix
             }
         }
 
+        private void btnColor_Click(object sender, EventArgs e)//Ok
+        {
+            if (dlgColor.ShowDialog() == DialogResult.OK)
+                (sender as Button).BackColor = dlgColor.Color;
+        }
+
         private void btnOk_Click(object sender, EventArgs e)
         {
             //...
             // Out
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void btnColor_Click(object sender, EventArgs e)//Ok
-        {
-            if (dlgColor.ShowDialog() == DialogResult.OK)
-                (sender as Button).BackColor = dlgColor.Color;
         }
     }
 }

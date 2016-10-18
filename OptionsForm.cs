@@ -138,7 +138,7 @@ namespace Schematix
             toolTip.SetToolTip(btnBackColor, options.LangCur.hOFMapBackColor);
             lblBackgImagePath.Text = lang.lOFMapBackImagePath;
             toolTip.SetToolTip(btnGetBackImage, options.LangCur.hOFMapBackImageLoad);
-            lblBackImageAlign.Text = lang.lOFMapBackImageAlign;
+            lblBackImageAlign.Text = lang.lEEAlign;
             idx = cbbBackImageAlign.SelectedIndex;
             cbbBackImageAlign.Items.Clear();
             cbbBackImageAlign.Items.Add(lang.lEEAlign0TL);

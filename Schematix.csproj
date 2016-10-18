@@ -177,6 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo_Schematix.ico" />
+    <None Include="Resources\dot 5x5%4024a.png" />
+    <None Include="Resources\MoveUp.png" />
+    <None Include="Resources\MoveDown.png" />
     <None Include="Resources\PinUp.png" />
     <None Include="Resources\PinDown.png" />
     <None Include="Resources\delete.png" />
