@@ -215,6 +215,7 @@
             this.btnObjectEdit.Size = new System.Drawing.Size(24, 24);
             this.btnObjectEdit.TabIndex = 4;
             this.btnObjectEdit.UseVisualStyleBackColor = true;
+            this.btnObjectEdit.Click += new System.EventHandler(this.btnObjectEdit_Click);
             // 
             // btnObjectAdd
             // 
@@ -227,6 +228,7 @@
             this.btnObjectAdd.Size = new System.Drawing.Size(24, 24);
             this.btnObjectAdd.TabIndex = 4;
             this.btnObjectAdd.UseVisualStyleBackColor = true;
+            this.btnObjectAdd.Click += new System.EventHandler(this.btnObjectAdd_Click);
             // 
             // tableLayoutPanel4
             // 
@@ -305,6 +307,7 @@
             this.btnUsedObjectEdit.Size = new System.Drawing.Size(24, 24);
             this.btnUsedObjectEdit.TabIndex = 4;
             this.btnUsedObjectEdit.UseVisualStyleBackColor = true;
+            this.btnUsedObjectEdit.Click += new System.EventHandler(this.btnUsedObjectEdit_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -368,6 +371,7 @@
             this.btnLinkEdit.Size = new System.Drawing.Size(24, 24);
             this.btnLinkEdit.TabIndex = 4;
             this.btnLinkEdit.UseVisualStyleBackColor = true;
+            this.btnLinkEdit.Click += new System.EventHandler(this.btnLinkEdit_Click);
             // 
             // btnLinkAdd
             // 
@@ -380,6 +384,7 @@
             this.btnLinkAdd.Size = new System.Drawing.Size(24, 24);
             this.btnLinkAdd.TabIndex = 4;
             this.btnLinkAdd.UseVisualStyleBackColor = true;
+            this.btnLinkAdd.Click += new System.EventHandler(this.btnLinkAdd_Click);
             // 
             // tableLayoutPanel5
             // 
@@ -458,6 +463,7 @@
             this.btnUsedLinkEdit.Size = new System.Drawing.Size(24, 24);
             this.btnUsedLinkEdit.TabIndex = 4;
             this.btnUsedLinkEdit.UseVisualStyleBackColor = true;
+            this.btnUsedLinkEdit.Click += new System.EventHandler(this.btnUsedLinkEdit_Click);
             // 
             // tcCatalog
             // 
@@ -619,6 +625,7 @@
             this.btnBoxEdit.Size = new System.Drawing.Size(24, 24);
             this.btnBoxEdit.TabIndex = 4;
             this.btnBoxEdit.UseVisualStyleBackColor = true;
+            this.btnBoxEdit.Click += new System.EventHandler(this.btnBoxEdit_Click);
             // 
             // btnBoxAdd
             // 
@@ -631,6 +638,7 @@
             this.btnBoxAdd.Size = new System.Drawing.Size(24, 24);
             this.btnBoxAdd.TabIndex = 4;
             this.btnBoxAdd.UseVisualStyleBackColor = true;
+            this.btnBoxAdd.Click += new System.EventHandler(this.btnBoxAdd_Click);
             // 
             // tableLayoutPanel6
             // 
@@ -709,6 +717,7 @@
             this.btnUsedBoxEdit.Size = new System.Drawing.Size(24, 24);
             this.btnUsedBoxEdit.TabIndex = 4;
             this.btnUsedBoxEdit.UseVisualStyleBackColor = true;
+            this.btnUsedBoxEdit.Click += new System.EventHandler(this.btnUsedBoxEdit_Click);
             // 
             // imageListTab
             // 

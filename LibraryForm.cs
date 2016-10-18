@@ -133,5 +133,59 @@ namespace Schematix
                 btnUsedBoxEdit.Enabled = false;
         }
         #endregion
+
+        private void btnObjectAdd_Click(object sender, EventArgs e)
+        {
+            var form = new ObjectEditForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+            }
+        }
+
+        private void btnObjectEdit_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void btnUsedObjectEdit_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void btnLinkAdd_Click(object sender, EventArgs e)
+        {
+            var form = new LinkEditForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+            }
+        }
+
+        private void btnLinkEdit_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void btnUsedLinkEdit_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void btnBoxAdd_Click(object sender, EventArgs e)
+        {
+            var form = new BoxEditForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+            }
+        }
+
+        private void btnBoxEdit_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void btnUsedBoxEdit_Click(object sender, EventArgs e)
+        {
+            //
+        }
     }
 }

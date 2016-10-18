@@ -11,8 +11,8 @@ namespace Schematix
         public int Idx = 0;
         public String Name;
         public String
-            //# Main Form
-            hMFTabNew     = "Create new map",
+        #region Main Form
+            hMFTabNew = "Create new map",
             hMFTabClose   = "Close map",
             hMFOptions    = "Open program options",
             hMFLibrary    = "Open map objects catalog",
@@ -24,8 +24,9 @@ namespace Schematix
             lMFMapCMLoad    = "Load",
             lMFMapCMReload  = "Reload",
             lMFMapCMClose   = "Close",
+        #endregion
 
-            //# Main Options
+        #region Main Options
             lOFTitle = "Main options",
             //* Main tab
             lOFMainTab = "Main",
@@ -75,20 +76,11 @@ namespace Schematix
             hOFMapBackColor              = "Pick color",
             lOFMapBackImagePath          = "Path to image",
             hOFMapBackImageLoad          = "Load image",
-            lOFMapBackImageAlign         = "Image align",
-            lOFMapBackImageAlign0TL      = "Top Left",
-            lOFMapBackImageAlign1T       = "Top",
-            lOFMapBackImageAlign2TR      = "Top Right",
-            lOFMapBackImageAlign3L       = "Left",
-            lOFMapBackImageAlign4C       = "Center",
-            lOFMapBackImageAlign5R       = "Right",
-            lOFMapBackImageAlign6BL      = "Bottom Left",
-            lOFMapBackImageAlign7B       = "Bottom",
-            lOFMapBackImageAlign8BR      = "Bottom Right",
             lOFMapBackImageFloat         = "Float image",
             lOFMapBackImageBuildIn       = "Save to file",
+        #endregion
 
-            //# Library
+        #region Library
             lLFTitle   = "Library",
             lLFCatalog = "Catalog",
             lLFUsed    = "Used on map",
@@ -99,6 +91,46 @@ namespace Schematix
             lLFColumName     = "Name",
             lLFColumCatalog  = "Catalog",
             lLFColumLocation = "Location",
+        #endregion
+
+        #region Element Edit (share)
+            lEETitleAdd  = "Add new prototype:",
+            lEETitleEdit = "Edit prototype:",
+            // +
+            lEEObject = "object",
+            lEELink   = "link",
+            lEEBox    = "box",
+            //
+            lEENode     = "Node name",
+            lEEID       = "ID",
+            lEERevision = "Revision",
+            lEEName     = "Full name",
+            lEEThick    = "Line thickness",
+            // Align
+            lEEAlign    = "Align",
+            lEEAlign0TL = "Top Left",
+            lEEAlign1T  = "Top",
+            lEEAlign2TR = "Top Right",
+            lEEAlign3L  = "Left",
+            lEEAlign4C  = "Center",
+            lEEAlign5R  = "Right",
+            lEEAlign6BL = "Bottom Left",
+            lEEAlign7B  = "Bottom",
+            lEEAlign8BR = "Bottom Right",
+        #endregion
+
+        #region Object Edit
+            //...
+        #endregion
+
+        #region Box Edit
+            lBEType           = "Type",
+            lBEType0Text      = "Text",
+            lBEType1Rectangle = "Rectangle",
+            lBEType2Ellipse   = "Ellipse",
+            lBEStyle          = "Style",
+            lBEText           = "Text",
+        #endregion
 
             //...
 
@@ -236,16 +268,6 @@ namespace Schematix
                                 case "hOFMapBackColor":               hOFMapBackColor              = lblText;   break;
                                 case "lOFMapBackImagePath":           lOFMapBackImagePath          = lblText;   break;
                                 case "hOFMapBackImageLoad":           hOFMapBackImageLoad          = lblText;   break;
-                                case "lOFMapBackImageAlign":          lOFMapBackImageAlign         = lblText;   break;
-                                case "lOFMapBackImageAlign0TL":       lOFMapBackImageAlign0TL      = lblText;   break;
-                                case "lOFMapBackImageAlign1T":        lOFMapBackImageAlign1T       = lblText;   break;
-                                case "lOFMapBackImageAlign2TR":       lOFMapBackImageAlign2TR      = lblText;   break;
-                                case "lOFMapBackImageAlign3L":        lOFMapBackImageAlign3L       = lblText;   break;
-                                case "lOFMapBackImageAlign4C":        lOFMapBackImageAlign4C       = lblText;   break;
-                                case "lOFMapBackImageAlign5R":        lOFMapBackImageAlign5R       = lblText;   break;
-                                case "lOFMapBackImageAlign6BL":       lOFMapBackImageAlign6BL      = lblText;   break;
-                                case "lOFMapBackImageAlign7B":        lOFMapBackImageAlign7B       = lblText;   break;
-                                case "lOFMapBackImageAlign8BR":       lOFMapBackImageAlign8BR      = lblText;   break;
                                 case "lOFMapBackImageFloat":          lOFMapBackImageFloat         = lblText;   break;
                                 case "lOFMapBackImageBuildIn":        lOFMapBackImageBuildIn       = lblText;   break;
                             }
@@ -266,6 +288,59 @@ namespace Schematix
                                 case "lLFColumName":     lLFColumName      = lblText;   break;
                                 case "lLFColumCatalog":  lLFColumCatalog   = lblText;   break;
                                 case "lLFColumLocation": lLFColumLocation  = lblText;   break;
+                            }
+                            break;
+                        #endregion
+
+                        #region Element Edit (share)
+                        case "EE":
+                            switch (lblName)
+                            {
+                                case "lEETitleAdd":  lEETitleAdd  = lblText;   break;
+                                case "lEETitleEdit": lEETitleEdit = lblText;   break;
+                                // +
+                                case "lEEObject":    lEEObject    = lblText;   break;
+                                case "lEELink":      lEELink      = lblText;   break;
+                                case "lEEBox":       lEEBox       = lblText;   break;
+                                //
+                                case "lEENode":      lEENode      = lblText;   break;
+                                case "lEEID":        lEEID        = lblText;   break;
+                                case "lEERevision":  lEERevision  = lblText;   break;
+                                case "lEEName":      lEEName      = lblText;   break;
+                                case "lEEThick":     lEEThick     = lblText;   break;
+                                // Align
+                                case "lEEAlign":     lEEAlign     = lblText;   break;
+                                case "lEEAlign0TL":  lEEAlign0TL  = lblText;   break;
+                                case "lEEAlign1T":   lEEAlign1T   = lblText;   break;
+                                case "lEEAlign2TR":  lEEAlign2TR  = lblText;   break;
+                                case "lEEAlign3L":   lEEAlign3L   = lblText;   break;
+                                case "lEEAlign4C":   lEEAlign4C   = lblText;   break;
+                                case "lEEAlign5R":   lEEAlign5R   = lblText;   break;
+                                case "lEEAlign6BL":  lEEAlign6BL  = lblText;   break;
+                                case "lEEAlign7B":   lEEAlign7B   = lblText;   break;
+                                case "lEEAlign8BR":  lEEAlign8BR  = lblText;   break;
+                            }
+                            break;
+                        #endregion
+
+                        #region Object Edit
+                        case "OE":
+                            //switch (lblName)
+                            //{
+                            //}
+                            break;
+                        #endregion
+                            
+                        #region Box Edit
+                        case "BE":
+                            switch (lblName)
+                            {
+                                case "lBEType":           lBEType           = lblText;   break;
+                                case "lBEType0Text":      lBEType0Text      = lblText;   break;
+                                case "lBEType1Rectangle": lBEType1Rectangle = lblText;   break;
+                                case "lBEType2Ellipse":   lBEType2Ellipse   = lblText;   break;
+                                case "lBEStyle":          lBEStyle          = lblText;   break;
+                                case "lBEText":           lBEText           = lblText;   break;
                             }
                             break;
                         #endregion
