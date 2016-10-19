@@ -184,9 +184,9 @@
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(3, 58);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(52, 13);
+            this.lblName.Size = new System.Drawing.Size(35, 13);
             this.lblName.TabIndex = 0;
-            this.lblName.Text = "Full name";
+            this.lblName.Text = "Name";
             // 
             // tbName
             // 
@@ -699,7 +699,7 @@
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Controls.Add(this.pbNodePicker, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(188, 190);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(188, 187);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -741,7 +741,7 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(408, 30);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(408, 29);
             this.tableLayoutPanel6.TabIndex = 8;
             // 
             // cbbNodes
@@ -751,7 +751,7 @@
             this.cbbNodes.FormattingEnabled = true;
             this.cbbNodes.Location = new System.Drawing.Point(47, 4);
             this.cbbNodes.Name = "cbbNodes";
-            this.cbbNodes.Size = new System.Drawing.Size(298, 21);
+            this.cbbNodes.Size = new System.Drawing.Size(300, 21);
             this.cbbNodes.TabIndex = 7;
             this.cbbNodes.SelectedIndexChanged += new System.EventHandler(this.cbbNodes_SelectedIndexChanged);
             // 
@@ -769,9 +769,9 @@
             // 
             this.btnNodeMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnNodeMoveUp.Image = global::Schematix.Properties.Resources.MoveUp;
-            this.btnNodeMoveUp.Location = new System.Drawing.Point(351, 3);
+            this.btnNodeMoveUp.Location = new System.Drawing.Point(353, 3);
             this.btnNodeMoveUp.Name = "btnNodeMoveUp";
-            this.btnNodeMoveUp.Size = new System.Drawing.Size(24, 24);
+            this.btnNodeMoveUp.Size = new System.Drawing.Size(23, 23);
             this.btnNodeMoveUp.TabIndex = 8;
             this.btnNodeMoveUp.UseVisualStyleBackColor = true;
             this.btnNodeMoveUp.Click += new System.EventHandler(this.btnNodeMoveUp_Click);
@@ -780,9 +780,9 @@
             // 
             this.btnNodeMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnNodeMoveDown.Image = global::Schematix.Properties.Resources.MoveDown;
-            this.btnNodeMoveDown.Location = new System.Drawing.Point(381, 3);
+            this.btnNodeMoveDown.Location = new System.Drawing.Point(382, 3);
             this.btnNodeMoveDown.Name = "btnNodeMoveDown";
-            this.btnNodeMoveDown.Size = new System.Drawing.Size(24, 24);
+            this.btnNodeMoveDown.Size = new System.Drawing.Size(23, 23);
             this.btnNodeMoveDown.TabIndex = 8;
             this.btnNodeMoveDown.UseVisualStyleBackColor = true;
             this.btnNodeMoveDown.Click += new System.EventHandler(this.btnNodeMoveDown_Click);
@@ -792,9 +792,9 @@
             this.groupBox1.AutoSize = true;
             this.groupBox1.Controls.Add(this.tableLayoutPanel7);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 39);
+            this.groupBox1.Location = new System.Drawing.Point(3, 38);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(408, 145);
+            this.groupBox1.Size = new System.Drawing.Size(408, 143);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Node";
@@ -827,16 +827,16 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(402, 126);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(402, 124);
             this.tableLayoutPanel7.TabIndex = 0;
             // 
             // btnNodeAdd
             // 
             this.btnNodeAdd.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnNodeAdd.Image = global::Schematix.Properties.Resources.plus;
-            this.btnNodeAdd.Location = new System.Drawing.Point(44, 99);
+            this.btnNodeAdd.Location = new System.Drawing.Point(44, 98);
             this.btnNodeAdd.Name = "btnNodeAdd";
-            this.btnNodeAdd.Size = new System.Drawing.Size(24, 24);
+            this.btnNodeAdd.Size = new System.Drawing.Size(23, 23);
             this.btnNodeAdd.TabIndex = 8;
             this.btnNodeAdd.UseVisualStyleBackColor = true;
             this.btnNodeAdd.Click += new System.EventHandler(this.btnNodeAdd_Click);
@@ -845,7 +845,7 @@
             // 
             this.tableLayoutPanel7.SetColumnSpan(this.tbNodeDescription, 6);
             this.tbNodeDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNodeDescription.Location = new System.Drawing.Point(3, 33);
+            this.tbNodeDescription.Location = new System.Drawing.Point(3, 32);
             this.tbNodeDescription.MaxLength = 4096;
             this.tbNodeDescription.MinimumSize = new System.Drawing.Size(4, 10);
             this.tbNodeDescription.Multiline = true;
@@ -859,7 +859,7 @@
             // 
             this.tbNodeName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel7.SetColumnSpan(this.tbNodeName, 4);
-            this.tbNodeName.Location = new System.Drawing.Point(44, 5);
+            this.tbNodeName.Location = new System.Drawing.Point(44, 4);
             this.tbNodeName.MaxLength = 255;
             this.tbNodeName.Name = "tbNodeName";
             this.tbNodeName.Size = new System.Drawing.Size(299, 20);
@@ -869,7 +869,7 @@
             // nudNodeY
             // 
             this.nudNodeY.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nudNodeY.Location = new System.Drawing.Point(349, 101);
+            this.nudNodeY.Location = new System.Drawing.Point(349, 99);
             this.nudNodeY.Name = "nudNodeY";
             this.nudNodeY.Size = new System.Drawing.Size(50, 20);
             this.nudNodeY.TabIndex = 12;
@@ -878,7 +878,7 @@
             // nudNodeX
             // 
             this.nudNodeX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nudNodeX.Location = new System.Drawing.Point(263, 101);
+            this.nudNodeX.Location = new System.Drawing.Point(263, 99);
             this.nudNodeX.Name = "nudNodeX";
             this.nudNodeX.Size = new System.Drawing.Size(50, 20);
             this.nudNodeX.TabIndex = 12;
@@ -888,7 +888,7 @@
             // 
             this.lblLocation.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblLocation.AutoSize = true;
-            this.lblLocation.Location = new System.Drawing.Point(209, 104);
+            this.lblLocation.Location = new System.Drawing.Point(209, 103);
             this.lblLocation.Name = "lblLocation";
             this.lblLocation.Size = new System.Drawing.Size(48, 13);
             this.lblLocation.TabIndex = 1;
@@ -898,9 +898,9 @@
             // 
             this.btnNodeDelete.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnNodeDelete.Image = global::Schematix.Properties.Resources.delete;
-            this.btnNodeDelete.Location = new System.Drawing.Point(3, 99);
+            this.btnNodeDelete.Location = new System.Drawing.Point(3, 98);
             this.btnNodeDelete.Name = "btnNodeDelete";
-            this.btnNodeDelete.Size = new System.Drawing.Size(24, 24);
+            this.btnNodeDelete.Size = new System.Drawing.Size(23, 23);
             this.btnNodeDelete.TabIndex = 8;
             this.btnNodeDelete.UseVisualStyleBackColor = true;
             this.btnNodeDelete.Click += new System.EventHandler(this.btnNodeDelete_Click);
@@ -910,9 +910,9 @@
             this.btnNodeSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnNodeSave.Enabled = false;
             this.btnNodeSave.Image = global::Schematix.Properties.Resources.save;
-            this.btnNodeSave.Location = new System.Drawing.Point(375, 3);
+            this.btnNodeSave.Location = new System.Drawing.Point(376, 3);
             this.btnNodeSave.Name = "btnNodeSave";
-            this.btnNodeSave.Size = new System.Drawing.Size(24, 24);
+            this.btnNodeSave.Size = new System.Drawing.Size(23, 23);
             this.btnNodeSave.TabIndex = 8;
             this.btnNodeSave.UseVisualStyleBackColor = true;
             this.btnNodeSave.EnabledChanged += new System.EventHandler(this.btnNodeSave_EnabledChanged);
@@ -932,7 +932,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(319, 104);
+            this.label1.Location = new System.Drawing.Point(319, 103);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(24, 13);
             this.label1.TabIndex = 1;

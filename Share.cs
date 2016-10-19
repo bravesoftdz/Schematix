@@ -9,7 +9,20 @@ namespace Schematix
     {
         public delegate void GetImageCallBack(Image img);
 
-        static public void GetImage(TextBox tb, GetImageCallBack callBack)
+        static public bool GetFolder(TextBox tb)//Ok
+        {
+            var dlgFolder = new FolderBrowserDialog();
+            if (tb.Text == "")
+                tb.Text = Directory.GetCurrentDirectory();
+            dlgFolder.SelectedPath = tb.Text;
+            if (dlgFolder.ShowDialog() == DialogResult.OK)
+                tb.Text = dlgFolder.SelectedPath;
+            else
+                return false;
+            return true;
+        }
+
+        static public bool GetFile(TextBox tb)//Ok
         {
             var dlgOpen = new OpenFileDialog();
             if (tb.Text == "")
@@ -18,19 +31,27 @@ namespace Schematix
                 dlgOpen.InitialDirectory = Path.GetDirectoryName(tb.Text);
             dlgOpen.FileName = Path.GetFileName(tb.Text);
             if (dlgOpen.ShowDialog() == DialogResult.OK)
+                tb.Text = dlgOpen.FileName;
+            else
+                return false;
+            return true;
+        }
+
+        static public bool GetImage(TextBox tb, GetImageCallBack callBack)//Ok
+        {
+            if (GetFile(tb))
                 try
                 {
-                    var image = new Bitmap(dlgOpen.FileName);
-                    tb.Text = dlgOpen.FileName;
-                    // Return control
-                    callBack?.Invoke(image);
+                    callBack?.Invoke(new Bitmap(tb.Text)); // Try to load and return control
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(
-                        options.LangCur.mErrorsOccurred + "\r\n" + ex.Message + "\r\n" + dlgOpen.FileName,
+                        options.LangCur.mErrorsOccurred + "\r\n" + ex.Message + "\r\n" + tb.Text,
                         options.LangCur.dImageLoading);
+                    return false;
                 }
+            return true;
         }
     }
 }

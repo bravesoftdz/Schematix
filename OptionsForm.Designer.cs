@@ -37,7 +37,6 @@
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.gbLanguage = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnGetLanguagePath = new System.Windows.Forms.Button();
             this.tbLanguagePath = new System.Windows.Forms.TextBox();
             this.lblLanguagePath = new System.Windows.Forms.Label();
             this.cbbLanguage = new System.Windows.Forms.ComboBox();
@@ -61,10 +60,6 @@
             this.tbRootObjects = new System.Windows.Forms.TextBox();
             this.tbRootLinks = new System.Windows.Forms.TextBox();
             this.tbRootBoxes = new System.Windows.Forms.TextBox();
-            this.btnGetRootMaps = new System.Windows.Forms.Button();
-            this.btnGetRootObjects = new System.Windows.Forms.Button();
-            this.btnGetRootLinks = new System.Windows.Forms.Button();
-            this.btnGetRootBoxes = new System.Windows.Forms.Button();
             this.tpMap = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.gbBack = new System.Windows.Forms.GroupBox();
@@ -72,11 +67,9 @@
             this.chkBackImageBuildIn = new System.Windows.Forms.CheckBox();
             this.cbbBackStyle = new System.Windows.Forms.ComboBox();
             this.lblBackgImagePath = new System.Windows.Forms.Label();
-            this.btnGetBackImage = new System.Windows.Forms.Button();
             this.tbBackgImagePath = new System.Windows.Forms.TextBox();
             this.chkBackStore = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.pbBackPreview = new System.Windows.Forms.PictureBox();
             this.cbbBackImageAlign = new System.Windows.Forms.ComboBox();
             this.lblBackImageAlign = new System.Windows.Forms.Label();
             this.chkBackImageFloat = new System.Windows.Forms.CheckBox();
@@ -95,6 +88,13 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnGetLanguagePath = new System.Windows.Forms.Button();
+            this.btnGetRootMaps = new System.Windows.Forms.Button();
+            this.btnGetRootObjects = new System.Windows.Forms.Button();
+            this.btnGetRootLinks = new System.Windows.Forms.Button();
+            this.btnGetRootBoxes = new System.Windows.Forms.Button();
+            this.btnGetBackImage = new System.Windows.Forms.Button();
+            this.pbBackPreview = new System.Windows.Forms.PictureBox();
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -111,13 +111,13 @@
             this.gbBack.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBackPreview)).BeginInit();
             this.gbGrid.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridThick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepX)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBackPreview)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -188,17 +188,6 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel8.Size = new System.Drawing.Size(404, 56);
             this.tableLayoutPanel8.TabIndex = 5;
-            // 
-            // btnGetLanguagePath
-            // 
-            this.btnGetLanguagePath.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetLanguagePath.Image = global::Schematix.Properties.Resources.open;
-            this.btnGetLanguagePath.Location = new System.Drawing.Point(378, 30);
-            this.btnGetLanguagePath.Name = "btnGetLanguagePath";
-            this.btnGetLanguagePath.Size = new System.Drawing.Size(23, 23);
-            this.btnGetLanguagePath.TabIndex = 2;
-            this.btnGetLanguagePath.UseVisualStyleBackColor = true;
-            this.btnGetLanguagePath.Click += new System.EventHandler(this.btnGetRootLanguage_Click);
             // 
             // tbLanguagePath
             // 
@@ -505,50 +494,6 @@
             this.tbRootBoxes.TabIndex = 6;
             this.tbRootBoxes.TextChanged += new System.EventHandler(this.Path_TextChanged);
             // 
-            // btnGetRootMaps
-            // 
-            this.btnGetRootMaps.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetRootMaps.Image = global::Schematix.Properties.Resources.open;
-            this.btnGetRootMaps.Location = new System.Drawing.Point(376, 3);
-            this.btnGetRootMaps.Name = "btnGetRootMaps";
-            this.btnGetRootMaps.Size = new System.Drawing.Size(23, 23);
-            this.btnGetRootMaps.TabIndex = 1;
-            this.btnGetRootMaps.UseVisualStyleBackColor = true;
-            this.btnGetRootMaps.Click += new System.EventHandler(this.btnGetRootMaps_Click);
-            // 
-            // btnGetRootObjects
-            // 
-            this.btnGetRootObjects.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetRootObjects.Image = global::Schematix.Properties.Resources.open;
-            this.btnGetRootObjects.Location = new System.Drawing.Point(376, 32);
-            this.btnGetRootObjects.Name = "btnGetRootObjects";
-            this.btnGetRootObjects.Size = new System.Drawing.Size(23, 23);
-            this.btnGetRootObjects.TabIndex = 3;
-            this.btnGetRootObjects.UseVisualStyleBackColor = true;
-            this.btnGetRootObjects.Click += new System.EventHandler(this.btnGetRootObjects_Click);
-            // 
-            // btnGetRootLinks
-            // 
-            this.btnGetRootLinks.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetRootLinks.Image = global::Schematix.Properties.Resources.open;
-            this.btnGetRootLinks.Location = new System.Drawing.Point(376, 61);
-            this.btnGetRootLinks.Name = "btnGetRootLinks";
-            this.btnGetRootLinks.Size = new System.Drawing.Size(23, 23);
-            this.btnGetRootLinks.TabIndex = 5;
-            this.btnGetRootLinks.UseVisualStyleBackColor = true;
-            this.btnGetRootLinks.Click += new System.EventHandler(this.btnGetRootLinks_Click);
-            // 
-            // btnGetRootBoxes
-            // 
-            this.btnGetRootBoxes.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetRootBoxes.Image = global::Schematix.Properties.Resources.open;
-            this.btnGetRootBoxes.Location = new System.Drawing.Point(376, 90);
-            this.btnGetRootBoxes.Name = "btnGetRootBoxes";
-            this.btnGetRootBoxes.Size = new System.Drawing.Size(23, 23);
-            this.btnGetRootBoxes.TabIndex = 7;
-            this.btnGetRootBoxes.UseVisualStyleBackColor = true;
-            this.btnGetRootBoxes.Click += new System.EventHandler(this.btnGetRootBoxes_Click);
-            // 
             // tpMap
             // 
             this.tpMap.BackColor = System.Drawing.SystemColors.Control;
@@ -650,17 +595,6 @@
             this.lblBackgImagePath.TabIndex = 5;
             this.lblBackgImagePath.Text = "Path to image";
             // 
-            // btnGetBackImage
-            // 
-            this.btnGetBackImage.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetBackImage.Image = global::Schematix.Properties.Resources.load;
-            this.btnGetBackImage.Location = new System.Drawing.Point(378, 53);
-            this.btnGetBackImage.Name = "btnGetBackImage";
-            this.btnGetBackImage.Size = new System.Drawing.Size(23, 23);
-            this.btnGetBackImage.TabIndex = 4;
-            this.btnGetBackImage.UseVisualStyleBackColor = true;
-            this.btnGetBackImage.Click += new System.EventHandler(this.btnGetImage_Click);
-            // 
             // tbBackgImagePath
             // 
             this.tbBackgImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -701,17 +635,6 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(398, 99);
             this.tableLayoutPanel7.TabIndex = 10;
-            // 
-            // pbBackPreview
-            // 
-            this.pbBackPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbBackPreview.Location = new System.Drawing.Point(3, 3);
-            this.pbBackPreview.Margin = new System.Windows.Forms.Padding(0);
-            this.pbBackPreview.Name = "pbBackPreview";
-            this.pbBackPreview.Size = new System.Drawing.Size(392, 93);
-            this.pbBackPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbBackPreview.TabIndex = 0;
-            this.pbBackPreview.TabStop = false;
             // 
             // cbbBackImageAlign
             // 
@@ -963,6 +886,83 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnGetLanguagePath
+            // 
+            this.btnGetLanguagePath.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGetLanguagePath.Image = global::Schematix.Properties.Resources.open;
+            this.btnGetLanguagePath.Location = new System.Drawing.Point(378, 30);
+            this.btnGetLanguagePath.Name = "btnGetLanguagePath";
+            this.btnGetLanguagePath.Size = new System.Drawing.Size(23, 23);
+            this.btnGetLanguagePath.TabIndex = 2;
+            this.btnGetLanguagePath.UseVisualStyleBackColor = true;
+            this.btnGetLanguagePath.Click += new System.EventHandler(this.btnGetLanguagePath_Click);
+            // 
+            // btnGetRootMaps
+            // 
+            this.btnGetRootMaps.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGetRootMaps.Image = global::Schematix.Properties.Resources.open;
+            this.btnGetRootMaps.Location = new System.Drawing.Point(376, 3);
+            this.btnGetRootMaps.Name = "btnGetRootMaps";
+            this.btnGetRootMaps.Size = new System.Drawing.Size(23, 23);
+            this.btnGetRootMaps.TabIndex = 1;
+            this.btnGetRootMaps.UseVisualStyleBackColor = true;
+            this.btnGetRootMaps.Click += new System.EventHandler(this.btnGetRootMaps_Click);
+            // 
+            // btnGetRootObjects
+            // 
+            this.btnGetRootObjects.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGetRootObjects.Image = global::Schematix.Properties.Resources.open;
+            this.btnGetRootObjects.Location = new System.Drawing.Point(376, 32);
+            this.btnGetRootObjects.Name = "btnGetRootObjects";
+            this.btnGetRootObjects.Size = new System.Drawing.Size(23, 23);
+            this.btnGetRootObjects.TabIndex = 3;
+            this.btnGetRootObjects.UseVisualStyleBackColor = true;
+            this.btnGetRootObjects.Click += new System.EventHandler(this.btnGetRootObjects_Click);
+            // 
+            // btnGetRootLinks
+            // 
+            this.btnGetRootLinks.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGetRootLinks.Image = global::Schematix.Properties.Resources.open;
+            this.btnGetRootLinks.Location = new System.Drawing.Point(376, 61);
+            this.btnGetRootLinks.Name = "btnGetRootLinks";
+            this.btnGetRootLinks.Size = new System.Drawing.Size(23, 23);
+            this.btnGetRootLinks.TabIndex = 5;
+            this.btnGetRootLinks.UseVisualStyleBackColor = true;
+            this.btnGetRootLinks.Click += new System.EventHandler(this.btnGetRootLinks_Click);
+            // 
+            // btnGetRootBoxes
+            // 
+            this.btnGetRootBoxes.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGetRootBoxes.Image = global::Schematix.Properties.Resources.open;
+            this.btnGetRootBoxes.Location = new System.Drawing.Point(376, 90);
+            this.btnGetRootBoxes.Name = "btnGetRootBoxes";
+            this.btnGetRootBoxes.Size = new System.Drawing.Size(23, 23);
+            this.btnGetRootBoxes.TabIndex = 7;
+            this.btnGetRootBoxes.UseVisualStyleBackColor = true;
+            this.btnGetRootBoxes.Click += new System.EventHandler(this.btnGetRootBoxes_Click);
+            // 
+            // btnGetBackImage
+            // 
+            this.btnGetBackImage.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGetBackImage.Image = global::Schematix.Properties.Resources.load;
+            this.btnGetBackImage.Location = new System.Drawing.Point(378, 53);
+            this.btnGetBackImage.Name = "btnGetBackImage";
+            this.btnGetBackImage.Size = new System.Drawing.Size(23, 23);
+            this.btnGetBackImage.TabIndex = 4;
+            this.btnGetBackImage.UseVisualStyleBackColor = true;
+            this.btnGetBackImage.Click += new System.EventHandler(this.btnGetImage_Click);
+            // 
+            // pbBackPreview
+            // 
+            this.pbBackPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbBackPreview.Location = new System.Drawing.Point(3, 3);
+            this.pbBackPreview.Margin = new System.Windows.Forms.Padding(0);
+            this.pbBackPreview.Name = "pbBackPreview";
+            this.pbBackPreview.Size = new System.Drawing.Size(392, 93);
+            this.pbBackPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbBackPreview.TabIndex = 0;
+            this.pbBackPreview.TabStop = false;
+            // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1001,7 +1001,6 @@
             this.tableLayoutPanel5.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBackPreview)).EndInit();
             this.gbGrid.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
@@ -1009,6 +1008,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepX)).EndInit();
             this.tableLayoutPanel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbBackPreview)).EndInit();
             this.ResumeLayout(false);
 
         }

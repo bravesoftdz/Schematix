@@ -117,7 +117,7 @@
             this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 4);
             this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbDescription.Location = new System.Drawing.Point(3, 81);
-            this.tbDescription.MaxLength = 8096;
+            this.tbDescription.MaxLength = 8192;
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -130,9 +130,9 @@
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(3, 58);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(52, 13);
+            this.lblName.Size = new System.Drawing.Size(35, 13);
             this.lblName.TabIndex = 0;
-            this.lblName.Text = "Full name";
+            this.lblName.Text = "Name";
             // 
             // tbName
             // 

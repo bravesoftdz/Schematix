@@ -10,24 +10,19 @@ using System.Windows.Forms;
 
 namespace Schematix
 {
-    public partial class BoxOptionsForm : Form
+    public partial class IPEditForm : Form
     {
-        public BoxOptionsForm()
+        public IPEditForm()
         {
             InitializeComponent();
+            lblName.Text = options.LangCur.lEEName;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             //...
-            // Out
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void btnGetReference_Click(object sender, EventArgs e)
-        {
-            Share.GetFile(tbReference);
         }
     }
 }

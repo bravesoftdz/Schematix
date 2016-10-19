@@ -41,10 +41,10 @@
             this.lblType = new System.Windows.Forms.Label();
             this.cbbType = new System.Windows.Forms.ComboBox();
             this.btnColorFont = new System.Windows.Forms.Button();
-            this.cbbAlign = new System.Windows.Forms.ComboBox();
-            this.btnFont = new System.Windows.Forms.Button();
             this.lblStyle = new System.Windows.Forms.Label();
+            this.btnFont = new System.Windows.Forms.Button();
             this.lblAlign = new System.Windows.Forms.Label();
+            this.cbbAlign = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tbDescription = new System.Windows.Forms.TextBox();
@@ -102,10 +102,10 @@
             this.tableLayoutPanel3.Controls.Add(this.lblType, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cbbType, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnColorFont, 3, 3);
-            this.tableLayoutPanel3.Controls.Add(this.cbbAlign, 5, 3);
-            this.tableLayoutPanel3.Controls.Add(this.btnFont, 0, 3);
             this.tableLayoutPanel3.Controls.Add(this.lblStyle, 4, 1);
-            this.tableLayoutPanel3.Controls.Add(this.lblAlign, 4, 3);
+            this.tableLayoutPanel3.Controls.Add(this.btnFont, 4, 3);
+            this.tableLayoutPanel3.Controls.Add(this.lblAlign, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.cbbAlign, 1, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 173);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -114,6 +114,9 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(378, 107);
             this.tableLayoutPanel3.TabIndex = 7;
             // 
@@ -141,7 +144,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(106, 34);
+            this.label2.Location = new System.Drawing.Point(147, 34);
             this.label2.Margin = new System.Windows.Forms.Padding(1, 0, 3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(18, 13);
@@ -160,7 +163,7 @@
             "• –",
             "• – –",
             "• • –"});
-            this.cbbStyle.Location = new System.Drawing.Point(220, 30);
+            this.cbbStyle.Location = new System.Drawing.Point(261, 30);
             this.cbbStyle.Name = "cbbStyle";
             this.cbbStyle.Size = new System.Drawing.Size(78, 21);
             this.cbbStyle.TabIndex = 5;
@@ -169,7 +172,7 @@
             // 
             this.btnColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnColor.BackColor = System.Drawing.Color.Maroon;
-            this.btnColor.Location = new System.Drawing.Point(138, 30);
+            this.btnColor.Location = new System.Drawing.Point(179, 30);
             this.btnColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnColor.Name = "btnColor";
             this.btnColor.Size = new System.Drawing.Size(32, 21);
@@ -230,14 +233,14 @@
             this.cbbType.FormattingEnabled = true;
             this.cbbType.Location = new System.Drawing.Point(65, 3);
             this.cbbType.Name = "cbbType";
-            this.cbbType.Size = new System.Drawing.Size(113, 21);
+            this.cbbType.Size = new System.Drawing.Size(154, 21);
             this.cbbType.TabIndex = 5;
             // 
             // btnColorFont
             // 
             this.btnColorFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnColorFont.BackColor = System.Drawing.Color.Black;
-            this.btnColorFont.Location = new System.Drawing.Point(138, 83);
+            this.btnColorFont.Location = new System.Drawing.Point(179, 83);
             this.btnColorFont.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnColorFont.Name = "btnColorFont";
             this.btnColorFont.Size = new System.Drawing.Size(32, 21);
@@ -245,48 +248,49 @@
             this.btnColorFont.UseVisualStyleBackColor = false;
             this.btnColorFont.Click += new System.EventHandler(this.PickColor_Click);
             // 
-            // cbbAlign
-            // 
-            this.cbbAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cbbAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbAlign.FormattingEnabled = true;
-            this.cbbAlign.Location = new System.Drawing.Point(220, 83);
-            this.cbbAlign.Name = "cbbAlign";
-            this.cbbAlign.Size = new System.Drawing.Size(78, 21);
-            this.cbbAlign.TabIndex = 5;
-            // 
-            // btnFont
-            // 
-            this.btnFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.SetColumnSpan(this.btnFont, 3);
-            this.btnFont.Location = new System.Drawing.Point(3, 83);
-            this.btnFont.Name = "btnFont";
-            this.btnFont.Size = new System.Drawing.Size(121, 21);
-            this.btnFont.TabIndex = 4;
-            this.btnFont.UseVisualStyleBackColor = true;
-            this.btnFont.Click += new System.EventHandler(this.btnStyle_Click);
-            // 
             // lblStyle
             // 
             this.lblStyle.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblStyle.AutoSize = true;
-            this.lblStyle.Location = new System.Drawing.Point(184, 34);
+            this.lblStyle.Location = new System.Drawing.Point(225, 34);
             this.lblStyle.Name = "lblStyle";
             this.lblStyle.Size = new System.Drawing.Size(30, 13);
             this.lblStyle.TabIndex = 7;
             this.lblStyle.Text = "Style";
             this.lblStyle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // btnFont
+            // 
+            this.btnFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.SetColumnSpan(this.btnFont, 2);
+            this.btnFont.Location = new System.Drawing.Point(225, 83);
+            this.btnFont.MaximumSize = new System.Drawing.Size(300, 21);
+            this.btnFont.Name = "btnFont";
+            this.btnFont.Size = new System.Drawing.Size(150, 21);
+            this.btnFont.TabIndex = 4;
+            this.btnFont.UseVisualStyleBackColor = true;
+            this.btnFont.Click += new System.EventHandler(this.btnStyle_Click);
+            // 
             // lblAlign
             // 
             this.lblAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblAlign.AutoSize = true;
-            this.lblAlign.Location = new System.Drawing.Point(184, 87);
+            this.lblAlign.Location = new System.Drawing.Point(29, 87);
             this.lblAlign.Name = "lblAlign";
             this.lblAlign.Size = new System.Drawing.Size(30, 13);
             this.lblAlign.TabIndex = 7;
             this.lblAlign.Text = "Align";
             this.lblAlign.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cbbAlign
+            // 
+            this.cbbAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbbAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbAlign.FormattingEnabled = true;
+            this.cbbAlign.Location = new System.Drawing.Point(65, 83);
+            this.cbbAlign.Name = "cbbAlign";
+            this.cbbAlign.Size = new System.Drawing.Size(78, 21);
+            this.cbbAlign.TabIndex = 5;
             // 
             // btnOk
             // 
@@ -333,7 +337,7 @@
             this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 4);
             this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbDescription.Location = new System.Drawing.Point(3, 81);
-            this.tbDescription.MaxLength = 8096;
+            this.tbDescription.MaxLength = 8192;
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -346,9 +350,9 @@
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(3, 58);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(52, 13);
+            this.lblName.Size = new System.Drawing.Size(35, 13);
             this.lblName.TabIndex = 0;
-            this.lblName.Text = "Full name";
+            this.lblName.Text = "Name";
             // 
             // tbName
             // 

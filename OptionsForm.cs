@@ -284,39 +284,11 @@ namespace Schematix
         }
 
         #region Get folder
-        private void btnGetRootLanguage_Click(object sender, EventArgs e)//O
-        {
-            GetRoot(tbLanguagePath);
-        }
-
-        private void btnGetRootMaps_Click(object sender, EventArgs e)//O
-        {
-            GetRoot(tbRootMaps);
-        }
-
-        private void btnGetRootObjects_Click(object sender, EventArgs e)//O
-        {
-            GetRoot(tbRootObjects);
-        }
-
-        private void btnGetRootLinks_Click(object sender, EventArgs e)//O
-        {
-            GetRoot(tbRootLinks);
-        }
-
-        private void btnGetRootBoxes_Click(object sender, EventArgs e)//O
-        {
-            GetRoot(tbRootBoxes);
-        }
-
-        private void GetRoot(TextBox target)//O
-        {
-            if (target.Text == "")
-                target.Text = Directory.GetCurrentDirectory();
-            dlgFolder.SelectedPath = target.Text;
-            if (dlgFolder.ShowDialog() == DialogResult.OK)
-                target.Text = dlgFolder.SelectedPath;
-        }
+        private void btnGetLanguagePath_Click(object sender, EventArgs e) => Share.GetFolder(tbLanguagePath);
+        private void btnGetRootMaps_Click    (object sender, EventArgs e) => Share.GetFolder(tbRootMaps);
+        private void btnGetRootObjects_Click (object sender, EventArgs e) => Share.GetFolder(tbRootObjects);
+        private void btnGetRootLinks_Click   (object sender, EventArgs e) => Share.GetFolder(tbRootLinks);
+        private void btnGetRootBoxes_Click   (object sender, EventArgs e) => Share.GetFolder(tbRootBoxes);
         #endregion
 
         #region Map tab
