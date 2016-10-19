@@ -28,22 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BoxEditForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tbText = new System.Windows.Forms.TextBox();
-            this.lblThick = new System.Windows.Forms.Label();
+            this.lblLineThick = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cbbStyle = new System.Windows.Forms.ComboBox();
-            this.btnColor = new System.Windows.Forms.Button();
+            this.btnLineColor = new System.Windows.Forms.Button();
             this.nudThick = new System.Windows.Forms.NumericUpDown();
             this.lblText = new System.Windows.Forms.Label();
             this.lblType = new System.Windows.Forms.Label();
             this.cbbType = new System.Windows.Forms.ComboBox();
             this.btnColorFont = new System.Windows.Forms.Button();
-            this.lblStyle = new System.Windows.Forms.Label();
-            this.btnFont = new System.Windows.Forms.Button();
-            this.lblAlign = new System.Windows.Forms.Label();
+            this.lblLineStyle = new System.Windows.Forms.Label();
+            this.btnFontColor = new System.Windows.Forms.Button();
+            this.lblTextAlign = new System.Windows.Forms.Label();
             this.cbbAlign = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -58,6 +59,7 @@
             this.lblRevision = new System.Windows.Forms.Label();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.dlgFont = new System.Windows.Forms.FontDialog();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudThick)).BeginInit();
@@ -93,18 +95,18 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.tbText, 1, 2);
-            this.tableLayoutPanel3.Controls.Add(this.lblThick, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.lblLineThick, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.label2, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.cbbStyle, 5, 1);
-            this.tableLayoutPanel3.Controls.Add(this.btnColor, 3, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnLineColor, 3, 1);
             this.tableLayoutPanel3.Controls.Add(this.nudThick, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.lblText, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.lblType, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cbbType, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnColorFont, 3, 3);
-            this.tableLayoutPanel3.Controls.Add(this.lblStyle, 4, 1);
-            this.tableLayoutPanel3.Controls.Add(this.btnFont, 4, 3);
-            this.tableLayoutPanel3.Controls.Add(this.lblAlign, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.lblLineStyle, 4, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnFontColor, 4, 3);
+            this.tableLayoutPanel3.Controls.Add(this.lblTextAlign, 0, 3);
             this.tableLayoutPanel3.Controls.Add(this.cbbAlign, 1, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 173);
@@ -130,21 +132,21 @@
             this.tbText.Size = new System.Drawing.Size(310, 20);
             this.tbText.TabIndex = 6;
             // 
-            // lblThick
+            // lblLineThick
             // 
-            this.lblThick.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblThick.AutoSize = true;
-            this.lblThick.Location = new System.Drawing.Point(3, 34);
-            this.lblThick.Name = "lblThick";
-            this.lblThick.Size = new System.Drawing.Size(56, 13);
-            this.lblThick.TabIndex = 0;
-            this.lblThick.Text = "Thickness";
+            this.lblLineThick.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblLineThick.AutoSize = true;
+            this.lblLineThick.Location = new System.Drawing.Point(3, 34);
+            this.lblLineThick.Name = "lblLineThick";
+            this.lblLineThick.Size = new System.Drawing.Size(56, 13);
+            this.lblLineThick.TabIndex = 0;
+            this.lblLineThick.Text = "Thickness";
             // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(147, 34);
+            this.label2.Location = new System.Drawing.Point(106, 34);
             this.label2.Margin = new System.Windows.Forms.Padding(1, 0, 3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(18, 13);
@@ -163,22 +165,22 @@
             "• –",
             "• – –",
             "• • –"});
-            this.cbbStyle.Location = new System.Drawing.Point(261, 30);
+            this.cbbStyle.Location = new System.Drawing.Point(239, 30);
             this.cbbStyle.Name = "cbbStyle";
             this.cbbStyle.Size = new System.Drawing.Size(78, 21);
             this.cbbStyle.TabIndex = 5;
             // 
-            // btnColor
+            // btnLineColor
             // 
-            this.btnColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnColor.BackColor = System.Drawing.Color.Maroon;
-            this.btnColor.Location = new System.Drawing.Point(179, 30);
-            this.btnColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
-            this.btnColor.Name = "btnColor";
-            this.btnColor.Size = new System.Drawing.Size(32, 21);
-            this.btnColor.TabIndex = 4;
-            this.btnColor.UseVisualStyleBackColor = false;
-            this.btnColor.Click += new System.EventHandler(this.PickColor_Click);
+            this.btnLineColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnLineColor.BackColor = System.Drawing.Color.Maroon;
+            this.btnLineColor.Location = new System.Drawing.Point(157, 30);
+            this.btnLineColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
+            this.btnLineColor.Name = "btnLineColor";
+            this.btnLineColor.Size = new System.Drawing.Size(32, 21);
+            this.btnLineColor.TabIndex = 4;
+            this.btnLineColor.UseVisualStyleBackColor = false;
+            this.btnLineColor.Click += new System.EventHandler(this.PickColor_Click);
             // 
             // nudThick
             // 
@@ -233,14 +235,14 @@
             this.cbbType.FormattingEnabled = true;
             this.cbbType.Location = new System.Drawing.Point(65, 3);
             this.cbbType.Name = "cbbType";
-            this.cbbType.Size = new System.Drawing.Size(154, 21);
+            this.cbbType.Size = new System.Drawing.Size(132, 21);
             this.cbbType.TabIndex = 5;
             // 
             // btnColorFont
             // 
             this.btnColorFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnColorFont.BackColor = System.Drawing.Color.Black;
-            this.btnColorFont.Location = new System.Drawing.Point(179, 83);
+            this.btnColorFont.Location = new System.Drawing.Point(157, 83);
             this.btnColorFont.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnColorFont.Name = "btnColorFont";
             this.btnColorFont.Size = new System.Drawing.Size(32, 21);
@@ -248,43 +250,44 @@
             this.btnColorFont.UseVisualStyleBackColor = false;
             this.btnColorFont.Click += new System.EventHandler(this.PickColor_Click);
             // 
-            // lblStyle
+            // lblLineStyle
             // 
-            this.lblStyle.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblStyle.AutoSize = true;
-            this.lblStyle.Location = new System.Drawing.Point(225, 34);
-            this.lblStyle.Name = "lblStyle";
-            this.lblStyle.Size = new System.Drawing.Size(30, 13);
-            this.lblStyle.TabIndex = 7;
-            this.lblStyle.Text = "Style";
-            this.lblStyle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblLineStyle.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblLineStyle.AutoSize = true;
+            this.lblLineStyle.Location = new System.Drawing.Point(203, 34);
+            this.lblLineStyle.Name = "lblLineStyle";
+            this.lblLineStyle.Size = new System.Drawing.Size(30, 13);
+            this.lblLineStyle.TabIndex = 7;
+            this.lblLineStyle.Text = "Style";
+            this.lblLineStyle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btnFont
+            // btnFontColor
             // 
-            this.btnFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.SetColumnSpan(this.btnFont, 2);
-            this.btnFont.Location = new System.Drawing.Point(225, 83);
-            this.btnFont.MaximumSize = new System.Drawing.Size(300, 21);
-            this.btnFont.Name = "btnFont";
-            this.btnFont.Size = new System.Drawing.Size(150, 21);
-            this.btnFont.TabIndex = 4;
-            this.btnFont.UseVisualStyleBackColor = true;
-            this.btnFont.Click += new System.EventHandler(this.btnStyle_Click);
+            this.btnFontColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.SetColumnSpan(this.btnFontColor, 2);
+            this.btnFontColor.Location = new System.Drawing.Point(203, 83);
+            this.btnFontColor.MaximumSize = new System.Drawing.Size(300, 21);
+            this.btnFontColor.Name = "btnFontColor";
+            this.btnFontColor.Size = new System.Drawing.Size(172, 21);
+            this.btnFontColor.TabIndex = 4;
+            this.btnFontColor.UseVisualStyleBackColor = true;
+            this.btnFontColor.Click += new System.EventHandler(this.btnStyle_Click);
             // 
-            // lblAlign
+            // lblTextAlign
             // 
-            this.lblAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblAlign.AutoSize = true;
-            this.lblAlign.Location = new System.Drawing.Point(29, 87);
-            this.lblAlign.Name = "lblAlign";
-            this.lblAlign.Size = new System.Drawing.Size(30, 13);
-            this.lblAlign.TabIndex = 7;
-            this.lblAlign.Text = "Align";
-            this.lblAlign.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblTextAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblTextAlign.AutoSize = true;
+            this.lblTextAlign.Location = new System.Drawing.Point(29, 87);
+            this.lblTextAlign.Name = "lblTextAlign";
+            this.lblTextAlign.Size = new System.Drawing.Size(30, 13);
+            this.lblTextAlign.TabIndex = 7;
+            this.lblTextAlign.Text = "Align";
+            this.lblTextAlign.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbbAlign
             // 
             this.cbbAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tableLayoutPanel3.SetColumnSpan(this.cbbAlign, 2);
             this.cbbAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbAlign.FormattingEnabled = true;
             this.cbbAlign.Location = new System.Drawing.Point(65, 83);
@@ -469,21 +472,22 @@
         private System.Windows.Forms.Label lblRevision;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TextBox tbText;
-        private System.Windows.Forms.Label lblThick;
+        private System.Windows.Forms.Label lblLineThick;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbbStyle;
-        private System.Windows.Forms.Button btnColor;
+        private System.Windows.Forms.Button btnLineColor;
         private System.Windows.Forms.NumericUpDown nudThick;
         private System.Windows.Forms.Label lblText;
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.ComboBox cbbType;
         private System.Windows.Forms.Button btnColorFont;
         private System.Windows.Forms.ComboBox cbbAlign;
-        private System.Windows.Forms.Button btnFont;
-        private System.Windows.Forms.Label lblStyle;
-        private System.Windows.Forms.Label lblAlign;
+        private System.Windows.Forms.Button btnFontColor;
+        private System.Windows.Forms.Label lblLineStyle;
+        private System.Windows.Forms.Label lblTextAlign;
         private System.Windows.Forms.ColorDialog dlgColor;
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.FontDialog dlgFont;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

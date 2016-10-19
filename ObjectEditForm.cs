@@ -16,13 +16,64 @@ namespace Schematix
         public ObjectEditForm()
         {
             InitializeComponent();
-            //...
-            cbbNodesRefill(0);
-            nudNodeX.Maximum = pbNodePicker.Width  - 1;
-            nudNodeY.Maximum = pbNodePicker.Height - 1;
-
-            pbNodePicker.BackColor =
+            // Main
+            tpMain.Text      = options.LangCur.lOETabMain;
+            lblNode.Text     = options.LangCur.lEENode;
+            lblName.Text     = options.LangCur.lEEName;
+            lblID.Text       = options.LangCur.lEEID;
+            lblRevision.Text = options.LangCur.lEERevision;
+            // Image
+            tpImage.Text      = options.LangCur.lOETabImage;
+            lblImageType.Text = options.LangCur.lOEImageType;
+            lblImagePath.Text = options.LangCur.lEEImagePath;
+            lblImageBPP.Text  = options.LangCur.lEEImageBPP;
+            toolTip.SetToolTip(btnImageColor,   options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnGetImagePath, options.LangCur.hEEImageLoad);
+            lblImageBackColor.Text = options.LangCur.lOEUseBackColor;
+            cbbImageType.Items.Add(options.LangCur.lOEImageType0Load);
+            cbbImageType.Items.Add(options.LangCur.lOEImageType1Link);
+            // Alpha
+            tpAlpha.Text      = options.LangCur.lOETabAlpha;
+            lblAlphaType.Text = options.LangCur.lOEAlphaType;
+            lblAlphaPath.Text = options.LangCur.lEEImagePath;
+            lblAlphaBPP.Text  = options.LangCur.lEEImageBPP;
+            toolTip.SetToolTip(btnAlphaColor,   options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnGetAlphaPath, options.LangCur.hEEImageLoad);
+            cbbImageType.Items.Add(options.LangCur.lOEAlphaType0Image);
+            cbbImageType.Items.Add(options.LangCur.lOEAlphaType1Color);
+            cbbImageType.Items.Add(options.LangCur.lOEAlphaType2Load);
+            cbbImageType.Items.Add(options.LangCur.lOEAlphaType3Link);
+            // Nodes
+            tpDotes.Text        = options.LangCur.lOETabDotes;
+            lblDot.Text         = options.LangCur.lOEDot;
+            lblDotName.Text     = options.LangCur.lOEDotName;
+            lblDotLocation.Text = options.LangCur.lOEDotLocation;
+            toolTip.SetToolTip(btnDotMoveUp,   options.LangCur.hOEDotMoveUp);
+            toolTip.SetToolTip(btnDotMoveDown, options.LangCur.hOEDotMoveDown);
+            toolTip.SetToolTip(btnDotAdd,      options.LangCur.hOEDotAdd);
+            toolTip.SetToolTip(btnDotSave,     options.LangCur.hOEDotSave);
+            toolTip.SetToolTip(btnDotDelete,   options.LangCur.hOEDotDelete);
+            //
+            if (false)
+            {
+                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEEBox;
+                //...
+            }
+            else
+            {
+                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEEBox;
+                cbbImageType.SelectedIndex = 0;
+                cbbAlphaType.SelectedIndex = 0;
+                cbbImageBPP.SelectedIndex = 0;
+                cbbAlphaBPP.SelectedIndex = 0;
+            }
+            pbDotPicker.BackColor =
             pbImage.BackColor = btnImageColor.BackColor;
+
+            nudDotX.Maximum = pbDotPicker.Width - 1;
+            nudDotY.Maximum = pbDotPicker.Height - 1;
+
+            cbbNodesRefill(0);
         }
 
         #region Nodes
@@ -30,38 +81,32 @@ namespace Schematix
         #region Node Dot
         private void nudNodeXY_ValueChanged(object sender, EventArgs e)//Ok
         {
-            int x = (int)nudNodeX.Value + BORDER_THICK;
-            int y = (int)nudNodeY.Value + BORDER_THICK;
+            int x = (int)nudDotX.Value + BORDER_THICK;
+            int y = (int)nudDotY.Value + BORDER_THICK;
             dotGraphics.Clear(Color.FromArgb(0, 0, 0, 0));
             pen.Color = Color.FromArgb(
                 255,
-                (255 - pbNodePicker.BackColor.R),
-                (255 - pbNodePicker.BackColor.G),
-                (255 - pbNodePicker.BackColor.B));
+                (255 - pbDotPicker.BackColor.R),
+                (255 - pbDotPicker.BackColor.G),
+                (255 - pbDotPicker.BackColor.B));
             dotGraphics.DrawRectangle(pen,
                 BORDER_THICK - 1,
                 BORDER_THICK - 1,
-                pbNodePicker.BackgroundImage.Width  + 1,
-                pbNodePicker.BackgroundImage.Height + 1);
+                pbDotPicker.BackgroundImage.Width  + 1,
+                pbDotPicker.BackgroundImage.Height + 1);
             dotGraphics.DrawLine(pen, x, 0, x, y + BORDER_THICK - 1);
             dotGraphics.DrawLine(pen, 0, y, x + BORDER_THICK - 1, y);
             dotGraphics.DrawEllipse(pen, x - 3, y - 3, 5, 5);
-            pbNodePicker.Image = dotBmap;
-            btnNodeSave.Enabled = true;
-        }
-
-        private void pbNodePicker_MouseDown(object sender, MouseEventArgs e)//Ok
-        {
-            btnNodeSave.Enabled = true;
-            nudNodeXY_ValueChanged(null, null);
+            pbDotPicker.Image = dotBmap;
+            btnDotSave.Enabled = true;
         }
 
         private void pbNodePicker_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             int x = (e.X < 5) ? 0 : e.X - BORDER_THICK;
             int y = (e.Y < 5) ? 0 : e.Y - BORDER_THICK;
-            nudNodeX.Value = (nudNodeX.Maximum < x) ? nudNodeX.Maximum : x;
-            nudNodeY.Value = (nudNodeY.Maximum < y) ? nudNodeY.Maximum : y;
+            nudDotX.Value = (nudDotX.Maximum < x) ? nudDotX.Maximum : x;
+            nudDotY.Value = (nudDotY.Maximum < y) ? nudDotY.Maximum : y;
             nudNodeXY_ValueChanged(null, null);
         }
         #endregion
@@ -69,20 +114,20 @@ namespace Schematix
         #region Node Record
         private void cbbNodesRefill(int idx)
         {
-            cbbNodes.Items.Clear();
+            cbbDotes.Items.Clear();
             //...
             // Must be atleast 1 node
-            if (cbbNodes.Items.Count < 1)
-                cbbNodes.Items.Add("0 - \"\"");
+            if (cbbDotes.Items.Count < 1)
+                cbbDotes.Items.Add("0 - \"\"");
             // Select asked node
             if (idx < 0)
                 idx = 0;
-            if (cbbNodes.Items.Count <= idx)
-                idx = cbbNodes.Items.Count - 1;
-            cbbNodes.SelectedIndex = idx;
+            if (cbbDotes.Items.Count <= idx)
+                idx = cbbDotes.Items.Count - 1;
+            cbbDotes.SelectedIndex = idx;
             // Limit addition
-            btnNodeAdd.Enabled = (cbbNodes.Items.Count < 256);
-            btnNodeDelete.Enabled = (0 < cbbNodes.Items.Count);
+            btnDotAdd.Enabled = (cbbDotes.Items.Count < 256);
+            btnDotDelete.Enabled = (0 < cbbDotes.Items.Count);
         }
 
         private void cbbNodes_SelectedIndexChanged(object sender, EventArgs e)
@@ -93,13 +138,13 @@ namespace Schematix
         private void btnNodeAdd_Click(object sender, EventArgs e)
         {
             //...
-            btnNodeSave.Enabled = false;
-            cbbNodesRefill(cbbNodes.Items.Count);
+            btnDotSave.Enabled = false;
+            cbbNodesRefill(cbbDotes.Items.Count);
         }
 
         private void btnNodeMoveUp_Click(object sender, EventArgs e)
         {
-            int idx = cbbNodes.SelectedIndex;
+            int idx = cbbDotes.SelectedIndex;
             if (0 < idx)
             {
                 //...
@@ -109,8 +154,8 @@ namespace Schematix
 
         private void btnNodeMoveDown_Click(object sender, EventArgs e)
         {
-            int idx = cbbNodes.SelectedIndex;
-            if (idx + 1 < cbbNodes.Items.Count)
+            int idx = cbbDotes.SelectedIndex;
+            if (idx + 1 < cbbDotes.Items.Count)
             {
                 //...
                 cbbNodesRefill(idx + 1);
@@ -119,30 +164,30 @@ namespace Schematix
 
         private void btnNodeDelete_Click(object sender, EventArgs e)
         {
-            int idx = cbbNodes.SelectedIndex;
+            int idx = cbbDotes.SelectedIndex;
             if (idx < 0)
                 return;
             //...
-            cbbNodes.Items.RemoveAt(idx);
-            btnNodeSave.Enabled = false;
+            cbbDotes.Items.RemoveAt(idx);
+            btnDotSave.Enabled = false;
             cbbNodesRefill(idx);
         }
 
         private void Node_TextChanged(object sender, EventArgs e)//Ok
         {
-            btnNodeSave.Enabled = true;
+            btnDotSave.Enabled = true;
         }
 
         private void btnNodeSave_EnabledChanged(object sender, EventArgs e)
         {
-            btnNodeMoveUp.Enabled =
-            btnNodeMoveDown.Enabled = !btnNodeSave.Enabled;
+            btnDotMoveUp.Enabled =
+            btnDotMoveDown.Enabled = !btnDotSave.Enabled;
         }
 
         private void btnNodeSave_Click(object sender, EventArgs e)
         {
             //...
-            btnNodeSave.Enabled = false;
+            btnDotSave.Enabled = false;
         }
         #endregion
 
@@ -151,8 +196,8 @@ namespace Schematix
         private void btnImageColor_Click(object sender, EventArgs e)//
         {
             if (dlgColor.ShowDialog() == DialogResult.OK)
+                pbDotPicker.BackColor =
                 pbImage.BackColor =
-                pbNodePicker.BackColor =
                 btnImageColor.BackColor = dlgColor.Color;
         }
 
@@ -171,7 +216,7 @@ namespace Schematix
         private void GotImage(Image img)//!!!
         {
             pbImage.Image = img;
-            pbNodePicker.BackgroundImage = img;
+            pbDotPicker.BackgroundImage = img;
             //...
         }
 
@@ -187,11 +232,11 @@ namespace Schematix
 
         private void pbNodePicker_BackgroundImageChanged(object sender, EventArgs e)
         {
-            nudNodeX.Maximum = pbNodePicker.BackgroundImage.Width  - 1;
-            nudNodeY.Maximum = pbNodePicker.BackgroundImage.Height - 1;
+            nudDotX.Maximum = pbDotPicker.BackgroundImage.Width  - 1;
+            nudDotY.Maximum = pbDotPicker.BackgroundImage.Height - 1;
             dotBmap = new Bitmap(
-                pbNodePicker.BackgroundImage.Width  + BORDER_THICK * 2,
-                pbNodePicker.BackgroundImage.Height + BORDER_THICK * 2,
+                pbDotPicker.BackgroundImage.Width  + BORDER_THICK * 2,
+                pbDotPicker.BackgroundImage.Height + BORDER_THICK * 2,
                 PixelFormat.Format32bppArgb);
             dotGraphics = Graphics.FromImage(dotBmap);
             nudNodeXY_ValueChanged(null, null);

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LinkEditForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnOk = new System.Windows.Forms.Button();
@@ -42,13 +43,14 @@
             this.lblID = new System.Windows.Forms.Label();
             this.lblRevision = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblThick = new System.Windows.Forms.Label();
+            this.lblLineThick = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cbbStyle = new System.Windows.Forms.ComboBox();
             this.btnColor = new System.Windows.Forms.Button();
             this.nudThick = new System.Windows.Forms.NumericUpDown();
             this.lblLineStyle = new System.Windows.Forms.Label();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -222,7 +224,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.lblThick, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.lblLineThick, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.cbbStyle, 5, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnColor, 3, 0);
@@ -236,15 +238,15 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(378, 27);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
-            // lblThick
+            // lblLineThick
             // 
-            this.lblThick.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblThick.AutoSize = true;
-            this.lblThick.Location = new System.Drawing.Point(3, 7);
-            this.lblThick.Name = "lblThick";
-            this.lblThick.Size = new System.Drawing.Size(56, 13);
-            this.lblThick.TabIndex = 0;
-            this.lblThick.Text = "Thickness";
+            this.lblLineThick.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblLineThick.AutoSize = true;
+            this.lblLineThick.Location = new System.Drawing.Point(3, 7);
+            this.lblLineThick.Name = "lblLineThick";
+            this.lblLineThick.Size = new System.Drawing.Size(56, 13);
+            this.lblLineThick.TabIndex = 0;
+            this.lblLineThick.Text = "Thickness";
             // 
             // label2
             // 
@@ -277,12 +279,13 @@
             // btnColor
             // 
             this.btnColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnColor.BackColor = System.Drawing.Color.Maroon;
             this.btnColor.Location = new System.Drawing.Point(138, 3);
             this.btnColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnColor.Name = "btnColor";
             this.btnColor.Size = new System.Drawing.Size(32, 21);
             this.btnColor.TabIndex = 4;
-            this.btnColor.UseVisualStyleBackColor = true;
+            this.btnColor.UseVisualStyleBackColor = false;
             this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
             // 
             // nudThick
@@ -363,8 +366,9 @@
         private System.Windows.Forms.TextBox tbNode;
         private System.Windows.Forms.TextBox tbID;
         private System.Windows.Forms.ColorDialog dlgColor;
-        private System.Windows.Forms.Label lblThick;
+        private System.Windows.Forms.Label lblLineThick;
         private System.Windows.Forms.Label lblLineStyle;
         private System.Windows.Forms.TextBox tbDescription;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

@@ -62,8 +62,6 @@ namespace Schematix
             lOFMapGridStyle2Corners = "Corners",
             lOFMapGridStyle3Crosses = "Crosses",
             lOFMapGridStyle4Grid    = "Grid",
-            hOFMapGridColor         = "Pick color",
-            lOFMapGridThick         = "Thickness",
             lOFMapGridAlign         = "Align elements to grid",
             // Background
             lOFMapBack = "Background",
@@ -73,21 +71,16 @@ namespace Schematix
             lOFMapBackStyle3ImageStrech  = "Image (strech)",
             lOFMapBackStyle4ImageZInner  = "Image (Zoom inner)",
             lOFMapBackStyle5ImageZOutter = "Image (Zoom outter)",
-            hOFMapBackColor              = "Pick color",
-            lOFMapBackImagePath          = "Path to image",
-            hOFMapBackImageLoad          = "Load image",
-            lOFMapBackImageFloat         = "Float image",
-            lOFMapBackImageBuildIn       = "Save to file",
         #endregion
 
         #region Library
-            lLFTitle   = "Library",
-            lLFCatalog = "Catalog",
-            lLFUsed    = "Used on map",
-            hLFPinUp   = "Turn top state on",
-            hLFPinDown = "Turn top state off",
-            hLFEdit    = "Edit element",
-            hLFAdd     = "Add new sub-element",
+            lLFTitle         = "Library",
+            lLFCatalog       = "Catalog",
+            lLFUsed          = "Used on map",
+            hLFPinUp         = "Turn top state on",
+            hLFPinDown       = "Turn top state off",
+            hLFEdit          = "Edit element",
+            hLFAdd           = "Add new sub-element",
             lLFColumName     = "Name",
             lLFColumCatalog  = "Catalog",
             lLFColumLocation = "Location",
@@ -100,26 +93,58 @@ namespace Schematix
             lEEObject = "object",
             lEELink   = "link",
             lEEBox    = "box",
-            //
-            lEENode     = "Node name",
+            // Share
+            lEENodeName = "Node name",
+            lEEName     = "Name",
             lEEID       = "ID",
             lEERevision = "Revision",
-            lEEName     = "Full name",
-            lEEThick    = "Line thickness",
+            // +
+            lEELineThick    = "Line thickness",
+            lEELineStyle    = "Line style",
+            hEEColorPick    = "Pick color",
+            lEEImagePath    = "Path to image",
+            hEEImageLoad    = "Load image",
+            lEEImageFloat   = "Float image",
+            lEEImageBuildIn = "Save to file",
+            lEEImageBPP     = "Storing BPP",
             // Align
             lEEAlign    = "Align",
             lEEAlign0TL = "Top Left",
-            lEEAlign1T  = "Top",
+            lEEAlign1TC = "Top",
             lEEAlign2TR = "Top Right",
-            lEEAlign3L  = "Left",
-            lEEAlign4C  = "Center",
-            lEEAlign5R  = "Right",
+            lEEAlign3ML = "Left",
+            lEEAlign4MC = "Center",
+            lEEAlign5MR = "Right",
             lEEAlign6BL = "Bottom Left",
-            lEEAlign7B  = "Bottom",
+            lEEAlign7BC = "Bottom",
             lEEAlign8BR = "Bottom Right",
         #endregion
 
         #region Object Edit
+            lOETabMain      = "Main",
+            //
+            lOETabImage       = "Image",
+            lOEImageType      = "Type",
+            lOEImageType0Load = "Load image",
+            lOEImageType1Link = "Link to image",
+            lOEUseBackColor   = "Back color on preview",
+            //
+            lOETabAlpha        = "Transparence",
+            lOEAlphaType       = "Type",
+            lOEAlphaType0Image = "As is",
+            lOEAlphaType1Color = "Color",
+            lOEAlphaType2Load  = "Load image",
+            lOEAlphaType3Link  = "Link to image",
+            //
+            lOETabDotes     = "Dotes",
+            lOEDot          = "Dot",
+            lOEDotName      = "Dot name",
+            hOEDotMoveUp    = "Move up",
+            hOEDotMoveDown  = "Move down",
+            hOEDotAdd       = "Add dot",
+            hOEDotSave      = "Save dot",
+            hOEDotDelete    = "Delete dot",
+            lOEDotLocation  = "Location",
             //...
         #endregion
 
@@ -128,7 +153,6 @@ namespace Schematix
             lBEType0Text      = "Text",
             lBEType1Rectangle = "Rectangle",
             lBEType2Ellipse   = "Ellipse",
-            lBEStyle          = "Style",
             lBEText           = "Text",
         #endregion
 
@@ -256,8 +280,6 @@ namespace Schematix
                                 case "lOFMapGridStyle2Corners": lOFMapGridStyle2Corners = lblText;   break;
                                 case "lOFMapGridStyle3Crosses": lOFMapGridStyle3Crosses = lblText;   break;
                                 case "lOFMapGridStyle4Grid":    lOFMapGridStyle4Grid    = lblText;   break;
-                                case "hOFMapGridColor":         hOFMapGridColor         = lblText;   break;
-                                case "lOFMapGridThick":         lOFMapGridThick         = lblText;   break;
                                 case "lOFMapGridAlign":         lOFMapGridAlign         = lblText;   break;
                                 // Background
                                 case "lOFMapBack":                    lOFMapBack                   = lblText;   break;
@@ -267,11 +289,6 @@ namespace Schematix
                                 case "lOFMapBackStyle3ImageStrech":   lOFMapBackStyle3ImageStrech  = lblText;   break;
                                 case "lOFMapBackStyle4ImageZInner":   lOFMapBackStyle4ImageZInner  = lblText;   break;
                                 case "lOFMapBackStyle5ImageZOutter":  lOFMapBackStyle5ImageZOutter = lblText;   break;
-                                case "hOFMapBackColor":               hOFMapBackColor              = lblText;   break;
-                                case "lOFMapBackImagePath":           lOFMapBackImagePath          = lblText;   break;
-                                case "hOFMapBackImageLoad":           hOFMapBackImageLoad          = lblText;   break;
-                                case "lOFMapBackImageFloat":          lOFMapBackImageFloat         = lblText;   break;
-                                case "lOFMapBackImageBuildIn":        lOFMapBackImageBuildIn       = lblText;   break;
                             }
                             break;
                         #endregion
@@ -301,35 +318,67 @@ namespace Schematix
                                 case "lEETitleAdd":  lEETitleAdd  = lblText;   break;
                                 case "lEETitleEdit": lEETitleEdit = lblText;   break;
                                 // +
-                                case "lEEObject":    lEEObject    = lblText;   break;
-                                case "lEELink":      lEELink      = lblText;   break;
-                                case "lEEBox":       lEEBox       = lblText;   break;
-                                //
-                                case "lEENode":      lEENode      = lblText;   break;
-                                case "lEEID":        lEEID        = lblText;   break;
-                                case "lEERevision":  lEERevision  = lblText;   break;
-                                case "lEEName":      lEEName      = lblText;   break;
-                                case "lEEThick":     lEEThick     = lblText;   break;
+                                case "lEEObject": lEEObject = lblText;   break;
+                                case "lEELink":   lEELink   = lblText;   break;
+                                case "lEEBox":    lEEBox    = lblText;   break;
+                                // Share
+                                case "lEENodeName": lEENodeName = lblText;   break;
+                                case "lEEName":     lEEName     = lblText;   break;
+                                case "lEEID":       lEEID       = lblText;   break;
+                                case "lEERevision": lEERevision = lblText;   break;
+                                // +
+                                case "lEELineThick":    lEELineThick    = lblText;   break;
+                                case "lEELineStyle":    lEELineStyle    = lblText;   break;
+                                case "hEEColorPick":    hEEColorPick    = lblText;   break;
+                                case "lEEImagePath":    lEEImagePath    = lblText;   break;
+                                case "hEEImageLoad":    hEEImageLoad    = lblText;   break;
+                                case "lEEImageFloat":   lEEImageFloat   = lblText;   break;
+                                case "lEEImageBuildIn": lEEImageBuildIn = lblText;   break;
+                                case "lEEImageBPP":     lEEImageBPP     = lblText;   break;
                                 // Align
-                                case "lEEAlign":     lEEAlign     = lblText;   break;
-                                case "lEEAlign0TL":  lEEAlign0TL  = lblText;   break;
-                                case "lEEAlign1T":   lEEAlign1T   = lblText;   break;
-                                case "lEEAlign2TR":  lEEAlign2TR  = lblText;   break;
-                                case "lEEAlign3L":   lEEAlign3L   = lblText;   break;
-                                case "lEEAlign4C":   lEEAlign4C   = lblText;   break;
-                                case "lEEAlign5R":   lEEAlign5R   = lblText;   break;
-                                case "lEEAlign6BL":  lEEAlign6BL  = lblText;   break;
-                                case "lEEAlign7B":   lEEAlign7B   = lblText;   break;
-                                case "lEEAlign8BR":  lEEAlign8BR  = lblText;   break;
+                                case "lEEAlign":    lEEAlign    = lblText;   break;
+                                case "lEEAlign0TL": lEEAlign0TL = lblText;   break;
+                                case "lEEAlign1TC": lEEAlign1TC = lblText;   break;
+                                case "lEEAlign2TR": lEEAlign2TR = lblText;   break;
+                                case "lEEAlign3ML": lEEAlign3ML = lblText;   break;
+                                case "lEEAlign4MC": lEEAlign4MC = lblText;   break;
+                                case "lEEAlign5MR": lEEAlign5MR = lblText;   break;
+                                case "lEEAlign6BL": lEEAlign6BL = lblText;   break;
+                                case "lEEAlign7BC": lEEAlign7BC = lblText;   break;
+                                case "lEEAlign8BR": lEEAlign8BR = lblText;   break;
                             }
                             break;
                         #endregion
 
                         #region Object Edit
                         case "OE":
-                            //switch (lblName)
-                            //{
-                            //}
+                            switch (lblName)
+                            {
+                                case "lOETabMain":        lOETabMain        = lblText;   break;
+                                //
+                                case "lOETabImage":       lOETabImage       = lblText;   break;
+                                case "lOEImageType":      lOEImageType      = lblText;   break;
+                                case "lOEImageType0Load": lOEImageType0Load = lblText;   break;
+                                case "lOEImageType1Link": lOEImageType1Link = lblText;   break;
+                                case "lOEUseBackColor":   lOEUseBackColor   = lblText;   break;
+                                //
+                                case "lOETabAlpha":        lOETabAlpha        = lblText;   break;
+                                case "lOEAlphaType":       lOEAlphaType       = lblText;   break;
+                                case "lOEAlphaType0Image": lOEAlphaType0Image = lblText;   break;
+                                case "lOEAlphaType1Color": lOEAlphaType1Color = lblText;   break;
+                                case "lOEAlphaType2Load":  lOEAlphaType2Load  = lblText;   break;
+                                case "lOEAlphaType3Link":  lOEAlphaType3Link  = lblText;   break;
+                                //
+                                case "lOETabDotes":    lOETabDotes    = lblText;   break;
+                                case "lOEDot":         lOEDot         = lblText;   break;
+                                case "lOEDotName":     lOEDotName     = lblText;   break;
+                                case "hOEDotMoveUp":   hOEDotMoveUp   = lblText;   break;
+                                case "hOEDotMoveDown": hOEDotMoveDown = lblText;   break;
+                                case "hOEDotAdd":      hOEDotAdd      = lblText;   break;
+                                case "hOEDotSave":     hOEDotSave     = lblText;   break;
+                                case "hOEDotDelete":   hOEDotDelete   = lblText;   break;
+                                case "lOEDotLocation": lOEDotLocation = lblText;   break;
+                            }
                             break;
                         #endregion
                             
@@ -341,7 +390,6 @@ namespace Schematix
                                 case "lBEType0Text":      lBEType0Text      = lblText;   break;
                                 case "lBEType1Rectangle": lBEType1Rectangle = lblText;   break;
                                 case "lBEType2Ellipse":   lBEType2Ellipse   = lblText;   break;
-                                case "lBEStyle":          lBEStyle          = lblText;   break;
                                 case "lBEText":           lBEText           = lblText;   break;
                             }
                             break;

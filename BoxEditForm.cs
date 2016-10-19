@@ -15,11 +15,13 @@ namespace Schematix
             lblID.Text       = options.LangCur.lEEID;
             lblRevision.Text = options.LangCur.lEERevision;
             // Own
-            lblType.Text  = options.LangCur.lBEType;
-            lblThick.Text = options.LangCur.lEEThick;
-            lblStyle.Text = options.LangCur.lBEStyle;
-            lblText.Text  = options.LangCur.lBEText;
-            lblAlign.Text = options.LangCur.lEEAlign;
+            lblType.Text      = options.LangCur.lBEType;
+            lblLineThick.Text = options.LangCur.lEELineThick;
+            lblLineStyle.Text = options.LangCur.lEELineStyle;
+            lblText.Text      = options.LangCur.lBEText;
+            lblTextAlign.Text = options.LangCur.lEEAlign;
+            toolTip.SetToolTip(btnLineColor, options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnFontColor, options.LangCur.hEEColorPick);
             // Fill CBB
             cbbType.Items.Add(options.LangCur.lBEType0Text);
             cbbType.Items.Add(options.LangCur.lBEType1Rectangle);
@@ -49,7 +51,7 @@ namespace Schematix
                 cbbType.SelectedIndex = 0;
                 cbbStyle.SelectedIndex = 0;
                 cbbAlign.SelectedIndex = 0;
-                ShowFont(btnFont.Font);
+                ShowFont(btnFontColor.Font);
             }
         }
 
@@ -70,8 +72,8 @@ namespace Schematix
 
         private void ShowFont(Font font)
         {
-            btnFont.Text = font.Size + "em, " + font.Name;
-            btnFont.Font = new Font(font.Name, 8.25f, font.Style);
+            btnFontColor.Text = font.Size + "em, " + font.Name;
+            btnFontColor.Font = new Font(font.Name, 8.25f, font.Style);
         }
 
         private void btnOk_Click(object sender, EventArgs e)

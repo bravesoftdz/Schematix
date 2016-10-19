@@ -33,49 +33,32 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
-            this.tpObjects = new System.Windows.Forms.TabPage();
-            this.tpLinks = new System.Windows.Forms.TabPage();
-            this.tpBoxes = new System.Windows.Forms.TabPage();
-            this.tpIPs = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnIPDelete = new System.Windows.Forms.Button();
-            this.clmIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmPeriod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTimeLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTimeNext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmPing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvIPs = new System.Windows.Forms.ListView();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnBoxDelete = new System.Windows.Forms.Button();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnLinkDelete = new System.Windows.Forms.Button();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnObjectsDelete = new System.Windows.Forms.Button();
-            this.lvObjects = new System.Windows.Forms.ListView();
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbDescription = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
-            this.tbDescription = new System.Windows.Forms.TextBox();
+            this.nudSizeW = new System.Windows.Forms.NumericUpDown();
+            this.lblSize = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.nudSizeH = new System.Windows.Forms.NumericUpDown();
+            this.chkSizeAuto = new System.Windows.Forms.CheckBox();
             this.tpBack = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.gbBack = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.chkBackImageBuildIn = new System.Windows.Forms.CheckBox();
             this.cbbBackStyle = new System.Windows.Forms.ComboBox();
             this.lblBackgImagePath = new System.Windows.Forms.Label();
             this.btnGetBackImage = new System.Windows.Forms.Button();
             this.tbBackgImagePath = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.pbBackPreview = new System.Windows.Forms.PictureBox();
-            this.cbbBackImageAlign = new System.Windows.Forms.ComboBox();
-            this.lblBackImageAlign = new System.Windows.Forms.Label();
-            this.chkBackImageFloat = new System.Windows.Forms.CheckBox();
             this.btnBackColor = new System.Windows.Forms.Button();
+            this.chkBackImageBuildIn = new System.Windows.Forms.CheckBox();
+            this.chkBackImageFloat = new System.Windows.Forms.CheckBox();
+            this.lblBackImageAlign = new System.Windows.Forms.Label();
+            this.cbbBackImageAlign = new System.Windows.Forms.ComboBox();
+            this.cbbImageBPP = new System.Windows.Forms.ComboBox();
+            this.lblImageBPP = new System.Windows.Forms.Label();
             this.gbGrid = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.chkGridAlign = new System.Windows.Forms.CheckBox();
@@ -86,22 +69,47 @@
             this.nudGridStepY = new System.Windows.Forms.NumericUpDown();
             this.nudGridStepX = new System.Windows.Forms.NumericUpDown();
             this.btnGridColor = new System.Windows.Forms.Button();
-            this.nudSizeW = new System.Windows.Forms.NumericUpDown();
-            this.nudSizeH = new System.Windows.Forms.NumericUpDown();
-            this.lblSize = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.tpObjects = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnObjectsDelete = new System.Windows.Forms.Button();
+            this.lvObjects = new System.Windows.Forms.ListView();
+            this.clmObjectName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmObjectLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmObjectPrototype = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tpLinks = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.clmLinkName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkFrom = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkTo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkPrototype = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnLinkDelete = new System.Windows.Forms.Button();
+            this.tpBoxes = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.clmBoxName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxPrototype = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnBoxDelete = new System.Windows.Forms.Button();
+            this.tpIPs = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnIPDelete = new System.Windows.Forms.Button();
+            this.lvIPs = new System.Windows.Forms.ListView();
+            this.clmIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmPeriod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmTimeLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmTimeNext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmPing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxReference = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkRefence = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmObjectReference = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
-            this.tpObjects.SuspendLayout();
-            this.tpLinks.SuspendLayout();
-            this.tpBoxes.SuspendLayout();
-            this.tpIPs.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSizeW)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSizeH)).BeginInit();
             this.tpBack.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.gbBack.SuspendLayout();
@@ -113,8 +121,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudGridThick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSizeW)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSizeH)).BeginInit();
+            this.tpObjects.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.tpLinks.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.tpBoxes.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.tpIPs.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -168,274 +182,43 @@
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             // 
-            // tpObjects
-            // 
-            this.tpObjects.BackColor = System.Drawing.SystemColors.Control;
-            this.tpObjects.Controls.Add(this.tableLayoutPanel5);
-            this.tpObjects.Location = new System.Drawing.Point(4, 22);
-            this.tpObjects.Name = "tpObjects";
-            this.tpObjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tpObjects.Size = new System.Drawing.Size(404, 285);
-            this.tpObjects.TabIndex = 1;
-            this.tpObjects.Text = "Objects";
-            // 
-            // tpLinks
-            // 
-            this.tpLinks.BackColor = System.Drawing.SystemColors.Control;
-            this.tpLinks.Controls.Add(this.tableLayoutPanel4);
-            this.tpLinks.Location = new System.Drawing.Point(4, 22);
-            this.tpLinks.Name = "tpLinks";
-            this.tpLinks.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLinks.Size = new System.Drawing.Size(404, 285);
-            this.tpLinks.TabIndex = 2;
-            this.tpLinks.Text = "Links";
-            // 
-            // tpBoxes
-            // 
-            this.tpBoxes.BackColor = System.Drawing.SystemColors.Control;
-            this.tpBoxes.Controls.Add(this.tableLayoutPanel3);
-            this.tpBoxes.Location = new System.Drawing.Point(4, 22);
-            this.tpBoxes.Name = "tpBoxes";
-            this.tpBoxes.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBoxes.Size = new System.Drawing.Size(404, 285);
-            this.tpBoxes.TabIndex = 3;
-            this.tpBoxes.Text = "Boxes";
-            // 
-            // tpIPs
-            // 
-            this.tpIPs.BackColor = System.Drawing.SystemColors.Control;
-            this.tpIPs.Controls.Add(this.tableLayoutPanel2);
-            this.tpIPs.Location = new System.Drawing.Point(4, 22);
-            this.tpIPs.Name = "tpIPs";
-            this.tpIPs.Padding = new System.Windows.Forms.Padding(3);
-            this.tpIPs.Size = new System.Drawing.Size(524, 185);
-            this.tpIPs.TabIndex = 4;
-            this.tpIPs.Text = "IP addresses";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Controls.Add(this.btnIPDelete, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lvIPs, 0, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(518, 179);
-            this.tableLayoutPanel2.TabIndex = 1;
-            // 
-            // btnIPDelete
-            // 
-            this.btnIPDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnIPDelete.Image = global::Schematix.Properties.Resources.delete;
-            this.btnIPDelete.Location = new System.Drawing.Point(492, 3);
-            this.btnIPDelete.Name = "btnIPDelete";
-            this.btnIPDelete.Size = new System.Drawing.Size(23, 23);
-            this.btnIPDelete.TabIndex = 2;
-            this.btnIPDelete.UseVisualStyleBackColor = true;
-            // 
-            // clmIP
-            // 
-            this.clmIP.Text = "IP";
-            this.clmIP.Width = 120;
-            // 
-            // clmPeriod
-            // 
-            this.clmPeriod.Text = "Period";
-            this.clmPeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // clmTimeLast
-            // 
-            this.clmTimeLast.Text = "Last check";
-            this.clmTimeLast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmTimeLast.Width = 120;
-            // 
-            // clmTimeNext
-            // 
-            this.clmTimeNext.Text = "Next check";
-            this.clmTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmTimeNext.Width = 120;
-            // 
-            // clmPing
-            // 
-            this.clmPing.Text = "Ping";
-            this.clmPing.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lvIPs
-            // 
-            this.lvIPs.CheckBoxes = true;
-            this.lvIPs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.clmIP,
-            this.clmPeriod,
-            this.clmTimeLast,
-            this.clmTimeNext,
-            this.clmPing});
-            this.tableLayoutPanel2.SetColumnSpan(this.lvIPs, 2);
-            this.lvIPs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvIPs.FullRowSelect = true;
-            this.lvIPs.GridLines = true;
-            this.lvIPs.HideSelection = false;
-            this.lvIPs.Location = new System.Drawing.Point(3, 32);
-            this.lvIPs.Name = "lvIPs";
-            this.lvIPs.Size = new System.Drawing.Size(512, 144);
-            this.lvIPs.TabIndex = 3;
-            this.lvIPs.UseCompatibleStateImageBehavior = false;
-            this.lvIPs.View = System.Windows.Forms.View.Details;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Controls.Add(this.btnBoxDelete, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(398, 279);
-            this.tableLayoutPanel3.TabIndex = 2;
-            // 
-            // btnBoxDelete
-            // 
-            this.btnBoxDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnBoxDelete.Image = global::Schematix.Properties.Resources.delete;
-            this.btnBoxDelete.Location = new System.Drawing.Point(372, 3);
-            this.btnBoxDelete.Name = "btnBoxDelete";
-            this.btnBoxDelete.Size = new System.Drawing.Size(23, 23);
-            this.btnBoxDelete.TabIndex = 2;
-            this.btnBoxDelete.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Controls.Add(this.btnLinkDelete, 1, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(398, 279);
-            this.tableLayoutPanel4.TabIndex = 2;
-            // 
-            // btnLinkDelete
-            // 
-            this.btnLinkDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnLinkDelete.Image = global::Schematix.Properties.Resources.delete;
-            this.btnLinkDelete.Location = new System.Drawing.Point(372, 3);
-            this.btnLinkDelete.Name = "btnLinkDelete";
-            this.btnLinkDelete.Size = new System.Drawing.Size(23, 23);
-            this.btnLinkDelete.TabIndex = 2;
-            this.btnLinkDelete.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel5.Controls.Add(this.btnObjectsDelete, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.lvObjects, 0, 1);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(398, 279);
-            this.tableLayoutPanel5.TabIndex = 2;
-            // 
-            // btnObjectsDelete
-            // 
-            this.btnObjectsDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnObjectsDelete.Image = global::Schematix.Properties.Resources.delete;
-            this.btnObjectsDelete.Location = new System.Drawing.Point(372, 3);
-            this.btnObjectsDelete.Name = "btnObjectsDelete";
-            this.btnObjectsDelete.Size = new System.Drawing.Size(23, 23);
-            this.btnObjectsDelete.TabIndex = 2;
-            this.btnObjectsDelete.UseVisualStyleBackColor = true;
-            // 
-            // lvObjects
-            // 
-            this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader11,
-            this.columnHeader12,
-            this.columnHeader13,
-            this.columnHeader14,
-            this.columnHeader15});
-            this.tableLayoutPanel5.SetColumnSpan(this.lvObjects, 2);
-            this.lvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvObjects.FullRowSelect = true;
-            this.lvObjects.GridLines = true;
-            this.lvObjects.HideSelection = false;
-            this.lvObjects.Location = new System.Drawing.Point(3, 32);
-            this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(392, 244);
-            this.lvObjects.TabIndex = 3;
-            this.lvObjects.UseCompatibleStateImageBehavior = false;
-            this.lvObjects.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.Text = "IP";
-            this.columnHeader11.Width = 120;
-            // 
-            // columnHeader12
-            // 
-            this.columnHeader12.Text = "Period";
-            this.columnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // columnHeader13
-            // 
-            this.columnHeader13.Text = "Last check";
-            this.columnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader13.Width = 120;
-            // 
-            // columnHeader14
-            // 
-            this.columnHeader14.Text = "Next check";
-            this.columnHeader14.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader14.Width = 120;
-            // 
-            // columnHeader15
-            // 
-            this.columnHeader15.Text = "Ping";
-            this.columnHeader15.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // tableLayoutPanel6
             // 
-            this.tableLayoutPanel6.ColumnCount = 4;
+            this.tableLayoutPanel6.ColumnCount = 5;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel6.Controls.Add(this.tbDescription, 0, 1);
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel6.Controls.Add(this.tbDescription, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.lblName, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.tbName, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.nudSizeW, 1, 2);
-            this.tableLayoutPanel6.Controls.Add(this.lblSize, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.nudSizeH, 3, 2);
-            this.tableLayoutPanel6.Controls.Add(this.label3, 2, 2);
+            this.tableLayoutPanel6.Controls.Add(this.lblSize, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.nudSizeW, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.label3, 2, 1);
+            this.tableLayoutPanel6.Controls.Add(this.nudSizeH, 3, 1);
+            this.tableLayoutPanel6.Controls.Add(this.chkSizeAuto, 4, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 3;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(398, 279);
             this.tableLayoutPanel6.TabIndex = 2;
+            // 
+            // tbDescription
+            // 
+            this.tableLayoutPanel6.SetColumnSpan(this.tbDescription, 5);
+            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDescription.Location = new System.Drawing.Point(3, 55);
+            this.tbDescription.MaxLength = 8192;
+            this.tbDescription.Multiline = true;
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbDescription.Size = new System.Drawing.Size(392, 221);
+            this.tbDescription.TabIndex = 10;
             // 
             // lblName
             // 
@@ -450,24 +233,91 @@
             // tbName
             // 
             this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel6.SetColumnSpan(this.tbName, 3);
+            this.tableLayoutPanel6.SetColumnSpan(this.tbName, 4);
             this.tbName.Location = new System.Drawing.Point(58, 3);
             this.tbName.MaxLength = 255;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(337, 20);
             this.tbName.TabIndex = 1;
             // 
-            // tbDescription
+            // nudSizeW
             // 
-            this.tableLayoutPanel6.SetColumnSpan(this.tbDescription, 4);
-            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDescription.Location = new System.Drawing.Point(3, 29);
-            this.tbDescription.MaxLength = 8192;
-            this.tbDescription.Multiline = true;
-            this.tbDescription.Name = "tbDescription";
-            this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDescription.Size = new System.Drawing.Size(392, 221);
-            this.tbDescription.TabIndex = 10;
+            this.nudSizeW.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.nudSizeW.Location = new System.Drawing.Point(58, 29);
+            this.nudSizeW.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.nudSizeW.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nudSizeW.Name = "nudSizeW";
+            this.nudSizeW.Size = new System.Drawing.Size(60, 20);
+            this.nudSizeW.TabIndex = 11;
+            this.nudSizeW.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudSizeW.Value = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            // 
+            // lblSize
+            // 
+            this.lblSize.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblSize.AutoSize = true;
+            this.lblSize.Location = new System.Drawing.Point(3, 32);
+            this.lblSize.Name = "lblSize";
+            this.lblSize.Size = new System.Drawing.Size(49, 13);
+            this.lblSize.TabIndex = 0;
+            this.lblSize.Text = "Map size";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(124, 32);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(12, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "x";
+            // 
+            // nudSizeH
+            // 
+            this.nudSizeH.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.nudSizeH.Location = new System.Drawing.Point(142, 29);
+            this.nudSizeH.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.nudSizeH.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nudSizeH.Name = "nudSizeH";
+            this.nudSizeH.Size = new System.Drawing.Size(60, 20);
+            this.nudSizeH.TabIndex = 11;
+            this.nudSizeH.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudSizeH.Value = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            // 
+            // chkSizeAuto
+            // 
+            this.chkSizeAuto.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkSizeAuto.AutoSize = true;
+            this.chkSizeAuto.Location = new System.Drawing.Point(208, 30);
+            this.chkSizeAuto.Name = "chkSizeAuto";
+            this.chkSizeAuto.Size = new System.Drawing.Size(48, 17);
+            this.chkSizeAuto.TabIndex = 12;
+            this.chkSizeAuto.Text = "Auto";
+            this.chkSizeAuto.UseVisualStyleBackColor = true;
             // 
             // tpBack
             // 
@@ -517,16 +367,18 @@
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.Controls.Add(this.chkBackImageBuildIn, 0, 3);
             this.tableLayoutPanel8.Controls.Add(this.cbbBackStyle, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.lblBackgImagePath, 0, 1);
             this.tableLayoutPanel8.Controls.Add(this.btnGetBackImage, 3, 1);
             this.tableLayoutPanel8.Controls.Add(this.tbBackgImagePath, 1, 1);
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 4);
-            this.tableLayoutPanel8.Controls.Add(this.cbbBackImageAlign, 1, 2);
-            this.tableLayoutPanel8.Controls.Add(this.lblBackImageAlign, 0, 2);
-            this.tableLayoutPanel8.Controls.Add(this.chkBackImageFloat, 2, 2);
             this.tableLayoutPanel8.Controls.Add(this.btnBackColor, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.chkBackImageBuildIn, 0, 3);
+            this.tableLayoutPanel8.Controls.Add(this.chkBackImageFloat, 0, 2);
+            this.tableLayoutPanel8.Controls.Add(this.lblBackImageAlign, 1, 2);
+            this.tableLayoutPanel8.Controls.Add(this.cbbBackImageAlign, 2, 2);
+            this.tableLayoutPanel8.Controls.Add(this.cbbImageBPP, 2, 3);
+            this.tableLayoutPanel8.Controls.Add(this.lblImageBPP, 1, 3);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -536,20 +388,9 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(386, 179);
             this.tableLayoutPanel8.TabIndex = 1;
-            // 
-            // chkBackImageBuildIn
-            // 
-            this.chkBackImageBuildIn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkBackImageBuildIn.AutoSize = true;
-            this.tableLayoutPanel8.SetColumnSpan(this.chkBackImageBuildIn, 2);
-            this.chkBackImageBuildIn.Location = new System.Drawing.Point(3, 86);
-            this.chkBackImageBuildIn.Name = "chkBackImageBuildIn";
-            this.chkBackImageBuildIn.Size = new System.Drawing.Size(79, 17);
-            this.chkBackImageBuildIn.TabIndex = 7;
-            this.chkBackImageBuildIn.Text = "Save to file";
-            this.chkBackImageBuildIn.UseVisualStyleBackColor = true;
             // 
             // cbbBackStyle
             // 
@@ -600,12 +441,12 @@
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel9.Controls.Add(this.pbBackPreview, 0, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 109);
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 113);
             this.tableLayoutPanel9.MinimumSize = new System.Drawing.Size(16, 16);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(380, 67);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(380, 63);
             this.tableLayoutPanel9.TabIndex = 10;
             // 
             // pbBackPreview
@@ -614,50 +455,90 @@
             this.pbBackPreview.Location = new System.Drawing.Point(3, 3);
             this.pbBackPreview.Margin = new System.Windows.Forms.Padding(0);
             this.pbBackPreview.Name = "pbBackPreview";
-            this.pbBackPreview.Size = new System.Drawing.Size(374, 61);
+            this.pbBackPreview.Size = new System.Drawing.Size(374, 57);
             this.pbBackPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbBackPreview.TabIndex = 0;
             this.pbBackPreview.TabStop = false;
             // 
-            // cbbBackImageAlign
+            // btnBackColor
             // 
-            this.cbbBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cbbBackImageAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbBackImageAlign.FormattingEnabled = true;
-            this.cbbBackImageAlign.Location = new System.Drawing.Point(129, 59);
-            this.cbbBackImageAlign.Name = "cbbBackImageAlign";
-            this.cbbBackImageAlign.Size = new System.Drawing.Size(120, 21);
-            this.cbbBackImageAlign.TabIndex = 5;
+            this.btnBackColor.BackColor = System.Drawing.Color.SkyBlue;
+            this.btnBackColor.Location = new System.Drawing.Point(137, 3);
+            this.btnBackColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
+            this.btnBackColor.Name = "btnBackColor";
+            this.btnBackColor.Size = new System.Drawing.Size(32, 21);
+            this.btnBackColor.TabIndex = 2;
+            this.btnBackColor.UseVisualStyleBackColor = false;
             // 
-            // lblBackImageAlign
+            // chkBackImageBuildIn
             // 
-            this.lblBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblBackImageAlign.AutoSize = true;
-            this.lblBackImageAlign.Location = new System.Drawing.Point(62, 63);
-            this.lblBackImageAlign.Name = "lblBackImageAlign";
-            this.lblBackImageAlign.Size = new System.Drawing.Size(61, 13);
-            this.lblBackImageAlign.TabIndex = 5;
-            this.lblBackImageAlign.Text = "Image align";
+            this.chkBackImageBuildIn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkBackImageBuildIn.AutoSize = true;
+            this.chkBackImageBuildIn.Location = new System.Drawing.Point(3, 88);
+            this.chkBackImageBuildIn.Name = "chkBackImageBuildIn";
+            this.chkBackImageBuildIn.Size = new System.Drawing.Size(79, 17);
+            this.chkBackImageBuildIn.TabIndex = 7;
+            this.chkBackImageBuildIn.Text = "Save to file";
+            this.chkBackImageBuildIn.UseVisualStyleBackColor = true;
             // 
             // chkBackImageFloat
             // 
             this.chkBackImageFloat.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.chkBackImageFloat.AutoSize = true;
-            this.chkBackImageFloat.Location = new System.Drawing.Point(255, 61);
+            this.chkBackImageFloat.Location = new System.Drawing.Point(3, 61);
             this.chkBackImageFloat.Name = "chkBackImageFloat";
             this.chkBackImageFloat.Size = new System.Drawing.Size(80, 17);
             this.chkBackImageFloat.TabIndex = 6;
             this.chkBackImageFloat.Text = "Float image";
             this.chkBackImageFloat.UseVisualStyleBackColor = true;
             // 
-            // btnBackColor
+            // lblBackImageAlign
             // 
-            this.btnBackColor.Location = new System.Drawing.Point(137, 3);
-            this.btnBackColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
-            this.btnBackColor.Name = "btnBackColor";
-            this.btnBackColor.Size = new System.Drawing.Size(32, 21);
-            this.btnBackColor.TabIndex = 2;
-            this.btnBackColor.UseVisualStyleBackColor = true;
+            this.lblBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblBackImageAlign.AutoSize = true;
+            this.lblBackImageAlign.Location = new System.Drawing.Point(132, 63);
+            this.lblBackImageAlign.Name = "lblBackImageAlign";
+            this.lblBackImageAlign.Size = new System.Drawing.Size(61, 13);
+            this.lblBackImageAlign.TabIndex = 5;
+            this.lblBackImageAlign.Text = "Image align";
+            // 
+            // cbbBackImageAlign
+            // 
+            this.cbbBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbbBackImageAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbBackImageAlign.FormattingEnabled = true;
+            this.cbbBackImageAlign.Location = new System.Drawing.Point(199, 59);
+            this.cbbBackImageAlign.Name = "cbbBackImageAlign";
+            this.cbbBackImageAlign.Size = new System.Drawing.Size(120, 21);
+            this.cbbBackImageAlign.TabIndex = 5;
+            // 
+            // cbbImageBPP
+            // 
+            this.cbbImageBPP.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbbImageBPP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbImageBPP.FormattingEnabled = true;
+            this.cbbImageBPP.Items.AddRange(new object[] {
+            "32 (ARGB)",
+            "24 (RGB)",
+            "16 (6r5g5b)",
+            "8 (256)",
+            "8 (Gray)",
+            "4 (16)",
+            "4 (Gray)"});
+            this.cbbImageBPP.Location = new System.Drawing.Point(199, 86);
+            this.cbbImageBPP.Name = "cbbImageBPP";
+            this.cbbImageBPP.Size = new System.Drawing.Size(100, 21);
+            this.cbbImageBPP.TabIndex = 11;
+            // 
+            // lblImageBPP
+            // 
+            this.lblImageBPP.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblImageBPP.AutoSize = true;
+            this.lblImageBPP.Location = new System.Drawing.Point(129, 90);
+            this.lblImageBPP.Name = "lblImageBPP";
+            this.lblImageBPP.Size = new System.Drawing.Size(64, 13);
+            this.lblImageBPP.TabIndex = 12;
+            this.lblImageBPP.Text = "Storing BPP";
             // 
             // gbGrid
             // 
@@ -819,80 +700,345 @@
             // 
             // btnGridColor
             // 
+            this.btnGridColor.BackColor = System.Drawing.Color.Silver;
             this.btnGridColor.Location = new System.Drawing.Point(137, 3);
             this.btnGridColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnGridColor.Name = "btnGridColor";
             this.btnGridColor.Size = new System.Drawing.Size(32, 21);
             this.btnGridColor.TabIndex = 2;
-            this.btnGridColor.UseVisualStyleBackColor = true;
+            this.btnGridColor.UseVisualStyleBackColor = false;
             // 
-            // nudSizeW
+            // tpObjects
             // 
-            this.nudSizeW.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nudSizeW.Location = new System.Drawing.Point(58, 256);
-            this.nudSizeW.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-            this.nudSizeW.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.nudSizeW.Name = "nudSizeW";
-            this.nudSizeW.Size = new System.Drawing.Size(60, 20);
-            this.nudSizeW.TabIndex = 11;
-            this.nudSizeW.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudSizeW.Value = new decimal(new int[] {
-            32,
-            0,
-            0,
-            0});
+            this.tpObjects.BackColor = System.Drawing.SystemColors.Control;
+            this.tpObjects.Controls.Add(this.tableLayoutPanel5);
+            this.tpObjects.Location = new System.Drawing.Point(4, 22);
+            this.tpObjects.Name = "tpObjects";
+            this.tpObjects.Padding = new System.Windows.Forms.Padding(3);
+            this.tpObjects.Size = new System.Drawing.Size(404, 285);
+            this.tpObjects.TabIndex = 1;
+            this.tpObjects.Text = "Objects";
             // 
-            // nudSizeH
+            // tableLayoutPanel5
             // 
-            this.nudSizeH.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nudSizeH.Location = new System.Drawing.Point(142, 256);
-            this.nudSizeH.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-            this.nudSizeH.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.nudSizeH.Name = "nudSizeH";
-            this.nudSizeH.Size = new System.Drawing.Size(60, 20);
-            this.nudSizeH.TabIndex = 11;
-            this.nudSizeH.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudSizeH.Value = new decimal(new int[] {
-            32,
-            0,
-            0,
-            0});
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel5.Controls.Add(this.btnObjectsDelete, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.lvObjects, 0, 1);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(398, 279);
+            this.tableLayoutPanel5.TabIndex = 2;
             // 
-            // lblSize
+            // btnObjectsDelete
             // 
-            this.lblSize.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblSize.AutoSize = true;
-            this.lblSize.Location = new System.Drawing.Point(3, 259);
-            this.lblSize.Name = "lblSize";
-            this.lblSize.Size = new System.Drawing.Size(49, 13);
-            this.lblSize.TabIndex = 0;
-            this.lblSize.Text = "Map size";
+            this.btnObjectsDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnObjectsDelete.Image = global::Schematix.Properties.Resources.delete;
+            this.btnObjectsDelete.Location = new System.Drawing.Point(372, 3);
+            this.btnObjectsDelete.Name = "btnObjectsDelete";
+            this.btnObjectsDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnObjectsDelete.TabIndex = 2;
+            this.btnObjectsDelete.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // lvObjects
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(124, 259);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(12, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "x";
+            this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clmObjectName,
+            this.clmObjectLocation,
+            this.clmObjectPrototype,
+            this.clmObjectReference});
+            this.tableLayoutPanel5.SetColumnSpan(this.lvObjects, 2);
+            this.lvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvObjects.FullRowSelect = true;
+            this.lvObjects.GridLines = true;
+            this.lvObjects.HideSelection = false;
+            this.lvObjects.Location = new System.Drawing.Point(3, 32);
+            this.lvObjects.Name = "lvObjects";
+            this.lvObjects.Size = new System.Drawing.Size(392, 244);
+            this.lvObjects.TabIndex = 3;
+            this.lvObjects.UseCompatibleStateImageBehavior = false;
+            this.lvObjects.View = System.Windows.Forms.View.Details;
+            // 
+            // clmObjectName
+            // 
+            this.clmObjectName.Text = "Name";
+            this.clmObjectName.Width = 120;
+            // 
+            // clmObjectLocation
+            // 
+            this.clmObjectLocation.Text = "Location";
+            this.clmObjectLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmObjectLocation.Width = 150;
+            // 
+            // clmObjectPrototype
+            // 
+            this.clmObjectPrototype.Text = "Prototype";
+            this.clmObjectPrototype.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmObjectPrototype.Width = 90;
+            // 
+            // tpLinks
+            // 
+            this.tpLinks.BackColor = System.Drawing.SystemColors.Control;
+            this.tpLinks.Controls.Add(this.tableLayoutPanel4);
+            this.tpLinks.Location = new System.Drawing.Point(4, 22);
+            this.tpLinks.Name = "tpLinks";
+            this.tpLinks.Padding = new System.Windows.Forms.Padding(3);
+            this.tpLinks.Size = new System.Drawing.Size(404, 285);
+            this.tpLinks.TabIndex = 2;
+            this.tpLinks.Text = "Links";
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.Controls.Add(this.listView1, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.btnLinkDelete, 1, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(398, 279);
+            this.tableLayoutPanel4.TabIndex = 2;
+            // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clmLinkName,
+            this.clmLinkFrom,
+            this.clmLinkTo,
+            this.clmLinkPrototype,
+            this.clmLinkRefence});
+            this.tableLayoutPanel4.SetColumnSpan(this.listView1, 2);
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.FullRowSelect = true;
+            this.listView1.GridLines = true;
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(3, 32);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(392, 244);
+            this.listView1.TabIndex = 4;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // clmLinkName
+            // 
+            this.clmLinkName.Text = "Name";
+            this.clmLinkName.Width = 120;
+            // 
+            // clmLinkFrom
+            // 
+            this.clmLinkFrom.Text = "From";
+            this.clmLinkFrom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmLinkFrom.Width = 80;
+            // 
+            // clmLinkTo
+            // 
+            this.clmLinkTo.Text = "To";
+            this.clmLinkTo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmLinkTo.Width = 80;
+            // 
+            // clmLinkPrototype
+            // 
+            this.clmLinkPrototype.Text = "Prototype";
+            this.clmLinkPrototype.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmLinkPrototype.Width = 80;
+            // 
+            // btnLinkDelete
+            // 
+            this.btnLinkDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnLinkDelete.Image = global::Schematix.Properties.Resources.delete;
+            this.btnLinkDelete.Location = new System.Drawing.Point(372, 3);
+            this.btnLinkDelete.Name = "btnLinkDelete";
+            this.btnLinkDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnLinkDelete.TabIndex = 2;
+            this.btnLinkDelete.UseVisualStyleBackColor = true;
+            // 
+            // tpBoxes
+            // 
+            this.tpBoxes.BackColor = System.Drawing.SystemColors.Control;
+            this.tpBoxes.Controls.Add(this.tableLayoutPanel3);
+            this.tpBoxes.Location = new System.Drawing.Point(4, 22);
+            this.tpBoxes.Name = "tpBoxes";
+            this.tpBoxes.Padding = new System.Windows.Forms.Padding(3);
+            this.tpBoxes.Size = new System.Drawing.Size(404, 285);
+            this.tpBoxes.TabIndex = 3;
+            this.tpBoxes.Text = "Boxes";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Controls.Add(this.listView2, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnBoxDelete, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(398, 279);
+            this.tableLayoutPanel3.TabIndex = 2;
+            // 
+            // listView2
+            // 
+            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clmBoxName,
+            this.clmBoxLocation,
+            this.clmBoxPrototype,
+            this.clmBoxReference,
+            this.clmBoxText});
+            this.tableLayoutPanel3.SetColumnSpan(this.listView2, 2);
+            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView2.FullRowSelect = true;
+            this.listView2.GridLines = true;
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(3, 32);
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(392, 244);
+            this.listView2.TabIndex = 4;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            // 
+            // clmBoxName
+            // 
+            this.clmBoxName.Text = "Name";
+            this.clmBoxName.Width = 120;
+            // 
+            // clmBoxLocation
+            // 
+            this.clmBoxLocation.Text = "Location";
+            this.clmBoxLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmBoxLocation.Width = 150;
+            // 
+            // clmBoxPrototype
+            // 
+            this.clmBoxPrototype.Text = "Prototype";
+            this.clmBoxPrototype.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmBoxPrototype.Width = 90;
+            // 
+            // btnBoxDelete
+            // 
+            this.btnBoxDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnBoxDelete.Image = global::Schematix.Properties.Resources.delete;
+            this.btnBoxDelete.Location = new System.Drawing.Point(372, 3);
+            this.btnBoxDelete.Name = "btnBoxDelete";
+            this.btnBoxDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnBoxDelete.TabIndex = 2;
+            this.btnBoxDelete.UseVisualStyleBackColor = true;
+            // 
+            // tpIPs
+            // 
+            this.tpIPs.BackColor = System.Drawing.SystemColors.Control;
+            this.tpIPs.Controls.Add(this.tableLayoutPanel2);
+            this.tpIPs.Location = new System.Drawing.Point(4, 22);
+            this.tpIPs.Name = "tpIPs";
+            this.tpIPs.Padding = new System.Windows.Forms.Padding(3);
+            this.tpIPs.Size = new System.Drawing.Size(404, 285);
+            this.tpIPs.TabIndex = 4;
+            this.tpIPs.Text = "IP addresses";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Controls.Add(this.btnIPDelete, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lvIPs, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(398, 279);
+            this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // btnIPDelete
+            // 
+            this.btnIPDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnIPDelete.Image = global::Schematix.Properties.Resources.delete;
+            this.btnIPDelete.Location = new System.Drawing.Point(372, 3);
+            this.btnIPDelete.Name = "btnIPDelete";
+            this.btnIPDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnIPDelete.TabIndex = 2;
+            this.btnIPDelete.UseVisualStyleBackColor = true;
+            // 
+            // lvIPs
+            // 
+            this.lvIPs.CheckBoxes = true;
+            this.lvIPs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clmIP,
+            this.clmPeriod,
+            this.clmTimeLast,
+            this.clmTimeNext,
+            this.clmPing});
+            this.tableLayoutPanel2.SetColumnSpan(this.lvIPs, 2);
+            this.lvIPs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvIPs.FullRowSelect = true;
+            this.lvIPs.GridLines = true;
+            this.lvIPs.HideSelection = false;
+            this.lvIPs.Location = new System.Drawing.Point(3, 32);
+            this.lvIPs.Name = "lvIPs";
+            this.lvIPs.Size = new System.Drawing.Size(392, 244);
+            this.lvIPs.TabIndex = 3;
+            this.lvIPs.UseCompatibleStateImageBehavior = false;
+            this.lvIPs.View = System.Windows.Forms.View.Details;
+            // 
+            // clmIP
+            // 
+            this.clmIP.Text = "IP";
+            this.clmIP.Width = 120;
+            // 
+            // clmPeriod
+            // 
+            this.clmPeriod.Text = "Period";
+            this.clmPeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // clmTimeLast
+            // 
+            this.clmTimeLast.Text = "Last check";
+            this.clmTimeLast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmTimeLast.Width = 120;
+            // 
+            // clmTimeNext
+            // 
+            this.clmTimeNext.Text = "Next check";
+            this.clmTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmTimeNext.Width = 120;
+            // 
+            // clmPing
+            // 
+            this.clmPing.Text = "Ping";
+            this.clmPing.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // clmBoxText
+            // 
+            this.clmBoxText.Text = "Text";
+            // 
+            // clmBoxReference
+            // 
+            this.clmBoxReference.Text = "Reference";
+            // 
+            // clmLinkRefence
+            // 
+            this.clmLinkRefence.Text = "Refence";
+            // 
+            // clmObjectReference
+            // 
+            this.clmObjectReference.Text = "Reference";
             // 
             // MapOptionsForm
             // 
@@ -908,16 +1054,10 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
-            this.tpObjects.ResumeLayout(false);
-            this.tpLinks.ResumeLayout(false);
-            this.tpBoxes.ResumeLayout(false);
-            this.tpIPs.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSizeW)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSizeH)).EndInit();
             this.tpBack.ResumeLayout(false);
             this.tpBack.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
@@ -935,8 +1075,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudGridThick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGridStepX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSizeW)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSizeH)).EndInit();
+            this.tpObjects.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tpLinks.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tpBoxes.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tpIPs.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -962,11 +1108,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button btnObjectsDelete;
         private System.Windows.Forms.ListView lvObjects;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.ColumnHeader columnHeader13;
-        private System.Windows.Forms.ColumnHeader columnHeader14;
-        private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.ColumnHeader clmObjectName;
+        private System.Windows.Forms.ColumnHeader clmObjectLocation;
+        private System.Windows.Forms.ColumnHeader clmObjectPrototype;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button btnLinkDelete;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
@@ -1004,5 +1148,21 @@
         private System.Windows.Forms.Label lblSize;
         private System.Windows.Forms.NumericUpDown nudSizeH;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox chkSizeAuto;
+        private System.Windows.Forms.ComboBox cbbImageBPP;
+        private System.Windows.Forms.Label lblImageBPP;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader clmLinkName;
+        private System.Windows.Forms.ColumnHeader clmLinkFrom;
+        private System.Windows.Forms.ColumnHeader clmLinkTo;
+        private System.Windows.Forms.ColumnHeader clmLinkPrototype;
+        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ColumnHeader clmBoxName;
+        private System.Windows.Forms.ColumnHeader clmBoxLocation;
+        private System.Windows.Forms.ColumnHeader clmBoxPrototype;
+        private System.Windows.Forms.ColumnHeader clmObjectReference;
+        private System.Windows.Forms.ColumnHeader clmLinkRefence;
+        private System.Windows.Forms.ColumnHeader clmBoxReference;
+        private System.Windows.Forms.ColumnHeader clmBoxText;
     }
 }

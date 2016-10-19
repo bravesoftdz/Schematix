@@ -14,16 +14,18 @@ namespace Schematix
             lblID.Text       = options.LangCur.lEEID;
             lblRevision.Text = options.LangCur.lEERevision;
             // Own
-            lblThick.Text = options.LangCur.lEEThick;
+            lblLineThick.Text = options.LangCur.lEELineThick;
+            lblLineStyle.Text = options.LangCur.lEELineStyle;
+            toolTip.SetToolTip(btnColor, options.LangCur.hEEColorPick);
             if (false)
             {
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEEBox;
+                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEELink;
                 //...
                 //cbbStyle.SelectedIndex = 0;
             }
             else
             {
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEEBox;
+                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEELink;
                 cbbStyle.SelectedIndex = 0;
             }
         }

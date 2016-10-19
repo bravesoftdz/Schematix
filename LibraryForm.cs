@@ -149,7 +149,10 @@ namespace Schematix
 
         private void btnUsedObjectEdit_Click(object sender, EventArgs e)
         {
-            //
+            var form = new ObjectOptionsForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+            }
         }
 
         private void btnLinkAdd_Click(object sender, EventArgs e)
@@ -167,7 +170,10 @@ namespace Schematix
 
         private void btnUsedLinkEdit_Click(object sender, EventArgs e)
         {
-            //
+            var form = new LinkOptionsForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+            }
         }
 
         private void btnBoxAdd_Click(object sender, EventArgs e)
@@ -185,7 +191,10 @@ namespace Schematix
 
         private void btnUsedBoxEdit_Click(object sender, EventArgs e)
         {
-            //
+            var form = new BoxOptionsForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+            }
         }
     }
 }

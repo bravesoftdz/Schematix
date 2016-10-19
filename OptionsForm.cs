@@ -53,7 +53,7 @@ namespace Schematix
             nudGridThick.Value         = options.GridThick;
             chkGridAlign.Checked       = options.GridAlign;
             // Background
-            chkBackStore.Checked            = options.BackgroundStoreOwn;
+            chkBackStore.Checked       = options.BackgroundStoreOwn;
             //
             image = new Bitmap(options.BackgroundImage);
             if (cbbBackStyle.SelectedIndex != 0)
@@ -75,15 +75,15 @@ namespace Schematix
             //# Main
             tpMain.Text = lang.lOFMainTab;
             // Language
-            gbLanguage.Text = lang.lOFMainLanguage;
+            gbLanguage.Text      = lang.lOFMainLanguage;
             lblLanguagePath.Text = lang.lOFMainLanguagePath;
             toolTip.SetToolTip(btnGetLanguagePath, options.LangCur.hOFMainRootGet);
             // Behaiour
-            gbRoots.Text = lang.lOFMainRoots;
-            lblRootMaps.Text = lang.lOFMainRootMaps;
+            gbRoots.Text        = lang.lOFMainRoots;
+            lblRootMaps.Text    = lang.lOFMainRootMaps;
             lblRootObjects.Text = lang.lOFMainRootObjects;
-            lblRootLinks.Text = lang.lOFMainRootLinks;
-            lblRootBoxes.Text = lang.lOFMainRootBoxes;
+            lblRootLinks.Text   = lang.lOFMainRootLinks;
+            lblRootBoxes.Text   = lang.lOFMainRootBoxes;
             toolTip.SetToolTip(btnGetRootMaps,    options.LangCur.hOFMainRootGet);
             toolTip.SetToolTip(btnGetRootObjects, options.LangCur.hOFMainRootGet);
             toolTip.SetToolTip(btnGetRootLinks,   options.LangCur.hOFMainRootGet);
@@ -105,12 +105,12 @@ namespace Schematix
             lblOnStart.Text = lang.lOFMainOnStart;
             lblOnClose.Text = lang.lOFMainOnClose;
             chkPingPeriod.Text = lang.lOFMainPingPeriod;
-            lblPingCount.Text = lang.lOFMainPingCount;
+            lblPingCount.Text  = lang.lOFMainPingCount;
 
             //# Map
             tpMap.Text = lang.lOFMapTab;
             // Grid
-            gbGrid.Text = lang.lOFMapGrid;
+            gbGrid.Text       = lang.lOFMapGrid;
             chkGridStore.Text = lang.lOFMapStore;
             idx = cbbGridStyle.SelectedIndex;
             cbbGridStyle.Items.Clear();
@@ -120,11 +120,11 @@ namespace Schematix
             cbbGridStyle.Items.Add(lang.lOFMapGridStyle3Crosses);
             cbbGridStyle.Items.Add(lang.lOFMapGridStyle4Grid);
             cbbGridStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(btnGridColor, options.LangCur.hOFMapGridColor);
-            lblGridThick.Text = lang.lOFMapGridThick;
+            toolTip.SetToolTip(btnGridColor, options.LangCur.hEEColorPick);
+            lblGridThick.Text = lang.lEELineThick;
             chkGridAlign.Text = lang.lOFMapGridAlign;
             // Background
-            gbBack.Text = lang.lOFMapBack;
+            gbBack.Text       = lang.lOFMapBack;
             chkBackStore.Text = lang.lOFMapStore;
             idx = cbbBackStyle.SelectedIndex;
             cbbBackStyle.Items.Clear();
@@ -135,24 +135,25 @@ namespace Schematix
             cbbBackStyle.Items.Add(lang.lOFMapBackStyle4ImageZInner);
             cbbBackStyle.Items.Add(lang.lOFMapBackStyle5ImageZOutter);
             cbbBackStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(btnBackColor, options.LangCur.hOFMapBackColor);
-            lblBackgImagePath.Text = lang.lOFMapBackImagePath;
-            toolTip.SetToolTip(btnGetBackImage, options.LangCur.hOFMapBackImageLoad);
-            lblBackImageAlign.Text = lang.lEEAlign;
+            toolTip.SetToolTip(btnBackColor,    options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnGetBackImage, options.LangCur.hEEImageLoad);
+            lblBackgImagePath.Text   = lang.lEEImagePath;
+            chkBackImageFloat.Text   = lang.lEEImageFloat;
+            chkBackImageBuildIn.Text = lang.lEEImageBuildIn;
+            lblBackImageAlign.Text   = lang.lEEAlign;
+            lblBackImageBPP.Text     = lang.lEEImageBPP;
             idx = cbbBackImageAlign.SelectedIndex;
             cbbBackImageAlign.Items.Clear();
             cbbBackImageAlign.Items.Add(lang.lEEAlign0TL);
-            cbbBackImageAlign.Items.Add(lang.lEEAlign1T);
+            cbbBackImageAlign.Items.Add(lang.lEEAlign1TC);
             cbbBackImageAlign.Items.Add(lang.lEEAlign2TR);
-            cbbBackImageAlign.Items.Add(lang.lEEAlign3L);
-            cbbBackImageAlign.Items.Add(lang.lEEAlign4C);
-            cbbBackImageAlign.Items.Add(lang.lEEAlign5R);
+            cbbBackImageAlign.Items.Add(lang.lEEAlign3ML);
+            cbbBackImageAlign.Items.Add(lang.lEEAlign4MC);
+            cbbBackImageAlign.Items.Add(lang.lEEAlign5MR);
             cbbBackImageAlign.Items.Add(lang.lEEAlign6BL);
-            cbbBackImageAlign.Items.Add(lang.lEEAlign7B);
+            cbbBackImageAlign.Items.Add(lang.lEEAlign7BC);
             cbbBackImageAlign.Items.Add(lang.lEEAlign8BR);
             cbbBackImageAlign.SelectedIndex = idx;
-            chkBackImageFloat.Text = lang.lOFMapBackImageFloat;
-            chkBackImageBuildIn.Text = lang.lOFMapBackImageBuildIn;
         }
 
         private void Path_TextChanged(object sender, EventArgs e)//Ok
@@ -254,7 +255,7 @@ namespace Schematix
             options.OnClose = cbbOnClose.SelectedIndex;
             options.PingOnn = chkPingPeriod.Checked;
             options.PingPeriod = (int)nudPingPeriod.Value;
-            options.PingCount = (int)nudPingCount.Value;
+            options.PingCount  = (int)nudPingCount.Value;
             // Folders
             options.RootMaps = tbRootMaps.Text;
             options.RootObjects = tbRootObjects.Text;
