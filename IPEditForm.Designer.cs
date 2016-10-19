@@ -37,11 +37,11 @@
             this.lblTimeOut = new System.Windows.Forms.Label();
             this.nudPeriod = new System.Windows.Forms.NumericUpDown();
             this.nudTimeOut = new System.Windows.Forms.NumericUpDown();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.tbAddress = new System.Windows.Forms.TextBox();
             this.lblTimeNext = new System.Windows.Forms.Label();
             this.dtpDateNext = new System.Windows.Forms.DateTimePicker();
             this.dtpTimeNext = new System.Windows.Forms.DateTimePicker();
-            this.lblAddress = new System.Windows.Forms.Label();
-            this.tbAddress = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPeriod)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeOut)).BeginInit();
@@ -193,38 +193,6 @@
             0,
             0});
             // 
-            // lblTimeNext
-            // 
-            this.lblTimeNext.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblTimeNext.AutoSize = true;
-            this.lblTimeNext.Location = new System.Drawing.Point(152, 121);
-            this.lblTimeNext.Name = "lblTimeNext";
-            this.lblTimeNext.Size = new System.Drawing.Size(62, 13);
-            this.lblTimeNext.TabIndex = 2;
-            this.lblTimeNext.Text = "Next check";
-            // 
-            // dtpDateNext
-            // 
-            this.dtpDateNext.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.dtpDateNext.CustomFormat = "yyyy.MM.dd";
-            this.dtpDateNext.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDateNext.Location = new System.Drawing.Point(220, 118);
-            this.dtpDateNext.Name = "dtpDateNext";
-            this.dtpDateNext.ShowCheckBox = true;
-            this.dtpDateNext.Size = new System.Drawing.Size(110, 20);
-            this.dtpDateNext.TabIndex = 16;
-            // 
-            // dtpTimeNext
-            // 
-            this.dtpTimeNext.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.dtpTimeNext.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpTimeNext.Location = new System.Drawing.Point(336, 118);
-            this.dtpTimeNext.Name = "dtpTimeNext";
-            this.dtpTimeNext.ShowUpDown = true;
-            this.dtpTimeNext.Size = new System.Drawing.Size(70, 20);
-            this.dtpTimeNext.TabIndex = 16;
-            this.dtpTimeNext.Value = new System.DateTime(2016, 10, 19, 15, 35, 0, 0);
-            // 
             // lblAddress
             // 
             this.lblAddress.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -245,6 +213,39 @@
             this.tbAddress.Size = new System.Drawing.Size(336, 20);
             this.tbAddress.TabIndex = 3;
             // 
+            // lblTimeNext
+            // 
+            this.lblTimeNext.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblTimeNext.AutoSize = true;
+            this.lblTimeNext.Location = new System.Drawing.Point(152, 121);
+            this.lblTimeNext.Name = "lblTimeNext";
+            this.lblTimeNext.Size = new System.Drawing.Size(62, 13);
+            this.lblTimeNext.TabIndex = 2;
+            this.lblTimeNext.Text = "Next check";
+            // 
+            // dtpDateNext
+            // 
+            this.dtpDateNext.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.dtpDateNext.CustomFormat = "yyyy.MM.dd";
+            this.dtpDateNext.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDateNext.Location = new System.Drawing.Point(220, 118);
+            this.dtpDateNext.Name = "dtpDateNext";
+            this.dtpDateNext.ShowCheckBox = true;
+            this.dtpDateNext.Size = new System.Drawing.Size(110, 20);
+            this.dtpDateNext.TabIndex = 16;
+            this.dtpDateNext.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            // 
+            // dtpTimeNext
+            // 
+            this.dtpTimeNext.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.dtpTimeNext.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpTimeNext.Location = new System.Drawing.Point(336, 118);
+            this.dtpTimeNext.Name = "dtpTimeNext";
+            this.dtpTimeNext.ShowUpDown = true;
+            this.dtpTimeNext.Size = new System.Drawing.Size(70, 20);
+            this.dtpTimeNext.TabIndex = 16;
+            this.dtpTimeNext.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            // 
             // IPEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -260,7 +261,7 @@
             this.Name = "IPEditForm";
             this.Padding = new System.Windows.Forms.Padding(8);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "IPEditForm";
+            this.Text = "Edit IP";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPeriod)).EndInit();

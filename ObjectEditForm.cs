@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -18,7 +17,7 @@ namespace Schematix
             InitializeComponent();
             // Main
             tpMain.Text      = options.LangCur.lOETabMain;
-            lblNode.Text     = options.LangCur.lEENode;
+            lblNode.Text     = options.LangCur.lEENodeName;
             lblName.Text     = options.LangCur.lEEName;
             lblID.Text       = options.LangCur.lEEID;
             lblRevision.Text = options.LangCur.lEERevision;
@@ -56,12 +55,12 @@ namespace Schematix
             //
             if (false)
             {
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEEBox;
+                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleBox;
                 //...
             }
             else
             {
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEEBox;
+                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleBox;
                 cbbImageType.SelectedIndex = 0;
                 cbbAlphaType.SelectedIndex = 0;
                 cbbImageBPP.SelectedIndex = 0;

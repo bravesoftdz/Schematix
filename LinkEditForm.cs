@@ -9,7 +9,7 @@ namespace Schematix
         {
             InitializeComponent();
             // Share
-            lblNode.Text     = options.LangCur.lEENode;
+            lblNode.Text     = options.LangCur.lEENodeName;
             lblName.Text     = options.LangCur.lEEName;
             lblID.Text       = options.LangCur.lEEID;
             lblRevision.Text = options.LangCur.lEERevision;
@@ -19,13 +19,13 @@ namespace Schematix
             toolTip.SetToolTip(btnColor, options.LangCur.hEEColorPick);
             if (false)
             {
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEELink;
+                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleLink;
                 //...
                 //cbbStyle.SelectedIndex = 0;
             }
             else
             {
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEELink;
+                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleLink;
                 cbbStyle.SelectedIndex = 0;
             }
         }

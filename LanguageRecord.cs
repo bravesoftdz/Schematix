@@ -11,6 +11,7 @@ namespace Schematix
         public int Idx = 0;
         public String Name;
         public String
+
         #region Main Form
             hMFTabNew = "Create new map",
             hMFTabClose   = "Close map",
@@ -57,20 +58,22 @@ namespace Schematix
             lOFMapStore = "Save options in map",
             // Grid
             lOFMapGrid = "Grid",
-            lOFMapGridStyle0None    = "None",
-            lOFMapGridStyle1Dots    = "Dots",
-            lOFMapGridStyle2Corners = "Corners",
-            lOFMapGridStyle3Crosses = "Crosses",
-            lOFMapGridStyle4Grid    = "Grid",
+            lOFMapGridStyle0Default = "Default", // Only for map
+            lOFMapGridStyle1None    = "None",
+            lOFMapGridStyle2Dots    = "Dots",
+            lOFMapGridStyle3Corners = "Corners",
+            lOFMapGridStyle4Crosses = "Crosses",
+            lOFMapGridStyle5Grid    = "Grid",
             lOFMapGridAlign         = "Align elements to grid",
             // Background
             lOFMapBack = "Background",
-            lOFMapBackStyle0Color        = "Color",
-            lOFMapBackStyle1ImageAlign   = "Image (1:1)",
-            lOFMapBackStyle2ImageTile    = "Image (tile)",
-            lOFMapBackStyle3ImageStrech  = "Image (strech)",
-            lOFMapBackStyle4ImageZInner  = "Image (Zoom inner)",
-            lOFMapBackStyle5ImageZOutter = "Image (Zoom outter)",
+            lOFMapBackStyle0Default      = "Default", // Only for map
+            lOFMapBackStyle1Color        = "Color",
+            lOFMapBackStyle2ImageAlign   = "Image (1:1)",
+            lOFMapBackStyle3ImageTile    = "Image (tile)",
+            lOFMapBackStyle4ImageStrech  = "Image (strech)",
+            lOFMapBackStyle5ImageZInner  = "Image (Zoom inner)",
+            lOFMapBackStyle6ImageZOutter = "Image (Zoom outter)",
         #endregion
 
         #region Library
@@ -90,9 +93,9 @@ namespace Schematix
             lEETitleAdd  = "Add new prototype:",
             lEETitleEdit = "Edit prototype:",
             // +
-            lEEObject = "object",
-            lEELink   = "link",
-            lEEBox    = "box",
+            lEETitleObject = "object",
+            lEETitleLink   = "link",
+            lEETitleBox    = "box",
             // Share
             lEENodeName = "Node name",
             lEEName     = "Name",
@@ -148,12 +151,62 @@ namespace Schematix
             //...
         #endregion
 
+        /*Link Edit*/
+
         #region Box Edit
             lBEType           = "Type",
-            lBEType0Text      = "Text",
+            lBEType0Text      = "Default text",
             lBEType1Rectangle = "Rectangle",
             lBEType2Ellipse   = "Ellipse",
             lBEText           = "Text",
+        #endregion
+
+        #region Element Options (share)
+            lEOTitle = "Edit exemplar:",
+            // Share
+            lEOName            = "Name",
+            lEOReference       = "Reference",
+            hEOGetReference    = "Pick reference",
+            // +
+            hEOPrototypeDelete = "Delete prototype",
+        #endregion
+
+        #region Object Options
+            hOOIPAdd         = "Add new IP",
+            hOOIPDelete      = "Delete selected IP",
+            // List
+            lOOColumIP       = "Address",
+            lOOColumPeriod   = "Period",
+            lOOColumTimeLast = "Last check",
+            lOOColumTimeNext = "Next check",
+            lOOColumPing     = "Ping",
+        #endregion
+
+        /*Link Options*/
+
+        #region Box Options
+            lBOText = "Text",
+        #endregion
+
+        #region Map Options
+            lMOTitle = "Map's options",
+            lMOName  = "Name",
+            lMOSize  = "Map size",
+            lMOAuto  = "Auto",
+            // List
+            lMOColumName      = "Name",
+            lMOColumLocation  = "Location",
+            lMOColumPrototype = "Prototype",
+            lMOColumReference = "Reference",
+        #endregion
+
+        #region IP Edit
+            lIPTitleAdd  = "Add new IP address",
+            lIPTitleEdit = "Edit IP address",
+            lIPAddress   = "Address",
+            lIPPeriod    = "Period (ms)",
+            lIPTimeOut   = "Time out (ms)",
+            lIPTimeNext  = "Next check",
         #endregion
 
             //...
@@ -275,20 +328,22 @@ namespace Schematix
                                 case "lOFMapStore": lOFMapStore = lblText;   break;
                                 // Grid
                                 case "lOFMapGrid":              lOFMapGrid              = lblText;   break;
-                                case "lOFMapGridStyle0None":    lOFMapGridStyle0None    = lblText;   break;
-                                case "lOFMapGridStyle1Dots":    lOFMapGridStyle1Dots    = lblText;   break;
-                                case "lOFMapGridStyle2Corners": lOFMapGridStyle2Corners = lblText;   break;
-                                case "lOFMapGridStyle3Crosses": lOFMapGridStyle3Crosses = lblText;   break;
-                                case "lOFMapGridStyle4Grid":    lOFMapGridStyle4Grid    = lblText;   break;
+                                case "lOFMapGridStyle0Default": lOFMapGridStyle0Default = lblText;   break;
+                                case "lOFMapGridStyle1None":    lOFMapGridStyle1None    = lblText;   break;
+                                case "lOFMapGridStyle2Dots":    lOFMapGridStyle2Dots    = lblText;   break;
+                                case "lOFMapGridStyle3Corners": lOFMapGridStyle3Corners = lblText;   break;
+                                case "lOFMapGridStyle4Crosses": lOFMapGridStyle4Crosses = lblText;   break;
+                                case "lOFMapGridStyle5Grid":    lOFMapGridStyle5Grid    = lblText;   break;
                                 case "lOFMapGridAlign":         lOFMapGridAlign         = lblText;   break;
                                 // Background
                                 case "lOFMapBack":                    lOFMapBack                   = lblText;   break;
-                                case "lOFMapBackStyle0Color":         lOFMapBackStyle0Color        = lblText;   break;
-                                case "lOFMapBackStyle1ImageAlign":    lOFMapBackStyle1ImageAlign   = lblText;   break;
-                                case "lOFMapBackStyle2ImageTile":     lOFMapBackStyle2ImageTile    = lblText;   break;
-                                case "lOFMapBackStyle3ImageStrech":   lOFMapBackStyle3ImageStrech  = lblText;   break;
-                                case "lOFMapBackStyle4ImageZInner":   lOFMapBackStyle4ImageZInner  = lblText;   break;
-                                case "lOFMapBackStyle5ImageZOutter":  lOFMapBackStyle5ImageZOutter = lblText;   break;
+                                case "lOFMapBackStyle0Default":       lOFMapBackStyle0Default      = lblText;   break;
+                                case "lOFMapBackStyle1Color":         lOFMapBackStyle1Color        = lblText;   break;
+                                case "lOFMapBackStyle2ImageAlign":    lOFMapBackStyle2ImageAlign   = lblText;   break;
+                                case "lOFMapBackStyle3ImageTile":     lOFMapBackStyle3ImageTile    = lblText;   break;
+                                case "lOFMapBackStyle4ImageStrech":   lOFMapBackStyle4ImageStrech  = lblText;   break;
+                                case "lOFMapBackStyle5ImageZInner":   lOFMapBackStyle5ImageZInner  = lblText;   break;
+                                case "lOFMapBackStyle6ImageZOutter":  lOFMapBackStyle6ImageZOutter = lblText;   break;
                             }
                             break;
                         #endregion
@@ -318,9 +373,9 @@ namespace Schematix
                                 case "lEETitleAdd":  lEETitleAdd  = lblText;   break;
                                 case "lEETitleEdit": lEETitleEdit = lblText;   break;
                                 // +
-                                case "lEEObject": lEEObject = lblText;   break;
-                                case "lEELink":   lEELink   = lblText;   break;
-                                case "lEEBox":    lEEBox    = lblText;   break;
+                                case "lEETitleObject": lEETitleObject = lblText;   break;
+                                case "lEETitleLink":   lEETitleLink   = lblText;   break;
+                                case "lEETitleBox":    lEETitleBox    = lblText;   break;
                                 // Share
                                 case "lEENodeName": lEENodeName = lblText;   break;
                                 case "lEEName":     lEEName     = lblText;   break;
@@ -381,7 +436,9 @@ namespace Schematix
                             }
                             break;
                         #endregion
-                            
+
+                        /*Link Options*/
+
                         #region Box Edit
                         case "BE":
                             switch (lblName)
@@ -391,6 +448,79 @@ namespace Schematix
                                 case "lBEType1Rectangle": lBEType1Rectangle = lblText;   break;
                                 case "lBEType2Ellipse":   lBEType2Ellipse   = lblText;   break;
                                 case "lBEText":           lBEText           = lblText;   break;
+                            }
+                            break;
+                        #endregion
+
+                        #region Element Options (share)
+                        case "EO":
+                            switch (lblName)
+                            {
+                                case "lEOTitle":           lEOTitle           = lblText;   break;
+                                // Share
+                                case "lEOName":            lEOName            = lblText;   break;
+                                case "lEOReference":       lEOReference       = lblText;   break;
+                                case "hEOGetReference":    hEOGetReference    = lblText;   break;
+                                // +
+                                case "hEOPrototypeDelete": hEOPrototypeDelete = lblText;   break;
+                            }
+                            break;
+                        #endregion
+
+                        #region Object Options
+                        case "OO":
+                            switch (lblName)
+                            {
+                                case "hOOIPAdd":         hOOIPAdd         = lblText;   break;
+                                case "hOOIPDelete":      hOOIPDelete      = lblText;   break;
+                                // List
+                                case "lOOColumIP":       lOOColumIP       = lblText;   break;
+                                case "lOOColumPeriod":   lOOColumPeriod   = lblText;   break;
+                                case "lOOColumTimeLast": lOOColumTimeLast = lblText;   break;
+                                case "lOOColumTimeNext": lOOColumTimeNext = lblText;   break;
+                                case "lOOColumPing":     lOOColumPing     = lblText;   break;
+                            }
+                            break;
+                        #endregion
+
+                        /*Link Options*/
+
+                        #region Box Options
+                        case "BO":
+                            switch (lblName)
+                            {
+                                case "lBOText": lBOText = lblText;   break;
+                            }
+                            break;
+                        #endregion
+
+                        #region Map Options
+                        case "MO":
+                            switch (lblName)
+                            {
+                                case "lMOTitle": lMOTitle = lblText;   break;
+                                case "lMOName":  lMOName  = lblText;   break;
+                                case "lMOSize":  lMOSize  = lblText;   break;
+                                case "lMOAuto":  lMOAuto  = lblText;   break;
+                                // List
+                                case "lMOColumName":      lMOColumName      = lblText;   break;
+                                case "lMOColumLocation":  lMOColumLocation  = lblText;   break;
+                                case "lMOColumPrototype": lMOColumPrototype = lblText;   break;
+                                case "lMOColumReference": lMOColumReference = lblText;   break;
+                            }
+                            break;
+                        #endregion
+
+                        #region IP Edit
+                        case "IP":
+                            switch (lblName)
+                            {
+                                case "lIPTitleAdd":  lIPTitleAdd  = lblText;   break;
+                                case "lIPTitleEdit": lIPTitleEdit = lblText;   break;
+                                case "lIPAddress":   lIPAddress   = lblText;   break;
+                                case "lIPPeriod":    lIPPeriod    = lblText;   break;
+                                case "lIPTimeOut":   lIPTimeOut   = lblText;   break;
+                                case "lIPTimeNext":  lIPTimeNext  = lblText;   break;
                             }
                             break;
                         #endregion

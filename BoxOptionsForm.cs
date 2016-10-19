@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -15,6 +8,12 @@ namespace Schematix
         public BoxOptionsForm()
         {
             InitializeComponent();
+            Text = options.LangCur.lEOTitle + " " + options.LangCur.lEETitleBox;
+        }
+
+        private void btnGetReference_Click(object sender, EventArgs e)
+        {
+            Share.GetFile(tbReference);
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -23,11 +22,6 @@ namespace Schematix
             // Out
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void btnGetReference_Click(object sender, EventArgs e)
-        {
-            Share.GetFile(tbReference);
         }
     }
 }

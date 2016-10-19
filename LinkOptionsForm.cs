@@ -8,6 +8,7 @@ namespace Schematix
         public LinkOptionsForm()
         {
             InitializeComponent();
+            Text = options.LangCur.lEOTitle + " " + options.LangCur.lEETitleLink;
         }
 
         private void btnGetReference_Click(object sender, EventArgs e)

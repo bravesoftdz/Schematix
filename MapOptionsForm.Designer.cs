@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapOptionsForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
@@ -37,8 +38,8 @@
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
-            this.nudSizeW = new System.Windows.Forms.NumericUpDown();
             this.lblSize = new System.Windows.Forms.Label();
+            this.nudSizeW = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.nudSizeH = new System.Windows.Forms.NumericUpDown();
             this.chkSizeAuto = new System.Windows.Forms.CheckBox();
@@ -57,8 +58,8 @@
             this.chkBackImageFloat = new System.Windows.Forms.CheckBox();
             this.lblBackImageAlign = new System.Windows.Forms.Label();
             this.cbbBackImageAlign = new System.Windows.Forms.ComboBox();
-            this.cbbImageBPP = new System.Windows.Forms.ComboBox();
-            this.lblImageBPP = new System.Windows.Forms.Label();
+            this.cbbBackImageBPP = new System.Windows.Forms.ComboBox();
+            this.lblBackImageBPP = new System.Windows.Forms.Label();
             this.gbGrid = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.chkGridAlign = new System.Windows.Forms.CheckBox();
@@ -76,34 +77,34 @@
             this.clmObjectName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmObjectLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmObjectPrototype = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmObjectReference = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpLinks = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lvLink = new System.Windows.Forms.ListView();
             this.clmLinkName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmLinkFrom = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmLinkTo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmLinkPrototype = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLinkReference = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnLinkDelete = new System.Windows.Forms.Button();
             this.tpBoxes = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.lvBox = new System.Windows.Forms.ListView();
             this.clmBoxName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmBoxLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmBoxPrototype = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxReference = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmBoxText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnBoxDelete = new System.Windows.Forms.Button();
             this.tpIPs = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnIPDelete = new System.Windows.Forms.Button();
             this.lvIPs = new System.Windows.Forms.ListView();
-            this.clmIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmPeriod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTimeLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTimeNext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmPing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmBoxText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmBoxReference = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmLinkRefence = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmObjectReference = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmIPAddress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmIPPeriod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmIPTimeLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmIPTimeNext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmIPPing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -155,6 +156,7 @@
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Ok";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // tabControl
             // 
@@ -240,6 +242,16 @@
             this.tbName.Size = new System.Drawing.Size(337, 20);
             this.tbName.TabIndex = 1;
             // 
+            // lblSize
+            // 
+            this.lblSize.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblSize.AutoSize = true;
+            this.lblSize.Location = new System.Drawing.Point(3, 32);
+            this.lblSize.Name = "lblSize";
+            this.lblSize.Size = new System.Drawing.Size(49, 13);
+            this.lblSize.TabIndex = 0;
+            this.lblSize.Text = "Map size";
+            // 
             // nudSizeW
             // 
             this.nudSizeW.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -263,16 +275,6 @@
             0,
             0,
             0});
-            // 
-            // lblSize
-            // 
-            this.lblSize.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblSize.AutoSize = true;
-            this.lblSize.Location = new System.Drawing.Point(3, 32);
-            this.lblSize.Name = "lblSize";
-            this.lblSize.Size = new System.Drawing.Size(49, 13);
-            this.lblSize.TabIndex = 0;
-            this.lblSize.Text = "Map size";
             // 
             // label3
             // 
@@ -377,8 +379,8 @@
             this.tableLayoutPanel8.Controls.Add(this.chkBackImageFloat, 0, 2);
             this.tableLayoutPanel8.Controls.Add(this.lblBackImageAlign, 1, 2);
             this.tableLayoutPanel8.Controls.Add(this.cbbBackImageAlign, 2, 2);
-            this.tableLayoutPanel8.Controls.Add(this.cbbImageBPP, 2, 3);
-            this.tableLayoutPanel8.Controls.Add(this.lblImageBPP, 1, 3);
+            this.tableLayoutPanel8.Controls.Add(this.cbbBackImageBPP, 2, 3);
+            this.tableLayoutPanel8.Controls.Add(this.lblBackImageBPP, 1, 3);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -421,6 +423,7 @@
             this.btnGetBackImage.Size = new System.Drawing.Size(23, 23);
             this.btnGetBackImage.TabIndex = 4;
             this.btnGetBackImage.UseVisualStyleBackColor = true;
+            this.btnGetBackImage.Click += new System.EventHandler(this.btnGetBackImage_Click);
             // 
             // tbBackgImagePath
             // 
@@ -511,13 +514,14 @@
             this.cbbBackImageAlign.Name = "cbbBackImageAlign";
             this.cbbBackImageAlign.Size = new System.Drawing.Size(120, 21);
             this.cbbBackImageAlign.TabIndex = 5;
+            this.cbbBackImageAlign.SelectedIndexChanged += new System.EventHandler(this.cbbBackImageAlign_SelectedIndexChanged);
             // 
-            // cbbImageBPP
+            // cbbBackImageBPP
             // 
-            this.cbbImageBPP.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cbbImageBPP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbImageBPP.FormattingEnabled = true;
-            this.cbbImageBPP.Items.AddRange(new object[] {
+            this.cbbBackImageBPP.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbbBackImageBPP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbBackImageBPP.FormattingEnabled = true;
+            this.cbbBackImageBPP.Items.AddRange(new object[] {
             "32 (ARGB)",
             "24 (RGB)",
             "16 (6r5g5b)",
@@ -525,20 +529,20 @@
             "8 (Gray)",
             "4 (16)",
             "4 (Gray)"});
-            this.cbbImageBPP.Location = new System.Drawing.Point(199, 86);
-            this.cbbImageBPP.Name = "cbbImageBPP";
-            this.cbbImageBPP.Size = new System.Drawing.Size(100, 21);
-            this.cbbImageBPP.TabIndex = 11;
+            this.cbbBackImageBPP.Location = new System.Drawing.Point(199, 86);
+            this.cbbBackImageBPP.Name = "cbbBackImageBPP";
+            this.cbbBackImageBPP.Size = new System.Drawing.Size(100, 21);
+            this.cbbBackImageBPP.TabIndex = 11;
             // 
-            // lblImageBPP
+            // lblBackImageBPP
             // 
-            this.lblImageBPP.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblImageBPP.AutoSize = true;
-            this.lblImageBPP.Location = new System.Drawing.Point(129, 90);
-            this.lblImageBPP.Name = "lblImageBPP";
-            this.lblImageBPP.Size = new System.Drawing.Size(64, 13);
-            this.lblImageBPP.TabIndex = 12;
-            this.lblImageBPP.Text = "Storing BPP";
+            this.lblBackImageBPP.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblBackImageBPP.AutoSize = true;
+            this.lblBackImageBPP.Location = new System.Drawing.Point(129, 90);
+            this.lblBackImageBPP.Name = "lblBackImageBPP";
+            this.lblBackImageBPP.Size = new System.Drawing.Size(64, 13);
+            this.lblBackImageBPP.TabIndex = 12;
+            this.lblBackImageBPP.Text = "Storing BPP";
             // 
             // gbGrid
             // 
@@ -745,6 +749,7 @@
             this.btnObjectsDelete.Size = new System.Drawing.Size(23, 23);
             this.btnObjectsDelete.TabIndex = 2;
             this.btnObjectsDelete.UseVisualStyleBackColor = true;
+            this.btnObjectsDelete.Click += new System.EventHandler(this.btnObjectsDelete_Click);
             // 
             // lvObjects
             // 
@@ -764,6 +769,7 @@
             this.lvObjects.TabIndex = 3;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
             this.lvObjects.View = System.Windows.Forms.View.Details;
+            this.lvObjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvObjects_MouseDoubleClick);
             // 
             // clmObjectName
             // 
@@ -774,13 +780,17 @@
             // 
             this.clmObjectLocation.Text = "Location";
             this.clmObjectLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmObjectLocation.Width = 150;
+            this.clmObjectLocation.Width = 100;
             // 
             // clmObjectPrototype
             // 
             this.clmObjectPrototype.Text = "Prototype";
             this.clmObjectPrototype.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.clmObjectPrototype.Width = 90;
+            // 
+            // clmObjectReference
+            // 
+            this.clmObjectReference.Text = "Reference";
             // 
             // tpLinks
             // 
@@ -799,7 +809,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Controls.Add(this.listView1, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.lvLink, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.btnLinkDelete, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
@@ -810,48 +820,46 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(398, 279);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
-            // listView1
+            // lvLink
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvLink.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmLinkName,
-            this.clmLinkFrom,
-            this.clmLinkTo,
+            this.clmLinkLocation,
             this.clmLinkPrototype,
-            this.clmLinkRefence});
-            this.tableLayoutPanel4.SetColumnSpan(this.listView1, 2);
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(3, 32);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(392, 244);
-            this.listView1.TabIndex = 4;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.clmLinkReference});
+            this.tableLayoutPanel4.SetColumnSpan(this.lvLink, 2);
+            this.lvLink.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvLink.FullRowSelect = true;
+            this.lvLink.GridLines = true;
+            this.lvLink.HideSelection = false;
+            this.lvLink.Location = new System.Drawing.Point(3, 32);
+            this.lvLink.Name = "lvLink";
+            this.lvLink.Size = new System.Drawing.Size(392, 244);
+            this.lvLink.TabIndex = 4;
+            this.lvLink.UseCompatibleStateImageBehavior = false;
+            this.lvLink.View = System.Windows.Forms.View.Details;
+            this.lvLink.DoubleClick += new System.EventHandler(this.lvLink_DoubleClick);
             // 
             // clmLinkName
             // 
             this.clmLinkName.Text = "Name";
             this.clmLinkName.Width = 120;
             // 
-            // clmLinkFrom
+            // clmLinkLocation
             // 
-            this.clmLinkFrom.Text = "From";
-            this.clmLinkFrom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmLinkFrom.Width = 80;
-            // 
-            // clmLinkTo
-            // 
-            this.clmLinkTo.Text = "To";
-            this.clmLinkTo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmLinkTo.Width = 80;
+            this.clmLinkLocation.Text = "Location";
+            this.clmLinkLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmLinkLocation.Width = 120;
             // 
             // clmLinkPrototype
             // 
             this.clmLinkPrototype.Text = "Prototype";
             this.clmLinkPrototype.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.clmLinkPrototype.Width = 80;
+            // 
+            // clmLinkReference
+            // 
+            this.clmLinkReference.Text = "Refence";
             // 
             // btnLinkDelete
             // 
@@ -862,6 +870,7 @@
             this.btnLinkDelete.Size = new System.Drawing.Size(23, 23);
             this.btnLinkDelete.TabIndex = 2;
             this.btnLinkDelete.UseVisualStyleBackColor = true;
+            this.btnLinkDelete.Click += new System.EventHandler(this.btnLinkDelete_Click);
             // 
             // tpBoxes
             // 
@@ -880,7 +889,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Controls.Add(this.listView2, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.lvBox, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.btnBoxDelete, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
@@ -891,25 +900,26 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(398, 279);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
-            // listView2
+            // lvBox
             // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvBox.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmBoxName,
             this.clmBoxLocation,
             this.clmBoxPrototype,
             this.clmBoxReference,
             this.clmBoxText});
-            this.tableLayoutPanel3.SetColumnSpan(this.listView2, 2);
-            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.FullRowSelect = true;
-            this.listView2.GridLines = true;
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(3, 32);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(392, 244);
-            this.listView2.TabIndex = 4;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
+            this.tableLayoutPanel3.SetColumnSpan(this.lvBox, 2);
+            this.lvBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvBox.FullRowSelect = true;
+            this.lvBox.GridLines = true;
+            this.lvBox.HideSelection = false;
+            this.lvBox.Location = new System.Drawing.Point(3, 32);
+            this.lvBox.Name = "lvBox";
+            this.lvBox.Size = new System.Drawing.Size(392, 244);
+            this.lvBox.TabIndex = 4;
+            this.lvBox.UseCompatibleStateImageBehavior = false;
+            this.lvBox.View = System.Windows.Forms.View.Details;
+            this.lvBox.DoubleClick += new System.EventHandler(this.lvBox_DoubleClick);
             // 
             // clmBoxName
             // 
@@ -920,13 +930,21 @@
             // 
             this.clmBoxLocation.Text = "Location";
             this.clmBoxLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmBoxLocation.Width = 150;
+            this.clmBoxLocation.Width = 100;
             // 
             // clmBoxPrototype
             // 
             this.clmBoxPrototype.Text = "Prototype";
             this.clmBoxPrototype.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.clmBoxPrototype.Width = 90;
+            // 
+            // clmBoxReference
+            // 
+            this.clmBoxReference.Text = "Reference";
+            // 
+            // clmBoxText
+            // 
+            this.clmBoxText.Text = "Text";
             // 
             // btnBoxDelete
             // 
@@ -937,6 +955,7 @@
             this.btnBoxDelete.Size = new System.Drawing.Size(23, 23);
             this.btnBoxDelete.TabIndex = 2;
             this.btnBoxDelete.UseVisualStyleBackColor = true;
+            this.btnBoxDelete.Click += new System.EventHandler(this.btnBoxDelete_Click);
             // 
             // tpIPs
             // 
@@ -975,16 +994,17 @@
             this.btnIPDelete.Size = new System.Drawing.Size(23, 23);
             this.btnIPDelete.TabIndex = 2;
             this.btnIPDelete.UseVisualStyleBackColor = true;
+            this.btnIPDelete.Click += new System.EventHandler(this.btnIPDelete_Click);
             // 
             // lvIPs
             // 
             this.lvIPs.CheckBoxes = true;
             this.lvIPs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.clmIP,
-            this.clmPeriod,
-            this.clmTimeLast,
-            this.clmTimeNext,
-            this.clmPing});
+            this.clmIPAddress,
+            this.clmIPPeriod,
+            this.clmIPTimeLast,
+            this.clmIPTimeNext,
+            this.clmIPPing});
             this.tableLayoutPanel2.SetColumnSpan(this.lvIPs, 2);
             this.lvIPs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvIPs.FullRowSelect = true;
@@ -996,49 +1016,34 @@
             this.lvIPs.TabIndex = 3;
             this.lvIPs.UseCompatibleStateImageBehavior = false;
             this.lvIPs.View = System.Windows.Forms.View.Details;
+            this.lvIPs.DoubleClick += new System.EventHandler(this.lvIPs_DoubleClick);
             // 
-            // clmIP
+            // clmIPAddress
             // 
-            this.clmIP.Text = "IP";
-            this.clmIP.Width = 120;
+            this.clmIPAddress.Text = "IP";
+            this.clmIPAddress.Width = 120;
             // 
-            // clmPeriod
+            // clmIPPeriod
             // 
-            this.clmPeriod.Text = "Period";
-            this.clmPeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmIPPeriod.Text = "Period";
+            this.clmIPPeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // clmTimeLast
+            // clmIPTimeLast
             // 
-            this.clmTimeLast.Text = "Last check";
-            this.clmTimeLast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmTimeLast.Width = 120;
+            this.clmIPTimeLast.Text = "Last check";
+            this.clmIPTimeLast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmIPTimeLast.Width = 120;
             // 
-            // clmTimeNext
+            // clmIPTimeNext
             // 
-            this.clmTimeNext.Text = "Next check";
-            this.clmTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmTimeNext.Width = 120;
+            this.clmIPTimeNext.Text = "Next check";
+            this.clmIPTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmIPTimeNext.Width = 120;
             // 
-            // clmPing
+            // clmIPPing
             // 
-            this.clmPing.Text = "Ping";
-            this.clmPing.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // clmBoxText
-            // 
-            this.clmBoxText.Text = "Text";
-            // 
-            // clmBoxReference
-            // 
-            this.clmBoxReference.Text = "Reference";
-            // 
-            // clmLinkRefence
-            // 
-            this.clmLinkRefence.Text = "Refence";
-            // 
-            // clmObjectReference
-            // 
-            this.clmObjectReference.Text = "Reference";
+            this.clmIPPing.Text = "Ping";
+            this.clmIPPing.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // MapOptionsForm
             // 
@@ -1100,11 +1105,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button btnIPDelete;
         private System.Windows.Forms.ListView lvIPs;
-        private System.Windows.Forms.ColumnHeader clmIP;
-        private System.Windows.Forms.ColumnHeader clmPeriod;
-        private System.Windows.Forms.ColumnHeader clmTimeLast;
-        private System.Windows.Forms.ColumnHeader clmTimeNext;
-        private System.Windows.Forms.ColumnHeader clmPing;
+        private System.Windows.Forms.ColumnHeader clmIPAddress;
+        private System.Windows.Forms.ColumnHeader clmIPPeriod;
+        private System.Windows.Forms.ColumnHeader clmIPTimeLast;
+        private System.Windows.Forms.ColumnHeader clmIPTimeNext;
+        private System.Windows.Forms.ColumnHeader clmIPPing;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button btnObjectsDelete;
         private System.Windows.Forms.ListView lvObjects;
@@ -1149,20 +1154,20 @@
         private System.Windows.Forms.NumericUpDown nudSizeH;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkSizeAuto;
-        private System.Windows.Forms.ComboBox cbbImageBPP;
-        private System.Windows.Forms.Label lblImageBPP;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ComboBox cbbBackImageBPP;
+        private System.Windows.Forms.Label lblBackImageBPP;
+        private System.Windows.Forms.ListView lvLink;
         private System.Windows.Forms.ColumnHeader clmLinkName;
-        private System.Windows.Forms.ColumnHeader clmLinkFrom;
-        private System.Windows.Forms.ColumnHeader clmLinkTo;
+        private System.Windows.Forms.ColumnHeader clmLinkLocation;
         private System.Windows.Forms.ColumnHeader clmLinkPrototype;
-        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ListView lvBox;
         private System.Windows.Forms.ColumnHeader clmBoxName;
         private System.Windows.Forms.ColumnHeader clmBoxLocation;
         private System.Windows.Forms.ColumnHeader clmBoxPrototype;
         private System.Windows.Forms.ColumnHeader clmObjectReference;
-        private System.Windows.Forms.ColumnHeader clmLinkRefence;
+        private System.Windows.Forms.ColumnHeader clmLinkReference;
         private System.Windows.Forms.ColumnHeader clmBoxReference;
         private System.Windows.Forms.ColumnHeader clmBoxText;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -16,6 +8,29 @@ namespace Schematix
         public ObjectOptionsForm()
         {
             InitializeComponent();
+            Text = options.LangCur.lEOTitle + " " + options.LangCur.lEETitleObject;
+            // Share
+            lblName.Text      = options.LangCur.lEOName;
+            lblReference.Text = options.LangCur.lEOReference;
+            toolTip.SetToolTip(btnGetReference, options.LangCur.hEOGetReference);
+            // Own
+            toolTip.SetToolTip(btnIPAdd,        options.LangCur.hOOIPAdd);
+            toolTip.SetToolTip(btnIPDelete,     options.LangCur.hOOIPDelete);
+            clmIP.Text        = options.LangCur.lOOColumIP;
+            clmPeriod.Text    = options.LangCur.lOOColumPeriod;
+            clmTimeLast.Text  = options.LangCur.lOOColumTimeLast;
+            clmTimeNext.Text  = options.LangCur.lOOColumTimeNext;
+            clmPing.Text      = options.LangCur.lOOColumPing;
+        }
+
+        private void btnGetReference_Click(object sender, EventArgs e)//Ok
+        {
+            Share.GetFile(tbReference);
+        }
+
+        private void lvIPs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void lvIPs_DoubleClick(object sender, EventArgs e)
@@ -41,29 +56,12 @@ namespace Schematix
             //...
         }
 
-        private void btnGetReference_Click(object sender, EventArgs e)//Ok
-        {
-            var dlgOpen = new OpenFileDialog();
-            if (tbReference.Text == "")
-                dlgOpen.InitialDirectory = Directory.GetCurrentDirectory();
-            else
-                dlgOpen.InitialDirectory = Path.GetDirectoryName(tbReference.Text);
-            dlgOpen.FileName = Path.GetFileName(tbReference.Text);
-            if (dlgOpen.ShowDialog() == DialogResult.OK)
-                tbReference.Text = dlgOpen.FileName;
-        }
-
         private void btnOk_Click(object sender, EventArgs e)
         {
             //...
             // Out
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void lvIPs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
