@@ -51,6 +51,7 @@
             this.lblLineStyle = new System.Windows.Forms.Label();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.chkPrototype = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -89,20 +90,22 @@
             // 
             this.tableLayoutPanel2.AutoSize = true;
             this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnCount = 5;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.chkPrototype, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.tbDescription, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.lblName, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.tbName, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.lblNode, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tbNode, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tbRevision, 2, 1);
-            this.tableLayoutPanel2.Controls.Add(this.tbID, 3, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblID, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblRevision, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tbRevision, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tbID, 4, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblID, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblRevision, 2, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -111,12 +114,13 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(378, 144);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tbDescription
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 4);
+            this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 5);
             this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbDescription.Location = new System.Drawing.Point(3, 81);
             this.tbDescription.MaxLength = 8192;
@@ -138,7 +142,7 @@
             // 
             // tbName
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbName, 3);
+            this.tableLayoutPanel2.SetColumnSpan(this.tbName, 4);
             this.tbName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbName.Location = new System.Drawing.Point(71, 55);
             this.tbName.MaxLength = 255;
@@ -158,6 +162,7 @@
             // 
             // tbNode
             // 
+            this.tableLayoutPanel2.SetColumnSpan(this.tbNode, 2);
             this.tbNode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbNode.Location = new System.Drawing.Point(71, 3);
             this.tbNode.MaxLength = 32;
@@ -324,6 +329,18 @@
             this.lblLineStyle.Text = "Style";
             this.lblLineStyle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // chkPrototype
+            // 
+            this.chkPrototype.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkPrototype.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.chkPrototype, 2);
+            this.chkPrototype.Location = new System.Drawing.Point(3, 30);
+            this.chkPrototype.Name = "chkPrototype";
+            this.chkPrototype.Size = new System.Drawing.Size(71, 17);
+            this.chkPrototype.TabIndex = 12;
+            this.chkPrototype.Text = "Prototype";
+            this.chkPrototype.UseVisualStyleBackColor = true;
+            // 
             // LinkEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -370,5 +387,6 @@
         private System.Windows.Forms.Label lblLineStyle;
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.CheckBox chkPrototype;
     }
 }

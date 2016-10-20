@@ -97,10 +97,11 @@ namespace Schematix
             lEETitleLink   = "link",
             lEETitleBox    = "box",
             // Share
-            lEENodeName = "Node name",
-            lEEName     = "Name",
-            lEEID       = "ID",
-            lEERevision = "Revision",
+            lEENodeName  = "Node name",
+            lEEName      = "Name",
+            lEEID        = "ID",
+            lEERevision  = "Revision",
+            lEEPrototype = "Prototype",
             // +
             lEELineThick    = "Line thickness",
             lEELineStyle    = "Line style",
@@ -128,8 +129,9 @@ namespace Schematix
             //
             lOETabImage       = "Image",
             lOEImageType      = "Type",
-            lOEImageType0Load = "Load image",
-            lOEImageType1Link = "Link to image",
+            lOEImageType0None = "None",
+            lOEImageType1Load = "Load image",
+            lOEImageType2Link = "Link to image",
             lOEUseBackColor   = "Back color on preview",
             //
             lOETabAlpha        = "Transparence",
@@ -205,12 +207,12 @@ namespace Schematix
             lIPTitleEdit = "Edit IP address",
             lIPAddress   = "Address",
             lIPPeriod    = "Period (ms)",
-            lIPTimeOut   = "Time out (ms)",
             lIPTimeNext  = "Next check",
+            lIPTimeOutGreen  = "Time out Green (ms)",
+            lIPTimeOutYellow = "+ time out Yellow (ms)",
+            lIPTimeOutRed    = "+ time out Red (ms)",
         #endregion
-
-            //...
-
+            
         #region Dialongs & About
             // Dialongs
             dLanguagesLoading = "Language packs loading",
@@ -220,6 +222,8 @@ namespace Schematix
             mNoFolders         = "These folders doesn't exists:",
             mCreateThem        = "Create them?",
             dImageLoading      = "Loading image",
+            dFileLoading       = "Loading file",
+            dFileSaving        = "Saving file",
 
             // About form
             lAbout        = "About",
@@ -377,10 +381,11 @@ namespace Schematix
                                 case "lEETitleLink":   lEETitleLink   = lblText;   break;
                                 case "lEETitleBox":    lEETitleBox    = lblText;   break;
                                 // Share
-                                case "lEENodeName": lEENodeName = lblText;   break;
-                                case "lEEName":     lEEName     = lblText;   break;
-                                case "lEEID":       lEEID       = lblText;   break;
-                                case "lEERevision": lEERevision = lblText;   break;
+                                case "lEENodeName":  lEENodeName  = lblText;   break;
+                                case "lEEName":      lEEName      = lblText;   break;
+                                case "lEEID":        lEEID        = lblText;   break;
+                                case "lEERevision":  lEERevision  = lblText;   break;
+                                case "lEEPrototype": lEEPrototype = lblText;   break;
                                 // +
                                 case "lEELineThick":    lEELineThick    = lblText;   break;
                                 case "lEELineStyle":    lEELineStyle    = lblText;   break;
@@ -413,8 +418,9 @@ namespace Schematix
                                 //
                                 case "lOETabImage":       lOETabImage       = lblText;   break;
                                 case "lOEImageType":      lOEImageType      = lblText;   break;
-                                case "lOEImageType0Load": lOEImageType0Load = lblText;   break;
-                                case "lOEImageType1Link": lOEImageType1Link = lblText;   break;
+                                case "lOEImageType0None": lOEImageType0None = lblText;   break;
+                                case "lOEImageType1Load": lOEImageType1Load = lblText;   break;
+                                case "lOEImageType2Link": lOEImageType2Link = lblText;   break;
                                 case "lOEUseBackColor":   lOEUseBackColor   = lblText;   break;
                                 //
                                 case "lOETabAlpha":        lOETabAlpha        = lblText;   break;
@@ -519,8 +525,10 @@ namespace Schematix
                                 case "lIPTitleEdit": lIPTitleEdit = lblText;   break;
                                 case "lIPAddress":   lIPAddress   = lblText;   break;
                                 case "lIPPeriod":    lIPPeriod    = lblText;   break;
-                                case "lIPTimeOut":   lIPTimeOut   = lblText;   break;
                                 case "lIPTimeNext":  lIPTimeNext  = lblText;   break;
+                                case "lIPTimeOutGreen":  lIPTimeOutGreen  = lblText;   break;
+                                case "lIPTimeOutYellow": lIPTimeOutYellow = lblText;   break;
+                                case "lIPTimeOutRed":    lIPTimeOutRed    = lblText;   break;
                             }
                             break;
                         #endregion
@@ -537,6 +545,8 @@ namespace Schematix
                                 case "mNoFolders":        mNoFolders        = lblText;   break;
                                 case "mCreateThem":       mCreateThem       = lblText;   break;
                                 case "dImageLoading":     dImageLoading     = lblText;   break;
+                                case "dFileLoading":      dFileLoading      = lblText;   break;
+                                case "dFileSaving":       dFileSaving       = lblText;   break;
 
                                 //# About form
                                 case "lAbout":    lAbout       = lblText;          break;

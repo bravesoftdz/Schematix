@@ -180,7 +180,7 @@ namespace Schematix
 
         private void lvIPs_DoubleClick(object sender, EventArgs e)
         {
-            var form = new IPEditForm();
+            var form = new IPEditForm(null);
             if (form.ShowDialog() == DialogResult.OK)
             {
             }

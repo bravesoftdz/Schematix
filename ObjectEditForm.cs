@@ -29,8 +29,9 @@ namespace Schematix
             toolTip.SetToolTip(btnImageColor,   options.LangCur.hEEColorPick);
             toolTip.SetToolTip(btnGetImagePath, options.LangCur.hEEImageLoad);
             lblImageBackColor.Text = options.LangCur.lOEUseBackColor;
-            cbbImageType.Items.Add(options.LangCur.lOEImageType0Load);
-            cbbImageType.Items.Add(options.LangCur.lOEImageType1Link);
+            cbbImageType.Items.Add(options.LangCur.lOEImageType0None);
+            cbbImageType.Items.Add(options.LangCur.lOEImageType1Load);
+            cbbImageType.Items.Add(options.LangCur.lOEImageType2Link);
             // Alpha
             tpAlpha.Text      = options.LangCur.lOETabAlpha;
             lblAlphaType.Text = options.LangCur.lOEAlphaType;

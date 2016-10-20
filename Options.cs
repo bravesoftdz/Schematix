@@ -9,6 +9,25 @@ namespace Schematix
 {
     static class options
     {
+        // IP
+        public const int  DEFAULT_PING_PERIOD         = 3000;
+        public const int  DEFAULT_PING_TIMEOUT_GREEN  = 100; // < Green
+        public const int  DEFAULT_PING_TIMEOUT_YELLOW = 100; // < Yellow
+        public const int  DEFAULT_PING_TIMEOUT_RED    = 100; // < Red, ... - Out
+        public const bool DEFAULT_PING_ONN            = false;
+        public const int  DEFAULT_PING_ARRAY          = 5;
+
+        // Object Prototype
+        public static readonly Color DEFAULT_OBJECT_IMAGE_COLOR = Color.Black; // for preview
+        public static readonly Color DEFAULT_OBJECT_APLHA_COLOR = Color.White;
+
+        // Link Prototype
+        public static readonly Color DEFAULT_LINK_LINE_COLOR = Color.Maroon;
+
+        // Box Prototype
+        public static readonly Font DEFAULT_BOX_FONT = new Font("Curier", 14);
+
+        // Main options
         public const String iniFile = "Schematix.ini";
         public const int MAX_PING_PERIOD = 24*3600000;
         public const int MAX_PING_COUNT  =   10;
@@ -51,7 +70,7 @@ namespace Schematix
             GridStepY = 32,
             GridThick = 1;
         static public Color
-            GridColor = Color.FromArgb(0xFF, 0x00, 0x00, 0x00);
+            GridColor = Color.Gray;
 
         // Background
         static public bool
@@ -61,7 +80,7 @@ namespace Schematix
         static public int
             BackgroundStyle = 0,
             BackgroundImageAlign = 0;
-        static public Color  BackgroundColor = Color.FromArgb(0xFF, 0x00, 0x00, 0x80);
+        static public Color  BackgroundColor = Color.DarkBlue;
         static public Bitmap BackgroundImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
         static public String BackgroundImagePath = "";
 
