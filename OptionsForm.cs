@@ -135,8 +135,10 @@ namespace Schematix
             cbbBackStyle.Items.Add(lang.lOFMapBackStyle5ImageZInner);
             cbbBackStyle.Items.Add(lang.lOFMapBackStyle6ImageZOutter);
             cbbBackStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(btnBackColor,    options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnBackColor,        options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnTransparentColor, options.LangCur.hEEColorPick);
             toolTip.SetToolTip(btnGetBackImage, options.LangCur.hEEImageLoad);
+            lblTransparentColor.Text = lang.lOFMapBackTransparentColor;
             lblBackgImagePath.Text   = lang.lEEImagePath;
             chkBackImageFloat.Text   = lang.lEEImageFloat;
             chkBackImageBuildIn.Text = lang.lEEImageBuildIn;
@@ -302,6 +304,11 @@ namespace Schematix
         private void btnBackgroundColor_BackColorChanged(object sender, EventArgs e)//Ok
         {
             pbBackPreview.BackColor = btnBackColor.BackColor;
+        }
+
+        private void btnTransparentColor_BackColorChanged(object sender, EventArgs e)
+        {
+            //
         }
 
         private void cbbBackgroundStyle_SelectedIndexChanged(object sender, EventArgs e)//!

@@ -22,27 +22,18 @@ namespace Schematix
             lblID.Text       = options.LangCur.lEEID;
             lblRevision.Text = options.LangCur.lEERevision;
             // Image
-            tpImage.Text      = options.LangCur.lOETabImage;
-            lblImageType.Text = options.LangCur.lOEImageType;
-            lblImagePath.Text = options.LangCur.lEEImagePath;
-            lblImageBPP.Text  = options.LangCur.lEEImageBPP;
+            tpImage.Text             = options.LangCur.lOETabImage;
+            lblImageType.Text        = options.LangCur.lOEImageType;
+            chkTransparentColor.Text = options.LangCur.lOETransparentColor;
+            lblImagePath.Text        = options.LangCur.lEEImagePath;
+            lblImageBPP.Text         = options.LangCur.lEEImageBPP;
             toolTip.SetToolTip(btnImageColor,   options.LangCur.hEEColorPick);
             toolTip.SetToolTip(btnGetImagePath, options.LangCur.hEEImageLoad);
             lblImageBackColor.Text = options.LangCur.lOEUseBackColor;
             cbbImageType.Items.Add(options.LangCur.lOEImageType0None);
             cbbImageType.Items.Add(options.LangCur.lOEImageType1Load);
             cbbImageType.Items.Add(options.LangCur.lOEImageType2Link);
-            // Alpha
-            tpAlpha.Text      = options.LangCur.lOETabAlpha;
-            lblAlphaType.Text = options.LangCur.lOEAlphaType;
-            lblAlphaPath.Text = options.LangCur.lEEImagePath;
-            lblAlphaBPP.Text  = options.LangCur.lEEImageBPP;
             toolTip.SetToolTip(btnAlphaColor,   options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnGetAlphaPath, options.LangCur.hEEImageLoad);
-            cbbImageType.Items.Add(options.LangCur.lOEAlphaType0Image);
-            cbbImageType.Items.Add(options.LangCur.lOEAlphaType1Color);
-            cbbImageType.Items.Add(options.LangCur.lOEAlphaType2Load);
-            cbbImageType.Items.Add(options.LangCur.lOEAlphaType3Link);
             // Nodes
             tpDotes.Text        = options.LangCur.lOETabDotes;
             lblDot.Text         = options.LangCur.lOEDot;
@@ -63,9 +54,7 @@ namespace Schematix
             {
                 Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleBox;
                 cbbImageType.SelectedIndex = 0;
-                cbbAlphaType.SelectedIndex = 0;
                 cbbImageBPP.SelectedIndex = 0;
-                cbbAlphaBPP.SelectedIndex = 0;
             }
             pbDotPicker.BackColor =
             pbImage.BackColor = btnImageColor.BackColor;
@@ -204,7 +193,6 @@ namespace Schematix
         private void btnAlphaColor_Click(object sender, EventArgs e)//
         {
             if (dlgColor.ShowDialog() == DialogResult.OK)
-                pbAlpha.BackColor =
                 btnAlphaColor.BackColor = dlgColor.Color;
         }
 
@@ -218,16 +206,6 @@ namespace Schematix
             pbImage.Image = img;
             pbDotPicker.BackgroundImage = img;
             //...
-        }
-
-        private void btnGetAlphaImage_Click(object sender, EventArgs e)//
-        {
-            Share.GetImage(tbAlphaPath, GotAlpha);
-        }
-
-        private void GotAlpha(Image img)//!!!
-        {
-            pbAlpha.Image = img;
         }
 
         private void pbNodePicker_BackgroundImageChanged(object sender, EventArgs e)

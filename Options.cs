@@ -27,6 +27,9 @@ namespace Schematix
         // Box Prototype
         public static readonly Font DEFAULT_BOX_FONT = new Font("Curier", 14);
 
+        // Exemplars
+        public const int DEFAULT_FRAME_PADDING = 3;
+
         // Main options
         public const String iniFile = "Schematix.ini";
         public const int MAX_PING_PERIOD = 24*3600000;

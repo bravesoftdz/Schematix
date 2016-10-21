@@ -40,14 +40,16 @@
             this.tbRevision = new System.Windows.Forms.TextBox();
             this.tbID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
-            this.lblRevision = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
+            this.chkPrototype = new System.Windows.Forms.CheckBox();
+            this.lblRevision = new System.Windows.Forms.Label();
             this.tpImage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.pbImage = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnAlphaColor = new System.Windows.Forms.Button();
             this.tbImagePath = new System.Windows.Forms.TextBox();
             this.lblImageType = new System.Windows.Forms.Label();
             this.cbbImageType = new System.Windows.Forms.ComboBox();
@@ -55,22 +57,9 @@
             this.lblImageBPP = new System.Windows.Forms.Label();
             this.cbbImageBPP = new System.Windows.Forms.ComboBox();
             this.btnGetImagePath = new System.Windows.Forms.Button();
-            this.btnImageColor = new System.Windows.Forms.Button();
             this.lblImageBackColor = new System.Windows.Forms.Label();
-            this.tpAlpha = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-            this.pbAlpha = new System.Windows.Forms.PictureBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.tbAlphaPath = new System.Windows.Forms.TextBox();
-            this.lblAlphaType = new System.Windows.Forms.Label();
-            this.cbbAlphaType = new System.Windows.Forms.ComboBox();
-            this.lblAlphaPath = new System.Windows.Forms.Label();
-            this.btnAlphaColor = new System.Windows.Forms.Button();
-            this.btnGetAlphaPath = new System.Windows.Forms.Button();
-            this.cbbAlphaBPP = new System.Windows.Forms.ComboBox();
-            this.lblAlphaBPP = new System.Windows.Forms.Label();
+            this.btnImageColor = new System.Windows.Forms.Button();
+            this.chkTransparentColor = new System.Windows.Forms.CheckBox();
             this.tpDotes = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -97,7 +86,6 @@
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.chkPrototype = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -107,12 +95,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tpAlpha.SuspendLayout();
-            this.tableLayoutPanel10.SuspendLayout();
-            this.tableLayoutPanel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAlpha)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
             this.tpDotes.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -129,7 +111,6 @@
             // 
             this.tabControl.Controls.Add(this.tpMain);
             this.tabControl.Controls.Add(this.tpImage);
-            this.tabControl.Controls.Add(this.tpAlpha);
             this.tabControl.Controls.Add(this.tpDotes);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(3, 3);
@@ -259,17 +240,6 @@
             this.lblID.TabIndex = 0;
             this.lblID.Text = "ID";
             // 
-            // lblRevision
-            // 
-            this.lblRevision.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblRevision.AutoSize = true;
-            this.lblRevision.Location = new System.Drawing.Point(254, 32);
-            this.lblRevision.Name = "lblRevision";
-            this.lblRevision.Size = new System.Drawing.Size(25, 13);
-            this.lblRevision.TabIndex = 0;
-            this.lblRevision.Text = "rev.";
-            this.lblRevision.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // tbDescription
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 5);
@@ -282,6 +252,29 @@
             this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbDescription.Size = new System.Drawing.Size(392, 165);
             this.tbDescription.TabIndex = 10;
+            // 
+            // chkPrototype
+            // 
+            this.chkPrototype.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkPrototype.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.chkPrototype, 2);
+            this.chkPrototype.Location = new System.Drawing.Point(3, 30);
+            this.chkPrototype.Name = "chkPrototype";
+            this.chkPrototype.Size = new System.Drawing.Size(71, 17);
+            this.chkPrototype.TabIndex = 11;
+            this.chkPrototype.Text = "Prototype";
+            this.chkPrototype.UseVisualStyleBackColor = true;
+            // 
+            // lblRevision
+            // 
+            this.lblRevision.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblRevision.AutoSize = true;
+            this.lblRevision.Location = new System.Drawing.Point(254, 32);
+            this.lblRevision.Name = "lblRevision";
+            this.lblRevision.Size = new System.Drawing.Size(25, 13);
+            this.lblRevision.TabIndex = 0;
+            this.lblRevision.Text = "rev.";
+            this.lblRevision.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tpImage
             // 
@@ -361,6 +354,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.Controls.Add(this.btnAlphaColor, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.tbImagePath, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.lblImageType, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cbbImageType, 1, 0);
@@ -368,8 +362,9 @@
             this.tableLayoutPanel3.Controls.Add(this.lblImageBPP, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.cbbImageBPP, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.btnGetImagePath, 4, 1);
-            this.tableLayoutPanel3.Controls.Add(this.btnImageColor, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.lblImageBackColor, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.lblImageBackColor, 3, 2);
+            this.tableLayoutPanel3.Controls.Add(this.btnImageColor, 2, 2);
+            this.tableLayoutPanel3.Controls.Add(this.chkTransparentColor, 3, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -379,6 +374,18 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.Size = new System.Drawing.Size(386, 83);
             this.tableLayoutPanel3.TabIndex = 3;
+            // 
+            // btnAlphaColor
+            // 
+            this.btnAlphaColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnAlphaColor.BackColor = System.Drawing.Color.White;
+            this.btnAlphaColor.Location = new System.Drawing.Point(207, 3);
+            this.btnAlphaColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
+            this.btnAlphaColor.Name = "btnAlphaColor";
+            this.btnAlphaColor.Size = new System.Drawing.Size(32, 21);
+            this.btnAlphaColor.TabIndex = 8;
+            this.btnAlphaColor.UseVisualStyleBackColor = false;
+            this.btnAlphaColor.Click += new System.EventHandler(this.btnAlphaColor_Click);
             // 
             // tbImagePath
             // 
@@ -459,11 +466,21 @@
             this.btnGetImagePath.UseVisualStyleBackColor = true;
             this.btnGetImagePath.Click += new System.EventHandler(this.btnGetImagePath_Click);
             // 
+            // lblImageBackColor
+            // 
+            this.lblImageBackColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tableLayoutPanel3.SetColumnSpan(this.lblImageBackColor, 2);
+            this.lblImageBackColor.Location = new System.Drawing.Point(253, 63);
+            this.lblImageBackColor.Name = "lblImageBackColor";
+            this.lblImageBackColor.Size = new System.Drawing.Size(113, 13);
+            this.lblImageBackColor.TabIndex = 0;
+            this.lblImageBackColor.Text = "Back color on preview";
+            // 
             // btnImageColor
             // 
             this.btnImageColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnImageColor.BackColor = System.Drawing.Color.Bisque;
-            this.btnImageColor.Location = new System.Drawing.Point(207, 3);
+            this.btnImageColor.Location = new System.Drawing.Point(207, 59);
             this.btnImageColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnImageColor.Name = "btnImageColor";
             this.btnImageColor.Size = new System.Drawing.Size(32, 21);
@@ -471,199 +488,17 @@
             this.btnImageColor.UseVisualStyleBackColor = false;
             this.btnImageColor.Click += new System.EventHandler(this.btnImageColor_Click);
             // 
-            // lblImageBackColor
+            // chkTransparentColor
             // 
-            this.lblImageBackColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.tableLayoutPanel3.SetColumnSpan(this.lblImageBackColor, 2);
-            this.lblImageBackColor.Location = new System.Drawing.Point(253, 7);
-            this.lblImageBackColor.Name = "lblImageBackColor";
-            this.lblImageBackColor.Size = new System.Drawing.Size(113, 13);
-            this.lblImageBackColor.TabIndex = 0;
-            this.lblImageBackColor.Text = "Back color on preview";
-            // 
-            // tpAlpha
-            // 
-            this.tpAlpha.BackColor = System.Drawing.SystemColors.Control;
-            this.tpAlpha.Controls.Add(this.tableLayoutPanel10);
-            this.tpAlpha.Location = new System.Drawing.Point(4, 22);
-            this.tpAlpha.Name = "tpAlpha";
-            this.tpAlpha.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAlpha.Size = new System.Drawing.Size(404, 255);
-            this.tpAlpha.TabIndex = 2;
-            this.tpAlpha.Text = "Transparence";
-            // 
-            // tableLayoutPanel10
-            // 
-            this.tableLayoutPanel10.AutoSize = true;
-            this.tableLayoutPanel10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel10.ColumnCount = 1;
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel9, 0, 1);
-            this.tableLayoutPanel10.Controls.Add(this.groupBox2, 0, 0);
-            this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
-            this.tableLayoutPanel10.RowCount = 2;
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(398, 249);
-            this.tableLayoutPanel10.TabIndex = 5;
-            // 
-            // tableLayoutPanel9
-            // 
-            this.tableLayoutPanel9.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tableLayoutPanel9.AutoSize = true;
-            this.tableLayoutPanel9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel9.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetPartial;
-            this.tableLayoutPanel9.ColumnCount = 1;
-            this.tableLayoutPanel10.SetColumnSpan(this.tableLayoutPanel9, 4);
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.Controls.Add(this.pbAlpha, 0, 0);
-            this.tableLayoutPanel9.Location = new System.Drawing.Point(180, 109);
-            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
-            this.tableLayoutPanel9.RowCount = 1;
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(38, 38);
-            this.tableLayoutPanel9.TabIndex = 9;
-            // 
-            // pbAlpha
-            // 
-            this.pbAlpha.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pbAlpha.BackColor = System.Drawing.Color.White;
-            this.pbAlpha.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pbAlpha.Location = new System.Drawing.Point(3, 3);
-            this.pbAlpha.Margin = new System.Windows.Forms.Padding(0);
-            this.pbAlpha.Name = "pbAlpha";
-            this.pbAlpha.Size = new System.Drawing.Size(32, 32);
-            this.pbAlpha.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbAlpha.TabIndex = 1;
-            this.pbAlpha.TabStop = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tableLayoutPanel8);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(392, 100);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            // 
-            // tableLayoutPanel8
-            // 
-            this.tableLayoutPanel8.AutoSize = true;
-            this.tableLayoutPanel8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel8.ColumnCount = 4;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.Controls.Add(this.tbAlphaPath, 1, 1);
-            this.tableLayoutPanel8.Controls.Add(this.lblAlphaType, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.cbbAlphaType, 1, 0);
-            this.tableLayoutPanel8.Controls.Add(this.lblAlphaPath, 0, 1);
-            this.tableLayoutPanel8.Controls.Add(this.btnAlphaColor, 2, 0);
-            this.tableLayoutPanel8.Controls.Add(this.btnGetAlphaPath, 3, 1);
-            this.tableLayoutPanel8.Controls.Add(this.cbbAlphaBPP, 1, 2);
-            this.tableLayoutPanel8.Controls.Add(this.lblAlphaBPP, 0, 2);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 3;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(386, 83);
-            this.tableLayoutPanel8.TabIndex = 4;
-            // 
-            // tbAlphaPath
-            // 
-            this.tbAlphaPath.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.tableLayoutPanel8.SetColumnSpan(this.tbAlphaPath, 2);
-            this.tbAlphaPath.Location = new System.Drawing.Point(73, 31);
-            this.tbAlphaPath.MaxLength = 255;
-            this.tbAlphaPath.Name = "tbAlphaPath";
-            this.tbAlphaPath.Size = new System.Drawing.Size(281, 20);
-            this.tbAlphaPath.TabIndex = 1;
-            // 
-            // lblAlphaType
-            // 
-            this.lblAlphaType.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblAlphaType.AutoSize = true;
-            this.lblAlphaType.Location = new System.Drawing.Point(3, 7);
-            this.lblAlphaType.Name = "lblAlphaType";
-            this.lblAlphaType.Size = new System.Drawing.Size(31, 13);
-            this.lblAlphaType.TabIndex = 0;
-            this.lblAlphaType.Text = "Type";
-            // 
-            // cbbAlphaType
-            // 
-            this.cbbAlphaType.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cbbAlphaType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbAlphaType.FormattingEnabled = true;
-            this.cbbAlphaType.Location = new System.Drawing.Point(73, 3);
-            this.cbbAlphaType.Name = "cbbAlphaType";
-            this.cbbAlphaType.Size = new System.Drawing.Size(120, 21);
-            this.cbbAlphaType.TabIndex = 6;
-            // 
-            // lblAlphaPath
-            // 
-            this.lblAlphaPath.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblAlphaPath.AutoSize = true;
-            this.lblAlphaPath.Location = new System.Drawing.Point(3, 35);
-            this.lblAlphaPath.Name = "lblAlphaPath";
-            this.lblAlphaPath.Size = new System.Drawing.Size(29, 13);
-            this.lblAlphaPath.TabIndex = 0;
-            this.lblAlphaPath.Text = "Path";
-            // 
-            // btnAlphaColor
-            // 
-            this.btnAlphaColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnAlphaColor.BackColor = System.Drawing.Color.White;
-            this.btnAlphaColor.Location = new System.Drawing.Point(207, 3);
-            this.btnAlphaColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
-            this.btnAlphaColor.Name = "btnAlphaColor";
-            this.btnAlphaColor.Size = new System.Drawing.Size(32, 21);
-            this.btnAlphaColor.TabIndex = 7;
-            this.btnAlphaColor.UseVisualStyleBackColor = false;
-            this.btnAlphaColor.Click += new System.EventHandler(this.btnAlphaColor_Click);
-            // 
-            // btnGetAlphaPath
-            // 
-            this.btnGetAlphaPath.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnGetAlphaPath.Image = global::Schematix.Properties.Resources.load;
-            this.btnGetAlphaPath.Location = new System.Drawing.Point(360, 30);
-            this.btnGetAlphaPath.Name = "btnGetAlphaPath";
-            this.btnGetAlphaPath.Size = new System.Drawing.Size(23, 23);
-            this.btnGetAlphaPath.TabIndex = 8;
-            this.btnGetAlphaPath.UseVisualStyleBackColor = true;
-            this.btnGetAlphaPath.Click += new System.EventHandler(this.btnGetAlphaImage_Click);
-            // 
-            // cbbAlphaBPP
-            // 
-            this.cbbAlphaBPP.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cbbAlphaBPP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbAlphaBPP.FormattingEnabled = true;
-            this.cbbAlphaBPP.Items.AddRange(new object[] {
-            "8",
-            "4",
-            "2",
-            "1"});
-            this.cbbAlphaBPP.Location = new System.Drawing.Point(73, 59);
-            this.cbbAlphaBPP.Name = "cbbAlphaBPP";
-            this.cbbAlphaBPP.Size = new System.Drawing.Size(100, 21);
-            this.cbbAlphaBPP.TabIndex = 6;
-            // 
-            // lblAlphaBPP
-            // 
-            this.lblAlphaBPP.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblAlphaBPP.AutoSize = true;
-            this.lblAlphaBPP.Location = new System.Drawing.Point(3, 63);
-            this.lblAlphaBPP.Name = "lblAlphaBPP";
-            this.lblAlphaBPP.Size = new System.Drawing.Size(64, 13);
-            this.lblAlphaBPP.TabIndex = 0;
-            this.lblAlphaBPP.Text = "Storing BPP";
+            this.chkTransparentColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkTransparentColor.AutoSize = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.chkTransparentColor, 2);
+            this.chkTransparentColor.Location = new System.Drawing.Point(253, 5);
+            this.chkTransparentColor.Name = "chkTransparentColor";
+            this.chkTransparentColor.Size = new System.Drawing.Size(109, 17);
+            this.chkTransparentColor.TabIndex = 11;
+            this.chkTransparentColor.Text = "Transparent color";
+            this.chkTransparentColor.UseVisualStyleBackColor = true;
             // 
             // tpDotes
             // 
@@ -980,18 +815,6 @@
             // 
             this.dlgOpen.SupportMultiDottedExtensions = true;
             // 
-            // chkPrototype
-            // 
-            this.chkPrototype.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkPrototype.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.chkPrototype, 2);
-            this.chkPrototype.Location = new System.Drawing.Point(3, 30);
-            this.chkPrototype.Name = "chkPrototype";
-            this.chkPrototype.Size = new System.Drawing.Size(71, 17);
-            this.chkPrototype.TabIndex = 11;
-            this.chkPrototype.Text = "Prototype";
-            this.chkPrototype.UseVisualStyleBackColor = true;
-            // 
             // ObjectEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1023,17 +846,6 @@
             this.groupBox3.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            this.tpAlpha.ResumeLayout(false);
-            this.tpAlpha.PerformLayout();
-            this.tableLayoutPanel10.ResumeLayout(false);
-            this.tableLayoutPanel10.PerformLayout();
-            this.tableLayoutPanel9.ResumeLayout(false);
-            this.tableLayoutPanel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAlpha)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
             this.tpDotes.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
@@ -1061,7 +873,6 @@
         private System.Windows.Forms.TabPage tpImage;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.TabPage tpAlpha;
         private System.Windows.Forms.TabPage tpDotes;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label lblName;
@@ -1097,15 +908,6 @@
         private System.Windows.Forms.Button btnDotDelete;
         private System.Windows.Forms.PictureBox pbDotPicker;
         private System.Windows.Forms.Button btnDotSave;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.TextBox tbAlphaPath;
-        private System.Windows.Forms.Label lblAlphaType;
-        private System.Windows.Forms.ComboBox cbbAlphaType;
-        private System.Windows.Forms.Label lblAlphaPath;
-        private System.Windows.Forms.Button btnAlphaColor;
-        private System.Windows.Forms.Button btnGetAlphaPath;
-        private System.Windows.Forms.Label lblAlphaBPP;
-        private System.Windows.Forms.ComboBox cbbAlphaBPP;
         private System.Windows.Forms.OpenFileDialog dlgOpen;
         private System.Windows.Forms.ColorDialog dlgColor;
         private System.Windows.Forms.ToolTip toolTip;
@@ -1116,13 +918,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
         private System.Windows.Forms.PictureBox pbImage;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
-        private System.Windows.Forms.PictureBox pbAlpha;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnImageColor;
         private System.Windows.Forms.Label lblImageBackColor;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkPrototype;
+        private System.Windows.Forms.Button btnAlphaColor;
+        private System.Windows.Forms.CheckBox chkTransparentColor;
     }
 }

@@ -83,6 +83,8 @@
             this.cbbBackImageAlign = new System.Windows.Forms.ComboBox();
             this.lblBackImageAlign = new System.Windows.Forms.Label();
             this.lblBackImageBPP = new System.Windows.Forms.Label();
+            this.btnTransparentColor = new System.Windows.Forms.Button();
+            this.lblTransparentColor = new System.Windows.Forms.Label();
             this.gbGrid = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.chkGridAlign = new System.Windows.Forms.CheckBox();
@@ -590,7 +592,8 @@
             // 
             // tableLayoutPanel5
             // 
-            this.tableLayoutPanel5.ColumnCount = 4;
+            this.tableLayoutPanel5.ColumnCount = 5;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -599,7 +602,7 @@
             this.tableLayoutPanel5.Controls.Add(this.chkBackImageBuildIn, 0, 4);
             this.tableLayoutPanel5.Controls.Add(this.cbbBackStyle, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.lblBackgImagePath, 0, 2);
-            this.tableLayoutPanel5.Controls.Add(this.btnGetBackImage, 3, 2);
+            this.tableLayoutPanel5.Controls.Add(this.btnGetBackImage, 4, 2);
             this.tableLayoutPanel5.Controls.Add(this.tbBackgImagePath, 1, 2);
             this.tableLayoutPanel5.Controls.Add(this.chkBackStore, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 5);
@@ -608,6 +611,8 @@
             this.tableLayoutPanel5.Controls.Add(this.cbbBackImageAlign, 2, 3);
             this.tableLayoutPanel5.Controls.Add(this.lblBackImageAlign, 1, 3);
             this.tableLayoutPanel5.Controls.Add(this.lblBackImageBPP, 1, 4);
+            this.tableLayoutPanel5.Controls.Add(this.btnTransparentColor, 3, 1);
+            this.tableLayoutPanel5.Controls.Add(this.lblTransparentColor, 2, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -630,11 +635,10 @@
             this.cbbBackImageBPP.Items.AddRange(new object[] {
             "32 (ARGB)",
             "24 (RGB)",
-            "16 (6r5g5b)",
+            "16 (1a5r5g5b)",
+            "16 (5r6g5b)",
             "8 (256)",
-            "8 (Gray)",
-            "4 (16)",
-            "4 (Gray)"});
+            "4 (16)"});
             this.cbbBackImageBPP.Location = new System.Drawing.Point(199, 109);
             this.cbbBackImageBPP.Name = "cbbBackImageBPP";
             this.cbbBackImageBPP.Size = new System.Drawing.Size(100, 21);
@@ -686,7 +690,7 @@
             // tbBackgImagePath
             // 
             this.tbBackgImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel5.SetColumnSpan(this.tbBackgImagePath, 2);
+            this.tableLayoutPanel5.SetColumnSpan(this.tbBackgImagePath, 3);
             this.tbBackgImagePath.Location = new System.Drawing.Point(129, 54);
             this.tbBackgImagePath.Name = "tbBackgImagePath";
             this.tbBackgImagePath.Size = new System.Drawing.Size(235, 20);
@@ -698,7 +702,7 @@
             this.chkBackStore.AutoSize = true;
             this.chkBackStore.Checked = true;
             this.chkBackStore.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tableLayoutPanel5.SetColumnSpan(this.chkBackStore, 4);
+            this.tableLayoutPanel5.SetColumnSpan(this.chkBackStore, 5);
             this.chkBackStore.Location = new System.Drawing.Point(3, 3);
             this.chkBackStore.Name = "chkBackStore";
             this.chkBackStore.Size = new System.Drawing.Size(122, 17);
@@ -712,7 +716,7 @@
             this.tableLayoutPanel7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel7.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetPartial;
             this.tableLayoutPanel7.ColumnCount = 1;
-            this.tableLayoutPanel5.SetColumnSpan(this.tableLayoutPanel7, 4);
+            this.tableLayoutPanel5.SetColumnSpan(this.tableLayoutPanel7, 5);
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel7.Controls.Add(this.pbBackPreview, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -788,6 +792,28 @@
             this.lblBackImageBPP.Size = new System.Drawing.Size(64, 13);
             this.lblBackImageBPP.TabIndex = 13;
             this.lblBackImageBPP.Text = "Storing BPP";
+            // 
+            // btnTransparentColor
+            // 
+            this.btnTransparentColor.BackColor = System.Drawing.Color.White;
+            this.btnTransparentColor.Location = new System.Drawing.Point(333, 26);
+            this.btnTransparentColor.Margin = new System.Windows.Forms.Padding(11, 3, 0, 3);
+            this.btnTransparentColor.Name = "btnTransparentColor";
+            this.btnTransparentColor.Size = new System.Drawing.Size(32, 21);
+            this.btnTransparentColor.TabIndex = 2;
+            this.btnTransparentColor.UseVisualStyleBackColor = false;
+            this.btnTransparentColor.BackColorChanged += new System.EventHandler(this.btnTransparentColor_BackColorChanged);
+            this.btnTransparentColor.Click += new System.EventHandler(this.PickColor_Click);
+            // 
+            // lblTransparentColor
+            // 
+            this.lblTransparentColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblTransparentColor.AutoSize = true;
+            this.lblTransparentColor.Location = new System.Drawing.Point(229, 30);
+            this.lblTransparentColor.Name = "lblTransparentColor";
+            this.lblTransparentColor.Size = new System.Drawing.Size(90, 13);
+            this.lblTransparentColor.TabIndex = 5;
+            this.lblTransparentColor.Text = "Transparent color";
             // 
             // gbGrid
             // 
@@ -1116,5 +1142,7 @@
         private System.Windows.Forms.Button btnGridColor;
         private System.Windows.Forms.Label lblBackImageBPP;
         private System.Windows.Forms.ComboBox cbbBackImageBPP;
+        private System.Windows.Forms.Button btnTransparentColor;
+        private System.Windows.Forms.Label lblTransparentColor;
     }
 }

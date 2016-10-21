@@ -74,6 +74,7 @@ namespace Schematix
             lOFMapBackStyle4ImageStrech  = "Image (strech)",
             lOFMapBackStyle5ImageZInner  = "Image (Zoom inner)",
             lOFMapBackStyle6ImageZOutter = "Image (Zoom outter)",
+            lOFMapBackTransparentColor   = "Transparent color",
         #endregion
 
         #region Library
@@ -125,21 +126,15 @@ namespace Schematix
         #endregion
 
         #region Object Edit
-            lOETabMain      = "Main",
+            lOETabMain          = "Main",
             //
-            lOETabImage       = "Image",
-            lOEImageType      = "Type",
-            lOEImageType0None = "None",
-            lOEImageType1Load = "Load image",
-            lOEImageType2Link = "Link to image",
-            lOEUseBackColor   = "Back color on preview",
-            //
-            lOETabAlpha        = "Transparence",
-            lOEAlphaType       = "Type",
-            lOEAlphaType0Image = "As is",
-            lOEAlphaType1Color = "Color",
-            lOEAlphaType2Load  = "Load image",
-            lOEAlphaType3Link  = "Link to image",
+            lOETabImage         = "Image",
+            lOEImageType        = "Type",
+            lOEImageType0None   = "None",
+            lOEImageType1Load   = "Load image",
+            lOEImageType2Link   = "Link to image",
+            lOETransparentColor = "Transparent color",
+            lOEUseBackColor     = "Back color on preview",
             //
             lOETabDotes     = "Dotes",
             lOEDot          = "Dot",
@@ -348,6 +343,7 @@ namespace Schematix
                                 case "lOFMapBackStyle4ImageStrech":   lOFMapBackStyle4ImageStrech  = lblText;   break;
                                 case "lOFMapBackStyle5ImageZInner":   lOFMapBackStyle5ImageZInner  = lblText;   break;
                                 case "lOFMapBackStyle6ImageZOutter":  lOFMapBackStyle6ImageZOutter = lblText;   break;
+                                case "lOFMapBackTransparentColor":    lOFMapBackTransparentColor   = lblText;   break;
                             }
                             break;
                         #endregion
@@ -414,21 +410,15 @@ namespace Schematix
                         case "OE":
                             switch (lblName)
                             {
-                                case "lOETabMain":        lOETabMain        = lblText;   break;
+                                case "lOETabMain":          lOETabMain          = lblText;   break;
                                 //
-                                case "lOETabImage":       lOETabImage       = lblText;   break;
-                                case "lOEImageType":      lOEImageType      = lblText;   break;
-                                case "lOEImageType0None": lOEImageType0None = lblText;   break;
-                                case "lOEImageType1Load": lOEImageType1Load = lblText;   break;
-                                case "lOEImageType2Link": lOEImageType2Link = lblText;   break;
-                                case "lOEUseBackColor":   lOEUseBackColor   = lblText;   break;
-                                //
-                                case "lOETabAlpha":        lOETabAlpha        = lblText;   break;
-                                case "lOEAlphaType":       lOEAlphaType       = lblText;   break;
-                                case "lOEAlphaType0Image": lOEAlphaType0Image = lblText;   break;
-                                case "lOEAlphaType1Color": lOEAlphaType1Color = lblText;   break;
-                                case "lOEAlphaType2Load":  lOEAlphaType2Load  = lblText;   break;
-                                case "lOEAlphaType3Link":  lOEAlphaType3Link  = lblText;   break;
+                                case "lOETabImage":         lOETabImage         = lblText;   break;
+                                case "lOEImageType":        lOEImageType        = lblText;   break;
+                                case "lOEImageType0None":   lOEImageType0None   = lblText;   break;
+                                case "lOEImageType1Load":   lOEImageType1Load   = lblText;   break;
+                                case "lOEImageType2Link":   lOEImageType2Link   = lblText;   break;
+                                case "lOETransparentColor": lOETransparentColor = lblText;   break;
+                                case "lOEUseBackColor":     lOEUseBackColor     = lblText;   break;
                                 //
                                 case "lOETabDotes":    lOETabDotes    = lblText;   break;
                                 case "lOEDot":         lOEDot         = lblText;   break;
