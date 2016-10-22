@@ -11,10 +11,19 @@ namespace Schematix
         static Bitmap dotBmap = new Bitmap(7, 7, PixelFormat.Format32bppArgb); // (3+ 7 +3)x(3+ 7 +3)
         static Graphics dotGraphics = Graphics.FromImage(dotBmap);
         static Pen pen = new Pen(Color.Black);
+        xPObject PObject;
 
-        public ObjectEditForm()
+        public ObjectEditForm(xPObject pObject)
         {
             InitializeComponent();
+            if (pObject == null)
+            {
+                pObject = new xPObject();
+                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleBox;
+            }
+            else
+                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleBox;
+            PObject = pObject;
             // Main
             tpMain.Text      = options.LangCur.lOETabMain;
             lblNode.Text     = options.LangCur.lEENodeName;
@@ -44,18 +53,10 @@ namespace Schematix
             toolTip.SetToolTip(btnDotAdd,      options.LangCur.hOEDotAdd);
             toolTip.SetToolTip(btnDotSave,     options.LangCur.hOEDotSave);
             toolTip.SetToolTip(btnDotDelete,   options.LangCur.hOEDotDelete);
-            //
-            if (false)
-            {
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleBox;
-                //...
-            }
-            else
-            {
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleBox;
-                cbbImageType.SelectedIndex = 0;
-                cbbImageBPP.SelectedIndex = 0;
-            }
+            // Fill
+            //...
+            cbbImageType.SelectedIndex = 0;
+            cbbImageBPP.SelectedIndex = 0;
             pbDotPicker.BackColor =
             pbImage.BackColor = btnImageColor.BackColor;
 

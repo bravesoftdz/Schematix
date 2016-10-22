@@ -89,6 +89,66 @@ namespace Schematix
         {
             btnBoxEdit.Enabled = (tvBoxes.SelectedNode?.Tag != null);
         }
+
+        private void btnObjectAdd_Click(object sender, EventArgs e)
+        {
+            var form = new ObjectEditForm(null);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //...
+            }
+        }
+
+        private void btnObjectEdit_Click(object sender, EventArgs e)
+        {
+            if (tvObjects.SelectedNode?.Tag == null)
+                return;
+            var form = new ObjectEditForm(tvObjects.SelectedNode.Tag as xPObject);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //...
+            }
+        }
+
+        private void btnLinkAdd_Click(object sender, EventArgs e)
+        {
+            var form = new LinkEditForm(null);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //...
+            }
+        }
+
+        private void btnLinkEdit_Click(object sender, EventArgs e)
+        {
+            if (tvLinks.SelectedNode?.Tag == null)
+                return;
+            var form = new LinkEditForm(tvLinks.SelectedNode.Tag as xPLink);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //...
+            }
+        }
+
+        private void btnBoxAdd_Click(object sender, EventArgs e)
+        {
+            var form = new BoxEditForm(null);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //...
+            }
+        }
+
+        private void btnBoxEdit_Click(object sender, EventArgs e)
+        {
+            if (tvBoxes.SelectedNode?.Tag == null)
+                return;
+            var form = new BoxEditForm(tvBoxes.SelectedNode.Tag as xPBox);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //...
+            }
+        }
         #endregion
 
         #region Split containers
@@ -132,69 +192,39 @@ namespace Schematix
             else
                 btnUsedBoxEdit.Enabled = false;
         }
-        #endregion
-
-        private void btnObjectAdd_Click(object sender, EventArgs e)
-        {
-            var form = new ObjectEditForm();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-            }
-        }
-
-        private void btnObjectEdit_Click(object sender, EventArgs e)
-        {
-            //
-        }
 
         private void btnUsedObjectEdit_Click(object sender, EventArgs e)
         {
-            var form = new ObjectOptionsForm();
+            if (lvObjects.SelectedItems[0].Tag == null)
+                return;
+            var form = new ObjectOptionsForm(lvObjects.SelectedItems[0].Tag as xObject);
             if (form.ShowDialog() == DialogResult.OK)
             {
+                //...
             }
-        }
-
-        private void btnLinkAdd_Click(object sender, EventArgs e)
-        {
-            var form = new LinkEditForm();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-            }
-        }
-
-        private void btnLinkEdit_Click(object sender, EventArgs e)
-        {
-            //
         }
 
         private void btnUsedLinkEdit_Click(object sender, EventArgs e)
         {
-            var form = new LinkOptionsForm();
+            if (lvLinks.SelectedItems[0].Tag == null)
+                return;
+            var form = new LinkOptionsForm(lvLinks.SelectedItems[0].Tag as xLink);
             if (form.ShowDialog() == DialogResult.OK)
             {
+                //...
             }
-        }
-
-        private void btnBoxAdd_Click(object sender, EventArgs e)
-        {
-            var form = new BoxEditForm();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-            }
-        }
-
-        private void btnBoxEdit_Click(object sender, EventArgs e)
-        {
-            //
         }
 
         private void btnUsedBoxEdit_Click(object sender, EventArgs e)
         {
-            var form = new BoxOptionsForm();
+            if (lvBoxes.SelectedItems[0].Tag == null)
+                return;
+            var form = new BoxOptionsForm(lvBoxes.SelectedItems[0].Tag as xBox);
             if (form.ShowDialog() == DialogResult.OK)
             {
+                //...
             }
         }
+        #endregion
     }
 }

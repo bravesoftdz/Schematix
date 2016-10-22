@@ -11,6 +11,7 @@ namespace Schematix
 {
     public abstract class xRecord
     {
+        public Int64  ID = DateTime.Now.ToBinary();
         public String Name        = "";
         public String Description = "";
 
@@ -22,6 +23,8 @@ namespace Schematix
                 Name = new String(stream.ReadChars(valueLength));
             else if (parameterName == "Description")
                 Description = new String(stream.ReadChars(valueLength));
+            else if (parameterName == "ID" && valueLength == 8)
+                ID = stream.ReadInt64();
             // Skip unknown data
             else
             {
@@ -42,6 +45,9 @@ namespace Schematix
         {
             StreamWriteString("Name", stream, Name);
             StreamWriteString("Description", stream, Description);
+            stream.Write("ID");
+            stream.Write(8);
+            stream.Write(ID);
             // Mark the end
             stream.Write("END");
         }
@@ -84,6 +90,8 @@ namespace Schematix
 
     public abstract class xSaveLoad : xBlock
     {
+        public String FileName = "";
+
         public void LoadFromFile(String fileName)//Ok
         {
             try
@@ -126,7 +134,6 @@ namespace Schematix
     public abstract class xPrototype : xSaveLoad
     {
         public String   NodeName = "";
-        public String   ID       = "";
         public DateTime Revision = DateTime.Now;
         public bool     Prototype;
 
@@ -134,8 +141,6 @@ namespace Schematix
         {
             if (parameterName == "NodeName")
                 NodeName = new String(stream.ReadChars(valueLength));
-            else if (parameterName == "ID")
-                ID = new String(stream.ReadChars(valueLength));
             else if (parameterName == "Revision" && valueLength == 8)
                 Revision = DateTime.FromBinary(stream.ReadInt64());
             else if (parameterName == "Prototype" && valueLength == 1)
@@ -150,7 +155,6 @@ namespace Schematix
         {
             // Write local part of body
             StreamWriteString("NodeName", stream, NodeName);
-            StreamWriteString("ID", stream, ID);
             stream.Write("Revision");
             stream.Write(8);
             stream.Write(Revision.ToBinary());
@@ -393,20 +397,25 @@ namespace Schematix
 
     public abstract class xExemplar : xBlock
     {
-        public int ID;
+        public xMap Map;
         public xPrototype Prototype;
-        public String     FileName = "";
+        public Int64      PrototypeID;
         public String     Reference = "";
         public int Left  = 0, Top    = 0;
         public int Right = 0, Bottom = 0;
         public int Width = 0, Height = 0;
 
+        public xExemplar(xMap owner)
+        {
+            Map = owner;
+        }
+
         override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (parameterName == "Reference")
                 Reference = StreamReadString(stream, valueLength);
-            else if (parameterName == "ID" && valueLength == 4)
-                ID = stream.ReadInt32();
+            else if (parameterName == "PrototypeID" && valueLength == 8)
+                PrototypeID = stream.ReadInt64();
             // Pass unprocessed data up
             else
                 return base.ReadParameter(stream, parameterName, valueLength);
@@ -417,9 +426,9 @@ namespace Schematix
         {
             // Write local part of body
             StreamWriteString("Reference", stream, Reference);
-            stream.Write("ID");
-            stream.Write(4);
-            stream.Write(ID);
+            stream.Write("PrototypeID");
+            stream.Write(8);
+            stream.Write(PrototypeID);
             // Upper class body
             base.WriteParameters(stream);
         }
@@ -435,11 +444,10 @@ namespace Schematix
             return (Left <= x + padding) && (x <= Right + padding) && (Top <= y + padding) && (y <= Bottom + padding);
         }
 
-        public void BondParent(String parentID, List<xPrototype> parents, xPrototype parentDefault)//Ok
+        public bool BondParent(List<xPrototype> Prototypes)//Ok
         {
-            Prototype = parents.Find(xP => xP.ID == parentID);
-            if (Prototype == null)
-                Prototype = parentDefault;
+            Prototype = Prototypes.Find(xP => xP.ID == PrototypeID);
+            return (Prototype == null);
         }
 
         virtual public void Check()
@@ -449,18 +457,23 @@ namespace Schematix
 
     public class xIP : xBlock
     {
-        public String   Address         = "";
-        public int      Period          = options.DEFAULT_PING_PERIOD;
-        public int      TimeOutGreen    = options.DEFAULT_PING_TIMEOUT_GREEN;
-        public int      TimeOutYellow   = options.DEFAULT_PING_TIMEOUT_YELLOW;
-        public int      TimeOutRed      = options.DEFAULT_PING_TIMEOUT_RED;
-        public bool     Onn             = options.DEFAULT_PING_ONN;
-        public DateTime TimeNext        = DateTime.Now;
-        public int[]    PingTimeArray   = new int[options.DEFAULT_PING_ARRAY];
-        protected int   PingTimeCount   = 0;
+        public ListViewItem Map_lvItem      = null;
+        public ListViewItem lvItem          = null;
+        public String       Address         = "";
+        public int          Period          = options.DEFAULT_PING_PERIOD;
+        public int          TimeOutGreen    = options.DEFAULT_PING_TIMEOUT_GREEN;
+        public int          TimeOutYellow   = options.DEFAULT_PING_TIMEOUT_YELLOW;
+        public int          TimeOutRed      = options.DEFAULT_PING_TIMEOUT_RED;
+        public bool         Onn             = options.DEFAULT_PING_ONN;
+        public DateTime     TimeLast        = DateTime.Now;
+        public DateTime     TimeNext        = DateTime.Now;
+        public int[]        PingTimeArray   = new int[options.DEFAULT_PING_ARRAY];
+        protected int       PingTimeCount   = 0;
+        public xObject      Object { get; }
 
-        public xIP()//Ok
+        public xIP(xObject owner)//Ok
         {
+            Object = owner;
             PingClearValues();
         }
 
@@ -496,6 +509,8 @@ namespace Schematix
                 TimeOutRed = stream.ReadInt32();
             else if (parameterName == "Onn" && valueLength == 1)
                 Onn = stream.ReadBoolean();
+            else if (parameterName == "TimeLast" && valueLength == 8)
+                TimeLast = DateTime.FromBinary(stream.ReadInt64());
             else if (parameterName == "TimeNext" && valueLength == 8)
                 TimeNext = DateTime.FromBinary(stream.ReadInt64());
             else if (parameterName == "PingTime" && valueLength == 4)
@@ -525,6 +540,9 @@ namespace Schematix
             stream.Write("Onn");
             stream.Write(Marshal.SizeOf(Onn));
             stream.Write(Onn);
+            stream.Write("TimeLast");
+            stream.Write(Marshal.SizeOf(TimeLast.ToBinary()));
+            stream.Write(TimeLast.ToBinary());
             stream.Write("TimeNext");
             stream.Write(Marshal.SizeOf(TimeNext.ToBinary()));
             stream.Write(TimeNext.ToBinary());
@@ -547,6 +565,8 @@ namespace Schematix
         public int Y;
         public List<xIP> IPs = new List<xIP>();
 
+        public xObject(xMap owner) : base(owner) { }
+
         override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (parameterName == "X" && valueLength == 4)
@@ -555,7 +575,7 @@ namespace Schematix
                 Y  = stream.ReadInt32();
             else if (parameterName == "IP")
             {
-                var IP = new xIP();
+                var IP = new xIP(this);
                 IP.ReadParameters(stream);
                 IPs.Add(IP);
             }
@@ -594,16 +614,106 @@ namespace Schematix
             Width  = (Prototype as xPObject).ImageCanva.Width;
             Height = (Prototype as xPObject).ImageCanva.Height;
         }
+
+        public void AddIP(xIP IP)
+        {
+            if (!IPs.Contains(IP))
+                IPs.Add(IP);
+            Map.AddIP(IP);
+        }
+
+        public void DeleteIP(xIP IP)
+        {
+            IPs.Remove(IP);
+            Map.DeleteIP(IP);
+        }
     }
 
     public class xLink : xExemplar
     {
-        public int ObjectAID;
-        public int ObjectBID;
-        public xExemplar ObjectA = null;
-        public xExemplar ObjectB = null;
-        public int DotA, XA, YA;
-        public int DotB, XB, YB;
+        public Int64 ObjectAID, DotAID;
+        public Int64 ObjectBID, DotBID;
+        public xObject ObjectA = null;
+        public xObject ObjectB = null;
+        public xDot DotA = null;
+        public xDot DotB = null;
+        public int XA, YA;
+        public int XB, YB;
+
+        public xLink(xMap owner) : base(owner) { }
+
+        override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        {
+            if (parameterName == "ObjectAID" && valueLength == 8)
+                ObjectAID = stream.ReadInt64();
+            else if (parameterName == "DotAID" && valueLength == 8)
+                DotAID = stream.ReadInt64();
+            else if (parameterName == "ObjectBID" && valueLength == 8)
+                ObjectBID = stream.ReadInt64();
+            else if (parameterName == "DotBID" && valueLength == 8)
+                DotBID = stream.ReadInt64();
+            else if (parameterName == "YB" && valueLength == 4)
+                YB = stream.ReadInt32();
+            else if (parameterName == "XA" && valueLength == 4)
+                XA = stream.ReadInt32();
+            else if (parameterName == "YA" && valueLength == 4)
+                YA = stream.ReadInt32();
+            else if (parameterName == "XB" && valueLength == 4)
+                XB = stream.ReadInt32();
+            else if (parameterName == "YB" && valueLength == 4)
+                YB = stream.ReadInt32();
+            // Pass unprocessed data up
+            else
+                return base.ReadParameter(stream, parameterName, valueLength);
+            return true;
+        }
+
+        override public void WriteParameters(BinaryWriter stream)//Ok
+        {
+            // Write local part of body
+            if (ObjectAID != 0)
+            {
+                stream.Write("ObjectAID");
+                stream.Write(8);
+                stream.Write(ObjectA.ID);
+                if (DotAID != 0)
+                    DotAID = (ObjectA.Prototype as xPObject).Dots[0].ID;
+                stream.Write("DotAID");
+                stream.Write(8);
+                stream.Write(DotA.ID);
+            }
+            else
+            {
+                stream.Write("XA");
+                stream.Write(4);
+                stream.Write(XA);
+                stream.Write("YA");
+                stream.Write(4);
+                stream.Write(YA);
+            }
+            if (ObjectBID != 0)
+            {
+                stream.Write("ObjectBID");
+                stream.Write(8);
+                stream.Write(ObjectBID);
+                if (DotBID != 0)
+                    DotBID = (ObjectB.Prototype as xPObject).Dots[0].ID;
+                stream.Write("DotBID");
+                stream.Write(8);
+                stream.Write(DotBID);
+            }
+            else
+            {            
+                stream.Write("XB");
+                stream.Write(4);
+                stream.Write(XB);
+                stream.Write("YB");
+                stream.Write(4);
+                stream.Write(YB);
+            }
+            // Upper class body
+            base.WriteParameters(stream);
+        }
 
         override public bool isOver(int x, int y, byte padding = 0)//Ok
         {
@@ -624,32 +734,85 @@ namespace Schematix
             return false;
         }
 
-        public void BondEnds(List<xExemplar> Objects)
+        public void BondEnds(List<xObject> Objects)
         {
             if (ObjectAID != 0)
+            {
                 ObjectA = Objects.Find(xE => xE.ID == ObjectAID);
+                if (ObjectA != null)
+                {
+                    DotA = (ObjectA.Prototype as xPObject).Dots.Find(xE => xE.ID == DotAID);
+                    if (DotA == null)
+                        DotA = (ObjectA.Prototype as xPObject).Dots[0];
+                }
+            }
             if (ObjectBID != 0)
+            {
                 ObjectB = Objects.Find(xE => xE.ID == ObjectBID);
+                if (ObjectB != null)
+                {
+                    DotB = (ObjectB.Prototype as xPObject).Dots.Find(xE => xE.ID == DotBID);
+                    if (DotB == null)
+                        DotB = (ObjectB.Prototype as xPObject).Dots[0];
+                }
+            }
         }
 
         override public void Check()
         {
             List<xDot> Dots;
-            if (ObjectA != null)
+            int x;
+            if (ObjectAID != 0)
             {
-                Dots = (ObjectA.Prototype as xPObject).Dots;
-                if (Dots.Count <= DotA)
-                    DotA = 0;
-                XA = ObjectA.Left - Dots[0].X + Dots[DotA].X;
-                YA = ObjectA.Top  - Dots[0].Y + Dots[DotA].Y;
+                try
+                {
+                    Dots = (ObjectA.Prototype as xPObject).Dots;
+                    if (DotAID != 0)
+                        try
+                        {
+                            x = DotA.X;
+                        }
+                        catch
+                        {
+                            DotA = Dots[0];
+                            DotAID = DotA.ID;
+                        }
+                    XA = ObjectA.Left - Dots[0].X + DotA.X;
+                    YA = ObjectA.Top  - Dots[0].Y + DotA.Y;
+                }
+                catch
+                {
+                    ObjectAID = 0;
+                    ObjectA   = null;
+                    DotAID = 0;
+                    DotA   = null;
+                }
             }
-            if (ObjectB != null)
+            if (ObjectBID != 0)
             {
-                Dots = (ObjectB.Prototype as xPObject).Dots;
-                if (Dots.Count <= DotB)
-                    DotB = 0;
-                XB = ObjectB.Left - Dots[0].X + Dots[DotB].X;
-                YB = ObjectB.Top  - Dots[0].Y + Dots[DotB].Y;
+                try
+                {
+                    Dots = (ObjectB.Prototype as xPObject).Dots;
+                    if (DotBID != 0)
+                        try
+                        {
+                            x = DotB.X;
+                        }
+                        catch
+                        {
+                            DotB = Dots[0];
+                            DotBID = DotB.ID;
+                        }
+                    XB = ObjectB.Left - Dots[0].X + DotB.X;
+                    YB = ObjectB.Top  - Dots[0].Y + DotB.Y;
+                }
+                catch
+                {
+                    ObjectBID = 0;
+                    ObjectB = null;
+                    DotBID = 0;
+                    DotB = null;
+                }
             }
             Width  = Math.Abs(XB - XA);
             Height = Math.Abs(YB - YA);
@@ -663,6 +826,8 @@ namespace Schematix
         public String Text = "";
         public int TextX;
         public int TextY;
+
+        public xBox(xMap owner) : base(owner) { }
 
         override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
@@ -794,8 +959,114 @@ namespace Schematix
         }
     }
 
+    public enum GridStyles
+    {
+        None,
+        Dots,
+        Corners,
+        Crosses,
+        Grid
+    }
+
+    public class xGrid
+    {
+        public bool
+            StoreOwn = false,
+            Align    = false;
+        public GridStyles
+            Style = options.DEFAULT_GRID_STYLE;
+        public int
+            StepX = options.DEFAULT_GRID_STEP,
+            StepY = options.DEFAULT_GRID_STEP,
+            Thick =  1;
+        public Color
+            Color;
+    }
+
+    public enum BackStyles
+    {
+        Color,
+        ImageAlign,
+        ImageTile,
+        ImageStrech,
+        ImageZInner,
+        ImageZOutter
+    }
+
+    public class xBack
+    {
+        public bool
+            StoreOwn = false,
+            Float = false,
+            BuildIn = false;
+        public BackStyles Style = options.DEFAULT_BACK_STYLE;
+        public Color      Color = options.DEFAULT_BACK_COLOR;
+        public AlignTypes Align = options.DEFAULT_BACK_ALIGN;
+        public ImageBPPs  BPP   = ImageBPPs.b32argb;
+        public String     Path  = "";
+        public Bitmap     Image = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+    }
+
     public class xMap : xSaveLoad
     {
+        public bool Changed = false;
+        public List<xPObject> PObjects = new List<xPObject>();
+        public List<xPLink>   PLinks   = new List<xPLink>();
+        public List<xPBox>    PBoxes   = new List<xPBox>();
+        public List<xObject>  Objects = new List<xObject>();
+        public List<xLink>    Links   = new List<xLink>();
+        public List<xBox>     Boxes   = new List<xBox>();
+        public List<xIP>      IPs   = new List<xIP>();
+        xExemplar Selected = null;
+        xLink     LinkAdding = null;
+        public xGrid Grid;
+        public xBack Back;
+        public int
+            ScrollX = 0,
+            ScrollY = 0,
+            Width  = 1,
+            Height = 1;
+        public bool AutoSize = false;
+        public Bitmap Canvas = new Bitmap(1, 1, PixelFormat.Format24bppRgb);
+
         //...
+
+        public void DeleteObject(xObject obj)//!!!
+        {
+            if (obj == null)
+                return;
+            //...
+            Objects.Remove(obj);
+        }
+
+        public void DeleteLink(xLink link)
+        {
+            if (link == null)
+                return;
+            Links.Remove(link);
+        }
+
+        public void DeleteBox(xBox box)
+        {
+            if (box == null)
+                return;
+            Boxes.Remove(box);
+        }
+
+        public void AddIP(xIP IP)
+        {
+            if (!IPs.Contains(IP))
+                IPs.Add(IP);
+            //...
+            if (!options.IPs.Contains(IP))
+                options.IPs.Add(IP);
+        }
+
+        public void DeleteIP(xIP IP)
+        {
+            IPs.Remove(IP);
+            //...
+            options.IPs.Remove(IP);
+        }
     }
 }

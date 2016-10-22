@@ -5,9 +5,19 @@ namespace Schematix
 {
     public partial class LinkEditForm : Form
     {
-        public LinkEditForm()
+        xPLink PLink;
+
+        public LinkEditForm(xPLink pLink)
         {
             InitializeComponent();
+            if (pLink == null)
+            {
+                pLink = new xPLink();
+                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleLink;
+            }
+            else
+                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleLink;
+            PLink = pLink;
             // Share
             lblNode.Text     = options.LangCur.lEENodeName;
             lblName.Text     = options.LangCur.lEEName;
@@ -17,17 +27,9 @@ namespace Schematix
             lblLineThick.Text = options.LangCur.lEELineThick;
             lblLineStyle.Text = options.LangCur.lEELineStyle;
             toolTip.SetToolTip(btnColor, options.LangCur.hEEColorPick);
-            if (false)
-            {
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleLink;
-                //...
-                //cbbStyle.SelectedIndex = 0;
-            }
-            else
-            {
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleLink;
-                cbbStyle.SelectedIndex = 0;
-            }
+            // Fill
+            //...
+            cbbStyle.SelectedIndex = 0;
         }
 
         private void btnColor_Click(object sender, EventArgs e)//Ok

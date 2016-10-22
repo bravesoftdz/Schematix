@@ -7,7 +7,7 @@ namespace Schematix
     {
         public xIP IP;
 
-        public IPEditForm(xIP ip)//Ok
+        public IPEditForm(xIP ip, xObject owner)//Ok
         {
             InitializeComponent();
             lblAddress.Text  = options.LangCur.lIPAddress;
@@ -20,7 +20,7 @@ namespace Schematix
             if (ip == null)
             {
                 Text = options.LangCur.lIPTitleAdd;
-                ip = new xIP();
+                ip = new xIP(owner);
             }
             else
                 Text = options.LangCur.lIPTitleEdit;

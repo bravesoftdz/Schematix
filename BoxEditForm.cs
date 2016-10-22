@@ -6,9 +6,19 @@ namespace Schematix
 {
     public partial class BoxEditForm : Form
     {
-        public BoxEditForm()
+        xPBox PBox;
+
+        public BoxEditForm(xPBox pBox)
         {
             InitializeComponent();
+            if (pBox == null)
+            {
+                pBox = new xPBox();
+                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleBox;
+            }
+            else
+                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleBox;
+            PBox = pBox;
             // Share
             lblNodeName.Text = options.LangCur.lEENodeName;
             lblName.Text     = options.LangCur.lEEName;
@@ -36,23 +46,12 @@ namespace Schematix
             cbbAlign.Items.Add(options.LangCur.lEEAlign6BL);
             cbbAlign.Items.Add(options.LangCur.lEEAlign7BC);
             cbbAlign.Items.Add(options.LangCur.lEEAlign8BR);
-            if (false)
-            {
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleBox;
-                //...
-                //cbbType.SelectedIndex = 0;
-                //cbbStyle.SelectedIndex = 0;
-                //cbbAlign.SelectedIndex = 0;
-                //ShowFont(btnFont.Font);
-            }
-            else
-            {
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleBox;
-                cbbType.SelectedIndex = 0;
-                cbbStyle.SelectedIndex = 0;
-                cbbAlign.SelectedIndex = 0;
-                ShowFont(btnFontColor.Font);
-            }
+            // Fill
+            //...
+            cbbType.SelectedIndex = 0;
+            cbbStyle.SelectedIndex = 0;
+            cbbAlign.SelectedIndex = 0;
+            ShowFont(btnFontColor.Font);
         }
 
         private void PickColor_Click(object sender, EventArgs e)//Ok

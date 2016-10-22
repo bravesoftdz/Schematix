@@ -118,5 +118,81 @@ namespace Schematix
                 }
             return true;
         }
+
+        static public void lvIPs_AddIP(ListView lvIPs, xIP IP)//Ok
+        {
+            if (lvIPs == null)
+                return;
+            if (IP == null)
+                return;
+            var ip_item = new ListViewItem("");
+            ip_item.SubItems.Add("");
+            ip_item.SubItems.Add("");
+            ip_item.SubItems.Add("");
+            ip_item.SubItems.Add("");
+            lvIPs.Items.Add(ip_item);
+            ip_item.Tag = IP;
+            IP.lvItem = ip_item;
+            lvIPs_RenewIP(IP);
+        }
+
+        static public void lvIPs_RenewIP(xIP IP)//Ok
+        {
+            if (IP == null)
+                return;
+            if (IP.lvItem == null)
+                return;
+            IP.lvItem.Text = IP.Address;
+            IP.lvItem.Checked = IP.Onn;
+            IP.lvItem.SubItems[0].Text = IP.Period.ToString();
+            if (IP.PingTimeArray[0] < 0)
+                IP.lvItem.SubItems[1].Text = "-";
+            else
+                IP.lvItem.SubItems[1].Text = IP.TimeLast.ToString(options.DEFAULT_TIME_FORMAT);
+            IP.lvItem.SubItems[2].Text = IP.TimeNext.ToString(options.DEFAULT_TIME_FORMAT);
+            String s = "";
+            foreach (var ping in IP.PingTimeArray)
+                if (ping < 0)
+                    break;
+                else if (ping < IP.TimeOutGreen)
+                    s += "G";
+                else if (ping < IP.TimeOutYellow)
+                    s += "Y";
+                else if (ping < IP.TimeOutRed)
+                    s += "R";
+                else
+                    s += "-";
+            s += "";
+            if (s == "")
+                s = "-";
+            else
+                s = IP.PingTimeArray[0] + "ms [" + s + "]";
+            IP.lvItem.SubItems[3].Text = s;
+        }
+
+        static public void lvIPs_Edit(ListView lvIPs)//Ok
+        {
+            if (lvIPs == null)
+                return;
+            if (lvIPs.SelectedItems.Count < 1)
+                return;
+            xIP ip = (lvIPs.SelectedItems[0].Tag as xIP);
+            if (ip == null)
+                return;
+            new IPEditForm(ip, ip.Object).ShowDialog();
+            lvIPs_RenewIP(ip);
+        }
+
+        static public void lvIPs_Delete(ListView lvIPs)//Ok
+        {
+            if (lvIPs == null)
+                return;
+            for (int i = lvIPs.SelectedItems.Count - 1; 0 <= i; i--)
+            {
+                xIP ip = (lvIPs.SelectedItems[i].Tag as xIP);
+                ip?.Object.DeleteIP(ip);
+                lvIPs.Items.RemoveAt(i);
+            }
+        }
     }
 }

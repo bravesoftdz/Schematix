@@ -207,6 +207,7 @@
             // btnIPDelete
             // 
             this.btnIPDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnIPDelete.Enabled = false;
             this.btnIPDelete.Image = global::Schematix.Properties.Resources.delete;
             this.btnIPDelete.Location = new System.Drawing.Point(401, 3);
             this.btnIPDelete.Name = "btnIPDelete";

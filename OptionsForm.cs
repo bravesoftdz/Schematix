@@ -42,29 +42,29 @@ namespace Schematix
 
             //# Map
             // Grid
-            chkGridStore.Checked       = options.GridStoreOwn;
-            cbbGridStyle.SelectedIndex = options.GridStyle;
-            btnGridColor.BackColor     = options.GridColor;
+            chkGridStore.Checked       = options.Grid.StoreOwn;
+            cbbGridStyle.SelectedIndex = (int)options.Grid.Style;
+            btnGridColor.BackColor     = options.Grid.Color;
             nudGridStepX.Maximum       = options.MAX_GRID_STEP;
             nudGridStepY.Maximum       = options.MAX_GRID_STEP;
             nudGridThick.Maximum       = options.MAX_GRID_THICK;
-            nudGridStepX.Value         = options.GridStepX;
-            nudGridStepY.Value         = options.GridStepY;
-            nudGridThick.Value         = options.GridThick;
-            chkGridAlign.Checked       = options.GridAlign;
+            nudGridStepX.Value         = options.Grid.StepX;
+            nudGridStepY.Value         = options.Grid.StepY;
+            nudGridThick.Value         = options.Grid.Thick;
+            chkGridAlign.Checked       = options.Grid.Align;
             // Background
-            chkBackStore.Checked       = options.BackgroundStoreOwn;
+            chkBackStore.Checked       = options.Back.StoreOwn;
             //
-            image = new Bitmap(options.BackgroundImage);
+            image = new Bitmap(options.Back.Image);
             if (cbbBackStyle.SelectedIndex != 0)
                 pbBackPreview.BackgroundImage = image;
-            cbbBackStyle.SelectedIndex      = options.BackgroundStyle;
+            cbbBackStyle.SelectedIndex      = (int)options.Back.Style;
             //
-            cbbBackImageAlign.SelectedIndex = options.BackgroundImageAlign;
-            btnBackColor.BackColor          = options.BackgroundColor;
-            tbBackgImagePath.Text           = options.BackgroundImagePath;
-            chkBackImageFloat.Checked       = options.BackgroundImageFloat;
-            chkBackImageBuildIn.Checked     = options.BackgroundImageBuildIn;
+            cbbBackImageAlign.SelectedIndex = (int)options.Back.Align;
+            btnBackColor.BackColor          = options.Back.Color;
+            tbBackgImagePath.Text           = options.Back.Path;
+            chkBackImageFloat.Checked       = options.Back.Float;
+            chkBackImageBuildIn.Checked     = options.Back.BuildIn;
         }
 
         private void SetText(LanguageRecord lang)//
@@ -73,7 +73,7 @@ namespace Schematix
             toolTip.RemoveAll();
             Text = lang.lOFTitle;
             //# Main
-            tpMain.Text = lang.lOFMainTab;
+            tpMain.Text = lang.lOFTabMain;
             // Language
             gbLanguage.Text      = lang.lOFMainLanguage;
             lblLanguagePath.Text = lang.lOFMainLanguagePath;
@@ -108,37 +108,37 @@ namespace Schematix
             lblPingCount.Text  = lang.lOFMainPingCount;
 
             //# Map
-            tpMap.Text = lang.lOFMapTab;
+            tpMap.Text = lang.lOFTabMap;
             // Grid
-            gbGrid.Text       = lang.lOFMapGrid;
-            chkGridStore.Text = lang.lOFMapStore;
+            gbGrid.Text       = lang.lMOGrid;
+            chkGridStore.Text = lang.lMOStoreInMap;
             idx = cbbGridStyle.SelectedIndex;
             cbbGridStyle.Items.Clear();
-            cbbGridStyle.Items.Add(lang.lOFMapGridStyle1None);
-            cbbGridStyle.Items.Add(lang.lOFMapGridStyle2Dots);
-            cbbGridStyle.Items.Add(lang.lOFMapGridStyle3Corners);
-            cbbGridStyle.Items.Add(lang.lOFMapGridStyle4Crosses);
-            cbbGridStyle.Items.Add(lang.lOFMapGridStyle5Grid);
+            cbbGridStyle.Items.Add(lang.lMOGridStyle0None);
+            cbbGridStyle.Items.Add(lang.lMOGridStyle1Dots);
+            cbbGridStyle.Items.Add(lang.lMOGridStyle2Corners);
+            cbbGridStyle.Items.Add(lang.lMOGridStyle3Crosses);
+            cbbGridStyle.Items.Add(lang.lMOGridStyle4Grid);
             cbbGridStyle.SelectedIndex = idx;
             toolTip.SetToolTip(btnGridColor, options.LangCur.hEEColorPick);
             lblGridThick.Text = lang.lEELineThick;
-            chkGridAlign.Text = lang.lOFMapGridAlign;
+            chkGridAlign.Text = lang.lMOGridAlign;
             // Background
-            gbBack.Text       = lang.lOFMapBack;
-            chkBackStore.Text = lang.lOFMapStore;
+            gbBack.Text       = lang.lMOBack;
+            chkBackStore.Text = lang.lMOStoreInMap;
             idx = cbbBackStyle.SelectedIndex;
             cbbBackStyle.Items.Clear();
-            cbbBackStyle.Items.Add(lang.lOFMapBackStyle1Color);
-            cbbBackStyle.Items.Add(lang.lOFMapBackStyle2ImageAlign);
-            cbbBackStyle.Items.Add(lang.lOFMapBackStyle3ImageTile);
-            cbbBackStyle.Items.Add(lang.lOFMapBackStyle4ImageStrech);
-            cbbBackStyle.Items.Add(lang.lOFMapBackStyle5ImageZInner);
-            cbbBackStyle.Items.Add(lang.lOFMapBackStyle6ImageZOutter);
+            cbbBackStyle.Items.Add(lang.lMOBackStyle0Color);
+            cbbBackStyle.Items.Add(lang.lMOBackStyle1ImageAlign);
+            cbbBackStyle.Items.Add(lang.lMOBackStyle2ImageTile);
+            cbbBackStyle.Items.Add(lang.lMOBackStyle3ImageStrech);
+            cbbBackStyle.Items.Add(lang.lMOBackStyle4ImageZInner);
+            cbbBackStyle.Items.Add(lang.lMOBackStyle5ImageZOutter);
             cbbBackStyle.SelectedIndex = idx;
             toolTip.SetToolTip(btnBackColor,        options.LangCur.hEEColorPick);
             toolTip.SetToolTip(btnTransparentColor, options.LangCur.hEEColorPick);
             toolTip.SetToolTip(btnGetBackImage, options.LangCur.hEEImageLoad);
-            lblTransparentColor.Text = lang.lOFMapBackTransparentColor;
+            lblTransparentColor.Text = lang.lMOBackTransparentColor;
             lblBackgImagePath.Text   = lang.lEEImagePath;
             chkBackImageFloat.Text   = lang.lEEImageFloat;
             chkBackImageBuildIn.Text = lang.lEEImageBuildIn;
@@ -266,20 +266,20 @@ namespace Schematix
 
             //# Map
             // Grid
-            options.GridStoreOwn = chkGridStore.Checked;
-            options.GridStyle = cbbGridStyle.SelectedIndex;
-            options.GridColor = btnGridColor.BackColor;
-            options.GridStepX = (int)nudGridStepX.Value;
-            options.GridStepY = (int)nudGridStepY.Value;
-            options.GridThick = (int)nudGridThick.Value;
-            options.GridAlign = chkGridAlign.Checked;
+            options.Grid.StoreOwn = chkGridStore.Checked;
+            options.Grid.Style = (GridStyles)cbbGridStyle.SelectedIndex;
+            options.Grid.Color = btnGridColor.BackColor;
+            options.Grid.StepX = (int)nudGridStepX.Value;
+            options.Grid.StepY = (int)nudGridStepY.Value;
+            options.Grid.Thick = (int)nudGridThick.Value;
+            options.Grid.Align = chkGridAlign.Checked;
             // Background
-            options.BackgroundStoreOwn = chkBackStore.Checked;
-            options.BackgroundStyle = cbbBackStyle.SelectedIndex;
-            options.BackgroundColor = btnBackColor.BackColor;
-            options.BackgroundImagePath = tbBackgImagePath.Text;
-            options.BackgroundImage = new Bitmap(pbBackPreview.BackgroundImage);
-            options.BackgroundImageBuildIn = chkBackImageBuildIn.Checked;
+            options.Back.StoreOwn = chkBackStore.Checked;
+            options.Back.Style = (BackStyles)cbbBackStyle.SelectedIndex;
+            options.Back.Color = btnBackColor.BackColor;
+            options.Back.Path = tbBackgImagePath.Text;
+            options.Back.Image = new Bitmap(pbBackPreview.BackgroundImage);
+            options.Back.BuildIn = chkBackImageBuildIn.Checked;
 
             // Out
             DialogResult = DialogResult.OK;

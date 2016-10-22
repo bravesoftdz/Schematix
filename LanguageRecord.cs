@@ -30,7 +30,7 @@ namespace Schematix
         #region Main Options
             lOFTitle = "Main options",
             //* Main tab
-            lOFMainTab = "Main",
+            lOFTabMain = "Main",
             // Language
             lOFMainLanguage     = "Language",
             lOFMainLanguagePath = "Load from",
@@ -54,27 +54,7 @@ namespace Schematix
             lOFMainPingPeriod    = "Period of ping (miliseconds)",
             lOFMainPingCount     = "Maximum count of pings per period",
             //* Map tab
-            lOFMapTab = "New map",
-            lOFMapStore = "Save options in map",
-            // Grid
-            lOFMapGrid = "Grid",
-            lOFMapGridStyle0Default = "Default", // Only for map
-            lOFMapGridStyle1None    = "None",
-            lOFMapGridStyle2Dots    = "Dots",
-            lOFMapGridStyle3Corners = "Corners",
-            lOFMapGridStyle4Crosses = "Crosses",
-            lOFMapGridStyle5Grid    = "Grid",
-            lOFMapGridAlign         = "Align elements to grid",
-            // Background
-            lOFMapBack = "Background",
-            lOFMapBackStyle0Default      = "Default", // Only for map
-            lOFMapBackStyle1Color        = "Color",
-            lOFMapBackStyle2ImageAlign   = "Image (1:1)",
-            lOFMapBackStyle3ImageTile    = "Image (tile)",
-            lOFMapBackStyle4ImageStrech  = "Image (strech)",
-            lOFMapBackStyle5ImageZInner  = "Image (Zoom inner)",
-            lOFMapBackStyle6ImageZOutter = "Image (Zoom outter)",
-            lOFMapBackTransparentColor   = "Transparent color",
+            lOFTabMap = "New map | Default",
         #endregion
 
         #region Library
@@ -186,10 +166,36 @@ namespace Schematix
         #endregion
 
         #region Map Options
-            lMOTitle = "Map's options",
-            lMOName  = "Name",
-            lMOSize  = "Map size",
-            lMOAuto  = "Auto",
+            lMOTitle      = "Map's options",
+            lMOStoreInMap = "Save options in map",
+            // Tabs
+            lMOTabMain    = "Main",
+            lMOTabBack    = "Background",
+            lMOTabObjects = "Objects",
+            lMOTabLinks   = "Links",
+            lMOTabBoxes   = "Boxes",
+            lMOTabIPs     = "IP addresses",
+            // Main
+            lMOName = "Name",
+            lMOSize = "Map size",
+            lMOAuto = "Auto",
+            // Grid
+            lMOGrid = "Grid",
+            lMOGridStyle0None    = "None",
+            lMOGridStyle1Dots    = "Dots",
+            lMOGridStyle2Corners = "Corners",
+            lMOGridStyle3Crosses = "Crosses",
+            lMOGridStyle4Grid    = "Grid",
+            lMOGridAlign      = "Align elements to grid",
+            // Back
+            lMOBack = "Background",
+            lMOBackStyle0Color        = "Color",
+            lMOBackStyle1ImageAlign   = "Image (1:1)",
+            lMOBackStyle2ImageTile    = "Image (tile)",
+            lMOBackStyle3ImageStrech  = "Image (strech)",
+            lMOBackStyle4ImageZInner  = "Image (Zoom inner)",
+            lMOBackStyle5ImageZOutter = "Image (Zoom outter)",
+            lMOBackTransparentColor   = "Transparent color",
             // List
             lMOColumName      = "Name",
             lMOColumLocation  = "Location",
@@ -299,7 +305,7 @@ namespace Schematix
                             {
                                 case "lOFTitle": lOFTitle = lblText;   break;
                                 //* Main tab
-                                case "lOFMainTab": lOFMainTab = lblText;   break;
+                                case "lOFMainTab": lOFTabMain = lblText;   break;
                                 // Language
                                 case "lOFMainLanguage":     lOFMainLanguage     = lblText;   break;
                                 case "lOFMainLanguagePath": lOFMainLanguagePath = lblText;   break;
@@ -323,27 +329,7 @@ namespace Schematix
                                 case "lOFMainPingPeriod":    lOFMainPingPeriod    = lblText;   break;
                                 case "lOFMainPingCount":     lOFMainPingCount     = lblText;   break;
                                 //* Map tab
-                                case "lOFMapTab":   lOFMapTab   = lblText;   break;
-                                case "lOFMapStore": lOFMapStore = lblText;   break;
-                                // Grid
-                                case "lOFMapGrid":              lOFMapGrid              = lblText;   break;
-                                case "lOFMapGridStyle0Default": lOFMapGridStyle0Default = lblText;   break;
-                                case "lOFMapGridStyle1None":    lOFMapGridStyle1None    = lblText;   break;
-                                case "lOFMapGridStyle2Dots":    lOFMapGridStyle2Dots    = lblText;   break;
-                                case "lOFMapGridStyle3Corners": lOFMapGridStyle3Corners = lblText;   break;
-                                case "lOFMapGridStyle4Crosses": lOFMapGridStyle4Crosses = lblText;   break;
-                                case "lOFMapGridStyle5Grid":    lOFMapGridStyle5Grid    = lblText;   break;
-                                case "lOFMapGridAlign":         lOFMapGridAlign         = lblText;   break;
-                                // Background
-                                case "lOFMapBack":                    lOFMapBack                   = lblText;   break;
-                                case "lOFMapBackStyle0Default":       lOFMapBackStyle0Default      = lblText;   break;
-                                case "lOFMapBackStyle1Color":         lOFMapBackStyle1Color        = lblText;   break;
-                                case "lOFMapBackStyle2ImageAlign":    lOFMapBackStyle2ImageAlign   = lblText;   break;
-                                case "lOFMapBackStyle3ImageTile":     lOFMapBackStyle3ImageTile    = lblText;   break;
-                                case "lOFMapBackStyle4ImageStrech":   lOFMapBackStyle4ImageStrech  = lblText;   break;
-                                case "lOFMapBackStyle5ImageZInner":   lOFMapBackStyle5ImageZInner  = lblText;   break;
-                                case "lOFMapBackStyle6ImageZOutter":  lOFMapBackStyle6ImageZOutter = lblText;   break;
-                                case "lOFMapBackTransparentColor":    lOFMapBackTransparentColor   = lblText;   break;
+                                case "lOFMapTab":   lOFTabMap   = lblText;   break;
                             }
                             break;
                         #endregion
@@ -494,10 +480,36 @@ namespace Schematix
                         case "MO":
                             switch (lblName)
                             {
-                                case "lMOTitle": lMOTitle = lblText;   break;
-                                case "lMOName":  lMOName  = lblText;   break;
-                                case "lMOSize":  lMOSize  = lblText;   break;
-                                case "lMOAuto":  lMOAuto  = lblText;   break;
+                                case "lMOTitle":    lMOTitle    = lblText;   break;
+                                case "lMOMapStore": lMOStoreInMap = lblText;   break;
+                                // Tabs
+                                case "lMOTabMain":    lMOTabMain    = lblText;   break;
+                                case "lMOTabBack":    lMOTabBack    = lblText;   break;
+                                case "lMOTabObjects": lMOTabObjects = lblText;   break;
+                                case "lMOTabLinks":   lMOTabLinks   = lblText;   break;
+                                case "lMOTabBoxes":   lMOTabBoxes   = lblText;   break;
+                                case "lMOTabIPs":     lMOTabIPs     = lblText;   break;
+                                // Main
+                                case "lMOName": lMOName = lblText;   break;
+                                case "lMOSize": lMOSize = lblText;   break;
+                                case "lMOAuto": lMOAuto = lblText;   break;
+                                // Grid
+                                case "lMOGrid":              lMOGrid              = lblText;   break;
+                                case "lMOGridStyle1None":    lMOGridStyle0None    = lblText;   break;
+                                case "lMOGridStyle2Dots":    lMOGridStyle1Dots    = lblText;   break;
+                                case "lMOGridStyle3Corners": lMOGridStyle2Corners = lblText;   break;
+                                case "lMOGridStyle4Crosses": lMOGridStyle3Crosses = lblText;   break;
+                                case "lMOGridStyle5Grid":    lMOGridStyle4Grid    = lblText;   break;
+                                case "lMOGridAlign":         lMOGridAlign         = lblText;   break;
+                                // Background
+                                case "lMOBack":                   lMOBack                   = lblText;   break;
+                                case "lMOBackStyle1Color":        lMOBackStyle0Color        = lblText;   break;
+                                case "lMOBackStyle2ImageAlign":   lMOBackStyle1ImageAlign   = lblText;   break;
+                                case "lMOBackStyle3ImageTile":    lMOBackStyle2ImageTile    = lblText;   break;
+                                case "lMOBackStyle4ImageStrech":  lMOBackStyle3ImageStrech  = lblText;   break;
+                                case "lMOBackStyle5ImageZInner":  lMOBackStyle4ImageZInner  = lblText;   break;
+                                case "lMOBackStyle6ImageZOutter": lMOBackStyle5ImageZOutter = lblText;   break;
+                                case "lMOBackTransparentColor":   lMOBackTransparentColor   = lblText;   break;
                                 // List
                                 case "lMOColumName":      lMOColumName      = lblText;   break;
                                 case "lMOColumLocation":  lMOColumLocation  = lblText;   break;

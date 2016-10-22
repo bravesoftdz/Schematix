@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BoxOptionsForm));
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbText = new System.Windows.Forms.TextBox();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnGetReference = new System.Windows.Forms.Button();
@@ -38,7 +39,6 @@
             this.lblReference = new System.Windows.Forms.Label();
             this.tbReference = new System.Windows.Forms.TextBox();
             this.lblText = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +50,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.Controls.Add(this.textBox1, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.tbText, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.tbDescription, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.btnOk, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.btnGetReference, 2, 0);
@@ -72,6 +72,16 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(284, 162);
             this.tableLayoutPanel2.TabIndex = 3;
+            // 
+            // tbText
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.tbText, 2);
+            this.tbText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbText.Location = new System.Drawing.Point(66, 110);
+            this.tbText.MaxLength = 255;
+            this.tbText.Name = "tbText";
+            this.tbText.Size = new System.Drawing.Size(215, 20);
+            this.tbText.TabIndex = 11;
             // 
             // tbDescription
             // 
@@ -157,16 +167,6 @@
             this.lblText.TabIndex = 0;
             this.lblText.Text = "Text";
             // 
-            // textBox1
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.textBox1, 2);
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(66, 110);
-            this.textBox1.MaxLength = 255;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(215, 20);
-            this.textBox1.TabIndex = 11;
-            // 
             // BoxOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,7 +194,7 @@
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.Label lblReference;
         private System.Windows.Forms.TextBox tbReference;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbText;
         private System.Windows.Forms.Label lblText;
     }
 }
