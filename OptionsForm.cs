@@ -51,7 +51,7 @@ namespace Schematix
             nudGridStepX.Value         = options.Grid.StepX;
             nudGridStepY.Value         = options.Grid.StepY;
             nudGridThick.Value         = options.Grid.Thick;
-            chkGridAlign.Checked       = options.Grid.Align;
+            chkGridAlign.Checked       = options.Grid.Snap;
             // Background
             chkBackStore.Checked       = options.Back.StoreOwn;
             //
@@ -272,14 +272,14 @@ namespace Schematix
             options.Grid.StepX = (int)nudGridStepX.Value;
             options.Grid.StepY = (int)nudGridStepY.Value;
             options.Grid.Thick = (int)nudGridThick.Value;
-            options.Grid.Align = chkGridAlign.Checked;
+            options.Grid.Snap  = chkGridAlign.Checked;
             // Background
             options.Back.StoreOwn = chkBackStore.Checked;
-            options.Back.Style = (BackStyles)cbbBackStyle.SelectedIndex;
-            options.Back.Color = btnBackColor.BackColor;
-            options.Back.Path = tbBackgImagePath.Text;
-            options.Back.Image = new Bitmap(pbBackPreview.BackgroundImage);
-            options.Back.BuildIn = chkBackImageBuildIn.Checked;
+            options.Back.Style    = (BackgroundStyles)cbbBackStyle.SelectedIndex;
+            options.Back.Color    = btnBackColor.BackColor;
+            options.Back.Path     = tbBackgImagePath.Text;
+            options.Back.Image    = new Bitmap(pbBackPreview.BackgroundImage);
+            options.Back.BuildIn  = chkBackImageBuildIn.Checked;
 
             // Out
             DialogResult = DialogResult.OK;

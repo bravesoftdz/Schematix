@@ -64,7 +64,7 @@
             this.gbGrid = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.chkGridStore = new System.Windows.Forms.CheckBox();
-            this.chkGridAlign = new System.Windows.Forms.CheckBox();
+            this.chkGridSnap = new System.Windows.Forms.CheckBox();
             this.cbbGridStyle = new System.Windows.Forms.ComboBox();
             this.lblGridThick = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -587,7 +587,7 @@
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel10.Controls.Add(this.chkGridStore, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.chkGridAlign, 0, 2);
+            this.tableLayoutPanel10.Controls.Add(this.chkGridSnap, 0, 2);
             this.tableLayoutPanel10.Controls.Add(this.cbbGridStyle, 0, 1);
             this.tableLayoutPanel10.Controls.Add(this.lblGridThick, 5, 1);
             this.tableLayoutPanel10.Controls.Add(this.label1, 3, 1);
@@ -619,17 +619,17 @@
             this.chkGridStore.Text = "Save options in map";
             this.chkGridStore.UseVisualStyleBackColor = true;
             // 
-            // chkGridAlign
+            // chkGridSnap
             // 
-            this.chkGridAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkGridAlign.AutoSize = true;
-            this.tableLayoutPanel10.SetColumnSpan(this.chkGridAlign, 7);
-            this.chkGridAlign.Location = new System.Drawing.Point(3, 53);
-            this.chkGridAlign.Name = "chkGridAlign";
-            this.chkGridAlign.Size = new System.Drawing.Size(126, 17);
-            this.chkGridAlign.TabIndex = 6;
-            this.chkGridAlign.Text = "Align elements to grid";
-            this.chkGridAlign.UseVisualStyleBackColor = true;
+            this.chkGridSnap.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkGridSnap.AutoSize = true;
+            this.tableLayoutPanel10.SetColumnSpan(this.chkGridSnap, 7);
+            this.chkGridSnap.Location = new System.Drawing.Point(3, 53);
+            this.chkGridSnap.Name = "chkGridSnap";
+            this.chkGridSnap.Size = new System.Drawing.Size(128, 17);
+            this.chkGridSnap.TabIndex = 6;
+            this.chkGridSnap.Text = "Snap elements to grid";
+            this.chkGridSnap.UseVisualStyleBackColor = true;
             // 
             // cbbGridStyle
             // 
@@ -1175,7 +1175,7 @@
         private System.Windows.Forms.Button btnBackColor;
         private System.Windows.Forms.GroupBox gbGrid;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.CheckBox chkGridAlign;
+        private System.Windows.Forms.CheckBox chkGridSnap;
         private System.Windows.Forms.ComboBox cbbGridStyle;
         private System.Windows.Forms.Label lblGridThick;
         private System.Windows.Forms.Label label1;

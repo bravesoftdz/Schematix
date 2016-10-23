@@ -40,7 +40,7 @@ namespace Schematix
             cbbGridStyle.Items.Add(options.LangCur.lMOGridStyle4Grid);
             toolTip.SetToolTip(btnGridColor, options.LangCur.hEEColorPick);
             lblGridThick.Text = options.LangCur.lEELineThick;
-            chkGridAlign.Text = options.LangCur.lMOGridAlign;
+            chkGridSnap.Text = options.LangCur.lMOGridAlign;
             // Fill
             chkGridStore.Checked       = Map.Grid.StoreOwn;
             cbbGridStyle.SelectedIndex = (int)Map.Grid.Style;
@@ -48,7 +48,7 @@ namespace Schematix
             nudGridStepX.Value         = Map.Grid.StepX;
             nudGridStepY.Value         = Map.Grid.StepY;
             nudGridThick.Value         = Map.Grid.Thick;
-            chkGridAlign.Checked       = Map.Grid.Align;
+            chkGridSnap.Checked        = Map.Grid.Snap;
             // Back image
             gbBack.Text = options.LangCur.lMOBack;
             cbbBackStyle.Items.Add(options.LangCur.lMOBackStyle0Color);
@@ -194,19 +194,12 @@ namespace Schematix
         {
             for (int i = lvObjects.SelectedItems.Count - 1; 0 <= i; i--)
             {
-                xObject obj = (lvObjects.SelectedItems[i].Tag as xObject);
-                if (obj != null)
-                {
-                    foreach (var IP in obj.IPs)
-                        if (IP.lvItem != null)
-                            IP.lvItem.Remove();
-                    obj.Map.DeleteObject(obj);
-                }
+                (lvObjects.SelectedItems[i].Tag as xObject)?.Delete();
                 lvObjects.Items.RemoveAt(i);
             }
         }
 
-        private void lvObjects_MouseDoubleClick(object sender, MouseEventArgs e)//(?)
+        private void lvObjects_MouseDoubleClick(object sender, MouseEventArgs e)//
         {
             if (lvObjects.SelectedItems.Count < 1)
                 return;
@@ -215,11 +208,10 @@ namespace Schematix
                 return;
             // Remove IPs
             foreach (var IP in obj.IPs)
-                if (IP.lvItem != null)
-                {
-                    IP.lvItem.Remove();
-                    IP.lvItem = null;
-                }
+            {
+                IP.lvItem.Remove();
+                IP.lvItem = null;
+            }
             // Edit
             new ObjectOptionsForm(obj).ShowDialog();
             // Return IPs in list
@@ -231,9 +223,7 @@ namespace Schematix
         {
             for (int i = lvLinks.SelectedItems.Count - 1; 0 <= i; i--)
             {
-                xLink link = (lvLinks.SelectedItems[i].Tag as xLink);
-                if (link != null)
-                    link.Map.DeleteLink(link);
+                (lvLinks.SelectedItems[i].Tag as xLink)?.Delete();
                 lvLinks.Items.RemoveAt(i);
             }
         }
@@ -252,9 +242,7 @@ namespace Schematix
         {
             for (int i = lvBoxes.SelectedItems.Count - 1; 0 <= i; i--)
             {
-                xBox box = (lvBoxes.SelectedItems[i].Tag as xBox);
-                if (box != null)
-                    box.Map.DeleteBox(box);
+                (lvBoxes.SelectedItems[i].Tag as xBox)?.Delete();
                 lvBoxes.Items.RemoveAt(i);
             }
         }
@@ -291,13 +279,13 @@ namespace Schematix
             Map.Grid.StoreOwn = chkGridStore.Checked;
             Map.Grid.Style = (GridStyles)cbbGridStyle.SelectedIndex;
             Map.Grid.Color = btnGridColor.BackColor;
-            Map.Grid.StepX = (int)nudGridStepX.Value;
-            Map.Grid.StepY = (int)nudGridStepY.Value;
-            Map.Grid.Thick = (int)nudGridThick.Value;
-            Map.Grid.Align = chkGridAlign.Checked;
+            Map.Grid.StepX = (Int16)nudGridStepX.Value;
+            Map.Grid.StepY = (Int16)nudGridStepY.Value;
+            Map.Grid.Thick = (Int16)nudGridThick.Value;
+            Map.Grid.Snap = chkGridSnap.Checked;
             // Back image
             Map.Back.StoreOwn = chkBackStore.Checked;
-            Map.Back.Style    = (BackStyles)cbbBackStyle.SelectedIndex;
+            Map.Back.Style    = (BackgroundStyles)cbbBackStyle.SelectedIndex;
             Map.Back.Color    = btnBackColor.BackColor;
             Map.Back.Path     = tbBackgImagePath.Text;
             Map.Back.Float    = chkBackImageFloat.Checked;

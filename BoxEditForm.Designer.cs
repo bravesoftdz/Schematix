@@ -43,11 +43,12 @@
             this.cbbType = new System.Windows.Forms.ComboBox();
             this.btnColorFont = new System.Windows.Forms.Button();
             this.lblLineStyle = new System.Windows.Forms.Label();
-            this.btnFontColor = new System.Windows.Forms.Button();
+            this.btnFont = new System.Windows.Forms.Button();
             this.lblTextAlign = new System.Windows.Forms.Label();
             this.cbbAlign = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.chkIsPrototype = new System.Windows.Forms.CheckBox();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
@@ -60,7 +61,6 @@
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.dlgFont = new System.Windows.Forms.FontDialog();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.chkPrototype = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudThick)).BeginInit();
@@ -106,7 +106,7 @@
             this.tableLayoutPanel3.Controls.Add(this.cbbType, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnColorFont, 3, 3);
             this.tableLayoutPanel3.Controls.Add(this.lblLineStyle, 4, 1);
-            this.tableLayoutPanel3.Controls.Add(this.btnFontColor, 4, 3);
+            this.tableLayoutPanel3.Controls.Add(this.btnFont, 4, 3);
             this.tableLayoutPanel3.Controls.Add(this.lblTextAlign, 0, 3);
             this.tableLayoutPanel3.Controls.Add(this.cbbAlign, 1, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -262,17 +262,17 @@
             this.lblLineStyle.Text = "Style";
             this.lblLineStyle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btnFontColor
+            // btnFont
             // 
-            this.btnFontColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.SetColumnSpan(this.btnFontColor, 2);
-            this.btnFontColor.Location = new System.Drawing.Point(203, 83);
-            this.btnFontColor.MaximumSize = new System.Drawing.Size(300, 21);
-            this.btnFontColor.Name = "btnFontColor";
-            this.btnFontColor.Size = new System.Drawing.Size(172, 21);
-            this.btnFontColor.TabIndex = 4;
-            this.btnFontColor.UseVisualStyleBackColor = true;
-            this.btnFontColor.Click += new System.EventHandler(this.btnStyle_Click);
+            this.btnFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.SetColumnSpan(this.btnFont, 2);
+            this.btnFont.Location = new System.Drawing.Point(203, 83);
+            this.btnFont.MaximumSize = new System.Drawing.Size(300, 21);
+            this.btnFont.Name = "btnFont";
+            this.btnFont.Size = new System.Drawing.Size(172, 21);
+            this.btnFont.TabIndex = 4;
+            this.btnFont.UseVisualStyleBackColor = true;
+            this.btnFont.Click += new System.EventHandler(this.btnFont_Click);
             // 
             // lblTextAlign
             // 
@@ -317,7 +317,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.Controls.Add(this.chkPrototype, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.chkIsPrototype, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.tbDescription, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.lblName, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.tbName, 1, 2);
@@ -338,6 +338,18 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(378, 164);
             this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // chkIsPrototype
+            // 
+            this.chkIsPrototype.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkIsPrototype.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.chkIsPrototype, 2);
+            this.chkIsPrototype.Location = new System.Drawing.Point(3, 30);
+            this.chkIsPrototype.Name = "chkIsPrototype";
+            this.chkIsPrototype.Size = new System.Drawing.Size(71, 17);
+            this.chkIsPrototype.TabIndex = 13;
+            this.chkIsPrototype.Text = "Prototype";
+            this.chkIsPrototype.UseVisualStyleBackColor = true;
             // 
             // tbDescription
             // 
@@ -397,8 +409,9 @@
             this.tbRevision.BackColor = System.Drawing.Color.OldLace;
             this.tableLayoutPanel2.SetColumnSpan(this.tbRevision, 2);
             this.tbRevision.Location = new System.Drawing.Point(265, 29);
-            this.tbRevision.MaxLength = 16;
+            this.tbRevision.MaxLength = 20;
             this.tbRevision.Name = "tbRevision";
+            this.tbRevision.ReadOnly = true;
             this.tbRevision.Size = new System.Drawing.Size(110, 20);
             this.tbRevision.TabIndex = 7;
             this.tbRevision.Text = "2000.01.01 12:00:00";
@@ -408,9 +421,8 @@
             // 
             this.tbID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbID.BackColor = System.Drawing.Color.OldLace;
-            this.tbID.Enabled = false;
             this.tbID.Location = new System.Drawing.Point(295, 3);
-            this.tbID.MaxLength = 16;
+            this.tbID.MaxLength = 20;
             this.tbID.Name = "tbID";
             this.tbID.ReadOnly = true;
             this.tbID.Size = new System.Drawing.Size(80, 20);
@@ -438,18 +450,6 @@
             this.lblRevision.TabIndex = 0;
             this.lblRevision.Text = "rev.";
             this.lblRevision.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // chkPrototype
-            // 
-            this.chkPrototype.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkPrototype.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.chkPrototype, 2);
-            this.chkPrototype.Location = new System.Drawing.Point(3, 30);
-            this.chkPrototype.Name = "chkPrototype";
-            this.chkPrototype.Size = new System.Drawing.Size(71, 17);
-            this.chkPrototype.TabIndex = 13;
-            this.chkPrototype.Text = "Prototype";
-            this.chkPrototype.UseVisualStyleBackColor = true;
             // 
             // BoxEditForm
             // 
@@ -499,13 +499,13 @@
         private System.Windows.Forms.ComboBox cbbType;
         private System.Windows.Forms.Button btnColorFont;
         private System.Windows.Forms.ComboBox cbbAlign;
-        private System.Windows.Forms.Button btnFontColor;
+        private System.Windows.Forms.Button btnFont;
         private System.Windows.Forms.Label lblLineStyle;
         private System.Windows.Forms.Label lblTextAlign;
         private System.Windows.Forms.ColorDialog dlgColor;
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.FontDialog dlgFont;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.CheckBox chkPrototype;
+        private System.Windows.Forms.CheckBox chkIsPrototype;
     }
 }

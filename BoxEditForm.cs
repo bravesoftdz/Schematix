@@ -20,10 +20,19 @@ namespace Schematix
                 Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleBox;
             PBox = pBox;
             // Share
-            lblNodeName.Text = options.LangCur.lEENodeName;
-            lblName.Text     = options.LangCur.lEEName;
-            lblID.Text       = options.LangCur.lEEID;
-            lblRevision.Text = options.LangCur.lEERevision;
+            lblNodeName.Text    = options.LangCur.lEENodeName;
+            chkIsPrototype.Text = options.LangCur.lEEPrototype;
+            lblName.Text        = options.LangCur.lEEName;
+            lblID.Text          = options.LangCur.lEEID;
+            lblRevision.Text    = options.LangCur.lEERevision;
+            // Fill
+            tbNode.Text            = PBox.NodeName;
+            chkIsPrototype.Checked = PBox.isPrototype;
+            tbName.Text            = PBox.Name;
+            tbID.Text              = PBox.ID.ToString();
+            tbRevision.Text        = PBox.Revision.ToString(options.TIME_FORMAT);
+            tbDescription.Text     = PBox.Description;
+
             // Own
             lblType.Text      = options.LangCur.lBEType;
             lblLineThick.Text = options.LangCur.lEELineThick;
@@ -31,12 +40,12 @@ namespace Schematix
             lblText.Text      = options.LangCur.lBEText;
             lblTextAlign.Text = options.LangCur.lEEAlign;
             toolTip.SetToolTip(btnLineColor, options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnFontColor, options.LangCur.hEEColorPick);
-            // Fill CBB
+            toolTip.SetToolTip(btnFont,      options.LangCur.hEEColorPick);
+            // Fill CBB Type
             cbbType.Items.Add(options.LangCur.lBEType0Text);
             cbbType.Items.Add(options.LangCur.lBEType1Rectangle);
             cbbType.Items.Add(options.LangCur.lBEType2Ellipse);
-            //
+            // Fill CBB Align
             cbbAlign.Items.Add(options.LangCur.lEEAlign0TL);
             cbbAlign.Items.Add(options.LangCur.lEEAlign1TC);
             cbbAlign.Items.Add(options.LangCur.lEEAlign2TR);
@@ -47,11 +56,14 @@ namespace Schematix
             cbbAlign.Items.Add(options.LangCur.lEEAlign7BC);
             cbbAlign.Items.Add(options.LangCur.lEEAlign8BR);
             // Fill
-            //...
-            cbbType.SelectedIndex = 0;
-            cbbStyle.SelectedIndex = 0;
-            cbbAlign.SelectedIndex = 0;
-            ShowFont(btnFontColor.Font);
+            cbbType.SelectedIndex  = (int)PBox.BoxType;
+            nudThick.Value         = PBox.LineThick;
+            btnLineColor.BackColor = PBox.LineColor;
+            cbbStyle.SelectedIndex = (int)PBox.LineStyle;
+            tbText.Text            = PBox.Text;
+            cbbAlign.SelectedIndex = (int)PBox.TextAlign;
+            btnFont.BackColor      = PBox.TextColor;
+            SetAndShowFont(PBox.TextFont);
         }
 
         private void PickColor_Click(object sender, EventArgs e)//Ok
@@ -60,24 +72,37 @@ namespace Schematix
                 (sender as Button).BackColor = dlgColor.Color;
         }
 
-        private void btnStyle_Click(object sender, EventArgs e)
+        private void btnFont_Click(object sender, EventArgs e)//Ok
         {
+            dlgFont.Font = btnFont.Font;
             if (dlgFont.ShowDialog() == DialogResult.OK)
-            {
-                //...
-                ShowFont(dlgFont.Font);
-            }
+                SetAndShowFont(dlgFont.Font);
         }
 
-        private void ShowFont(Font font)
+        private void SetAndShowFont(Font font)//Ok
         {
-            btnFontColor.Text = font.Size + "em, " + font.Name;
-            btnFontColor.Font = new Font(font.Name, 8.25f, font.Style);
+            btnFont.Text = font.Size + "em, " + font.Name;
+            btnFont.Font = new Font(font.Name, 8.25f, font.Style);
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            //...
+            // Share
+            PBox.NodeName    = tbNode.Text;
+            PBox.isPrototype = chkIsPrototype.Checked;
+            PBox.Revision    = DateTime.Now;
+            PBox.Name        = tbName.Text;
+            PBox.Description = tbDescription.Text;
+            // Own
+            PBox.BoxType   = (BoxTypes)cbbType.SelectedIndex;
+            PBox.LineThick = (int)nudThick.Value;
+            PBox.LineColor = btnLineColor.BackColor;
+            PBox.LineStyle = (LineStyles)cbbStyle.SelectedIndex;
+            PBox.Text      = tbText.Text;
+            PBox.TextAlign = (AlignTypes)cbbAlign.SelectedIndex;
+            PBox.TextColor = btnFont.BackColor;
+            PBox.TextFont  = btnFont.Font;
+
             // Out
             DialogResult = DialogResult.OK;
             Close();

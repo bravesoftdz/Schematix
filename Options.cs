@@ -9,7 +9,7 @@ namespace Schematix
 {
     static class options
     {
-        public const String DEFAULT_TIME_FORMAT = "yyyy.MM.dd HH:mm:ss";
+        public const String TIME_FORMAT = "yyyy.MM.dd HH:mm:ss";
         // IP
         public const int  DEFAULT_PING_PERIOD         = 3000;
         public const int  DEFAULT_PING_TIMEOUT_GREEN  = 100; // < Green
@@ -26,7 +26,8 @@ namespace Schematix
         public static readonly Color DEFAULT_LINK_LINE_COLOR = Color.Maroon;
 
         // Box Prototype
-        public static readonly Font DEFAULT_BOX_FONT = new Font("Curier", 14);
+        public static readonly Font  DEFAULT_BOX_FONT       = new Font("Curier", 14);
+        public static readonly Color DEFAULT_BOX_TEXT_COLOR = Color.Black;
 
         // Exemplars
         public const int DEFAULT_FRAME_PADDING = 3;
@@ -43,7 +44,7 @@ namespace Schematix
         public const GridStyles      DEFAULT_GRID_STYLE = GridStyles.None;
         public static readonly Color DEFAULT_GRID_COLOR = Color.Gray;
         // Back
-        public const BackStyles      DEFAULT_BACK_STYLE = BackStyles.Color;
+        public const BackgroundStyles      DEFAULT_BACK_STYLE = BackgroundStyles.Color;
         public const AlignTypes      DEFAULT_BACK_ALIGN = AlignTypes.TopLeft;
         public static readonly Color DEFAULT_BACK_COLOR = Color.DarkBlue;
 
@@ -73,7 +74,7 @@ namespace Schematix
             RootBoxes   = "Boxes";
 
         static public xGrid Grid = new xGrid();
-        static public xBack Back = new xBack();
+        static public xBackground Back = new xBackground();
 
         // Catalog
         static public List<xPObject> PObjects = new List<xPObject>();
@@ -203,10 +204,10 @@ namespace Schematix
                             case "GridStepX":     Grid.StepX = SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
                             case "GridStepY":     Grid.StepY = SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
                             case "GridThick":     Grid.Thick = SetCounter(value, MAX_GRID_THICK, 1);              break;
-                            case "GridAlign":     Grid.Align = (value.ToUpper() == "YES");                        break;
+                            case "GridAlign":     Grid.Snap = (value.ToUpper() == "YES");                        break;
                             // Background
                             case "BackgroundStoreOwn":  Back.StoreOwn  = (value.ToUpper() == "YES");        break;
-                            case "BackgroundStyle":     Back.Style     = (BackStyles)SetCounter(value, 5);  break;
+                            case "BackgroundStyle":     Back.Style     = (BackgroundStyles)SetCounter(value, 5);  break;
                             case "BackgroundColor":     Back.Color     = Color.FromArgb(StrToInt(value));   break;
                             case "BackgroundImagePath":
                                 Back.Path = value;
@@ -261,7 +262,7 @@ namespace Schematix
                     file.WriteLine("GridStepX\t"    + Grid.StepX);
                     file.WriteLine("GridStepY\t"    + Grid.StepY);
                     file.WriteLine("GridThick\t"    + Grid.Thick);
-                    file.WriteLine("GridAlign\t"    + (Grid.Align ? "yes" : "no"));
+                    file.WriteLine("GridAlign\t"    + (Grid.Snap ? "yes" : "no"));
                     // Background
                     file.WriteLine("BackgroundStoreOwn\t"     + (Back.StoreOwn ? "yes" : "no"));
                     file.WriteLine("BackgroundStyle\t"        + (int)Back.Style);

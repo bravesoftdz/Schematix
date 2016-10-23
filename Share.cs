@@ -72,7 +72,7 @@ namespace Schematix
             return image;
         }
 
-        public delegate void GetImageCallBack(Image img);
+        public delegate void GetImageCallBack(Bitmap img);
 
         static public bool GetFolder(TextBox tb)//Ok
         {
@@ -148,8 +148,8 @@ namespace Schematix
             if (IP.PingTimeArray[0] < 0)
                 IP.lvItem.SubItems[1].Text = "-";
             else
-                IP.lvItem.SubItems[1].Text = IP.TimeLast.ToString(options.DEFAULT_TIME_FORMAT);
-            IP.lvItem.SubItems[2].Text = IP.TimeNext.ToString(options.DEFAULT_TIME_FORMAT);
+                IP.lvItem.SubItems[1].Text = IP.TimeLast.ToString(options.TIME_FORMAT);
+            IP.lvItem.SubItems[2].Text = IP.TimeNext.ToString(options.TIME_FORMAT);
             String s = "";
             foreach (var ping in IP.PingTimeArray)
                 if (ping < 0)
@@ -179,7 +179,7 @@ namespace Schematix
             xIP ip = (lvIPs.SelectedItems[0].Tag as xIP);
             if (ip == null)
                 return;
-            new IPEditForm(ip, ip.Object).ShowDialog();
+            new IPEditForm(ip, null).ShowDialog();
             lvIPs_RenewIP(ip);
         }
 
@@ -189,8 +189,7 @@ namespace Schematix
                 return;
             for (int i = lvIPs.SelectedItems.Count - 1; 0 <= i; i--)
             {
-                xIP ip = (lvIPs.SelectedItems[i].Tag as xIP);
-                ip?.Object.DeleteIP(ip);
+                (lvIPs.SelectedItems[i].Tag as xIP)?.Delete();
                 lvIPs.Items.RemoveAt(i);
             }
         }
