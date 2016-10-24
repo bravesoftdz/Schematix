@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -57,9 +58,9 @@ namespace Schematix
             cbbAlign.Items.Add(options.LangCur.lEEAlign8BR);
             // Fill
             cbbType.SelectedIndex  = (int)PBox.BoxType;
-            nudThick.Value         = PBox.LineThick;
-            btnLineColor.BackColor = PBox.LineColor;
-            cbbStyle.SelectedIndex = (int)PBox.LineStyle;
+            nudThick.Value         = (int)PBox.Pen.Width;
+            btnLineColor.BackColor = PBox.Pen.Color;
+            cbbStyle.SelectedIndex = (int)PBox.Pen.DashStyle;
             tbText.Text            = PBox.Text;
             cbbAlign.SelectedIndex = (int)PBox.TextAlign;
             btnFont.BackColor      = PBox.TextColor;
@@ -94,14 +95,14 @@ namespace Schematix
             PBox.Name        = tbName.Text;
             PBox.Description = tbDescription.Text;
             // Own
-            PBox.BoxType   = (BoxTypes)cbbType.SelectedIndex;
-            PBox.LineThick = (int)nudThick.Value;
-            PBox.LineColor = btnLineColor.BackColor;
-            PBox.LineStyle = (LineStyles)cbbStyle.SelectedIndex;
-            PBox.Text      = tbText.Text;
-            PBox.TextAlign = (AlignTypes)cbbAlign.SelectedIndex;
-            PBox.TextColor = btnFont.BackColor;
-            PBox.TextFont  = btnFont.Font;
+            PBox.BoxType       = (BoxTypes)cbbType.SelectedIndex;
+            PBox.Pen.Width     = (int)nudThick.Value;
+            PBox.Pen.Color     = btnLineColor.BackColor;
+            PBox.Pen.DashStyle = (DashStyle)cbbStyle.SelectedIndex;
+            PBox.Text          = tbText.Text;
+            PBox.TextAlign     = (AlignTypes)cbbAlign.SelectedIndex;
+            PBox.TextColor     = btnFont.BackColor;
+            PBox.TextFont      = btnFont.Font;
 
             // Out
             DialogResult = DialogResult.OK;

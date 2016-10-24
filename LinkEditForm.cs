@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -36,9 +37,9 @@ namespace Schematix
             lblLineStyle.Text = options.LangCur.lEELineStyle;
             toolTip.SetToolTip(btnLineColor, options.LangCur.hEEColorPick);
             // Fill
-            nudThick.Value         = PLink.LineThick;
-            btnLineColor.BackColor = PLink.LineColor;
-            cbbStyle.SelectedIndex = (int)PLink.LineStyle;
+            nudThick.Value         = (int)PLink.Pen.Width;
+            btnLineColor.BackColor = PLink.Pen.Color;
+            cbbStyle.SelectedIndex = (int)PLink.Pen.DashStyle;
         }
 
         private void btnColor_Click(object sender, EventArgs e)//Ok
@@ -56,9 +57,9 @@ namespace Schematix
             PLink.Name        = tbName.Text;
             PLink.Description = tbDescription.Text;
             // Own
-            PLink.LineThick = (int)nudThick.Value;
-            PLink.LineColor = btnLineColor.BackColor;
-            PLink.LineStyle = (LineStyles)cbbStyle.SelectedIndex;
+            PLink.Pen.Width     = (int)nudThick.Value;
+            PLink.Pen.Color     = btnLineColor.BackColor;
+            PLink.Pen.DashStyle = (DashStyle)cbbStyle.SelectedIndex;
 
             // Out
             DialogResult = DialogResult.OK;

@@ -39,15 +39,16 @@ namespace Schematix
             cbbGridStyle.Items.Add(options.LangCur.lMOGridStyle3Crosses);
             cbbGridStyle.Items.Add(options.LangCur.lMOGridStyle4Grid);
             toolTip.SetToolTip(btnGridColor, options.LangCur.hEEColorPick);
-            lblGridThick.Text = options.LangCur.lEELineThick;
-            chkGridSnap.Text = options.LangCur.lMOGridAlign;
+            lblGridThick.Text     = options.LangCur.lEELineThick;
+            chkGridSnap.Text      = options.LangCur.lMOGridAlign;
+            btnAlignElements.Text = options.LangCur.lMOGridAlignNow;
             // Fill
             chkGridStore.Checked       = Map.Grid.StoreOwn;
             cbbGridStyle.SelectedIndex = (int)Map.Grid.Style;
-            btnGridColor.BackColor     = Map.Grid.Color;
+            btnGridColor.BackColor     = Map.Grid.Pen.Color;
             nudGridStepX.Value         = Map.Grid.StepX;
             nudGridStepY.Value         = Map.Grid.StepY;
-            nudGridThick.Value         = Map.Grid.Thick;
+            nudGridThick.Value         = (int)Map.Grid.Pen.Width;
             chkGridSnap.Checked        = Map.Grid.Snap;
             // Back image
             gbBack.Text = options.LangCur.lMOBack;
@@ -151,6 +152,13 @@ namespace Schematix
             clmIPTimeLast.Text  = options.LangCur.lOOColumTimeLast;
             clmIPTimeNext.Text  = options.LangCur.lOOColumTimeNext;
             clmIPPing.Text      = options.LangCur.lOOColumPing;
+        }
+
+        private void btnColor_Click(object sender, EventArgs e)//Ok
+        {
+            if (dlgColor.ShowDialog() != DialogResult.OK)
+                return;
+            (sender as Button).BackColor = dlgColor.Color;
         }
 
         private void cbbBackImageAlign_SelectedIndexChanged(object sender, EventArgs e)//!!!
@@ -267,6 +275,11 @@ namespace Schematix
             Share.lvIPs_Edit(lvIPs);
         }
 
+        private void btnAlignElements_Click(object sender, EventArgs e)//O
+        {
+            Map.AlignToGridAll((int)nudGridStepX.Value, (int)nudGridStepX.Value);
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Main
@@ -276,13 +289,13 @@ namespace Schematix
             Map.Description = tbDescription.Text;
             Map.AutoSize    = chkSizeAuto.Checked;            
             // Grid
-            Map.Grid.StoreOwn = chkGridStore.Checked;
-            Map.Grid.Style = (GridStyles)cbbGridStyle.SelectedIndex;
-            Map.Grid.Color = btnGridColor.BackColor;
-            Map.Grid.StepX = (Int16)nudGridStepX.Value;
-            Map.Grid.StepY = (Int16)nudGridStepY.Value;
-            Map.Grid.Thick = (Int16)nudGridThick.Value;
-            Map.Grid.Snap = chkGridSnap.Checked;
+            Map.Grid.StoreOwn  = chkGridStore.Checked;
+            Map.Grid.Style     = (GridStyles)cbbGridStyle.SelectedIndex;
+            Map.Grid.Pen.Color = btnGridColor.BackColor;
+            Map.Grid.StepX     = (Int16)nudGridStepX.Value;
+            Map.Grid.StepY     = (Int16)nudGridStepY.Value;
+            Map.Grid.Pen.Width = (float)nudGridThick.Value;
+            Map.Grid.Snap      = chkGridSnap.Checked;
             // Back image
             Map.Back.StoreOwn = chkBackStore.Checked;
             Map.Back.Style    = (BackgroundStyles)cbbBackStyle.SelectedIndex;
@@ -301,6 +314,16 @@ namespace Schematix
             // Out
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void btnBackColor_BackColorChanged(object sender, EventArgs e)
+        {
+            pbBackPreview.BackColor = btnBackColor.BackColor;
+        }
+
+        private void btnAlphaColor_BackColorChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

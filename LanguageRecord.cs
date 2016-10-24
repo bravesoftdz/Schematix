@@ -186,7 +186,8 @@ namespace Schematix
             lMOGridStyle2Corners = "Corners",
             lMOGridStyle3Crosses = "Crosses",
             lMOGridStyle4Grid    = "Grid",
-            lMOGridAlign      = "Align elements to grid",
+            lMOGridAlign         = "Align elements to grid",
+            lMOGridAlignNow      = "Align now",
             // Back
             lMOBack = "Background",
             lMOBackStyle0Color        = "Color",
@@ -501,6 +502,7 @@ namespace Schematix
                                 case "lMOGridStyle4Crosses": lMOGridStyle3Crosses = lblText;   break;
                                 case "lMOGridStyle5Grid":    lMOGridStyle4Grid    = lblText;   break;
                                 case "lMOGridAlign":         lMOGridAlign         = lblText;   break;
+                                case "lMOGridAlignNow":      lMOGridAlignNow      = lblText;   break;
                                 // Background
                                 case "lMOBack":                   lMOBack                   = lblText;   break;
                                 case "lMOBackStyle1Color":        lMOBackStyle0Color        = lblText;   break;

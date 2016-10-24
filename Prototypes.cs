@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -256,14 +256,28 @@ namespace Schematix
 
         public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
-            if (valueLength == 1 && parameterName == "ImageType")
-                ImageType = (ImageTypes)stream.ReadByte();
-            else if (parameterName == "ImagePath")
-                ImagePath = StreamReadString(stream, valueLength);
-            else if (parameterName == "Image")
-                ImageCanva = Share.StreamImageOut(stream, valueLength, ref ImageBPP);
+            if (parameterName == "ImageType")
+                Enum.TryParse(StreamReadString(stream, valueLength), out ImageType);
             else if (valueLength == 4 && parameterName == "AlphaColor")
                 AlphaColor = Color.FromArgb(stream.ReadInt32());
+            else if (parameterName == "ImagePath")
+            {
+                ImagePath = StreamReadString(stream, valueLength);
+                if (ImageType == ImageTypes.Link)
+                    if (File.Exists(ImagePath))
+                    {
+                        var bmap = new Bitmap(ImagePath);
+                        ImageCanva = new Bitmap(bmap.Width, bmap.Height, PixelFormat.Format32bppArgb);
+                        Graphics.FromImage(ImageCanva).DrawImageUnscaled(bmap, 0, 0);
+                    }
+            }
+            else if (parameterName == "Image")
+                Share.StreamGetImage(stream, valueLength, ref ImageBPP, ref ImageCanva);
+            else if (valueLength == 0 && parameterName == "UseAlphaColor")
+            {
+                UseAlphaColor = true;
+                ImageCanva.MakeTransparent(AlphaColor);
+            }
             else if (valueLength == 4 && parameterName == "BackColor")
                 BackColor = Color.FromArgb(stream.ReadInt32());
             else if (parameterName == "Dot")
@@ -286,18 +300,29 @@ namespace Schematix
         public override void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            stream.Write("ImageType");
-            stream.Write(1);
-            stream.Write((byte)ImageType);
-            StreamWriteString("ImagePath", stream, ImagePath);
-            stream.Write("Image");
-            Share.StreamImageIn(stream, ImageCanva, ImageBPP);
+            StreamWriteString("ImageType", stream, ImageType.ToString());
             stream.Write("AlphaColor");
             stream.Write(4);
             stream.Write(AlphaColor.ToArgb());
+            StreamWriteString("ImagePath", stream, ImagePath);
+            if (ImageType == ImageTypes.Image)
+            {
+                stream.Write("Image");
+                Share.StreamPutImage(stream, ImageCanva, ImageBPP);
+            }
+            if (UseAlphaColor)
+            {
+                stream.Write("UseAlphaColor");
+                stream.Write(0);
+            }
             stream.Write("BackColor");
             stream.Write(4);
             stream.Write(BackColor.ToArgb());
+            if (ImageType != ImageTypes.None)
+            {
+                stream.Write("InitializeImage");
+                stream.Write(0);
+            }
             // Dots
             int pos = 0;
             foreach (var Dot in Dots)
@@ -318,31 +343,25 @@ namespace Schematix
                 Dots.Add(new xDot(this));
         }
     }
-
-    public enum LineStyles
-    {
-        Solid,
-        Dashed,
-        Doted,
-        DotDash,
-        DotDashDash,
-        DotDotDash
-    }
-
+    
     public class xPLink : xPrototype
     {
-        public int        LineThick = 1;
-        public Color      LineColor = options.DEFAULT_LINK_LINE_COLOR;
-        public LineStyles LineStyle = LineStyles.Solid;
+        public Pen Pen = new Pen(options.DEFAULT_LINK_LINE_COLOR, 1);
 
         public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
-            if (valueLength == 1 && parameterName == "Thick")
-                LineThick = stream.ReadByte();
+            if (valueLength == 4 && parameterName == "Thick")
+                Pen.Width = stream.ReadSingle();
             else if (valueLength == 4 && parameterName == "LineColor")
-                LineColor = Color.FromArgb(stream.ReadInt32());
-            else if (valueLength == 1 && parameterName == "LineStyle")
-                LineStyle = (LineStyles)stream.ReadByte();
+                Pen.Color = Color.FromArgb(stream.ReadInt32());
+            else if (parameterName == "LineStyle")
+            {
+                DashStyle ds;
+                Enum.TryParse(StreamReadString(stream, valueLength), out ds);
+                Pen.DashStyle = ds;
+                if (ds == DashStyle.Custom)
+                    Pen.DashPattern = new float[] { 5, 2, 1, 3 };
+            }
             // Pass unprocessed data up
             else
                 return base.ReadParameter(stream, parameterName, valueLength);
@@ -353,14 +372,12 @@ namespace Schematix
         {
             // Write local part of body
             stream.Write("Thick");
-            stream.Write(1);
-            stream.Write((byte)LineThick);
+            stream.Write(4);
+            stream.Write(Pen.Width);
             stream.Write("LineColor");
             stream.Write(4);
-            stream.Write(LineColor.ToArgb());
-            stream.Write("LineStyle");
-            stream.Write(1);
-            stream.Write((byte)LineStyle);
+            stream.Write(Pen.Color.ToArgb());
+            StreamWriteString("LineStyle", stream, Pen.DashStyle.ToString());
             // Upper class body
             base.WriteParameters(stream);
         }
@@ -397,13 +414,13 @@ namespace Schematix
         public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (valueLength == 1 && parameterName == "BoxType")
-                BoxType = (BoxTypes)stream.ReadByte();
-            else if (valueLength == 4 && parameterName == "LineColor")
-                LineColor = Color.FromArgb(stream.ReadInt32());
+                Enum.TryParse(StreamReadString(stream, valueLength), out BoxType);
+            else if (parameterName == "Text")
+                Text = StreamReadString(stream, valueLength);
             else if (valueLength == 1 && parameterName == "TextAlign")
-                TextAlign = (AlignTypes)stream.ReadByte();
+                Enum.TryParse(stream.ReadByte().ToString(), out TextAlign);
             else if (parameterName == "FontName")
-                TextFont = new Font(new String(stream.ReadChars(valueLength)), TextFont.Size, TextFont.Style);
+                TextFont = new Font(StreamReadString(stream, valueLength), TextFont.Size, TextFont.Style);
             else if (valueLength == 4 && parameterName == "FontSize")
                 TextFont = new Font(TextFont.Name, stream.ReadSingle(), TextFont.Style);
             else if (valueLength == 1 && parameterName == "FontStyle")
@@ -419,9 +436,7 @@ namespace Schematix
         public override void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            stream.Write("BoxType");
-            stream.Write(1);
-            stream.Write((byte)BoxType);
+            StreamWriteString("BoxType", stream, BoxType.ToString());
             StreamWriteString("Text", stream, Text);
             stream.Write("TextAlign");
             stream.Write(1);
@@ -1051,10 +1066,9 @@ namespace Schematix
             Style = options.DEFAULT_GRID_STYLE;
         public Int16
             StepX = options.DEFAULT_GRID_STEP,
-            StepY = options.DEFAULT_GRID_STEP,
-            Thick =  1;
-        public Color
-            Color;
+            StepY = options.DEFAULT_GRID_STEP;
+        public Pen
+            Pen = new Pen(options.DEFAULT_GRID_COLOR, 1);
     }
 
     public enum BackgroundStyles
@@ -1072,13 +1086,15 @@ namespace Schematix
         public bool
             StoreOwn = false,
             Float = false,
-            BuildIn = false;
-        public BackgroundStyles Style = options.DEFAULT_BACK_STYLE;
-        public Color            Color = options.DEFAULT_BACK_COLOR;
-        public AlignTypes       Align = options.DEFAULT_BACK_ALIGN;
-        public ImageBPPs        BPP   = ImageBPPs.b32argb;
-        public String           Path  = "";
-        public Bitmap           Image = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+            BuildIn = false,
+            UseAlphaColor = false;
+        public BackgroundStyles Style      = options.DEFAULT_BACK_STYLE;
+        public Color            Color      = options.DEFAULT_BACK_COLOR;
+        public Color            AlphaColor = options.DEFAULT_BACK_COLOR;
+        public AlignTypes       Align      = options.DEFAULT_BACK_ALIGN;
+        public ImageBPPs        BPP        = ImageBPPs.b32argb;
+        public String           Path       = "";
+        public Bitmap           Image      = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
     }
 
     public class xMap : xSaveLoad
@@ -1091,8 +1107,6 @@ namespace Schematix
         public List<xLink>    Links    = new List<xLink>();
         public List<xBox>     Boxes    = new List<xBox>();
         public List<xIP>      IPs      = new List<xIP>();
-        xExemplar Selected = null;
-        xLink     LinkAdding = null;
         public xBackground Back;
         public xGrid Grid;
         public int
@@ -1102,6 +1116,9 @@ namespace Schematix
             Height = 1;
         public bool AutoSize = false;
         public Bitmap Canvas = new Bitmap(1, 1, PixelFormat.Format24bppRgb);
+        Graphics graphics;
+        public xExemplar Selected = null;
+        public xLink LinkAdding = null;
 
         public void AddPObject(xPObject PObject)//Ok
         {
@@ -1193,46 +1210,67 @@ namespace Schematix
         
         override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
-            if (valueLength == 1 && parameterName == "AutoSize")
-                AutoSize = stream.ReadBoolean();
-            else if (valueLength == 4 && parameterName == "Width")
+            if (valueLength == 8 && parameterName == "Size")
+            {
                 Width = stream.ReadInt32();
-            else if (valueLength == 4 && parameterName == "Height")
                 Height = stream.ReadInt32();
-            else if (valueLength == 4 && parameterName == "ScrollX")
+            }
+            else if (valueLength == 8 && parameterName == "Scroll")
+            {
                 ScrollX = stream.ReadInt32();
-            else if (valueLength == 4 && parameterName == "ScrollY")
                 ScrollY = stream.ReadInt32();
+            }
+            else if (valueLength == 0 && parameterName == "AutoSize")
+                AutoSize = true;
             // Grid
-            else if (valueLength == 1 && parameterName == "GridStoreOwn")
-                Grid.StoreOwn = stream.ReadBoolean();
-            else if (valueLength == 1 && parameterName == "GridStyle")
-                Grid.Style = (GridStyles)stream.ReadByte();
+            else if (valueLength == 0 && parameterName == "GridStoreOwn")
+                Grid.StoreOwn = true;
+            else if (parameterName == "GridStyle")
+                Enum.TryParse(StreamReadString(stream, valueLength), out Grid.Style);
             else if (valueLength == 4 && parameterName == "GridColor")
-                Grid.Color = Color.FromArgb(stream.ReadInt32());
+                Grid.Pen.Color = Color.FromArgb(stream.ReadInt32());
             else if (valueLength == 2 && parameterName == "GridStepX")
                 Grid.StepX = stream.ReadInt16();
             else if (valueLength == 2 && parameterName == "GridStepY")
                 Grid.StepY = stream.ReadInt16();
-            else if (valueLength == 1 && parameterName == "GridSnap")
-                Grid.Snap = stream.ReadBoolean();
+            else if (valueLength == 4 && parameterName == "GridThick")
+                Grid.Pen.Width = stream.ReadSingle();
+            else if (valueLength == 0 && parameterName == "GridSnap")
+                Grid.Snap = true;
             // Backgruod
-            else if (valueLength == 1 && parameterName == "BackgroundStoreOwn")
-                Back.StoreOwn = stream.ReadBoolean();
-            else if (valueLength == 1 && parameterName == "BackgroundStyle")
-                Back.Style = (BackgroundStyles)stream.ReadByte();
+            else if (valueLength == 0 && parameterName == "BackgroundStoreOwn")
+                Back.StoreOwn = true;
+            else if (parameterName == "BackgroundStyle")
+                Enum.TryParse(StreamReadString(stream, valueLength), out Back.Style);
             else if (valueLength == 4 && parameterName == "BackgroundColor")
                 Back.Color = Color.FromArgb(stream.ReadInt32());
             else if (parameterName == "BackgroundPath")
+            {
                 Back.Path = StreamReadString(stream, valueLength);
-            else if (valueLength == 1 && parameterName == "BackgroundFloat")
-                Back.Float = stream.ReadBoolean();
+                if (Back.Style != BackgroundStyles.Color)
+                    if (File.Exists(Back.Path))
+                    {
+                        var bmap = new Bitmap(Back.Path);
+                        Back.Image = new Bitmap(bmap.Width, bmap.Height, PixelFormat.Format32bppArgb);
+                        Graphics.FromImage(Back.Image).DrawImageUnscaled(bmap, 0, 0);
+                    }
+            }
+            else if (valueLength == 0 && parameterName == "BackgroundFloat")
+                Back.Float = true;
+            else if (valueLength == 4 && parameterName == "BackgroundAlphaColor")
+                Back.AlphaColor = Color.FromArgb(stream.ReadInt32());
             else if (valueLength == 1 && parameterName == "BackgroundAlign")
-                Back.Align = (AlignTypes)stream.ReadByte();
-            else if (valueLength == 1 && parameterName == "BackgroundBuildIn")
-                Back.BuildIn = stream.ReadBoolean();
+                Enum.TryParse(stream.ReadByte().ToString(), out Back.Align);
             else if (parameterName == "BackgroundImage")
-                Back.Image = Share.StreamImageOut(stream, valueLength, ref Back.BPP);
+            {
+                Back.BuildIn = true;
+                Share.StreamGetImage(stream, valueLength, ref Back.BPP, ref Back.Image);
+            }
+            else if (valueLength == 0 && parameterName == "BackgroundUseAlphaColor")
+            {
+                Back.UseAlphaColor = true;
+                Back.Image.MakeTransparent(Back.AlphaColor);
+            }
 
             #region Prototype
             // PObjects
@@ -1294,69 +1332,79 @@ namespace Schematix
         override public void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            stream.Write("AutoSize");
-            stream.Write(1);
-            stream.Write(AutoSize);
-            stream.Write("Width");
-            stream.Write(4);
+            stream.Write("Size");
+            stream.Write(8);
             stream.Write(Width);
-            stream.Write("Height");
-            stream.Write(4);
             stream.Write(Height);
-            stream.Write("ScrollX");
-            stream.Write(4);
+            stream.Write("Scroll");
+            stream.Write(8);
             stream.Write(ScrollX);
-            stream.Write("ScrollY");
-            stream.Write(4);
             stream.Write(ScrollY);
+            if (AutoSize)
+            {
+                stream.Write("AutoSize");
+                stream.Write(0);
+            }
 
             // Grid
-            stream.Write("GridStoreOwn");
-            stream.Write(1);
-            stream.Write(Grid.StoreOwn);
-            stream.Write("GridStyle");
-            stream.Write(1);
-            stream.Write((byte)Grid.Style);
+            if (Grid.StoreOwn)
+            {
+                stream.Write("GridStoreOwn");
+                stream.Write(0);
+            }
+            StreamWriteString("GridStyle", stream, Grid.Style.ToString());
             stream.Write("GridColor");
             stream.Write(4);
-            stream.Write(Grid.Color.ToArgb());
+            stream.Write(Grid.Pen.Color.ToArgb());
             stream.Write("GridStepX");
             stream.Write(2);
             stream.Write(Grid.StepX);
             stream.Write("GridStepY");
             stream.Write(2);
             stream.Write(Grid.StepY);
-            stream.Write("GridSnap");
-            stream.Write(1);
-            stream.Write(Grid.Snap);
+            stream.Write("GridThick");
+            stream.Write(4);
+            stream.Write(Grid.Pen.Width);
+            if (Grid.Snap)
+            {
+                stream.Write("GridSnap");
+                stream.Write(0);
+            }
 
             // Backgruod
-            stream.Write("BackgroundStoreOwn");
-            stream.Write(1);
-            stream.Write(Back.StoreOwn);
-            stream.Write("BackgroundStyle");
-            stream.Write(1);
-            stream.Write((byte)Back.Style);
+            if (Back.StoreOwn)
+            {
+                stream.Write("BackgroundStoreOwn");
+                stream.Write(0);
+            }
+            StreamWriteString("BackgroundStyle", stream, Back.Style.ToString());
             stream.Write("BackgroundColor");
             stream.Write(4);
             stream.Write(Back.Color.ToArgb());
             StreamWriteString("BackgroundPath", stream, Back.Path);
-            stream.Write("BackgroundFloat");
-            stream.Write(1);
-            stream.Write(Back.Float);
+            if (Back.Float)
+            {
+                stream.Write("BackgroundFloat");
+                stream.Write(0);
+            }
+            stream.Write("BackgroundAlphaColor");
+            stream.Write(4);
+            stream.Write(Back.AlphaColor.ToArgb());
             stream.Write("BackgroundAlign");
             stream.Write(1);
             stream.Write((byte)Back.Align);
-            stream.Write("BackgroundBuildIn");
-            stream.Write(1);
-            stream.Write(Back.BuildIn);
             if (Back.BuildIn)
             {
                 stream.Write("BackgroundImage");
-                Share.StreamImageIn(stream, Back.Image, Back.BPP);
+                Share.StreamPutImage(stream, Back.Image, Back.BPP);
+            }
+            if (Back.UseAlphaColor)
+            {
+                stream.Write("BackgroundUseAlphaColor");
+                stream.Write(0);
             }
 
-            int pos = 0;
+            int pos;
             #region Prototype
             // PObjects
             foreach (var PObject in PObjects)
@@ -1413,6 +1461,295 @@ namespace Schematix
 
             // Upper class body
             base.WriteParameters(stream);
+        }
+
+        public void AlignToGridAll(int sx = 0, int sy = 0)//Ok
+        {
+            if (sx == 0)
+                sx = Grid.StepX;
+            if (sy == 0)
+                sy = Grid.StepY;
+            foreach (var Object in Objects)
+            {
+                AlignToGrid(ref Object.X, ref Object.Y);
+                Object.Check();
+            }
+            foreach (var Link in Links)
+            {
+                if (Link.ObjectA == null)
+                    AlignToGrid(ref Link.XA, ref Link.YA);
+                if (Link.ObjectB == null)
+                    AlignToGrid(ref Link.XB, ref Link.YB);
+                Link.Check();
+            }
+        }
+
+        public void AlignToGrid(ref int x, ref int y)//Ok
+        {
+            x = (int)((float)x / Grid.StepX) * Grid.StepX;
+            y = (int)((float)y / Grid.StepY) * Grid.StepY;
+        }
+        
+        public void DoAutoSize(int minWidth, int minHeight)
+        {
+            if (!AutoSize)
+                return;
+            int w = minWidth,
+                h = minHeight;
+            // Look for bigger values
+            foreach (var Object in Objects)
+            {
+                if (w < Object.Right)
+                    w = Object.Right;
+                if (h < Object.Bottom)
+                    h = Object.Bottom;
+            }
+            foreach (var Link in Links)
+            {
+                if (w < Link.Right)
+                    w = Link.Right;
+                if (h < Link.Bottom)
+                    h = Link.Bottom;
+            }
+            foreach (var Box in Boxes)
+            {
+                if (w < Box.Right)
+                    w = Box.Right;
+                if (h < Box.Bottom)
+                    h = Box.Bottom;
+            }
+            // Apply
+            ReSize(w, h);
+        }
+
+        public void ReSize(int width, int height)
+        {
+            if (width < Width || height < Height)
+            {
+                // Look for out of border elements
+                foreach (var Object in Objects)
+                {
+                    if (width  < Object.Right )
+                        Object.X = (width  < Object.Width ) ? 0 : width  - Object.Width;
+                    if (height < Object.Bottom)
+                        Object.Y = (height < Object.Height) ? 0 : height - Object.Height;
+                    Object.Check();
+                }
+                foreach (var Link in Links)
+                {
+                    if (Link.ObjectA == null)
+                    {
+                        if (width  < Link.XA)
+                            Link.XA = width;
+                        if (height < Link.YA)
+                            Link.YA = height;
+                    }
+                    if (Link.ObjectB == null)
+                    {
+                        if (width  < Link.XB)
+                            Link.XB = width;
+                        if (height < Link.YB)
+                            Link.YB = height;
+                    }
+                    Link.Check();
+                }
+                foreach (var Box in Boxes)
+                {
+                    if (width  < Box.Right )
+                        Box.Left = (width  < Box.Width ) ? 0 : width  - Box.Width;
+                    if (height < Box.Bottom)
+                        Box.Top  = (height < Box.Height) ? 0 : height - Box.Height;
+                    Box.Check();
+                }
+            }
+            // Apply
+            Width  = width;
+            Height = height;
+            // Canvas
+            Canvas = new Bitmap(width, height);
+            graphics = Graphics.FromImage(Canvas);
+            ReDraw();
+        }
+
+        public void ReDraw(int x = 0, int y = 0, int width = 0, int height = 0)
+        {
+            // Get area
+            if (width  < 1)
+                width  = Width;
+            if (height < 1)
+                height = Height;
+            // Clear area
+            graphics.Clip = new Region(new Rectangle(x, y, width, height));
+            graphics.Clear(Back.Color);
+
+            // Variables
+            int iX, startX, endX, 
+                iY, startY, endY;
+
+            #region Backgruond
+            int pX = 0,
+                pY = 0,
+                pW = Width,
+                pH = Height;
+            if (Back.Float)
+            {
+                pX = ScrollX;
+                pY = ScrollY;
+                pW = options.WindowW;
+                pH = options.WindowH;
+            }
+            int imgW = Back.Image.Width,
+                imgH = Back.Image.Height;
+            int imgOffsetX,
+                imgOffsetY;
+            switch (Back.Style)
+            {
+                case BackgroundStyles.Color:
+                    // Skip
+                    break;
+
+                case BackgroundStyles.ImageAlign:
+                    // Calculate offset
+                    imgOffsetX = ((pW - imgW) * (int)Back.Align % 3) / 2;
+                    imgOffsetY = ((pH - imgH) * (int)Back.Align / 3) / 2;
+                    // Fill
+                    graphics.DrawImageUnscaled(Back.Image,
+                        pX - imgOffsetX,
+                        pY - imgOffsetY);
+                    break;
+
+                case BackgroundStyles.ImageTile:
+                    startX = x / imgW;
+                    startY = y / imgW;
+                    endX = (x + width ) / imgW + 1;
+                    endY = (y + height) / imgH + 1;
+                    // Colum/row oscillation for float style
+                    pX = pX % imgW;
+                    pY = pY % imgH;
+                    // Calculate align offset
+                    imgOffsetX = ((imgW - pW % imgW) * (int)Back.Align % 3) / 2;
+                    imgOffsetY = ((imgH - pH % imgH) * (int)Back.Align / 3) / 2;
+                    // Fill
+                    for (iY = startX; iY <= endX; iY++)
+                        for (iX = startY; iX <= endY; iX++)
+                            graphics.DrawImageUnscaled(Back.Image,
+                                pX + iX * imgW - imgOffsetX,
+                                pY + iY * imgH - imgOffsetY);
+                    break;
+
+                case BackgroundStyles.ImageStrech:
+                    graphics.DrawImage(Back.Image, pX, pY, pW, pH);
+                    break;
+
+                case BackgroundStyles.ImageZInner:
+                    int imgZiW,
+                        imgZiH;
+                    // Find most "tight" side
+                    if (imgW * pH <= imgH * pW)
+                    {
+                        imgZiW = pW;
+                        imgZiH = (int)(imgH * ((double)pW / imgW));
+                    }
+                    else
+                    {
+                        imgZiW = (int)(imgW * ((double)pH / imgH));
+                        imgZiH = pH;
+                    }
+                    imgOffsetX = ((pW - imgZiW) * (int)Back.Align % 3) / 2;
+                    imgOffsetY = ((pH - imgZiH) * (int)Back.Align / 3) / 2;
+                    graphics.DrawImage(Back.Image, imgOffsetX, imgOffsetY, imgZiW, imgZiH);
+                    break;
+
+                case BackgroundStyles.ImageZOutter:
+                    int imgZoW,
+                        imgZoH;
+                    // Find most "tight" side
+                    if (imgW * pH <= imgH * pW)
+                    {
+                        imgZoW = (int)(imgW * ((double)pH / imgH));
+                        imgZoH = pH;
+                    }
+                    else
+                    {
+                        imgZoW = pW;
+                        imgZoH = (int)(imgH * ((double)pW / imgW));
+                    }
+                    imgOffsetX = ((imgZoW - pW) * (int)Back.Align % 3) / 2;
+                    imgOffsetY = ((imgZoH - pH) * (int)Back.Align / 3) / 2;
+                    graphics.DrawImage(Back.Image, imgOffsetX, imgOffsetY, imgZoW, imgZoH);
+                    break;
+            }
+            #endregion
+
+            #region Grid
+            endX = x / Grid.StepX;
+            endY = y / Grid.StepY;
+            startX = (x + width ) / Grid.StepX + 1;
+            startY = (y + height) / Grid.StepY + 1;
+            switch (Grid.Style)
+            {
+                case GridStyles.None:
+                    break;
+                case GridStyles.Dots:
+                    for (iX = startX; endX <= iX; iX--)
+                        for (iY = startY; endY <= iY; iY--)
+                            graphics.DrawLine(Grid.Pen, iX * Grid.StepX, iY * Grid.StepY, iX * Grid.StepX, iY * Grid.StepY);
+                    break;
+                case GridStyles.Corners:
+                    int halfW = Grid.StepX / 2,
+                        halfH = Grid.StepY / 2;
+                    for (iX = startX; endX <= iX; iX--)
+                        for (iY = startY; endY <= iY; iY--)
+                        {
+                            graphics.DrawLine(Grid.Pen,
+                                iX * Grid.StepX,         iY * Grid.StepY,
+                                iX * Grid.StepX + halfW, iY * Grid.StepY);
+                            graphics.DrawLine(Grid.Pen,
+                                iX * Grid.StepX,         iY * Grid.StepY,
+                                iX * Grid.StepX,         iY * Grid.StepY + halfH);
+                        }
+                    break;
+                case GridStyles.Crosses:
+                    int quadW,
+                        quadH;
+                    quadW = Grid.StepX / 2;
+                    quadH = Grid.StepY / 2;
+                    for (iX = startX; endX <= iX; iX--)
+                        for (iY = startY; endY <= iY; iY--)
+                        {
+                            graphics.DrawLine(Grid.Pen,
+                                iX * Grid.StepX - quadW, iY * Grid.StepY,
+                                iX * Grid.StepX + quadW, iY * Grid.StepY);
+                            graphics.DrawLine(Grid.Pen,
+                                iX * Grid.StepX,         iY * Grid.StepY - quadH,
+                                iX * Grid.StepX,         iY * Grid.StepY + quadH);
+                        }
+                    break;
+                case GridStyles.Grid:
+                    for (iX = startX; endX <= iX; iX--)
+                        graphics.DrawLine(Grid.Pen, iX * Grid.StepX, y, iX * Grid.StepX, y + height);
+                    for (iY = startY; endY <= iY; iY--)
+                        graphics.DrawLine(Grid.Pen, x, iY * Grid.StepY, x + width, iY * Grid.StepY);
+                    break;
+            }
+            #endregion
+
+            // Draw Boxes
+
+            // Draw Links
+
+            // Draw Objects
+
+        }
+
+        public xExemplar SelectAt(int x, int y)//
+        {
+            Selected = Objects.Find(O => O.isOver(x, y));
+            if (Selected == null)
+                Selected = Links.Find(L => L.isOver(x, y));
+            if (Selected == null)
+                Selected = Boxes.Find(B => B.isOver(x, y));
+            return Selected;
         }
 
         //...

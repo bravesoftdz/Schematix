@@ -76,6 +76,10 @@ namespace Schematix
         static public xGrid Grid = new xGrid();
         static public xBackground Back = new xBackground();
 
+        // Display window
+        static public int
+            WindowW = 320,
+            WindowH = 240;
         // Catalog
         static public List<xPObject> PObjects = new List<xPObject>();
         static public List<xPLink>   PLinks   = new List<xPLink>();
@@ -198,13 +202,13 @@ namespace Schematix
 
                             //# Map
                             // Grid
-                            case "GridStoreOwn":  Grid.StoreOwn = (value.ToUpper() == "YES");                     break;
-                            case "GridStyle":     Grid.Style = (GridStyles)SetCounter(value, 4);                  break;
-                            case "GridColor":     Grid.Color = Color.FromArgb(StrToInt(value));                   break;
-                            case "GridStepX":     Grid.StepX = SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
-                            case "GridStepY":     Grid.StepY = SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
-                            case "GridThick":     Grid.Thick = SetCounter(value, MAX_GRID_THICK, 1);              break;
-                            case "GridAlign":     Grid.Snap = (value.ToUpper() == "YES");                        break;
+                            case "GridStoreOwn":  Grid.StoreOwn  = (value.ToUpper() == "YES");                               break;
+                            case "GridStyle":     Grid.Style     = (GridStyles)SetCounter(value, 4);                         break;
+                            case "GridColor":     Grid.Pen.Color = Color.FromArgb(StrToInt(value));                          break;
+                            case "GridStepX":     Grid.StepX     = (Int16)SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
+                            case "GridStepY":     Grid.StepY     = (Int16)SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
+                            case "GridThick":     Grid.Pen.Width = (Int16)SetCounter(value, MAX_GRID_THICK, 1);              break;
+                            case "GridAlign":     Grid.Snap      = (value.ToUpper() == "YES");                               break;
                             // Background
                             case "BackgroundStoreOwn":  Back.StoreOwn  = (value.ToUpper() == "YES");        break;
                             case "BackgroundStyle":     Back.Style     = (BackgroundStyles)SetCounter(value, 5);  break;
@@ -258,10 +262,10 @@ namespace Schematix
                     // Grid
                     file.WriteLine("GridStoreOwn\t" + (Grid.StoreOwn ? "yes" : "no"));
                     file.WriteLine("GridStyle\t"    + (int)Grid.Style);
-                    file.WriteLine("GridColor\t"    + Grid.Color.ToArgb());
+                    file.WriteLine("GridColor\t"    + Grid.Pen.Color.ToArgb());
                     file.WriteLine("GridStepX\t"    + Grid.StepX);
                     file.WriteLine("GridStepY\t"    + Grid.StepY);
-                    file.WriteLine("GridThick\t"    + Grid.Thick);
+                    file.WriteLine("GridThick\t"    + (int)Grid.Pen.Width);
                     file.WriteLine("GridAlign\t"    + (Grid.Snap ? "yes" : "no"));
                     // Background
                     file.WriteLine("BackgroundStoreOwn\t"     + (Back.StoreOwn ? "yes" : "no"));

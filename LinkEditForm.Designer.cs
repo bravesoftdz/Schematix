@@ -282,12 +282,12 @@
             this.cbbStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbStyle.FormattingEnabled = true;
             this.cbbStyle.Items.AddRange(new object[] {
-            "–",
-            "– –",
-            "•",
-            "• –",
-            "• – –",
-            "• • –"});
+            "––––––––",
+            "–   –   –   –",
+            "•  •  •  •  •",
+            "– • – • – •",
+            "– • • – • •",
+            "– • – – • –"});
             this.cbbStyle.Location = new System.Drawing.Point(220, 3);
             this.cbbStyle.Name = "cbbStyle";
             this.cbbStyle.Size = new System.Drawing.Size(100, 21);

@@ -44,13 +44,13 @@ namespace Schematix
             // Grid
             chkGridStore.Checked       = options.Grid.StoreOwn;
             cbbGridStyle.SelectedIndex = (int)options.Grid.Style;
-            btnGridColor.BackColor     = options.Grid.Color;
+            btnGridColor.BackColor     = options.Grid.Pen.Color;
             nudGridStepX.Maximum       = options.MAX_GRID_STEP;
             nudGridStepY.Maximum       = options.MAX_GRID_STEP;
             nudGridThick.Maximum       = options.MAX_GRID_THICK;
             nudGridStepX.Value         = options.Grid.StepX;
             nudGridStepY.Value         = options.Grid.StepY;
-            nudGridThick.Value         = options.Grid.Thick;
+            nudGridThick.Value         = (int)options.Grid.Pen.Width;
             chkGridAlign.Checked       = options.Grid.Snap;
             // Background
             chkBackStore.Checked       = options.Back.StoreOwn;
@@ -266,13 +266,13 @@ namespace Schematix
 
             //# Map
             // Grid
-            options.Grid.StoreOwn = chkGridStore.Checked;
-            options.Grid.Style = (GridStyles)cbbGridStyle.SelectedIndex;
-            options.Grid.Color = btnGridColor.BackColor;
-            options.Grid.StepX = (int)nudGridStepX.Value;
-            options.Grid.StepY = (int)nudGridStepY.Value;
-            options.Grid.Thick = (int)nudGridThick.Value;
-            options.Grid.Snap  = chkGridAlign.Checked;
+            options.Grid.StoreOwn  = chkGridStore.Checked;
+            options.Grid.Style     = (GridStyles)cbbGridStyle.SelectedIndex;
+            options.Grid.Pen.Color = btnGridColor.BackColor;
+            options.Grid.StepX     = (Int16)nudGridStepX.Value;
+            options.Grid.StepY     = (Int16)nudGridStepY.Value;
+            options.Grid.Pen.Width = (float)nudGridThick.Value;
+            options.Grid.Snap      = chkGridAlign.Checked;
             // Background
             options.Back.StoreOwn = chkBackStore.Checked;
             options.Back.Style    = (BackgroundStyles)cbbBackStyle.SelectedIndex;

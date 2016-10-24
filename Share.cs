@@ -9,7 +9,7 @@ namespace Schematix
 {
     static public class Share
     {
-        static public void StreamImageIn(BinaryWriter stream, Bitmap image, ImageBPPs BPP)
+        static public void StreamPutImage(BinaryWriter stream, Bitmap image, ImageBPPs BPP)
         {
             // BPP
             var pFormat = PixelFormat.Format32bppArgb;
@@ -23,53 +23,42 @@ namespace Schematix
             var graphics = Graphics.FromImage(bmap);
             graphics.DrawImageUnscaled(image, 0,0);
             // Get data
-            var imageData = bmap.LockBits(new Rectangle(0, 0, bmap.Width, bmap.Height), ImageLockMode.ReadOnly, bmap.PixelFormat);
-            int bytes = Math.Abs(imageData.Stride) * imageData.Height;
-            byte[] buffer = new byte[bytes];
-            Marshal.Copy(imageData.Scan0, buffer, 0, bytes);
-            bmap.UnlockBits(imageData);
-            // Write
-            stream.Write(6 + bytes);
-            stream.Write(image.Width);
-            stream.Write(image.Height);
-            stream.Write((int)pFormat);
-            stream.Write(buffer);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bmap.Save(ms, ImageFormat.Bmp);
+                // Write
+                stream.Write((int)ms.Length + 4);
+                stream.Write((int)pFormat);
+                stream.Write(ms.ToArray());
+            }
         }
 
-        static public Bitmap StreamImageOut(BinaryReader stream, int bytes, ref ImageBPPs BPP)
+        static public bool StreamGetImage(BinaryReader stream, int bytes, ref ImageBPPs BPP, ref Bitmap image)
         {
-            BPP = ImageBPPs.b32argb;
-            var image = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
-            if (bytes < 7)
+            if (bytes < 4)
             {
                 stream.ReadBytes(bytes);
-                return image;
+                return false;
             }
-            int w;
-            int h;
-            PixelFormat pFormat;
-            byte[] buffer = new byte[bytes - 6];
-            // Read data
-            w = stream.ReadInt32();
-            h = stream.ReadInt32();
-            pFormat = (PixelFormat)stream.ReadInt32();
-            buffer = stream.ReadBytes(bytes - 6);
-            // Transfer
-            var bmap = new Bitmap(w, h, pFormat);
-            var imageData = bmap.LockBits(new Rectangle(0, 0, bmap.Width, bmap.Height), ImageLockMode.WriteOnly, bmap.PixelFormat);
-            Marshal.Copy(buffer, 0, imageData.Scan0, bytes);
-            bmap.UnlockBits(imageData);
-            // Return
-            image = new Bitmap(w, h, PixelFormat.Format32bppArgb);
-            var graphics = Graphics.FromImage(image);
-            graphics.DrawImageUnscaled(bmap, 0, 0);
             // BPP
+            BPP = ImageBPPs.b32argb;
+            PixelFormat pFormat = (PixelFormat)stream.ReadInt32();
             if (pFormat == PixelFormat.Format24bppRgb)      BPP = ImageBPPs.b24rgb;
             if (pFormat == PixelFormat.Format16bppArgb1555) BPP = ImageBPPs.b16a1r5g5b5;
             if (pFormat == PixelFormat.Format16bppRgb565)   BPP = ImageBPPs.b16r5g6b5;
             if (pFormat == PixelFormat.Format8bppIndexed)   BPP = ImageBPPs.b8;
             if (pFormat == PixelFormat.Format4bppIndexed)   BPP = ImageBPPs.b4;
-            return image;
+            // Read data
+            Bitmap bmap;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ms.Write(stream.ReadBytes(bytes - 4), 0, bytes - 4);
+                bmap = new Bitmap(ms);
+            }
+            // Return
+            image = new Bitmap(bmap.Width, bmap.Height, PixelFormat.Format32bppArgb);
+            Graphics.FromImage(image).DrawImageUnscaled(bmap, 0, 0);
+            return true;
         }
 
         public delegate void GetImageCallBack(Bitmap img);
