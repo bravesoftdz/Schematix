@@ -47,6 +47,7 @@
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.gbBack = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnAlphaColor = new System.Windows.Forms.Button();
             this.chkBackStore = new System.Windows.Forms.CheckBox();
             this.cbbBackStyle = new System.Windows.Forms.ComboBox();
             this.lblBackgImagePath = new System.Windows.Forms.Label();
@@ -61,9 +62,9 @@
             this.cbbBackImageAlign = new System.Windows.Forms.ComboBox();
             this.cbbBackImageBPP = new System.Windows.Forms.ComboBox();
             this.lblBackImageBPP = new System.Windows.Forms.Label();
+            this.chkTransparentColor = new System.Windows.Forms.CheckBox();
             this.gbGrid = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.chkGridStore = new System.Windows.Forms.CheckBox();
             this.btnAlignElements = new System.Windows.Forms.Button();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.cbbGridStyle = new System.Windows.Forms.ComboBox();
@@ -74,6 +75,7 @@
             this.nudGridStepX = new System.Windows.Forms.NumericUpDown();
             this.btnGridColor = new System.Windows.Forms.Button();
             this.chkGridSnap = new System.Windows.Forms.CheckBox();
+            this.chkGridStore = new System.Windows.Forms.CheckBox();
             this.tpObjects = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.btnObjectsDelete = new System.Windows.Forms.Button();
@@ -109,8 +111,6 @@
             this.clmIPTimeNext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmIPPing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnAlphaColor = new System.Windows.Forms.Button();
-            this.chkTransparentColor = new System.Windows.Forms.CheckBox();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -407,6 +407,19 @@
             this.tableLayoutPanel8.Size = new System.Drawing.Size(396, 230);
             this.tableLayoutPanel8.TabIndex = 1;
             // 
+            // btnAlphaColor
+            // 
+            this.btnAlphaColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnAlphaColor.BackColor = System.Drawing.Color.White;
+            this.btnAlphaColor.Location = new System.Drawing.Point(137, 82);
+            this.btnAlphaColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
+            this.btnAlphaColor.Name = "btnAlphaColor";
+            this.btnAlphaColor.Size = new System.Drawing.Size(32, 21);
+            this.btnAlphaColor.TabIndex = 9;
+            this.btnAlphaColor.UseVisualStyleBackColor = false;
+            this.btnAlphaColor.BackColorChanged += new System.EventHandler(this.btnAlphaColor_BackColorChanged);
+            this.btnAlphaColor.Click += new System.EventHandler(this.btnColor_Click);
+            // 
             // chkBackStore
             // 
             this.chkBackStore.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -573,6 +586,17 @@
             this.lblBackImageBPP.TabIndex = 12;
             this.lblBackImageBPP.Text = "Storing BPP";
             // 
+            // chkTransparentColor
+            // 
+            this.chkTransparentColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkTransparentColor.AutoSize = true;
+            this.chkTransparentColor.Location = new System.Drawing.Point(3, 84);
+            this.chkTransparentColor.Name = "chkTransparentColor";
+            this.chkTransparentColor.Size = new System.Drawing.Size(109, 17);
+            this.chkTransparentColor.TabIndex = 12;
+            this.chkTransparentColor.Text = "Transparent color";
+            this.chkTransparentColor.UseVisualStyleBackColor = true;
+            // 
             // gbGrid
             // 
             this.gbGrid.AutoSize = true;
@@ -606,20 +630,6 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel11.Size = new System.Drawing.Size(396, 79);
             this.tableLayoutPanel11.TabIndex = 2;
-            // 
-            // chkGridStore
-            // 
-            this.chkGridStore.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkGridStore.AutoSize = true;
-            this.chkGridStore.Checked = true;
-            this.chkGridStore.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tableLayoutPanel11.SetColumnSpan(this.chkGridStore, 2);
-            this.chkGridStore.Location = new System.Drawing.Point(3, 3);
-            this.chkGridStore.Name = "chkGridStore";
-            this.chkGridStore.Size = new System.Drawing.Size(122, 17);
-            this.chkGridStore.TabIndex = 2;
-            this.chkGridStore.Text = "Save options in map";
-            this.chkGridStore.UseVisualStyleBackColor = true;
             // 
             // btnAlignElements
             // 
@@ -731,7 +741,7 @@
             0,
             0});
             this.nudGridStepY.Minimum = new decimal(new int[] {
-            2,
+            4,
             0,
             0,
             0});
@@ -755,7 +765,7 @@
             0,
             0});
             this.nudGridStepX.Minimum = new decimal(new int[] {
-            2,
+            4,
             0,
             0,
             0});
@@ -790,6 +800,20 @@
             this.chkGridSnap.TabIndex = 6;
             this.chkGridSnap.Text = "Snap elements to grid";
             this.chkGridSnap.UseVisualStyleBackColor = true;
+            // 
+            // chkGridStore
+            // 
+            this.chkGridStore.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkGridStore.AutoSize = true;
+            this.chkGridStore.Checked = true;
+            this.chkGridStore.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tableLayoutPanel11.SetColumnSpan(this.chkGridStore, 2);
+            this.chkGridStore.Location = new System.Drawing.Point(3, 3);
+            this.chkGridStore.Name = "chkGridStore";
+            this.chkGridStore.Size = new System.Drawing.Size(122, 17);
+            this.chkGridStore.TabIndex = 2;
+            this.chkGridStore.Text = "Save options in map";
+            this.chkGridStore.UseVisualStyleBackColor = true;
             // 
             // tpObjects
             // 
@@ -1124,30 +1148,6 @@
             this.clmIPPing.Text = "Ping";
             this.clmIPPing.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // btnAlphaColor
-            // 
-            this.btnAlphaColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnAlphaColor.BackColor = System.Drawing.Color.White;
-            this.btnAlphaColor.Location = new System.Drawing.Point(137, 82);
-            this.btnAlphaColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
-            this.btnAlphaColor.Name = "btnAlphaColor";
-            this.btnAlphaColor.Size = new System.Drawing.Size(32, 21);
-            this.btnAlphaColor.TabIndex = 9;
-            this.btnAlphaColor.UseVisualStyleBackColor = false;
-            this.btnAlphaColor.BackColorChanged += new System.EventHandler(this.btnAlphaColor_BackColorChanged);
-            this.btnAlphaColor.Click += new System.EventHandler(this.btnColor_Click);
-            // 
-            // chkTransparentColor
-            // 
-            this.chkTransparentColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkTransparentColor.AutoSize = true;
-            this.chkTransparentColor.Location = new System.Drawing.Point(3, 84);
-            this.chkTransparentColor.Name = "chkTransparentColor";
-            this.chkTransparentColor.Size = new System.Drawing.Size(109, 17);
-            this.chkTransparentColor.TabIndex = 12;
-            this.chkTransparentColor.Text = "Transparent color";
-            this.chkTransparentColor.UseVisualStyleBackColor = true;
-            // 
             // MapOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1158,6 +1158,7 @@
             this.MinimumSize = new System.Drawing.Size(460, 480);
             this.Name = "MapOptionsForm";
             this.Padding = new System.Windows.Forms.Padding(8);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MapOptionsForm";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);

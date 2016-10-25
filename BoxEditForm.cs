@@ -64,7 +64,7 @@ namespace Schematix
             tbText.Text            = PBox.Text;
             cbbAlign.SelectedIndex = (int)PBox.TextAlign;
             btnFont.BackColor      = PBox.TextColor;
-            SetAndShowFont(PBox.TextFont);
+            SetAndShowFont(PBox.Font);
         }
 
         private void PickColor_Click(object sender, EventArgs e)//Ok
@@ -102,7 +102,7 @@ namespace Schematix
             PBox.Text          = tbText.Text;
             PBox.TextAlign     = (AlignTypes)cbbAlign.SelectedIndex;
             PBox.TextColor     = btnFont.BackColor;
-            PBox.TextFont      = btnFont.Font;
+            PBox.Font      = btnFont.Font;
 
             // Out
             DialogResult = DialogResult.OK;

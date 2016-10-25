@@ -562,7 +562,7 @@
             this.tpMap.Padding = new System.Windows.Forms.Padding(3);
             this.tpMap.Size = new System.Drawing.Size(414, 365);
             this.tpMap.TabIndex = 1;
-            this.tpMap.Text = "New map";
+            this.tpMap.Text = "New map | Default";
             // 
             // tableLayoutPanel3
             // 
@@ -934,7 +934,7 @@
             0,
             0});
             this.nudGridStepY.Minimum = new decimal(new int[] {
-            2,
+            4,
             0,
             0,
             0});
@@ -958,7 +958,7 @@
             0,
             0});
             this.nudGridStepX.Minimum = new decimal(new int[] {
-            2,
+            4,
             0,
             0,
             0});

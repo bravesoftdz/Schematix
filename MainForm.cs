@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -10,9 +11,10 @@ namespace Schematix
     {
         const int TOOLS_HIDE_DELAY = 500; // mseconds
         LibraryForm libraryForm = new LibraryForm();
+        List<xMap> Maps = new List<xMap>();
+        xMap Map = null;
 
-        #region Main
-        public MainForm()//!!!
+        public MainForm()//!
         {
             InitializeComponent();
             options.mainForm = this;
@@ -46,8 +48,15 @@ namespace Schematix
                     options.LangCur.mNoFolders + eStr, 
                     options.LangCur.dOptionsLoading);
             SetText();
+            //
+            Map = new xMap();
+            Map.Tab = tcMaps.TabPages[0];
+            Map.Tab.Tag = Map;
+            Maps.Add(Map);
+            MainForm_ResizeEnd(null, null);
         }
 
+        #region Main
         private void SetText()//Ok
         {
             toolTip.RemoveAll();
@@ -78,7 +87,7 @@ namespace Schematix
             }
         }
 
-        private void btnOptions_Click(object sender, EventArgs e)//!!!
+        private void btnOptions_Click(object sender, EventArgs e)//!
         {
             var form = new OptionsForm();
             if (form.ShowDialog() == DialogResult.OK)
@@ -86,8 +95,13 @@ namespace Schematix
                 SetText();
                 if (libraryForm.Visible)
                     libraryForm.SetText();
-                //...
-                //.Draw();
+                foreach (TabPage Tab in tcMaps.TabPages)
+                {
+                    (Tab.Tag as xMap)?.DoAutoSize();
+                    (Tab.Tag as xMap)?.ReDraw();
+                }
+                CheckScrollers();
+                DrawMap();
             }
         }
 
@@ -190,74 +204,179 @@ namespace Schematix
             tabPageAddNew.Tag = i + 1;
             // Add new tab
             int idx = tcMaps.SelectedIndex;
-            //...
-            tcMaps.TabPages.Insert(idx, "New " + i);
+            Map = AddMap(idx, "New " + i);
+            Map.DoAutoSize();
             // Select new tab
-            tcMaps.SelectedIndex = idx;
+            tcMaps.SelectedTab = Map.Tab;
         }
 
-        private void tcMaps_Selected(object sender, TabControlEventArgs e)//!!!
+        private xMap AddMap(int TabIdx, String MapName)
         {
-            //
+            if (tcMaps.TabCount <= TabIdx)
+                TabIdx = tcMaps.TabCount - 1;
+            // Add new tab
+            var page = new TabPage(MapName);
+            var Map = new xMap();
+            page.Tag = Map;
+            Map.Tab = page;
+            tcMaps.TabPages.Insert(TabIdx, page);
+            Maps.Add(Map);
+            return Map;
+        }
+
+        private void tcMaps_Selected(object sender, TabControlEventArgs e)//!
+        {
+            Map = tcMaps.SelectedTab.Tag as xMap;
+            if (Map == null)
+                return;
+            CheckScrollers();
+            DrawMap();
         }
         #endregion
 
         #region Context menu
         private void cmsMap_Opening(object sender, CancelEventArgs e)//
         {
-            tsmiMapReload.Visible = (tcMaps.SelectedTab.Tag != null);
+            tsmiMapReload.Visible = ((tcMaps.SelectedTab.Tag as xMap).FileName != "");
         }
 
-        private void tsmiMapOptions_Click(object sender, EventArgs e)//!!!
+        private void tsmiMapOptions_Click(object sender, EventArgs e)//
         {
-            /*
-            MapOptionsForm mapOptionsForm = new MapOptionsForm(/.../);
+            var mapOptionsForm = new MapOptionsForm(Map);
             if (mapOptionsForm.ShowDialog() == DialogResult.OK)
             {
-                //...
+                Map.DoAutoSize();
+                Map.ReDraw();
+                CheckScrollers();
+                DrawMap();
+                Map.Changed = true;
             }
-            */
         }
 
-        private void tsmiMapSave_Click(object sender, EventArgs e)//!!!
+        private void tsmiMapSave_Click(object sender, EventArgs e)//Ok
         {
-            //.Save();
+            Map.SaveToFile(Map.FileName);
+            Map.Changed = false;
         }
 
-        private void tsmiMapLoad_Click(object sender, EventArgs e)//!!!
+        private void tsmiMapLoad_Click(object sender, EventArgs e)//Ok
         {
-            //
-            //.Close();
-            //.Load();
+            LoadMap(options.LangCur.dMapLoading, "");
         }
 
-        private void tsmiMapReload_Click(object sender, EventArgs e)//!!!
+        private void tsmiMapReload_Click(object sender, EventArgs e)//Ok
         {
-            //.Close();
-            //.Load();
+            LoadMap(options.LangCur.dMapLoading, Map.FileName);
         }
 
-        private void tsmiMapClose_Click(object sender, EventArgs e)//!!!
+        private void LoadMap(String actionTitle, String fileName)//
         {
-            //if(.Close())
+            if (Map.Changed)
+            {
+                var res = MessageBox.Show(options.LangCur.mMapHasChanges, actionTitle, MessageBoxButtons.YesNoCancel);
+                if (res == DialogResult.Cancel)
+                    return;
+                if (res == DialogResult.OK)
+                    Map.SaveToFile(Map.FileName);
+            }
+            Map.Clear();
+            Map.LoadFromFile(fileName);
+            Map.DoAutoSize();
+            Map.ReDraw();
+            CheckScrollers();
+            DrawMap();
+            Map.Changed = false;
+        }
+
+        private void tsmiMapClose_Click(object sender, EventArgs e)//
+        {
+            if (Map.Changed)
+            {
+                var res = MessageBox.Show(options.LangCur.mMapHasChanges, options.LangCur.dMapClosing, MessageBoxButtons.YesNoCancel);
+                if (res == DialogResult.Cancel)
+                    return;
+                if (res == DialogResult.OK)
+                    Map.SaveToFile(Map.FileName);
+            }
+            CloseMap(Map);
+        }
+
+        private void CloseMap(xMap Map)//
+        {
             int idx = tcMaps.SelectedIndex;
-            if (idx + 2 == tcMaps.TabCount)
+            if (tcMaps.TabPages.IndexOf(Map.Tab) <= idx)
                 if (0 < idx)
                     idx--;
-            tcMaps.TabPages.Remove(tcMaps.SelectedTab);
             tcMaps.SelectedIndex = idx;
+            Map.Clear();
+            Maps.Remove(Map);
+            tcMaps.TabPages.Remove(Map.Tab);
         }
         #endregion
 
         #region Map pad
-        private void pbMap_MouseDown(object sender, MouseEventArgs e)//!!!
+        private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
-            //
-            //pbMap.Cursor = (...) ? Cursors.NoMove2D : Cursors.SizeAll;
-            pbMap.Cursor = 
-                (hScrollBar.LargeChange < hScrollBar.Maximum || vScrollBar.LargeChange < vScrollBar.Maximum)
-                ? Cursors.NoMove2D
-                : Cursors.No;
+            options.WindowW = ClientSize.Width  - 2;
+            options.WindowH = ClientSize.Height - 2;
+            if (Map == null)
+                return;
+            Map.DoAutoSize();
+            Map.ReDraw();
+            CheckScrollers();
+            DrawMap();
+        }
+
+        private void CheckScrollers()
+        {
+            hScrollBar.LargeChange = options.WindowW;
+            vScrollBar.LargeChange = options.WindowH;
+            if (Map == null)
+                return;
+            if (Map.Width  < Map.ScrollX + options.WindowW)
+                Map.ScrollX = (Map.Width  < options.WindowW) ? 0 : Map.Width  - options.WindowW;
+            if (Map.Height < Map.ScrollY + options.WindowH)
+                Map.ScrollY = (Map.Height < options.WindowH) ? 0 : Map.Height - options.WindowH;
+            hScrollBar.Maximum = Map.Width;
+            vScrollBar.Maximum = Map.Height;
+            hScrollBar.Value = Map.ScrollX;
+            vScrollBar.Value = Map.ScrollY;
+        }
+
+        private void ScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            Map.ScrollX = hScrollBar.Value;
+            Map.ScrollY = vScrollBar.Value;
+            DrawMap();
+        }
+
+        private void DrawMap()
+        {
+            if (Map == null)
+                return;
+            // Canvas
+            int w = (options.WindowW < Map.Width ) ? options.WindowW : Map.Width,
+                h = (options.WindowH < Map.Height) ? options.WindowH : Map.Height;
+            var image = new Bitmap(w, h);
+            var gr = Graphics.FromImage(image);
+            gr.DrawImage(Map.Canvas,
+                new Rectangle(0, 0, w, h),
+                Map.ScrollX, Map.ScrollY, w, h,
+                GraphicsUnit.Pixel);
+            pbMap.Image = image;
+        }
+
+        private void pbMap_MouseDown(object sender, MouseEventArgs e)//!
+        {
+            Map.SelectAt(e.X, e.Y);
+            if (Map.Selected == null)
+                pbMap.Cursor =
+                    (hScrollBar.LargeChange < hScrollBar.Maximum || vScrollBar.LargeChange < vScrollBar.Maximum)
+                    ? Cursors.NoMove2D
+                    : Cursors.No;
+            else
+                pbMap.Cursor =  Cursors.SizeAll;
+            // ...
         }
 
         private void pbMap_MouseUp(object sender, MouseEventArgs e)//!!!
@@ -268,12 +387,17 @@ namespace Schematix
 
         private void pbMap_MouseMove(object sender, MouseEventArgs e)//!!!
         {
-            //
-            //pbMap.Cursor = (...) ? Cursors.Default : Cursors.Hand;
+            // ...
         }
 
         private void pbMap_MouseDoubleClick(object sender, MouseEventArgs e)//!!!
         {
+            if (Map.Selected == null)
+                tsmiMapOptions_Click(null, null);
+            else
+            {
+                MessageBox.Show(Map.Selected.GetType().ToString(), Map.Selected.ToString());
+            }
             //
         }
 

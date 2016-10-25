@@ -42,11 +42,11 @@ namespace Schematix
         public const int             MIN_GRID_STEP      = 2;
         public const int             MAX_GRID_THICK     = 5;
         public const GridStyles      DEFAULT_GRID_STYLE = GridStyles.None;
-        public static readonly Color DEFAULT_GRID_COLOR = Color.Gray;
+        public static readonly Color DEFAULT_GRID_COLOR = Color.Silver;
         // Back
-        public const BackgroundStyles      DEFAULT_BACK_STYLE = BackgroundStyles.Color;
-        public const AlignTypes      DEFAULT_BACK_ALIGN = AlignTypes.TopLeft;
-        public static readonly Color DEFAULT_BACK_COLOR = Color.DarkBlue;
+        public const BackgroundStyles   DEFAULT_BACK_STYLE = BackgroundStyles.Color;
+        public const AlignTypes         DEFAULT_BACK_ALIGN = AlignTypes.TopLeft;
+        public static readonly Color    DEFAULT_BACK_COLOR = Color.SteelBlue;
 
         static public MainForm mainForm = null;
 
@@ -78,8 +78,8 @@ namespace Schematix
 
         // Display window
         static public int
-            WindowW = 320,
-            WindowH = 240;
+            WindowW,
+            WindowH;
         // Catalog
         static public List<xPObject> PObjects = new List<xPObject>();
         static public List<xPLink>   PLinks   = new List<xPLink>();

@@ -74,7 +74,6 @@ namespace Schematix
                 int valueLength = stream.ReadInt32();
                 // Load(/skip) parameters
                 ReadParameter(stream, parameterName, valueLength);
-                return;
             }
         }
 
@@ -149,9 +148,12 @@ namespace Schematix
 
     public abstract class xPrototype : xSaveLoad
     {
-        public String   NodeName = "";
-        public DateTime Revision = DateTime.Now;
-        public bool     isPrototype;
+        public bool         isUsed;
+        public bool         isPrototype;
+        public String       NodeName;
+        public DateTime     Revision    = DateTime.Now;
+        public ListViewItem lvItemUsed;
+        public ListViewItem lvItem;
 
         public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
@@ -408,8 +410,14 @@ namespace Schematix
         public BoxTypes     BoxType   = BoxTypes.Text;
         public String       Text      = "";
         public AlignTypes   TextAlign = AlignTypes.TopLeft;
-        public Font         TextFont  = options.DEFAULT_BOX_FONT;
-        public Color        TextColor = options.DEFAULT_BOX_TEXT_COLOR;
+        public Font         Font      = options.DEFAULT_BOX_FONT;
+        public Brush        Brush     = new SolidBrush(options.DEFAULT_BOX_TEXT_COLOR);
+               Color       _textColor = options.DEFAULT_BOX_TEXT_COLOR;
+        public Color        TextColor
+        {
+            set { Brush = new SolidBrush(_textColor = value); }
+            get { return _textColor; }
+        }
 
         public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
@@ -420,13 +428,13 @@ namespace Schematix
             else if (valueLength == 1 && parameterName == "TextAlign")
                 Enum.TryParse(stream.ReadByte().ToString(), out TextAlign);
             else if (parameterName == "FontName")
-                TextFont = new Font(StreamReadString(stream, valueLength), TextFont.Size, TextFont.Style);
+                Font = new Font(StreamReadString(stream, valueLength), Font.Size, Font.Style);
             else if (valueLength == 4 && parameterName == "FontSize")
-                TextFont = new Font(TextFont.Name, stream.ReadSingle(), TextFont.Style);
+                Font = new Font(Font.Name, stream.ReadSingle(), Font.Style);
             else if (valueLength == 1 && parameterName == "FontStyle")
-                TextFont = new Font(TextFont.Name, TextFont.Size, (FontStyle)stream.ReadByte());
+                Font = new Font(Font.Name, Font.Size, (FontStyle)stream.ReadByte());
             else if (valueLength == 4 && parameterName == "TextColor")
-                TextColor = Color.FromArgb(stream.ReadInt32());
+                 TextColor = Color.FromArgb(stream.ReadInt32());
             // Pass unprocessed data up
             else
                 return base.ReadParameter(stream, parameterName, valueLength);
@@ -441,13 +449,13 @@ namespace Schematix
             stream.Write("TextAlign");
             stream.Write(1);
             stream.Write((byte)TextAlign);
-            StreamWriteString("FontName", stream, TextFont.Name);
+            StreamWriteString("FontName", stream, Font.Name);
             stream.Write("FontSize");
             stream.Write(4);
-            stream.Write(TextFont.Size);
+            stream.Write(Font.Size);
             stream.Write("FontStyle");
             stream.Write(1);
-            stream.Write((byte)TextFont.Style);
+            stream.Write((byte)Font.Style);
             stream.Write("TextColor");
             stream.Write(4);
             stream.Write(TextColor.ToArgb());
@@ -953,8 +961,10 @@ namespace Schematix
 
         override public void Check()
         {
+            if (Text == "")
+                return;
             Graphics g = Graphics.FromImage(new Bitmap(1,1));
-            SizeF textSize = g.MeasureString(Text, (Prototype as xPBox).TextFont);
+            SizeF textSize = g.MeasureString(Text, (Prototype as xPBox).Font);
             if ((Prototype as xPBox).BoxType == BoxTypes.Ellipse)
             {
                 double m  = (1 - Math.Sqrt(2)) / 4;
@@ -1099,6 +1109,7 @@ namespace Schematix
 
     public class xMap : xSaveLoad
     {
+        public TabPage Tab;
         public bool Changed = false;
         public List<xPObject> PObjects = new List<xPObject>();
         public List<xPLink>   PLinks   = new List<xPLink>();
@@ -1107,59 +1118,86 @@ namespace Schematix
         public List<xLink>    Links    = new List<xLink>();
         public List<xBox>     Boxes    = new List<xBox>();
         public List<xIP>      IPs      = new List<xIP>();
-        public xBackground Back;
-        public xGrid Grid;
+        public xBackground    Back     = new xBackground();
+        public xGrid          Grid     = new xGrid();
         public int
             ScrollX = 0,
             ScrollY = 0,
-            Width  = 1,
-            Height = 1;
+            Width  = 600,
+            Height = 600;
         public bool AutoSize = false;
-        public Bitmap Canvas = new Bitmap(1, 1, PixelFormat.Format24bppRgb);
+        public Bitmap Canvas;
         Graphics graphics;
         public xExemplar Selected = null;
         public xLink LinkAdding = null;
+        public ListView 
+            lv_PObjects,
+            lv_PLinks,
+            lv_PBoxes;
 
-        public void AddPObject(xPObject PObject)//Ok
+        public xMap()
+        {
+            ReSize(Width, Height);
+        }
+
+        public void AddPObject(xPObject PObject)//
         {
             xPObject uPObject = options.PObjects.Find(PO => (PO.ID == PObject.ID) && (PO.Revision >= PObject.Revision));
             if (uPObject == null)
                 uPObject = PObject;
             PObjects.Add(uPObject);
+            uPObject.lvItemUsed = lv_PObjects?.Items.Add(uPObject.NodeName);
         }
 
-        public void AddPLink(xPLink PLink)//Ok
+        public void AddPLink(xPLink PLink)//
         {
             xPLink uPLink = options.PLinks.Find(PL => (PL.ID == PLink.ID) && (PL.Revision >= PLink.Revision));
             if (uPLink == null)
                 uPLink = PLink;
             PLinks.Add(uPLink);
+            uPLink.lvItemUsed = lv_PLinks?.Items.Add(uPLink.NodeName);
         }
 
-        public void AddPBox(xPBox PBox)//Ok
+        public void AddPBox(xPBox PBox)//
         {
             xPBox uPBox = options.PBoxes.Find(PB => (PB.ID == PBox.ID) && (PB.Revision >= PBox.Revision));
             if (uPBox == null)
                 uPBox = PBox;
             PBoxes.Add(uPBox);
+            uPBox.lvItemUsed = lv_PBoxes?.Items.Add(uPBox.NodeName);
         }
 
-        public void DeletePObject(xPObject PObject)//Ok
+        public void RemovePObject(xPObject PObject)//
         {
+            if (PObject == null)
+                return;
             if (!Objects.Exists(O => O.Prototype.ID == PObject.ID))
+            {
+                PObject.lvItemUsed?.Remove();
                 PObjects.Remove(PObject);
+            }
         }
 
-        public void DeletePLink(xPLink PLink)//Ok
+        public void RemovePLink(xPLink PLink)//
         {
+            if (PLink == null)
+                return;
             if (!Links.Exists(L => L.Prototype.ID == PLink.ID))
+            {
+                PLink.lvItemUsed?.Remove();
                 PLinks.Remove(PLink);
+            }
         }
 
-        public void DeletePBox(xPBox PBox)//Ok
+        public void RemovePBox(xPBox PBox)//
         {
+            if (PBox == null)
+                return;
             if (!Boxes.Exists(B => B.Prototype.ID == PBox.ID))
+            {
+                PBox.lvItemUsed?.Remove();
                 PBoxes.Remove(PBox);
+            }
         }
 
         public void DeleteObject(xObject obj)//O
@@ -1173,7 +1211,7 @@ namespace Schematix
                 if (Links[i].ObjectA == obj || Links[i].ObjectB == obj)
                     Links.RemoveAt(i);
             // Try to remove it's prototype
-            DeletePObject(obj.Prototype as xPObject);
+            RemovePObject(obj.Prototype as xPObject);
             // Remove object
             Objects.Remove(obj);
         }
@@ -1181,7 +1219,7 @@ namespace Schematix
         public void DeleteLink(xLink link)//Ok
         {
             // Try to remove it's prototype
-            DeletePLink(link.Prototype as xPLink);
+            RemovePLink(link.Prototype as xPLink);
             // Remove object
             Links.Remove(link);
         }
@@ -1189,7 +1227,7 @@ namespace Schematix
         public void DeleteBox(xBox box)//Ok
         {
             // Try to remove it's prototype
-            DeletePBox(box.Prototype as xPBox);
+            RemovePBox(box.Prototype as xPBox);
             // Remove object
             Boxes.Remove(box);
         }
@@ -1463,6 +1501,16 @@ namespace Schematix
             base.WriteParameters(stream);
         }
 
+        public void Clear()
+        {
+            foreach (var Box in Boxes)
+                DeleteBox(Box);
+            foreach (var Link in Links)
+                DeleteLink(Link);
+            foreach (var Object in Objects)
+                DeleteObject(Object);
+        }
+
         public void AlignToGridAll(int sx = 0, int sy = 0)//Ok
         {
             if (sx == 0)
@@ -1490,12 +1538,12 @@ namespace Schematix
             y = (int)((float)y / Grid.StepY) * Grid.StepY;
         }
         
-        public void DoAutoSize(int minWidth, int minHeight)
+        public void DoAutoSize()
         {
             if (!AutoSize)
                 return;
-            int w = minWidth,
-                h = minHeight;
+            int w = options.WindowW,
+                h = options.WindowH;
             // Look for bigger values
             foreach (var Object in Objects)
             {
@@ -1568,10 +1616,19 @@ namespace Schematix
             // Canvas
             Canvas = new Bitmap(width, height);
             graphics = Graphics.FromImage(Canvas);
-            ReDraw();
         }
 
-        public void ReDraw(int x = 0, int y = 0, int width = 0, int height = 0)
+        public void CheckAll()
+        {
+            foreach (var Object in Objects)
+                Object.Check();
+            foreach (var Link in Links)
+                Link.Check();
+            foreach (var Box in Boxes)
+                Box.Check();
+        }
+
+        public void ReDraw(int x = 0, int y = 0, int width = 0, int height = 0)//
         {
             // Get area
             if (width  < 1)
@@ -1684,16 +1741,19 @@ namespace Schematix
             #region Grid
             endX = x / Grid.StepX;
             endY = y / Grid.StepY;
-            startX = (x + width ) / Grid.StepX + 1;
-            startY = (y + height) / Grid.StepY + 1;
+            startX = (x + width ) / Grid.StepX;
+            startY = (y + height) / Grid.StepY;
             switch (Grid.Style)
             {
                 case GridStyles.None:
                     break;
                 case GridStyles.Dots:
+                    var brush = new SolidBrush(Grid.Pen.Color);
                     for (iX = startX; endX <= iX; iX--)
                         for (iY = startY; endY <= iY; iY--)
-                            graphics.DrawLine(Grid.Pen, iX * Grid.StepX, iY * Grid.StepY, iX * Grid.StepX, iY * Grid.StepY);
+                            graphics.FillRectangle(brush,
+                                iX * Grid.StepX, iY * Grid.StepY,
+                                Grid.Pen.Width, Grid.Pen.Width);
                     break;
                 case GridStyles.Corners:
                     int halfW = Grid.StepX / 2,
@@ -1712,8 +1772,8 @@ namespace Schematix
                 case GridStyles.Crosses:
                     int quadW,
                         quadH;
-                    quadW = Grid.StepX / 2;
-                    quadH = Grid.StepY / 2;
+                    quadW = Grid.StepX / 4;
+                    quadH = Grid.StepY / 4;
                     for (iX = startX; endX <= iX; iX--)
                         for (iY = startY; endY <= iY; iY--)
                         {
@@ -1735,11 +1795,28 @@ namespace Schematix
             #endregion
 
             // Draw Boxes
+            foreach (var Box in Boxes)
+            {
+                switch ((Box.Prototype as xPBox).BoxType)
+                {
+                    case BoxTypes.Rectangle:
+                        graphics.DrawRectangle((Box.Prototype as xPBox).Pen, Box.Left, Box.Top, Box.Width, Box.Height);
+                        break;
+                    case BoxTypes.Ellipse:
+                        graphics.DrawEllipse((Box.Prototype as xPBox).Pen, Box.Left, Box.Top, Box.Width, Box.Height);
+                        break;
+                }
+                if (Box.Text != "")
+                    graphics.DrawString(Box.Text, (Box.Prototype as xPBox).Font, (Box.Prototype as xPBox).Brush, Box.TextX, Box.TextY);
+            }
 
             // Draw Links
+            foreach (var Link in Links)
+                graphics.DrawLine((Link.Prototype as xPLink).Pen, Link.XA, Link.YA, Link.XB, Link.YB);
 
             // Draw Objects
-
+            foreach (var Object in Objects)
+                graphics.DrawImageUnscaled((Object.Prototype as xPObject).ImageCanva, Object.X, Object.Y);
         }
 
         public xExemplar SelectAt(int x, int y)//

@@ -22,7 +22,7 @@ namespace Schematix
             // Context menu
             lMFMapCMOptions = "Options",
             lMFMapCMSave    = "Save",
-            lMFMapCMLoad    = "Load",
+            lMFMapCMLoad    = "Load...",
             lMFMapCMReload  = "Reload",
             lMFMapCMClose   = "Close",
         #endregion
@@ -226,6 +226,10 @@ namespace Schematix
             dImageLoading      = "Loading image",
             dFileLoading       = "Loading file",
             dFileSaving        = "Saving file",
+            mMapHasChanges     = "This map has changes, save it before proceed?",
+            dMapClosing        = "Closing map",
+            dMapLoading        = "Loading map",
+            dMapSaving         = "Saving map",
 
             // About form
             lAbout        = "About",
@@ -551,6 +555,10 @@ namespace Schematix
                                 case "dImageLoading":     dImageLoading     = lblText;   break;
                                 case "dFileLoading":      dFileLoading      = lblText;   break;
                                 case "dFileSaving":       dFileSaving       = lblText;   break;
+                                case "mMapHasChanges":    mMapHasChanges    = lblText;   break;
+                                case "dMapClosing":       dMapClosing       = lblText;   break;
+                                case "dMapLoading":       dMapLoading       = lblText;   break;
+                                case "dMapSaving":        dMapSaving        = lblText;   break;
 
                                 //# About form
                                 case "lAbout":    lAbout       = lblText;          break;

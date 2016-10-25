@@ -80,15 +80,12 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.AutoScroll = true;
-            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(364, 0);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "New";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPageAddNew
             // 
@@ -114,6 +111,7 @@
             this.vScrollBar.TabIndex = 5;
             this.vScrollBar.Value = 1;
             this.vScrollBar.Visible = false;
+            this.vScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ScrollBar_Scroll);
             // 
             // hScrollBar
             // 
@@ -124,6 +122,7 @@
             this.hScrollBar.Size = new System.Drawing.Size(456, 17);
             this.hScrollBar.TabIndex = 7;
             this.hScrollBar.Visible = false;
+            this.hScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ScrollBar_Scroll);
             // 
             // pnlMapOptions
             // 
@@ -239,8 +238,8 @@
             // 
             this.tsmiMapLoad.Image = global::Schematix.Properties.Resources.load;
             this.tsmiMapLoad.Name = "tsmiMapLoad";
-            this.tsmiMapLoad.Size = new System.Drawing.Size(116, 22);
-            this.tsmiMapLoad.Text = "Load";
+            this.tsmiMapLoad.Size = new System.Drawing.Size(152, 22);
+            this.tsmiMapLoad.Text = "Load...";
             this.tsmiMapLoad.Click += new System.EventHandler(this.tsmiMapLoad_Click);
             // 
             // tsmiMapReload
@@ -301,12 +300,14 @@
             // pbMap
             // 
             this.pbMap.BackColor = System.Drawing.Color.SteelBlue;
+            this.pbMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbMap.ContextMenuStrip = this.cmsMap;
             this.pbMap.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pbMap.Location = new System.Drawing.Point(4, 4);
+            this.pbMap.Location = new System.Drawing.Point(0, 0);
             this.pbMap.Name = "pbMap";
             this.pbMap.Size = new System.Drawing.Size(284, 280);
+            this.pbMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbMap.TabIndex = 3;
             this.pbMap.TabStop = false;
             this.pbMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbMap_MouseClick);
@@ -337,6 +338,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Schematix 0.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.Move += new System.EventHandler(this.MainForm_Move);
             this.tcMaps.ResumeLayout(false);
             this.pnlMaps.ResumeLayout(false);
@@ -352,7 +354,6 @@
 
         #endregion
         private System.Windows.Forms.TabControl tcMaps;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPageAddNew;
         private System.Windows.Forms.PictureBox pbMap;
         private System.Windows.Forms.VScrollBar vScrollBar;
@@ -376,6 +377,7 @@
         private System.Windows.Forms.OpenFileDialog dlgMapOpen;
         private System.Windows.Forms.SaveFileDialog dlgMapSave;
         private System.Windows.Forms.Button btnAbout;
+        private System.Windows.Forms.TabPage tabPage1;
     }
 }
 
