@@ -9,12 +9,12 @@ namespace Schematix
         public AboutForm()
         {
             InitializeComponent();
-            Text               = options.LangCur.lAbout;
-            lblAppName.Text    = options.LangCur.lAppName;
-            lblAppVersion.Text = options.LangCur.lAppVersion;
-            lblOwner.Text      = options.LangCur.lOwner;
-            lblContact.Text    = options.LangCur.lContact;
-            tbDescription.Text = options.LangCur.tDescription;
+            Text               = Options.LangCur.lAbout;
+            lblAppName.Text    = Options.LangCur.lAppName;
+            lblAppVersion.Text = Options.LangCur.lAppVersion;
+            lblOwner.Text      = Options.LangCur.lOwner;
+            lblContact.Text    = Options.LangCur.lContact;
+            tbDescription.Text = Options.LangCur.tDescription;
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Schematix
     public partial class MapOptionsForm : Form
     {
         public xMap Map;
-        Bitmap image = new Bitmap(1, 1);
+        Bitmap imageOriginal = new Bitmap(1, 1);
+        Bitmap imageAlpha;
 
         public MapOptionsForm(xMap map)
         {
@@ -15,13 +16,13 @@ namespace Schematix
             if (map == null)
                 map = new xMap();
             Map = map;
-            Text = options.LangCur.lMOTitle;
+            Text = Options.LangCur.lMOTitle;
 
             // Main
-            tpMain.Text = options.LangCur.lMOTabMain;
-            lblName.Text     = options.LangCur.lMOName;
-            lblSize.Text     = options.LangCur.lMOSize;
-            chkSizeAuto.Text = options.LangCur.lMOAuto;
+            tpMain.Text = Options.LangCur.lMOTabMain;
+            lblName.Text     = Options.LangCur.lMOName;
+            lblSize.Text     = Options.LangCur.lMOSize;
+            chkSizeAuto.Text = Options.LangCur.lMOAuto;
             // Fill
             tbName.Text         = Map.Name;
             nudSizeW.Value      = Map.Width;
@@ -30,18 +31,18 @@ namespace Schematix
             chkSizeAuto.Checked = Map.AutoSize;
 
             // Background
-            tpBack.Text = options.LangCur.lMOTabBack;
+            tpBack.Text = Options.LangCur.lMOTabBack;
             // Grid
-            gbGrid.Text = options.LangCur.lMOGrid;
-            cbbGridStyle.Items.Add(options.LangCur.lMOGridStyle0None);
-            cbbGridStyle.Items.Add(options.LangCur.lMOGridStyle1Dots);
-            cbbGridStyle.Items.Add(options.LangCur.lMOGridStyle2Corners);
-            cbbGridStyle.Items.Add(options.LangCur.lMOGridStyle3Crosses);
-            cbbGridStyle.Items.Add(options.LangCur.lMOGridStyle4Grid);
-            toolTip.SetToolTip(btnGridColor, options.LangCur.hEEColorPick);
-            lblGridThick.Text     = options.LangCur.lEELineThick;
-            chkGridSnap.Text      = options.LangCur.lMOGridAlign;
-            btnAlignElements.Text = options.LangCur.lMOGridAlignNow;
+            gbGrid.Text = Options.LangCur.lMOGrid;
+            cbbGridStyle.Items.Add(Options.LangCur.lMOGridStyle0None);
+            cbbGridStyle.Items.Add(Options.LangCur.lMOGridStyle1Dots);
+            cbbGridStyle.Items.Add(Options.LangCur.lMOGridStyle2Corners);
+            cbbGridStyle.Items.Add(Options.LangCur.lMOGridStyle3Crosses);
+            cbbGridStyle.Items.Add(Options.LangCur.lMOGridStyle4Grid);
+            toolTip.SetToolTip(btnGridColor, Options.LangCur.hEEColorPick);
+            lblGridThick.Text     = Options.LangCur.lEELineThick;
+            chkGridSnap.Text      = Options.LangCur.lMOGridAlign;
+            btnAlignElements.Text = Options.LangCur.lMOGridAlignNow;
             // Fill
             chkGridStore.Checked       = Map.Grid.StoreOwn;
             cbbGridStyle.SelectedIndex = (int)Map.Grid.Style;
@@ -51,29 +52,29 @@ namespace Schematix
             nudGridThick.Value         = (int)Map.Grid.Pen.Width;
             chkGridSnap.Checked        = Map.Grid.Snap;
             // Back image
-            gbBack.Text = options.LangCur.lMOBack;
-            cbbBackStyle.Items.Add(options.LangCur.lMOBackStyle0Color);
-            cbbBackStyle.Items.Add(options.LangCur.lMOBackStyle1ImageAlign);
-            cbbBackStyle.Items.Add(options.LangCur.lMOBackStyle2ImageTile);
-            cbbBackStyle.Items.Add(options.LangCur.lMOBackStyle3ImageStrech);
-            cbbBackStyle.Items.Add(options.LangCur.lMOBackStyle4ImageZInner);
-            cbbBackStyle.Items.Add(options.LangCur.lMOBackStyle5ImageZOutter);
-            toolTip.SetToolTip(btnBackColor,    options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnGetBackImage, options.LangCur.hEEImageLoad);
-            lblBackgImagePath.Text   = options.LangCur.lEEImagePath;
-            chkBackImageFloat.Text   = options.LangCur.lEEImageFloat;
-            chkBackImageBuildIn.Text = options.LangCur.lEEImageBuildIn;
-            lblBackImageAlign.Text   = options.LangCur.lEEAlign;
-            lblBackImageBPP.Text     = options.LangCur.lEEImageBPP;
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign0TL);
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign1TC);
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign2TR);
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign3ML);
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign4MC);
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign5MR);
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign6BL);
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign7BC);
-            cbbBackImageAlign.Items.Add(options.LangCur.lEEAlign8BR);
+            gbBack.Text = Options.LangCur.lMOBack;
+            cbbBackStyle.Items.Add(Options.LangCur.lMOBackStyle0Color);
+            cbbBackStyle.Items.Add(Options.LangCur.lMOBackStyle1ImageAlign);
+            cbbBackStyle.Items.Add(Options.LangCur.lMOBackStyle2ImageTile);
+            cbbBackStyle.Items.Add(Options.LangCur.lMOBackStyle3ImageStrech);
+            cbbBackStyle.Items.Add(Options.LangCur.lMOBackStyle4ImageZInner);
+            cbbBackStyle.Items.Add(Options.LangCur.lMOBackStyle5ImageZOutter);
+            toolTip.SetToolTip(btnBackColor,    Options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnGetBackImage, Options.LangCur.hEEImageLoad);
+            lblBackgImagePath.Text   = Options.LangCur.lEEImagePath;
+            chkBackImageFloat.Text   = Options.LangCur.lEEImageFloat;
+            chkBackImageBuildIn.Text = Options.LangCur.lEEImageBuildIn;
+            lblBackImageAlign.Text   = Options.LangCur.lEEAlign;
+            lblBackImageBPP.Text     = Options.LangCur.lEEImageBPP;
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign0TL);
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign1TC);
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign2TR);
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign3ML);
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign4MC);
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign5MR);
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign6BL);
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign7BC);
+            cbbBackImageAlign.Items.Add(Options.LangCur.lEEAlign8BR);
             // Fill
             chkBackStore.Checked            = Map.Back.StoreOwn;
             cbbBackStyle.SelectedIndex      = (int)Map.Back.Style;
@@ -83,17 +84,15 @@ namespace Schematix
             cbbBackImageAlign.SelectedIndex = (int)Map.Back.Align;
             chkBackImageBuildIn.Checked     = Map.Back.BuildIn;
             cbbBackImageBPP.SelectedIndex   = (int)Map.Back.BPP;
-            //
-            image = Map.Back.Image;
-            GotImage(image);
+            GotImage(Map.Back.Image);
 
             // Objects
-            tpObjects.Text = options.LangCur.lMOTabObjects;
-            toolTip.SetToolTip(btnIPDelete, options.LangCur.hEOPrototypeDelete);
-            clmObjectName.Text      = options.LangCur.lMOColumName;
-            clmObjectLocation.Text  = options.LangCur.lMOColumLocation;
-            clmObjectPrototype.Text = options.LangCur.lMOColumPrototype;
-            clmObjectReference.Text = options.LangCur.lMOColumReference;
+            tpObjects.Text = Options.LangCur.lMOTabObjects;
+            toolTip.SetToolTip(btnIPDelete, Options.LangCur.hEOPrototypeDelete);
+            clmObjectName.Text      = Options.LangCur.lMOColumName;
+            clmObjectLocation.Text  = Options.LangCur.lMOColumLocation;
+            clmObjectPrototype.Text = Options.LangCur.lMOColumPrototype;
+            clmObjectReference.Text = Options.LangCur.lMOColumReference;
             // Fill
             foreach (var obj in Map.Objects)
             {
@@ -109,12 +108,12 @@ namespace Schematix
             }
 
             // Links
-            tpLinks.Text = options.LangCur.lMOTabLinks;
-            toolTip.SetToolTip(btnIPDelete, options.LangCur.hEOPrototypeDelete);
-            clmLinkName.Text      = options.LangCur.lMOColumName;
-            clmLinkLocation.Text  = options.LangCur.lMOColumLocation;
-            clmLinkPrototype.Text = options.LangCur.lMOColumPrototype;
-            clmLinkReference.Text = options.LangCur.lMOColumReference;
+            tpLinks.Text = Options.LangCur.lMOTabLinks;
+            toolTip.SetToolTip(btnIPDelete, Options.LangCur.hEOPrototypeDelete);
+            clmLinkName.Text      = Options.LangCur.lMOColumName;
+            clmLinkLocation.Text  = Options.LangCur.lMOColumLocation;
+            clmLinkPrototype.Text = Options.LangCur.lMOColumPrototype;
+            clmLinkReference.Text = Options.LangCur.lMOColumReference;
             // Fill
             foreach (var link in Map.Links)
             {
@@ -127,12 +126,12 @@ namespace Schematix
             }
 
             // Boxes
-            tpBoxes.Text = options.LangCur.lMOTabBoxes;
-            toolTip.SetToolTip(btnIPDelete, options.LangCur.hEOPrototypeDelete);
-            clmBoxName.Text      = options.LangCur.lMOColumName;
-            clmBoxLocation.Text  = options.LangCur.lMOColumLocation;
-            clmBoxPrototype.Text = options.LangCur.lMOColumPrototype;
-            clmBoxReference.Text = options.LangCur.lMOColumReference;
+            tpBoxes.Text = Options.LangCur.lMOTabBoxes;
+            toolTip.SetToolTip(btnIPDelete, Options.LangCur.hEOPrototypeDelete);
+            clmBoxName.Text      = Options.LangCur.lMOColumName;
+            clmBoxLocation.Text  = Options.LangCur.lMOColumLocation;
+            clmBoxPrototype.Text = Options.LangCur.lMOColumPrototype;
+            clmBoxReference.Text = Options.LangCur.lMOColumReference;
             // Fill
             foreach (var box in Map.Boxes)
             {
@@ -145,13 +144,13 @@ namespace Schematix
             }
 
             // IPs
-            tpIPs.Text = options.LangCur.lMOTabIPs;
-            toolTip.SetToolTip(btnIPDelete, options.LangCur.hOOIPDelete);
-            clmIPAddress.Text   = options.LangCur.lOOColumIP;
-            clmIPPeriod.Text    = options.LangCur.lOOColumPeriod;
-            clmIPTimeLast.Text  = options.LangCur.lOOColumTimeLast;
-            clmIPTimeNext.Text  = options.LangCur.lOOColumTimeNext;
-            clmIPPing.Text      = options.LangCur.lOOColumPing;
+            tpIPs.Text = Options.LangCur.lMOTabIPs;
+            toolTip.SetToolTip(btnIPDelete, Options.LangCur.hOOIPDelete);
+            clmIPAddress.Text   = Options.LangCur.lOOColumIP;
+            clmIPPeriod.Text    = Options.LangCur.lOOColumPeriod;
+            clmIPTimeLast.Text  = Options.LangCur.lOOColumTimeLast;
+            clmIPTimeNext.Text  = Options.LangCur.lOOColumTimeNext;
+            clmIPPing.Text      = Options.LangCur.lOOColumPing;
         }
 
         private void btnColor_Click(object sender, EventArgs e)//Ok
@@ -166,7 +165,7 @@ namespace Schematix
             if (cbbBackStyle.SelectedIndex == 0 && pbBackPreview.BackgroundImage != null)
                 pbBackPreview.BackgroundImage = null;
             if (cbbBackStyle.SelectedIndex != 0 && pbBackPreview.BackgroundImage == null)
-                pbBackPreview.BackgroundImage = image;
+                pbBackPreview.BackgroundImage = imageAlpha;
             switch (cbbBackStyle.SelectedIndex)
             {
                 case 1:
@@ -192,12 +191,26 @@ namespace Schematix
             Share.GetImage(tbBackgImagePath, GotImage);
         }
 
-        private void GotImage(Image img)//!!!
+        private void GotImage(Bitmap img)//!
         {
-            pbBackPreview.BackgroundImage = img;
-            //...
+            imageOriginal = img;
+            Alpha_Changed(null, null);
         }
 
+        private void Alpha_Changed(object sender, EventArgs e)
+        {
+            imageAlpha = new Bitmap(imageOriginal);
+            if (chkTransparentColor.Checked)
+                imageAlpha.MakeTransparent(btnAlphaColor.BackColor);
+            pbBackPreview.BackgroundImage = imageAlpha;
+        }
+
+        private void btnBackColor_BackColorChanged(object sender, EventArgs e)
+        {
+            pbBackPreview.BackColor = btnBackColor.BackColor;
+        }
+
+        #region Elements Tabs
         private void btnObjectsDelete_Click(object sender, EventArgs e)//
         {
             for (int i = lvObjects.SelectedItems.Count - 1; 0 <= i; i--)
@@ -206,8 +219,8 @@ namespace Schematix
                 lvObjects.Items.RemoveAt(i);
             }
         }
-
-        private void lvObjects_MouseDoubleClick(object sender, MouseEventArgs e)//
+        
+        private void lvObjects_DoubleClick(object sender, EventArgs e)//
         {
             if (lvObjects.SelectedItems.Count < 1)
                 return;
@@ -274,6 +287,7 @@ namespace Schematix
         {
             Share.lvIPs_Edit(lvIPs);
         }
+        #endregion
 
         private void btnAlignElements_Click(object sender, EventArgs e)//O
         {
@@ -287,7 +301,7 @@ namespace Schematix
             Map.Width  = (int)nudSizeW.Value;
             Map.Height = (int)nudSizeH.Value;
             Map.Description = tbDescription.Text;
-            Map.AutoSize    = chkSizeAuto.Checked;            
+            Map.AutoSize    = chkSizeAuto.Checked;
             // Grid
             Map.Grid.StoreOwn  = chkGridStore.Checked;
             Map.Grid.Style     = (GridStyles)cbbGridStyle.SelectedIndex;
@@ -305,25 +319,15 @@ namespace Schematix
             Map.Back.Align    = (AlignTypes)cbbBackImageAlign.SelectedIndex;
             Map.Back.BuildIn  = chkBackImageBuildIn.Checked;
             Map.Back.BPP      = (ImageBPPs)cbbBackImageBPP.SelectedIndex;
-            //...
-            Map.Back.Image    = image;
+            Map.Back.Image    = imageAlpha;
             // Clear backtrack
             foreach (ListViewItem lvi in lvIPs.Items)
                 if (lvi.Tag != null)
                     (lvi.Tag as xIP).lvItem = null;
+
             // Out
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void btnBackColor_BackColorChanged(object sender, EventArgs e)
-        {
-            pbBackPreview.BackColor = btnBackColor.BackColor;
-        }
-
-        private void btnAlphaColor_BackColorChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

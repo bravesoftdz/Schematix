@@ -21,41 +21,41 @@ namespace Schematix
             if (pObject == null)
             {
                 pObject = new xPObject();
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleBox;
+                Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleBox;
             }
             else
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleBox;
+                Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleBox;
             PObject = pObject;
             // Main
-            tpMain.Text         = options.LangCur.lOETabMain;
-            chkIsPrototype.Text = options.LangCur.lEEPrototype;
-            lblNode.Text        = options.LangCur.lEENodeName;
-            lblName.Text        = options.LangCur.lEEName;
-            lblID.Text          = options.LangCur.lEEID;
-            lblRevision.Text    = options.LangCur.lEERevision;
+            tpMain.Text         = Options.LangCur.lOETabMain;
+            chkIsPrototype.Text = Options.LangCur.lEEPrototype;
+            lblNode.Text        = Options.LangCur.lEENodeName;
+            lblName.Text        = Options.LangCur.lEEName;
+            lblID.Text          = Options.LangCur.lEEID;
+            lblRevision.Text    = Options.LangCur.lEERevision;
             // Fill
             tbNode.Text            = PObject.NodeName;
             chkIsPrototype.Checked = PObject.isPrototype;
             tbName.Text            = PObject.Name;
             tbID.Text              = PObject.ID.ToString();
-            tbRevision.Text        = PObject.Revision.ToString(options.TIME_FORMAT);
+            tbRevision.Text        = DateTime.FromBinary(PObject.Revision).ToString(Options.TIME_FORMAT);
             tbDescription.Text     = PObject.Description;
 
             // Image
-            tpImage.Text             = options.LangCur.lOETabImage;
-            lblImageType.Text        = options.LangCur.lOEImageType;
-            chkTransparentColor.Text = options.LangCur.lOETransparentColor;
-            lblImagePath.Text        = options.LangCur.lEEImagePath;
-            lblImageBPP.Text         = options.LangCur.lEEImageBPP;
-            lblImageBackColor.Text   = options.LangCur.lOEUseBackColor;
-            toolTip.SetToolTip(btnBackColor,    options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnGetImagePath, options.LangCur.hEEImageLoad);
-            toolTip.SetToolTip(btnAlphaColor,   options.LangCur.hEEColorPick);
-            cbbImageType.Items.Add(options.LangCur.lOEImageType0None);
-            cbbImageType.Items.Add(options.LangCur.lOEImageType1Load);
-            cbbImageType.Items.Add(options.LangCur.lOEImageType2Link);
+            tpImage.Text             = Options.LangCur.lOETabImage;
+            lblImageType.Text        = Options.LangCur.lOEImageType;
+            chkTransparentColor.Text = Options.LangCur.lOETransparentColor;
+            lblImagePath.Text        = Options.LangCur.lEEImagePath;
+            lblImageBPP.Text         = Options.LangCur.lEEImageBPP;
+            lblImageBackColor.Text   = Options.LangCur.lOEUseBackColor;
+            toolTip.SetToolTip(btnBackColor,    Options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnGetImagePath, Options.LangCur.hEEImageLoad);
+            toolTip.SetToolTip(btnAlphaColor,   Options.LangCur.hEEColorPick);
+            cbbImageType.Items.Add(Options.LangCur.lOEImageType0None);
+            cbbImageType.Items.Add(Options.LangCur.lOEImageType1Load);
+            cbbImageType.Items.Add(Options.LangCur.lOEImageType2Link);
             // Fill
-            GotImage(new Bitmap(PObject.ImageCanva));
+            GotImage(new Bitmap(PObject.Canvas));
             cbbImageType.SelectedIndex  = (int)PObject.ImageType;
             btnAlphaColor.BackColor     = PObject.AlphaColor;
             chkTransparentColor.Checked = PObject.UseAlphaColor;
@@ -64,15 +64,15 @@ namespace Schematix
             btnBackColor.BackColor      = PObject.BackColor;
 
             // Nodes
-            tpDotes.Text        = options.LangCur.lOETabDotes;
-            lblDot.Text         = options.LangCur.lOEDot;
-            lblDotName.Text     = options.LangCur.lOEDotName;
-            lblDotLocation.Text = options.LangCur.lOEDotLocation;
-            toolTip.SetToolTip(btnDotMoveUp,   options.LangCur.hOEDotMoveUp);
-            toolTip.SetToolTip(btnDotMoveDown, options.LangCur.hOEDotMoveDown);
-            toolTip.SetToolTip(btnDotAdd,      options.LangCur.hOEDotAdd);
-            toolTip.SetToolTip(btnDotSave,     options.LangCur.hOEDotSave);
-            toolTip.SetToolTip(btnDotDelete,   options.LangCur.hOEDotDelete);
+            tpDotes.Text        = Options.LangCur.lOETabDotes;
+            lblDot.Text         = Options.LangCur.lOEDot;
+            lblDotName.Text     = Options.LangCur.lOEDotName;
+            lblDotLocation.Text = Options.LangCur.lOEDotLocation;
+            toolTip.SetToolTip(btnDotMoveUp,   Options.LangCur.hOEDotMoveUp);
+            toolTip.SetToolTip(btnDotMoveDown, Options.LangCur.hOEDotMoveDown);
+            toolTip.SetToolTip(btnDotAdd,      Options.LangCur.hOEDotAdd);
+            toolTip.SetToolTip(btnDotSave,     Options.LangCur.hOEDotSave);
+            toolTip.SetToolTip(btnDotDelete,   Options.LangCur.hOEDotDelete);
             // Fill
             cbbNodesRefill(0);
         }
@@ -256,7 +256,7 @@ namespace Schematix
             // Main
             PObject.NodeName    = tbNode.Text;
             PObject.isPrototype = chkIsPrototype.Checked;
-            PObject.Revision    = DateTime.Now;
+            PObject.Revision    = DateTime.Now.ToBinary();
             PObject.Name        = tbName.Text;
             PObject.Description = tbDescription.Text;
             // Image
@@ -266,7 +266,7 @@ namespace Schematix
             PObject.ImagePath     = tbImagePath.Text;
             PObject.ImageBPP      = (ImageBPPs)cbbImageBPP.SelectedIndex;
             PObject.BackColor     = btnBackColor.BackColor;
-            PObject.ImageCanva    = loadedBitmap;
+            PObject.Canvas    = loadedBitmap;
 
             // Out
             DialogResult = DialogResult.OK;

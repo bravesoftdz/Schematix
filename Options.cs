@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Schematix
 {
-    static class options
+    static class Options
     {
         public const String TIME_FORMAT = "yyyy.MM.dd HH:mm:ss";
         // IP
@@ -36,6 +36,9 @@ namespace Schematix
         public const String iniFile = "Schematix.ini";
         public const int    MAX_PING_PERIOD = 24 * 3600000;
         public const int    MAX_PING_COUNT  = 10;
+        public const int    DEFAULT_MAP_WIDTH  = 820;
+        public const int    DEFAULT_MAP_HEIGHT = 240;
+        public const bool   DEFAULT_MAP_AUTOSIZE = false;
         // Grid
         public const int             MAX_GRID_STEP      = 1000;
         public const int             DEFAULT_GRID_STEP  = 32;
@@ -86,7 +89,22 @@ namespace Schematix
         static public List<xPBox>    PBoxes   = new List<xPBox>();
         // Ping list
         static public List<xIP> IPs = new List<xIP>();
-        static public xIP LastSendIP = null;
+        static public int LastSendIPIdx = -1;
+
+        static public void AddIP(xIP IP)
+        {
+            if (!IPs.Contains(IP))
+                IPs.Add(IP);
+        }
+
+        static public void RemoveIP(xIP IP)
+        {
+            int idx = IPs.IndexOf(IP);
+            if (0 <= idx)
+                if (idx <= LastSendIPIdx)
+                    LastSendIPIdx--;
+            IPs.Remove(IP);
+        }
 
         static public int SelectLanguage(String name)//Ok
         {

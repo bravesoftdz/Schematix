@@ -10,20 +10,20 @@ namespace Schematix
         public IPEditForm(xIP ip, xObject owner)//Ok
         {
             InitializeComponent();
-            lblAddress.Text  = options.LangCur.lIPAddress;
-            lblName.Text     = options.LangCur.lEOName;
-            lblPeriod.Text   = options.LangCur.lIPPeriod;
-            lblTimeNext.Text = options.LangCur.lIPTimeNext;
-            lblTimeOutGreen.Text  = options.LangCur.lIPTimeOutGreen;
-            lblTimeOutYellow.Text = options.LangCur.lIPTimeOutYellow;
-            lblTimeOutRed.Text    = options.LangCur.lIPTimeOutRed;
+            lblAddress.Text  = Options.LangCur.lIPAddress;
+            lblName.Text     = Options.LangCur.lEOName;
+            lblPeriod.Text   = Options.LangCur.lIPPeriod;
+            lblTimeNext.Text = Options.LangCur.lIPTimeNext;
+            lblTimeOutGreen.Text  = Options.LangCur.lIPTimeOutGreen;
+            lblTimeOutYellow.Text = Options.LangCur.lIPTimeOutYellow;
+            lblTimeOutRed.Text    = Options.LangCur.lIPTimeOutRed;
             if (ip == null)
             {
-                Text = options.LangCur.lIPTitleAdd;
+                Text = Options.LangCur.lIPTitleAdd;
                 ip = new xIP(owner);
             }
             else
-                Text = options.LangCur.lIPTitleEdit;
+                Text = Options.LangCur.lIPTitleEdit;
             IP = ip;
             tbName.Text         = IP.Name;
             tbDescription.Text  = IP.Description;

@@ -21,51 +21,51 @@ namespace Schematix
         {
             toolTip.RemoveAll();
             // Hints
-            toolTip.SetToolTip(btnObjectAdd, options.LangCur.hLFAdd);
-            toolTip.SetToolTip(btnObjectEdit, options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnLinkAdd, options.LangCur.hLFAdd);
-            toolTip.SetToolTip(btnLinkEdit, options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnBoxAdd, options.LangCur.hLFAdd);
-            toolTip.SetToolTip(btnBoxEdit, options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnUsedObjectEdit, options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnUsedLinkEdit, options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnUsedBoxEdit, options.LangCur.hLFEdit);
-            toolTip.SetToolTip(chkPin, (chkPin.Checked ? options.LangCur.hLFPinDown : options.LangCur.hLFPinUp));
+            toolTip.SetToolTip(btnObjectAdd, Options.LangCur.hLFAdd);
+            toolTip.SetToolTip(btnObjectEdit, Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnLinkAdd, Options.LangCur.hLFAdd);
+            toolTip.SetToolTip(btnLinkEdit, Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnBoxAdd, Options.LangCur.hLFAdd);
+            toolTip.SetToolTip(btnBoxEdit, Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnUsedObjectEdit, Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnUsedLinkEdit, Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnUsedBoxEdit, Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(chkPin, (chkPin.Checked ? Options.LangCur.hLFPinDown : Options.LangCur.hLFPinUp));
             // Text
-            Text = options.LangCur.lLFTitle;
+            Text = Options.LangCur.lLFTitle;
             lblObjectsCatalog.Text =
             lblLinksCatalog.Text =
-            lblBoxesCatalog.Text = options.LangCur.lLFCatalog;
+            lblBoxesCatalog.Text = Options.LangCur.lLFCatalog;
             lblUsedObjects.Text =
             lblUsedLinks.Text =
-            lblUsedBoxes.Text = options.LangCur.lLFUsed;
+            lblUsedBoxes.Text = Options.LangCur.lLFUsed;
             // Colums
             clmObjectName.Text =
             clmLinkName.Text =
-            clmBoxName.Text = options.LangCur.lLFColumName;
+            clmBoxName.Text = Options.LangCur.lLFColumName;
             clmObjectCatalog.Text =
             clmLinkCatalog.Text =
-            clmBoxCatalog.Text = options.LangCur.lLFColumCatalog;
+            clmBoxCatalog.Text = Options.LangCur.lLFColumCatalog;
             clmObjectLocation.Text =
             clmLinkLocation.Text =
-            clmBoxLocation.Text = options.LangCur.lLFColumLocation;
+            clmBoxLocation.Text = Options.LangCur.lLFColumLocation;
         }
 
         private void chkPin_CheckedChanged(object sender, EventArgs e)
         {
             chkPin.BackgroundImage = imageListPin.Images[chkPin.Checked ? 1 : 0];
             chkPin.BackColor = (chkPin.Checked ? Color.LightCyan : SystemColors.Control);
-            toolTip.SetToolTip(chkPin, (chkPin.Checked ? options.LangCur.hLFPinDown : options.LangCur.hLFPinUp));
+            toolTip.SetToolTip(chkPin, (chkPin.Checked ? Options.LangCur.hLFPinDown : Options.LangCur.hLFPinUp));
             TopMost = chkPin.Checked;
         }
 
         private void LibraryForm_Move(object sender, EventArgs e)
         {
-            int x = options.mainForm.Location.X + options.mainForm.Width;
-            int y = options.mainForm.Location.Y;
+            int x = Options.mainForm.Location.X + Options.mainForm.Width;
+            int y = Options.mainForm.Location.Y;
             bind = (Math.Abs(x - Location.X) < 16) && (Math.Abs(y - Location.Y) < 16);
             if (bind)
-                options.mainForm.MoveLibraryForm();
+                Options.mainForm.MoveLibraryForm();
         }
 
         private void LibraryForm_FormClosing(object sender, FormClosingEventArgs e)//Ok

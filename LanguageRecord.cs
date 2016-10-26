@@ -228,8 +228,9 @@ namespace Schematix
             dFileSaving        = "Saving file",
             mMapHasChanges     = "This map has changes, save it before proceed?",
             dMapClosing        = "Closing map",
-            dMapLoading        = "Loading map",
-            dMapSaving         = "Saving map",
+            dMapReload         = "Reload map",
+            dMapLoad           = "Load map",
+            dMapSave           = "Save map",
 
             // About form
             lAbout        = "About",
@@ -557,8 +558,9 @@ namespace Schematix
                                 case "dFileSaving":       dFileSaving       = lblText;   break;
                                 case "mMapHasChanges":    mMapHasChanges    = lblText;   break;
                                 case "dMapClosing":       dMapClosing       = lblText;   break;
-                                case "dMapLoading":       dMapLoading       = lblText;   break;
-                                case "dMapSaving":        dMapSaving        = lblText;   break;
+                                case "dMapReload":        dMapReload        = lblText;   break;
+                                case "dMapLoad":          dMapLoad          = lblText;   break;
+                                case "dMapSave":          dMapSave          = lblText;   break;
 
                                 //# About form
                                 case "lAbout":    lAbout       = lblText;          break;

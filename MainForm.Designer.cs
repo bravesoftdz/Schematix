@@ -108,6 +108,7 @@
             this.vScrollBar.Maximum = 9;
             this.vScrollBar.Name = "vScrollBar";
             this.vScrollBar.Size = new System.Drawing.Size(17, 432);
+            this.vScrollBar.SmallChange = 5;
             this.vScrollBar.TabIndex = 5;
             this.vScrollBar.Value = 1;
             this.vScrollBar.Visible = false;
@@ -120,6 +121,7 @@
             this.hScrollBar.Location = new System.Drawing.Point(4, 440);
             this.hScrollBar.Name = "hScrollBar";
             this.hScrollBar.Size = new System.Drawing.Size(456, 17);
+            this.hScrollBar.SmallChange = 10;
             this.hScrollBar.TabIndex = 7;
             this.hScrollBar.Visible = false;
             this.hScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ScrollBar_Scroll);
@@ -238,7 +240,7 @@
             // 
             this.tsmiMapLoad.Image = global::Schematix.Properties.Resources.load;
             this.tsmiMapLoad.Name = "tsmiMapLoad";
-            this.tsmiMapLoad.Size = new System.Drawing.Size(152, 22);
+            this.tsmiMapLoad.Size = new System.Drawing.Size(116, 22);
             this.tsmiMapLoad.Text = "Load...";
             this.tsmiMapLoad.Click += new System.EventHandler(this.tsmiMapLoad_Click);
             // 

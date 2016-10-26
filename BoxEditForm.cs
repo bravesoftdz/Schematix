@@ -15,47 +15,47 @@ namespace Schematix
             if (pBox == null)
             {
                 pBox = new xPBox();
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleBox;
+                Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleBox;
             }
             else
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleBox;
+                Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleBox;
             PBox = pBox;
             // Share
-            lblNodeName.Text    = options.LangCur.lEENodeName;
-            chkIsPrototype.Text = options.LangCur.lEEPrototype;
-            lblName.Text        = options.LangCur.lEEName;
-            lblID.Text          = options.LangCur.lEEID;
-            lblRevision.Text    = options.LangCur.lEERevision;
+            lblNodeName.Text    = Options.LangCur.lEENodeName;
+            chkIsPrototype.Text = Options.LangCur.lEEPrototype;
+            lblName.Text        = Options.LangCur.lEEName;
+            lblID.Text          = Options.LangCur.lEEID;
+            lblRevision.Text    = Options.LangCur.lEERevision;
             // Fill
             tbNode.Text            = PBox.NodeName;
             chkIsPrototype.Checked = PBox.isPrototype;
             tbName.Text            = PBox.Name;
             tbID.Text              = PBox.ID.ToString();
-            tbRevision.Text        = PBox.Revision.ToString(options.TIME_FORMAT);
+            tbRevision.Text        = DateTime.FromBinary(PBox.Revision).ToString(Options.TIME_FORMAT);
             tbDescription.Text     = PBox.Description;
 
             // Own
-            lblType.Text      = options.LangCur.lBEType;
-            lblLineThick.Text = options.LangCur.lEELineThick;
-            lblLineStyle.Text = options.LangCur.lEELineStyle;
-            lblText.Text      = options.LangCur.lBEText;
-            lblTextAlign.Text = options.LangCur.lEEAlign;
-            toolTip.SetToolTip(btnLineColor, options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnFont,      options.LangCur.hEEColorPick);
+            lblType.Text      = Options.LangCur.lBEType;
+            lblLineThick.Text = Options.LangCur.lEELineThick;
+            lblLineStyle.Text = Options.LangCur.lEELineStyle;
+            lblText.Text      = Options.LangCur.lBEText;
+            lblTextAlign.Text = Options.LangCur.lEEAlign;
+            toolTip.SetToolTip(btnLineColor, Options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnFont,      Options.LangCur.hEEColorPick);
             // Fill CBB Type
-            cbbType.Items.Add(options.LangCur.lBEType0Text);
-            cbbType.Items.Add(options.LangCur.lBEType1Rectangle);
-            cbbType.Items.Add(options.LangCur.lBEType2Ellipse);
+            cbbType.Items.Add(Options.LangCur.lBEType0Text);
+            cbbType.Items.Add(Options.LangCur.lBEType1Rectangle);
+            cbbType.Items.Add(Options.LangCur.lBEType2Ellipse);
             // Fill CBB Align
-            cbbAlign.Items.Add(options.LangCur.lEEAlign0TL);
-            cbbAlign.Items.Add(options.LangCur.lEEAlign1TC);
-            cbbAlign.Items.Add(options.LangCur.lEEAlign2TR);
-            cbbAlign.Items.Add(options.LangCur.lEEAlign3ML);
-            cbbAlign.Items.Add(options.LangCur.lEEAlign4MC);
-            cbbAlign.Items.Add(options.LangCur.lEEAlign5MR);
-            cbbAlign.Items.Add(options.LangCur.lEEAlign6BL);
-            cbbAlign.Items.Add(options.LangCur.lEEAlign7BC);
-            cbbAlign.Items.Add(options.LangCur.lEEAlign8BR);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign0TL);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign1TC);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign2TR);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign3ML);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign4MC);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign5MR);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign6BL);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign7BC);
+            cbbAlign.Items.Add(Options.LangCur.lEEAlign8BR);
             // Fill
             cbbType.SelectedIndex  = (int)PBox.BoxType;
             nudThick.Value         = (int)PBox.Pen.Width;
@@ -91,7 +91,7 @@ namespace Schematix
             // Share
             PBox.NodeName    = tbNode.Text;
             PBox.isPrototype = chkIsPrototype.Checked;
-            PBox.Revision    = DateTime.Now;
+            PBox.Revision    = DateTime.Now.ToBinary();
             PBox.Name        = tbName.Text;
             PBox.Description = tbDescription.Text;
             // Own

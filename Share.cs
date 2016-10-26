@@ -101,8 +101,8 @@ namespace Schematix
                 catch (Exception ex)
                 {
                     MessageBox.Show(
-                        options.LangCur.mErrorsOccurred + "\r\n" + ex.Message + "\r\n" + tb.Text,
-                        options.LangCur.dImageLoading);
+                        Options.LangCur.mErrorsOccurred + "\r\n" + ex.Message + "\r\n" + tb.Text,
+                        Options.LangCur.dImageLoading);
                     return false;
                 }
             return true;
@@ -137,8 +137,8 @@ namespace Schematix
             if (IP.PingTimeArray[0] < 0)
                 IP.lvItem.SubItems[1].Text = "-";
             else
-                IP.lvItem.SubItems[1].Text = IP.TimeLast.ToString(options.TIME_FORMAT);
-            IP.lvItem.SubItems[2].Text = IP.TimeNext.ToString(options.TIME_FORMAT);
+                IP.lvItem.SubItems[1].Text = IP.TimeLast.ToString(Options.TIME_FORMAT);
+            IP.lvItem.SubItems[2].Text = IP.TimeNext.ToString(Options.TIME_FORMAT);
             String s = "";
             foreach (var ping in IP.PingTimeArray)
                 if (ping < 0)

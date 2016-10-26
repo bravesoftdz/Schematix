@@ -17,54 +17,54 @@ namespace Schematix
 
             //# Main
             // Language
-            tbLanguagePath.Text = options.LangPath;
-            cbbLanguage.Items.AddRange(options.Langs.Select(l => l.Name).ToArray());
-            cbbLanguage.Text = options.LangName;
+            tbLanguagePath.Text = Options.LangPath;
+            cbbLanguage.Items.AddRange(Options.Langs.Select(l => l.Name).ToArray());
+            cbbLanguage.Text = Options.LangName;
             if (cbbLanguage.SelectedIndex < 0)
                 cbbLanguage.SelectedIndex = 0;
-            SetText(options.Langs[cbbLanguage.SelectedIndex]);
+            SetText(Options.Langs[cbbLanguage.SelectedIndex]);
 
             // Behaiour
-            cbbOnStart.SelectedIndex = options.OnStart;
-            cbbOnClose.SelectedIndex = options.OnClose;
-            if (options.PingPeriod < 1)
-                options.PingPeriod = 1;
-            chkPingPeriod.Checked = options.PingOnn;
-            nudPingPeriod.Maximum = options.MAX_PING_PERIOD;
-            nudPingCount.Maximum  = options.MAX_PING_COUNT;
-            nudPingPeriod.Value   = options.PingPeriod;
-            nudPingCount.Value    = options.PingCount;
+            cbbOnStart.SelectedIndex = Options.OnStart;
+            cbbOnClose.SelectedIndex = Options.OnClose;
+            if (Options.PingPeriod < 1)
+                Options.PingPeriod = 1;
+            chkPingPeriod.Checked = Options.PingOnn;
+            nudPingPeriod.Maximum = Options.MAX_PING_PERIOD;
+            nudPingCount.Maximum  = Options.MAX_PING_COUNT;
+            nudPingPeriod.Value   = Options.PingPeriod;
+            nudPingCount.Value    = Options.PingCount;
             // Folders
-            tbRootMaps.Text    = options.RootMaps;
-            tbRootObjects.Text = options.RootObjects;
-            tbRootLinks.Text   = options.RootLinks;
-            tbRootBoxes.Text   = options.RootBoxes;
+            tbRootMaps.Text    = Options.RootMaps;
+            tbRootObjects.Text = Options.RootObjects;
+            tbRootLinks.Text   = Options.RootLinks;
+            tbRootBoxes.Text   = Options.RootBoxes;
 
             //# Map
             // Grid
-            chkGridStore.Checked       = options.Grid.StoreOwn;
-            cbbGridStyle.SelectedIndex = (int)options.Grid.Style;
-            btnGridColor.BackColor     = options.Grid.Pen.Color;
-            nudGridStepX.Maximum       = options.MAX_GRID_STEP;
-            nudGridStepY.Maximum       = options.MAX_GRID_STEP;
-            nudGridThick.Maximum       = options.MAX_GRID_THICK;
-            nudGridStepX.Value         = options.Grid.StepX;
-            nudGridStepY.Value         = options.Grid.StepY;
-            nudGridThick.Value         = (int)options.Grid.Pen.Width;
-            chkGridAlign.Checked       = options.Grid.Snap;
+            chkGridStore.Checked       = Options.Grid.StoreOwn;
+            cbbGridStyle.SelectedIndex = (int)Options.Grid.Style;
+            btnGridColor.BackColor     = Options.Grid.Pen.Color;
+            nudGridStepX.Maximum       = Options.MAX_GRID_STEP;
+            nudGridStepY.Maximum       = Options.MAX_GRID_STEP;
+            nudGridThick.Maximum       = Options.MAX_GRID_THICK;
+            nudGridStepX.Value         = Options.Grid.StepX;
+            nudGridStepY.Value         = Options.Grid.StepY;
+            nudGridThick.Value         = (int)Options.Grid.Pen.Width;
+            chkGridAlign.Checked       = Options.Grid.Snap;
             // Background
-            chkBackStore.Checked       = options.Back.StoreOwn;
+            chkBackStore.Checked       = Options.Back.StoreOwn;
             //
-            image = new Bitmap(options.Back.Image);
+            image = new Bitmap(Options.Back.Image);
             if (cbbBackStyle.SelectedIndex != 0)
                 pbBackPreview.BackgroundImage = image;
-            cbbBackStyle.SelectedIndex      = (int)options.Back.Style;
+            cbbBackStyle.SelectedIndex      = (int)Options.Back.Style;
             //
-            cbbBackImageAlign.SelectedIndex = (int)options.Back.Align;
-            btnBackColor.BackColor          = options.Back.Color;
-            tbBackgImagePath.Text           = options.Back.Path;
-            chkBackImageFloat.Checked       = options.Back.Float;
-            chkBackImageBuildIn.Checked     = options.Back.BuildIn;
+            cbbBackImageAlign.SelectedIndex = (int)Options.Back.Align;
+            btnBackColor.BackColor          = Options.Back.Color;
+            tbBackgImagePath.Text           = Options.Back.Path;
+            chkBackImageFloat.Checked       = Options.Back.Float;
+            chkBackImageBuildIn.Checked     = Options.Back.BuildIn;
         }
 
         private void SetText(LanguageRecord lang)//
@@ -77,17 +77,17 @@ namespace Schematix
             // Language
             gbLanguage.Text      = lang.lOFMainLanguage;
             lblLanguagePath.Text = lang.lOFMainLanguagePath;
-            toolTip.SetToolTip(btnGetLanguagePath, options.LangCur.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetLanguagePath, Options.LangCur.hOFMainRootGet);
             // Behaiour
             gbRoots.Text        = lang.lOFMainRoots;
             lblRootMaps.Text    = lang.lOFMainRootMaps;
             lblRootObjects.Text = lang.lOFMainRootObjects;
             lblRootLinks.Text   = lang.lOFMainRootLinks;
             lblRootBoxes.Text   = lang.lOFMainRootBoxes;
-            toolTip.SetToolTip(btnGetRootMaps,    options.LangCur.hOFMainRootGet);
-            toolTip.SetToolTip(btnGetRootObjects, options.LangCur.hOFMainRootGet);
-            toolTip.SetToolTip(btnGetRootLinks,   options.LangCur.hOFMainRootGet);
-            toolTip.SetToolTip(btnGetRootBoxes,   options.LangCur.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetRootMaps,    Options.LangCur.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetRootObjects, Options.LangCur.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetRootLinks,   Options.LangCur.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetRootBoxes,   Options.LangCur.hOFMainRootGet);
             // Folders
             idx = cbbOnStart.SelectedIndex;
             cbbOnStart.Items.Clear();
@@ -120,7 +120,7 @@ namespace Schematix
             cbbGridStyle.Items.Add(lang.lMOGridStyle3Crosses);
             cbbGridStyle.Items.Add(lang.lMOGridStyle4Grid);
             cbbGridStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(btnGridColor, options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnGridColor, Options.LangCur.hEEColorPick);
             lblGridThick.Text = lang.lEELineThick;
             chkGridAlign.Text = lang.lMOGridAlign;
             // Background
@@ -135,9 +135,9 @@ namespace Schematix
             cbbBackStyle.Items.Add(lang.lMOBackStyle4ImageZInner);
             cbbBackStyle.Items.Add(lang.lMOBackStyle5ImageZOutter);
             cbbBackStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(btnBackColor,        options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnTransparentColor, options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnGetBackImage, options.LangCur.hEEImageLoad);
+            toolTip.SetToolTip(btnBackColor,        Options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnTransparentColor, Options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnGetBackImage, Options.LangCur.hEEImageLoad);
             lblTransparentColor.Text = lang.lMOBackTransparentColor;
             lblBackgImagePath.Text   = lang.lEEImagePath;
             chkBackImageFloat.Text   = lang.lEEImageFloat;
@@ -184,8 +184,8 @@ namespace Schematix
             if (eStr != "")
             {
                 if (DialogResult.Cancel == MessageBox.Show(
-                    options.LangCur.mNoFolders + eStr + "\r\n" + options.LangCur.mCreateThem, 
-                    options.LangCur.dOptionsSaving,
+                    Options.LangCur.mNoFolders + eStr + "\r\n" + Options.LangCur.mCreateThem, 
+                    Options.LangCur.dOptionsSaving,
                     MessageBoxButtons.OKCancel))
                     return;
                 #region Try to create
@@ -240,8 +240,8 @@ namespace Schematix
                 if (eStr != "")
                 {
                     MessageBox.Show(
-                        options.LangCur.mErrorsOccurred + "\r\n" + eStr,
-                        options.LangCur.dOptionsSaving);
+                        Options.LangCur.mErrorsOccurred + "\r\n" + eStr,
+                        Options.LangCur.dOptionsSaving);
                     return;
                 }
             }
@@ -249,37 +249,37 @@ namespace Schematix
 
             //# Main
             // Language
-            options.LangPath = tbLanguagePath.Text;
-            options.LangCur = options.Langs[cbbLanguage.SelectedIndex];
-            options.LangName = options.LangCur.Name;
+            Options.LangPath = tbLanguagePath.Text;
+            Options.LangCur = Options.Langs[cbbLanguage.SelectedIndex];
+            Options.LangName = Options.LangCur.Name;
             // Behaiour
-            options.OnStart = cbbOnStart.SelectedIndex;
-            options.OnClose = cbbOnClose.SelectedIndex;
-            options.PingOnn = chkPingPeriod.Checked;
-            options.PingPeriod = (int)nudPingPeriod.Value;
-            options.PingCount  = (int)nudPingCount.Value;
+            Options.OnStart = cbbOnStart.SelectedIndex;
+            Options.OnClose = cbbOnClose.SelectedIndex;
+            Options.PingOnn = chkPingPeriod.Checked;
+            Options.PingPeriod = (int)nudPingPeriod.Value;
+            Options.PingCount  = (int)nudPingCount.Value;
             // Folders
-            options.RootMaps = tbRootMaps.Text;
-            options.RootObjects = tbRootObjects.Text;
-            options.RootLinks = tbRootLinks.Text;
-            options.RootBoxes = tbRootBoxes.Text;
+            Options.RootMaps = tbRootMaps.Text;
+            Options.RootObjects = tbRootObjects.Text;
+            Options.RootLinks = tbRootLinks.Text;
+            Options.RootBoxes = tbRootBoxes.Text;
 
             //# Map
             // Grid
-            options.Grid.StoreOwn  = chkGridStore.Checked;
-            options.Grid.Style     = (GridStyles)cbbGridStyle.SelectedIndex;
-            options.Grid.Pen.Color = btnGridColor.BackColor;
-            options.Grid.StepX     = (Int16)nudGridStepX.Value;
-            options.Grid.StepY     = (Int16)nudGridStepY.Value;
-            options.Grid.Pen.Width = (float)nudGridThick.Value;
-            options.Grid.Snap      = chkGridAlign.Checked;
+            Options.Grid.StoreOwn  = chkGridStore.Checked;
+            Options.Grid.Style     = (GridStyles)cbbGridStyle.SelectedIndex;
+            Options.Grid.Pen.Color = btnGridColor.BackColor;
+            Options.Grid.StepX     = (Int16)nudGridStepX.Value;
+            Options.Grid.StepY     = (Int16)nudGridStepY.Value;
+            Options.Grid.Pen.Width = (float)nudGridThick.Value;
+            Options.Grid.Snap      = chkGridAlign.Checked;
             // Background
-            options.Back.StoreOwn = chkBackStore.Checked;
-            options.Back.Style    = (BackgroundStyles)cbbBackStyle.SelectedIndex;
-            options.Back.Color    = btnBackColor.BackColor;
-            options.Back.Path     = tbBackgImagePath.Text;
-            options.Back.Image    = new Bitmap(pbBackPreview.BackgroundImage);
-            options.Back.BuildIn  = chkBackImageBuildIn.Checked;
+            Options.Back.StoreOwn = chkBackStore.Checked;
+            Options.Back.Style    = (BackgroundStyles)cbbBackStyle.SelectedIndex;
+            Options.Back.Color    = btnBackColor.BackColor;
+            Options.Back.Path     = tbBackgImagePath.Text;
+            Options.Back.Image    = new Bitmap(pbBackPreview.BackgroundImage);
+            Options.Back.BuildIn  = chkBackImageBuildIn.Checked;
 
             // Out
             DialogResult = DialogResult.OK;

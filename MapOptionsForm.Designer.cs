@@ -270,7 +270,7 @@
             0,
             0});
             this.nudSizeW.Minimum = new decimal(new int[] {
-            2,
+            32,
             0,
             0,
             0});
@@ -304,7 +304,7 @@
             0,
             0});
             this.nudSizeH.Minimum = new decimal(new int[] {
-            2,
+            32,
             0,
             0,
             0});
@@ -417,7 +417,7 @@
             this.btnAlphaColor.Size = new System.Drawing.Size(32, 21);
             this.btnAlphaColor.TabIndex = 9;
             this.btnAlphaColor.UseVisualStyleBackColor = false;
-            this.btnAlphaColor.BackColorChanged += new System.EventHandler(this.btnAlphaColor_BackColorChanged);
+            this.btnAlphaColor.BackColorChanged += new System.EventHandler(this.Alpha_Changed);
             this.btnAlphaColor.Click += new System.EventHandler(this.btnColor_Click);
             // 
             // chkBackStore
@@ -596,6 +596,7 @@
             this.chkTransparentColor.TabIndex = 12;
             this.chkTransparentColor.Text = "Transparent color";
             this.chkTransparentColor.UseVisualStyleBackColor = true;
+            this.chkTransparentColor.CheckedChanged += new System.EventHandler(this.Alpha_Changed);
             // 
             // gbGrid
             // 
@@ -872,7 +873,7 @@
             this.lvObjects.TabIndex = 3;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
             this.lvObjects.View = System.Windows.Forms.View.Details;
-            this.lvObjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvObjects_MouseDoubleClick);
+            this.lvObjects.DoubleClick += new System.EventHandler(this.lvObjects_DoubleClick);
             // 
             // clmObjectName
             // 

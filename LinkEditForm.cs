@@ -14,28 +14,28 @@ namespace Schematix
             if (pLink == null)
             {
                 pLink = new xPLink();
-                Text = options.LangCur.lEETitleAdd + " " + options.LangCur.lEETitleLink;
+                Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleLink;
             }
             else
-                Text = options.LangCur.lEETitleEdit + " " + options.LangCur.lEETitleLink;
+                Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleLink;
             PLink = pLink;
             // Share
-            lblNode.Text        = options.LangCur.lEENodeName;
-            chkIsPrototype.Text = options.LangCur.lEEPrototype;
-            lblName.Text        = options.LangCur.lEEName;
-            lblID.Text          = options.LangCur.lEEID;
-            lblRevision.Text    = options.LangCur.lEERevision;
+            lblNode.Text        = Options.LangCur.lEENodeName;
+            chkIsPrototype.Text = Options.LangCur.lEEPrototype;
+            lblName.Text        = Options.LangCur.lEEName;
+            lblID.Text          = Options.LangCur.lEEID;
+            lblRevision.Text    = Options.LangCur.lEERevision;
             // Fill
             tbNode.Text            = PLink.NodeName;
             chkIsPrototype.Checked = PLink.isPrototype;
             tbName.Text            = PLink.Name;
             tbID.Text              = PLink.ID.ToString();
-            tbRevision.Text        = PLink.Revision.ToString(options.TIME_FORMAT);
+            tbRevision.Text        = DateTime.FromBinary(PLink.Revision).ToString(Options.TIME_FORMAT);
             tbDescription.Text     = PLink.Description;
             // Own
-            lblLineThick.Text = options.LangCur.lEELineThick;
-            lblLineStyle.Text = options.LangCur.lEELineStyle;
-            toolTip.SetToolTip(btnLineColor, options.LangCur.hEEColorPick);
+            lblLineThick.Text = Options.LangCur.lEELineThick;
+            lblLineStyle.Text = Options.LangCur.lEELineStyle;
+            toolTip.SetToolTip(btnLineColor, Options.LangCur.hEEColorPick);
             // Fill
             nudThick.Value         = (int)PLink.Pen.Width;
             btnLineColor.BackColor = PLink.Pen.Color;
@@ -53,7 +53,7 @@ namespace Schematix
             // Share
             PLink.NodeName    = tbNode.Text;
             PLink.isPrototype = chkIsPrototype.Checked;
-            PLink.Revision    = DateTime.Now;
+            PLink.Revision    = DateTime.Now.ToBinary();
             PLink.Name        = tbName.Text;
             PLink.Description = tbDescription.Text;
             // Own

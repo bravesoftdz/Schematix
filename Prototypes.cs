@@ -11,85 +11,20 @@ namespace Schematix
 {
     public abstract class xRecord
     {
-        public UInt64 ID = (UInt64)DateTime.Now.ToBinary();
+        public UInt64 ID          = (UInt64)DateTime.Now.ToBinary();
         public String Name        = "";
         public String Description = "";
+        public String FileName    = "";
 
         // Load
 
-        virtual public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        virtual protected void BeforeReadParameters()//Ok
         {
-            if (parameterName == "Name")
-                Name = new String(stream.ReadChars(valueLength));
-            else if (parameterName == "Description")
-                Description = new String(stream.ReadChars(valueLength));
-            else if (valueLength == 8 && parameterName == "ID")
-                ID = stream.ReadUInt64();
-            // Skip unknown data
-            else
-            {
-                stream.ReadBytes(valueLength);
-                return false;
-            }
-            return true;
         }
 
-        public String StreamReadString(BinaryReader stream, int length)//?Ok
+        virtual protected void AfterReadParameters()//Ok
         {
-            return Encoding.UTF8.GetString(stream.ReadBytes(length));
         }
-
-        // Save
-        
-        virtual public void WriteParameters(BinaryWriter stream)//Ok
-        {
-            StreamWriteString("Name", stream, Name);
-            StreamWriteString("Description", stream, Description);
-            stream.Write("ID");
-            stream.Write(8);
-            stream.Write(ID);
-            // Mark the end
-            stream.Write("END");
-        }
-
-        public void StreamWriteString(String parameterName, BinaryWriter stream, String value)//Ok
-        {
-            stream.Write(parameterName);
-            byte[] b = Encoding.UTF8.GetBytes(value);
-            stream.Write(b.Length);
-            stream.Write(b);
-        }
-    }
-
-    public abstract class xBlock : xRecord
-    {
-        virtual public void ReadParameters(BinaryReader stream)//Ok
-        {
-            while (stream.PeekChar() > -1)
-            {
-                String parameterName = stream.ReadString();
-                // Check for record's end
-                if (parameterName == "END")
-                    return;
-                int valueLength = stream.ReadInt32();
-                // Load(/skip) parameters
-                ReadParameter(stream, parameterName, valueLength);
-            }
-        }
-
-        public void WriteStream_CloseBlock(BinaryWriter stream, int start)//Ok
-        {
-            // Jump back and fill size value
-            int pos = (int)stream.Seek(0, SeekOrigin.Current);
-            stream.Seek(start, SeekOrigin.Begin);
-            stream.Write(pos - start);
-            stream.Seek(pos, SeekOrigin.Begin);
-        }
-    }
-
-    public abstract class xSaveLoad : xBlock
-    {
-        public String FileName = "";
 
         public void LoadFromFile(String fileName)//Ok
         {
@@ -113,10 +48,50 @@ namespace Schematix
             }
             catch (Exception e)
             {
-                MessageBox.Show(options.LangCur.mErrorsOccurred + "" + e.Message, options.LangCur.dFileLoading);
+                MessageBox.Show(Options.LangCur.mErrorsOccurred + "" + e.Message, Options.LangCur.dFileLoading);
             }
         }
 
+        virtual public void ReadParameters(BinaryReader stream)//Ok
+        {
+            BeforeReadParameters();
+            while (stream.PeekChar() > -1)
+            {
+                String parameterName = stream.ReadString();
+                // Check for record's end
+                if (parameterName == "END")
+                    return;
+                int valueLength = stream.ReadInt32();
+                // Load(/skip) parameters
+                ReadParameter(stream, parameterName, valueLength);
+            }
+            AfterReadParameters();
+        }
+        
+        virtual protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        {
+            if (parameterName == "Name")
+                Name = new String(stream.ReadChars(valueLength));
+            else if (parameterName == "Description")
+                Description = new String(stream.ReadChars(valueLength));
+            else if (valueLength == 8 && parameterName == "ID")
+                ID = stream.ReadUInt64();
+            // Skip unknown data
+            else
+            {
+                stream.ReadBytes(valueLength);
+                return false;
+            }
+            return true;
+        }
+
+        protected String ReadStreamString(BinaryReader stream, int length)//Ok
+        {
+            return Encoding.UTF8.GetString(stream.ReadBytes(length));
+        }
+
+        // Save
+        
         public void SaveToFile(String fileName)//Ok
         {
             if (fileName == "")
@@ -139,28 +114,56 @@ namespace Schematix
             }
             catch (Exception e)
             {
-                MessageBox.Show(options.LangCur.mErrorsOccurred + "" + e.Message, options.LangCur.dFileSaving);
+                MessageBox.Show(Options.LangCur.mErrorsOccurred + "" + e.Message, Options.LangCur.dFileSaving);
             }
         }
-    }
+        
+        virtual public void WriteParameters(BinaryWriter stream)//Ok
+        {
+            WriteStreamString("Name", stream, Name);
+            WriteStreamString("Description", stream, Description);
+            stream.Write("ID");
+            stream.Write(8);
+            stream.Write(ID);
+            // Mark the end
+            stream.Write("END");
+        }
 
+        protected void WriteStreamString(String parameterName, BinaryWriter stream, String text)//Ok
+        {
+            stream.Write(parameterName);
+            byte[] b = Encoding.UTF8.GetBytes(text);
+            stream.Write(b.Length);
+            stream.Write(b);
+        }
+
+        protected void WriteStream_CloseBlock(BinaryWriter stream, int start)//Ok
+        {
+            // Jump back and fill size value
+            int pos = (int)stream.Seek(0, SeekOrigin.Current);
+            stream.Seek(start, SeekOrigin.Begin);
+            stream.Write(pos - start);
+            stream.Seek(pos, SeekOrigin.Begin);
+        }
+    }
+    
     // Prototypes
 
-    public abstract class xPrototype : xSaveLoad
+    public abstract class xPrototype : xRecord
     {
         public bool         isUsed;
         public bool         isPrototype;
         public String       NodeName;
-        public DateTime     Revision    = DateTime.Now;
+        public Int64        Revision    = DateTime.Now.ToBinary();
         public ListViewItem lvItemUsed;
         public ListViewItem lvItem;
 
-        public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (parameterName == "NodeName")
                 NodeName = new String(stream.ReadChars(valueLength));
             else if (valueLength == 8 && parameterName == "Revision")
-                Revision = DateTime.FromBinary(stream.ReadInt64());
+                Revision = stream.ReadInt64();
             else if (valueLength == 1 && parameterName == "IsPrototype")
                 isPrototype = stream.ReadBoolean();
             // Pass unprocessed data up
@@ -169,13 +172,13 @@ namespace Schematix
             return true;
         }
 
-        public override void WriteParameters(BinaryWriter stream)//Ok
+        override public void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            StreamWriteString("NodeName", stream, NodeName);
+            WriteStreamString("NodeName", stream, NodeName);
             stream.Write("Revision");
             stream.Write(8);
-            stream.Write(Revision.ToBinary());
+            stream.Write(Revision);
             stream.Write("IsPrototype");
             stream.Write(1);
             stream.Write(isPrototype);
@@ -184,7 +187,7 @@ namespace Schematix
         }
     }
 
-    public class xDot : xBlock
+    public class xDot : xRecord
     {
         protected xPObject PObject { get; }
         public short X = 0;
@@ -195,7 +198,7 @@ namespace Schematix
             PObject = owner;
         }
 
-        override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (valueLength == 2 && parameterName == "X")
                 X = stream.ReadInt16();
@@ -243,11 +246,11 @@ namespace Schematix
         public ImageTypes   ImageType     = ImageTypes.Image;
         public String       ImagePath     = "";
         public bool         UseAlphaColor = false;
-        public Color        AlphaColor    = options.DEFAULT_OBJECT_APLHA_COLOR;
+        public Color        AlphaColor    = Options.DEFAULT_OBJECT_APLHA_COLOR;
         public ImageBPPs    ImageBPP      = ImageBPPs.b32argb;
-        public Color        BackColor     = options.DEFAULT_OBJECT_IMAGE_COLOR;
+        public Color        BackColor     = Options.DEFAULT_OBJECT_IMAGE_COLOR;
         public List<xDot>   Dots          = new List<xDot>();
-        public Bitmap       ImageCanva    = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+        public Bitmap       Canvas        = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
         bool MustClearDots = false;
         
         public xPObject()
@@ -256,30 +259,40 @@ namespace Schematix
             MustClearDots = true;
         }
 
-        public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        protected override void BeforeReadParameters()
+        {
+            UseAlphaColor = false;
+            MustClearDots = false;
+            Dots = new List<xDot>();
+        }
+
+        protected override void AfterReadParameters()
+        {
+            if (ImageType == ImageTypes.None)
+                Canvas = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+            if (ImageType == ImageTypes.Link)
+                if (File.Exists(ImagePath))
+                {
+                    var bmap = new Bitmap(ImagePath);
+                    Canvas = new Bitmap(bmap.Width, bmap.Height, PixelFormat.Format32bppArgb);
+                    Graphics.FromImage(Canvas).DrawImageUnscaled(bmap, 0, 0);
+                }
+            if (UseAlphaColor)
+                Canvas.MakeTransparent(AlphaColor);
+        }
+
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (parameterName == "ImageType")
-                Enum.TryParse(StreamReadString(stream, valueLength), out ImageType);
+                Enum.TryParse(ReadStreamString(stream, valueLength), out ImageType);
             else if (valueLength == 4 && parameterName == "AlphaColor")
                 AlphaColor = Color.FromArgb(stream.ReadInt32());
             else if (parameterName == "ImagePath")
-            {
-                ImagePath = StreamReadString(stream, valueLength);
-                if (ImageType == ImageTypes.Link)
-                    if (File.Exists(ImagePath))
-                    {
-                        var bmap = new Bitmap(ImagePath);
-                        ImageCanva = new Bitmap(bmap.Width, bmap.Height, PixelFormat.Format32bppArgb);
-                        Graphics.FromImage(ImageCanva).DrawImageUnscaled(bmap, 0, 0);
-                    }
-            }
+                ImagePath = ReadStreamString(stream, valueLength);
             else if (parameterName == "Image")
-                Share.StreamGetImage(stream, valueLength, ref ImageBPP, ref ImageCanva);
+                Share.StreamGetImage(stream, valueLength, ref ImageBPP, ref Canvas);
             else if (valueLength == 0 && parameterName == "UseAlphaColor")
-            {
                 UseAlphaColor = true;
-                ImageCanva.MakeTransparent(AlphaColor);
-            }
             else if (valueLength == 4 && parameterName == "BackColor")
                 BackColor = Color.FromArgb(stream.ReadInt32());
             else if (parameterName == "Dot")
@@ -299,18 +312,18 @@ namespace Schematix
             return true;
         }
 
-        public override void WriteParameters(BinaryWriter stream)//Ok
+        override public void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            StreamWriteString("ImageType", stream, ImageType.ToString());
+            WriteStreamString("ImageType", stream, ImageType.ToString());
             stream.Write("AlphaColor");
             stream.Write(4);
             stream.Write(AlphaColor.ToArgb());
-            StreamWriteString("ImagePath", stream, ImagePath);
+            WriteStreamString("ImagePath", stream, ImagePath);
             if (ImageType == ImageTypes.Image)
             {
                 stream.Write("Image");
-                Share.StreamPutImage(stream, ImageCanva, ImageBPP);
+                Share.StreamPutImage(stream, Canvas, ImageBPP);
             }
             if (UseAlphaColor)
             {
@@ -348,9 +361,9 @@ namespace Schematix
     
     public class xPLink : xPrototype
     {
-        public Pen Pen = new Pen(options.DEFAULT_LINK_LINE_COLOR, 1);
+        public Pen Pen = new Pen(Options.DEFAULT_LINK_LINE_COLOR, 1);
 
-        public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (valueLength == 4 && parameterName == "Thick")
                 Pen.Width = stream.ReadSingle();
@@ -359,7 +372,7 @@ namespace Schematix
             else if (parameterName == "LineStyle")
             {
                 DashStyle ds;
-                Enum.TryParse(StreamReadString(stream, valueLength), out ds);
+                Enum.TryParse(ReadStreamString(stream, valueLength), out ds);
                 Pen.DashStyle = ds;
                 if (ds == DashStyle.Custom)
                     Pen.DashPattern = new float[] { 5, 2, 1, 3 };
@@ -370,7 +383,7 @@ namespace Schematix
             return true;
         }
 
-        public override void WriteParameters(BinaryWriter stream)//Ok
+        override public void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
             stream.Write("Thick");
@@ -379,7 +392,7 @@ namespace Schematix
             stream.Write("LineColor");
             stream.Write(4);
             stream.Write(Pen.Color.ToArgb());
-            StreamWriteString("LineStyle", stream, Pen.DashStyle.ToString());
+            WriteStreamString("LineStyle", stream, Pen.DashStyle.ToString());
             // Upper class body
             base.WriteParameters(stream);
         }
@@ -410,25 +423,25 @@ namespace Schematix
         public BoxTypes     BoxType   = BoxTypes.Text;
         public String       Text      = "";
         public AlignTypes   TextAlign = AlignTypes.TopLeft;
-        public Font         Font      = options.DEFAULT_BOX_FONT;
-        public Brush        Brush     = new SolidBrush(options.DEFAULT_BOX_TEXT_COLOR);
-               Color       _textColor = options.DEFAULT_BOX_TEXT_COLOR;
+        public Font         Font      = Options.DEFAULT_BOX_FONT;
+        public Brush        Brush     = new SolidBrush(Options.DEFAULT_BOX_TEXT_COLOR);
+               Color       _textColor = Options.DEFAULT_BOX_TEXT_COLOR;
         public Color        TextColor
         {
             set { Brush = new SolidBrush(_textColor = value); }
             get { return _textColor; }
         }
 
-        public override bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (valueLength == 1 && parameterName == "BoxType")
-                Enum.TryParse(StreamReadString(stream, valueLength), out BoxType);
+                Enum.TryParse(ReadStreamString(stream, valueLength), out BoxType);
             else if (parameterName == "Text")
-                Text = StreamReadString(stream, valueLength);
+                Text = ReadStreamString(stream, valueLength);
             else if (valueLength == 1 && parameterName == "TextAlign")
                 Enum.TryParse(stream.ReadByte().ToString(), out TextAlign);
             else if (parameterName == "FontName")
-                Font = new Font(StreamReadString(stream, valueLength), Font.Size, Font.Style);
+                Font = new Font(ReadStreamString(stream, valueLength), Font.Size, Font.Style);
             else if (valueLength == 4 && parameterName == "FontSize")
                 Font = new Font(Font.Name, stream.ReadSingle(), Font.Style);
             else if (valueLength == 1 && parameterName == "FontStyle")
@@ -441,15 +454,15 @@ namespace Schematix
             return true;
         }
 
-        public override void WriteParameters(BinaryWriter stream)//Ok
+        override public void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            StreamWriteString("BoxType", stream, BoxType.ToString());
-            StreamWriteString("Text", stream, Text);
+            WriteStreamString("BoxType", stream, BoxType.ToString());
+            WriteStreamString("Text", stream, Text);
             stream.Write("TextAlign");
             stream.Write(1);
             stream.Write((byte)TextAlign);
-            StreamWriteString("FontName", stream, Font.Name);
+            WriteStreamString("FontName", stream, Font.Name);
             stream.Write("FontSize");
             stream.Write(4);
             stream.Write(Font.Size);
@@ -466,27 +479,33 @@ namespace Schematix
 
     // Exemplars
 
-    public abstract class xExemplar : xBlock
+    public abstract class xExemplar : xRecord
     {
         protected xMap Map { get; }
-        public xPrototype Prototype;
         public UInt64     PrototypeID;
+        public Int64      PrototypeRevision;
         public String     Reference = "";
         public int Left  = 0, Top    = 0;
         public int Right = 0, Bottom = 0;
         public int Width = 0, Height = 0;
+
+        virtual public bool IsObject { get; }
+        virtual public bool IsLink { get; }
+        virtual public bool IsBox { get; }
 
         public xExemplar(xMap owner)
         {
             Map = owner;
         }
 
-        override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (parameterName == "Reference")
-                Reference = StreamReadString(stream, valueLength);
+                Reference = ReadStreamString(stream, valueLength);
             else if (valueLength == 8 && parameterName == "PrototypeID")
                 PrototypeID = stream.ReadUInt64();
+            else if (valueLength == 8 && parameterName == "PrototypeRevision")
+                PrototypeRevision = stream.ReadInt64();
             // Pass unprocessed data up
             else
                 return base.ReadParameter(stream, parameterName, valueLength);
@@ -496,15 +515,18 @@ namespace Schematix
         override public void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            StreamWriteString("Reference", stream, Reference);
+            WriteStreamString("Reference", stream, Reference);
             stream.Write("PrototypeID");
             stream.Write(8);
             stream.Write(PrototypeID);
+            stream.Write("PrototypeRevision");
+            stream.Write(8);
+            stream.Write(PrototypeRevision);
             // Upper class body
             base.WriteParameters(stream);
         }
 
-        virtual public void BoxRenew()//Ok
+        public void BoxRenew()//Ok
         {
             Right  = Left + Width;
             Bottom = Top  + Height;
@@ -515,30 +537,24 @@ namespace Schematix
             return (Left <= x + padding) && (x <= Right + padding) && (Top <= y + padding) && (y <= Bottom + padding);
         }
 
-        public bool BondParent(object Prototypes)//Ok
-        {
-            Prototype = (Prototypes as List<xPrototype>).Find(xP => xP.ID == PrototypeID);
-            return (Prototype == null);
-        }
-
         virtual public void Check()
         {
         }
     }
 
-    public class xIP : xBlock
+    public class xIP : xRecord
     {
         xObject Object { get; }
         public ListViewItem lvItem          = null;
         public String       Address         = "";
-        public int          Period          = options.DEFAULT_PING_PERIOD;
-        public int          TimeOutGreen    = options.DEFAULT_PING_TIMEOUT_GREEN;
-        public int          TimeOutYellow   = options.DEFAULT_PING_TIMEOUT_YELLOW;
-        public int          TimeOutRed      = options.DEFAULT_PING_TIMEOUT_RED;
-        public bool         Onn             = options.DEFAULT_PING_ONN;
+        public int          Period          = Options.DEFAULT_PING_PERIOD;
+        public int          TimeOutGreen    = Options.DEFAULT_PING_TIMEOUT_GREEN;
+        public int          TimeOutYellow   = Options.DEFAULT_PING_TIMEOUT_YELLOW;
+        public int          TimeOutRed      = Options.DEFAULT_PING_TIMEOUT_RED;
+        public bool         Onn             = Options.DEFAULT_PING_ONN;
         public DateTime     TimeLast        = DateTime.Now;
         public DateTime     TimeNext        = DateTime.Now;
-        public int[]        PingTimeArray   = new int[options.DEFAULT_PING_ARRAY];
+        public int[]        PingTimeArray   = new int[Options.DEFAULT_PING_ARRAY];
         protected int       PingTimeCount   = 0;
 
         public xIP(xObject owner)//Ok
@@ -565,7 +581,7 @@ namespace Schematix
                 PingTimeCount++;
         }
 
-        override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (parameterName == "Address")
                 Address = new String(stream.ReadChars(valueLength));
@@ -594,7 +610,7 @@ namespace Schematix
         override public void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            StreamWriteString("Address", stream, Address);
+            WriteStreamString("Address", stream, Address);
             stream.Write("Period");
             stream.Write(4);
             stream.Write(Period);
@@ -636,13 +652,16 @@ namespace Schematix
 
     public class xObject : xExemplar
     {
+        public xPObject Prototype;
         public int X;
         public int Y;
         public List<xIP> IPs = new List<xIP>();
 
+        override public bool IsObject { get; } = true;
+
         public xObject(xMap owner) : base(owner) { }
 
-        override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (valueLength == 4 && parameterName == "X")
                 X = stream.ReadInt32();
@@ -686,8 +705,9 @@ namespace Schematix
         {
             Left = X - (Prototype as xPObject).Dots[0].X;
             Top  = Y - (Prototype as xPObject).Dots[0].Y;
-            Width  = (Prototype as xPObject).ImageCanva.Width;
-            Height = (Prototype as xPObject).ImageCanva.Height;
+            Width  = (Prototype as xPObject).Canvas.Width;
+            Height = (Prototype as xPObject).Canvas.Height;
+            BoxRenew();
         }
 
         public void AddIP(xIP IP)
@@ -718,6 +738,7 @@ namespace Schematix
 
     public class xLink : xExemplar
     {
+        public xPLink Prototype;
         public UInt64 ObjectAID, DotAID;
         public UInt64 ObjectBID, DotBID;
         public xObject ObjectA = null;
@@ -727,9 +748,11 @@ namespace Schematix
         public int XA, YA;
         public int XB, YB;
 
+        override public bool IsLink { get; } = true;
+
         public xLink(xMap owner) : base(owner) { }
 
-        override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (valueLength == 8 && parameterName == "ObjectAID")
                 ObjectAID = stream.ReadUInt64();
@@ -811,10 +834,10 @@ namespace Schematix
                 // Find point on line:
                 if (Width < Height)
                     // Vertical
-                    ry = Math.Round(Top  + (double)(Height *(Top  - x)) / Height);
+                    rx = Math.Round(XA + (double)((XB - XA)  *(y - Top )) / Height);
                 else if (0 < Width)
                     // Horizontal
-                    rx = Math.Round(Left + (double)(Left   *(Left - y)) / Width);
+                    ry = Math.Round(YA + (double)((YB - YA) * (x - Left)) / Width);
                 // Check if point near line +/-3
                 return (Math.Abs(x - rx) <= padding) && (Math.Abs(y - ry) <= padding);
             }
@@ -905,6 +928,7 @@ namespace Schematix
             Height = Math.Abs(YB - YA);
             Left = ((XA < XB) ? XA : XB);
             Top  = ((YA < YB) ? YA : YB);
+            BoxRenew();
         }
 
         public void Delete()
@@ -915,16 +939,19 @@ namespace Schematix
 
     public class xBox : xExemplar
     {
+        public xPBox Prototype;
         public String Text = "";
         public int TextX;
         public int TextY;
+        
+        override public bool IsBox { get; } = true;
 
         public xBox(xMap owner) : base(owner) { }
 
-        override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (parameterName == "Text")
-                Text = StreamReadString(stream, valueLength);
+                Text = ReadStreamString(stream, valueLength);
             else if (valueLength == 4 && parameterName == "Left")
                 Left = stream.ReadInt32();
             else if (valueLength == 4 && parameterName == "Top" )
@@ -942,7 +969,7 @@ namespace Schematix
         override public void WriteParameters(BinaryWriter stream)//Ok
         {
             // Write local part of body
-            StreamWriteString("Text", stream, Text);
+            WriteStreamString("Text", stream, Text);
             stream.Write("Left");
             stream.Write(4);
             stream.Write(Left);
@@ -1050,6 +1077,7 @@ namespace Schematix
                     Height = (int)textSize.Height;
                 }
             }
+            BoxRenew();
         }
 
         public void Delete()
@@ -1073,12 +1101,12 @@ namespace Schematix
             StoreOwn = false,
             Snap     = false;
         public GridStyles
-            Style = options.DEFAULT_GRID_STYLE;
+            Style = Options.DEFAULT_GRID_STYLE;
         public Int16
-            StepX = options.DEFAULT_GRID_STEP,
-            StepY = options.DEFAULT_GRID_STEP;
+            StepX = Options.DEFAULT_GRID_STEP,
+            StepY = Options.DEFAULT_GRID_STEP;
         public Pen
-            Pen = new Pen(options.DEFAULT_GRID_COLOR, 1);
+            Pen = new Pen(Options.DEFAULT_GRID_COLOR, 1);
     }
 
     public enum BackgroundStyles
@@ -1098,38 +1126,37 @@ namespace Schematix
             Float = false,
             BuildIn = false,
             UseAlphaColor = false;
-        public BackgroundStyles Style      = options.DEFAULT_BACK_STYLE;
-        public Color            Color      = options.DEFAULT_BACK_COLOR;
-        public Color            AlphaColor = options.DEFAULT_BACK_COLOR;
-        public AlignTypes       Align      = options.DEFAULT_BACK_ALIGN;
+        public BackgroundStyles Style      = Options.DEFAULT_BACK_STYLE;
+        public Color            Color      = Options.DEFAULT_BACK_COLOR;
+        public Color            AlphaColor = Options.DEFAULT_BACK_COLOR;
+        public AlignTypes       Align      = Options.DEFAULT_BACK_ALIGN;
         public ImageBPPs        BPP        = ImageBPPs.b32argb;
         public String           Path       = "";
         public Bitmap           Image      = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
     }
 
-    public class xMap : xSaveLoad
+    public class xMap : xRecord
     {
         public TabPage Tab;
-        public bool Changed = false;
+        public bool Changed;
         public List<xPObject> PObjects = new List<xPObject>();
         public List<xPLink>   PLinks   = new List<xPLink>();
         public List<xPBox>    PBoxes   = new List<xPBox>();
         public List<xObject>  Objects  = new List<xObject>();
         public List<xLink>    Links    = new List<xLink>();
         public List<xBox>     Boxes    = new List<xBox>();
-        public List<xIP>      IPs      = new List<xIP>();
         public xBackground    Back     = new xBackground();
         public xGrid          Grid     = new xGrid();
         public int
             ScrollX = 0,
             ScrollY = 0,
-            Width  = 600,
-            Height = 600;
-        public bool AutoSize = false;
-        public Bitmap Canvas;
-        Graphics graphics;
-        public xExemplar Selected = null;
-        public xLink LinkAdding = null;
+            Width,
+            Height;
+        public bool      AutoSize = Options.DEFAULT_MAP_AUTOSIZE;
+        public Bitmap    Canvas;
+        Graphics         graphics;
+        public xExemplar Selected;
+        public xLink     LinkAdding;
         public ListView 
             lv_PObjects,
             lv_PLinks,
@@ -1137,12 +1164,13 @@ namespace Schematix
 
         public xMap()
         {
-            ReSize(Width, Height);
+            SetCanvas(Options.DEFAULT_MAP_WIDTH, Options.DEFAULT_MAP_HEIGHT);
         }
 
+        #region Prototypes
         public void AddPObject(xPObject PObject)//
         {
-            xPObject uPObject = options.PObjects.Find(PO => (PO.ID == PObject.ID) && (PO.Revision >= PObject.Revision));
+            xPObject uPObject = Options.PObjects.Find(PO => (PO.ID == PObject.ID) && (PO.Revision == PObject.Revision));
             if (uPObject == null)
                 uPObject = PObject;
             PObjects.Add(uPObject);
@@ -1151,7 +1179,7 @@ namespace Schematix
 
         public void AddPLink(xPLink PLink)//
         {
-            xPLink uPLink = options.PLinks.Find(PL => (PL.ID == PLink.ID) && (PL.Revision >= PLink.Revision));
+            xPLink uPLink = Options.PLinks.Find(PL => (PL.ID == PLink.ID) && (PL.Revision == PLink.Revision));
             if (uPLink == null)
                 uPLink = PLink;
             PLinks.Add(uPLink);
@@ -1160,7 +1188,7 @@ namespace Schematix
 
         public void AddPBox(xPBox PBox)//
         {
-            xPBox uPBox = options.PBoxes.Find(PB => (PB.ID == PBox.ID) && (PB.Revision >= PBox.Revision));
+            xPBox uPBox = Options.PBoxes.Find(PB => (PB.ID == PBox.ID) && (PB.Revision == PBox.Revision));
             if (uPBox == null)
                 uPBox = PBox;
             PBoxes.Add(uPBox);
@@ -1171,7 +1199,7 @@ namespace Schematix
         {
             if (PObject == null)
                 return;
-            if (!Objects.Exists(O => O.Prototype.ID == PObject.ID))
+            if (!Objects.Exists(O => (O.Prototype.ID == PObject.ID) && (O.Prototype.Revision == PObject.Revision)))
             {
                 PObject.lvItemUsed?.Remove();
                 PObjects.Remove(PObject);
@@ -1182,7 +1210,7 @@ namespace Schematix
         {
             if (PLink == null)
                 return;
-            if (!Links.Exists(L => L.Prototype.ID == PLink.ID))
+            if (!Links.Exists(L => (L.Prototype.ID == PLink.ID) && (L.Prototype.Revision == PLink.Revision)))
             {
                 PLink.lvItemUsed?.Remove();
                 PLinks.Remove(PLink);
@@ -1193,13 +1221,15 @@ namespace Schematix
         {
             if (PBox == null)
                 return;
-            if (!Boxes.Exists(B => B.Prototype.ID == PBox.ID))
+            if (!Boxes.Exists(B => (B.Prototype.ID == PBox.ID) && (B.Prototype.Revision == PBox.Revision)))
             {
                 PBox.lvItemUsed?.Remove();
                 PBoxes.Remove(PBox);
             }
         }
+        #endregion
 
+        #region Exemplars
         public void DeleteObject(xObject obj)//O
         {
             if (obj == null)
@@ -1211,7 +1241,7 @@ namespace Schematix
                 if (Links[i].ObjectA == obj || Links[i].ObjectB == obj)
                     Links.RemoveAt(i);
             // Try to remove it's prototype
-            RemovePObject(obj.Prototype as xPObject);
+            RemovePObject(obj.Prototype);
             // Remove object
             Objects.Remove(obj);
         }
@@ -1219,7 +1249,7 @@ namespace Schematix
         public void DeleteLink(xLink link)//Ok
         {
             // Try to remove it's prototype
-            RemovePLink(link.Prototype as xPLink);
+            RemovePLink(link.Prototype);
             // Remove object
             Links.Remove(link);
         }
@@ -1227,27 +1257,91 @@ namespace Schematix
         public void DeleteBox(xBox box)//Ok
         {
             // Try to remove it's prototype
-            RemovePBox(box.Prototype as xPBox);
+            RemovePBox(box.Prototype);
             // Remove object
             Boxes.Remove(box);
         }
 
         public void AddIP(xIP IP)//
         {
-            if (!IPs.Contains(IP))
-                IPs.Add(IP);
-            if (!options.IPs.Contains(IP))
-                options.IPs.Add(IP);
+            Options.AddIP(IP);
         }
 
         public void DeleteIP(xIP IP)//
         {
-            options.IPs.Remove(IP);
-            IPs.Remove(IP);
+            Options.RemoveIP(IP);
         }
-        
-        override public bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+
+        public void Clear()
         {
+            for (int i = Boxes.Count - 1; 0 <= i; i--)
+                DeleteBox(Boxes[i]);
+            for (int i = Links.Count - 1; 0 <= i; i--)
+                DeleteLink(Links[i]);
+            for (int i = Objects.Count - 1; 0 <= i; i--)
+                DeleteObject(Objects[i]);
+        }
+
+        public void AlignToGridAll(int sx = 0, int sy = 0)//Ok
+        {
+            if (sx == 0)
+                sx = Grid.StepX;
+            if (sy == 0)
+                sy = Grid.StepY;
+            foreach (var Object in Objects)
+            {
+                AlignToGridXY(ref Object.X, ref Object.Y);
+                Object.Check();
+            }
+            foreach (var Link in Links)
+            {
+                if (Link.ObjectA == null)
+                    AlignToGridXY(ref Link.XA, ref Link.YA);
+                if (Link.ObjectB == null)
+                    AlignToGridXY(ref Link.XB, ref Link.YB);
+                Link.Check();
+            }
+        }
+
+        public void AlignToGridXY(ref int x, ref int y)//Ok
+        {
+            x = (int)((float)x / Grid.StepX) * Grid.StepX;
+            y = (int)((float)y / Grid.StepY) * Grid.StepY;
+        }
+        #endregion
+
+        // Map
+
+        override protected void BeforeReadParameters()//Ok
+        {
+            Clear();
+            Selected = null;
+            LinkAdding = null;
+            AutoSize = false;
+            Grid = new xGrid();
+            Back = new xBackground();
+        }
+
+        override protected void AfterReadParameters()//Ok
+        {
+            if (Back.Style != BackgroundStyles.Color)
+                if (File.Exists(Back.Path))
+                {
+                    var bmap = new Bitmap(Back.Path);
+                    Back.Image = new Bitmap(bmap.Width, bmap.Height, PixelFormat.Format32bppArgb);
+                    Graphics.FromImage(Back.Image).DrawImageUnscaled(bmap, 0, 0);
+                }
+            if (Back.UseAlphaColor)
+                Back.Image.MakeTransparent(Back.AlphaColor);
+            if (!DoAutoSize())
+                SetSize(Width, Height);
+            Changed = false;
+            ReDraw();
+        }
+
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        {
+            #region Map
             if (valueLength == 8 && parameterName == "Size")
             {
                 Width = stream.ReadInt32();
@@ -1264,7 +1358,7 @@ namespace Schematix
             else if (valueLength == 0 && parameterName == "GridStoreOwn")
                 Grid.StoreOwn = true;
             else if (parameterName == "GridStyle")
-                Enum.TryParse(StreamReadString(stream, valueLength), out Grid.Style);
+                Enum.TryParse(ReadStreamString(stream, valueLength), out Grid.Style);
             else if (valueLength == 4 && parameterName == "GridColor")
                 Grid.Pen.Color = Color.FromArgb(stream.ReadInt32());
             else if (valueLength == 2 && parameterName == "GridStepX")
@@ -1279,20 +1373,11 @@ namespace Schematix
             else if (valueLength == 0 && parameterName == "BackgroundStoreOwn")
                 Back.StoreOwn = true;
             else if (parameterName == "BackgroundStyle")
-                Enum.TryParse(StreamReadString(stream, valueLength), out Back.Style);
+                Enum.TryParse(ReadStreamString(stream, valueLength), out Back.Style);
             else if (valueLength == 4 && parameterName == "BackgroundColor")
                 Back.Color = Color.FromArgb(stream.ReadInt32());
             else if (parameterName == "BackgroundPath")
-            {
-                Back.Path = StreamReadString(stream, valueLength);
-                if (Back.Style != BackgroundStyles.Color)
-                    if (File.Exists(Back.Path))
-                    {
-                        var bmap = new Bitmap(Back.Path);
-                        Back.Image = new Bitmap(bmap.Width, bmap.Height, PixelFormat.Format32bppArgb);
-                        Graphics.FromImage(Back.Image).DrawImageUnscaled(bmap, 0, 0);
-                    }
-            }
+                Back.Path = ReadStreamString(stream, valueLength);
             else if (valueLength == 0 && parameterName == "BackgroundFloat")
                 Back.Float = true;
             else if (valueLength == 4 && parameterName == "BackgroundAlphaColor")
@@ -1305,10 +1390,8 @@ namespace Schematix
                 Share.StreamGetImage(stream, valueLength, ref Back.BPP, ref Back.Image);
             }
             else if (valueLength == 0 && parameterName == "BackgroundUseAlphaColor")
-            {
                 Back.UseAlphaColor = true;
-                Back.Image.MakeTransparent(Back.AlphaColor);
-            }
+            #endregion
 
             #region Prototype
             // PObjects
@@ -1340,7 +1423,7 @@ namespace Schematix
             {
                 var Object = new xObject(this);
                 Object.ReadParameters(stream);
-                Object.BondParent(PObjects);
+                Object.Prototype = PObjects.Find(xP => (xP.ID == Object.PrototypeID) && (xP.Revision == Object.PrototypeRevision));
                 Objects.Add(Object);
             }
             // Links
@@ -1348,7 +1431,7 @@ namespace Schematix
             {
                 var Link = new xLink(this);
                 Link.ReadParameters(stream);
-                Link.BondParent(PLinks);
+                Link.Prototype = PLinks.Find(xP => (xP.ID == Link.PrototypeID) && (xP.Revision == Link.PrototypeRevision));
                 Link.BondEnds(Objects);
                 Links.Add(Link);
             }
@@ -1357,10 +1440,11 @@ namespace Schematix
             {
                 var Box = new xBox(this);
                 Box.ReadParameters(stream);
-                Box.BondParent(PBoxes);
+                Box.Prototype = PBoxes.Find(xP => (xP.ID == Box.PrototypeID) && (xP.Revision == Box.PrototypeRevision));
                 Boxes.Add(Box);
             }
             #endregion
+
             // Pass unprocessed data up
             else
                 return base.ReadParameter(stream, parameterName, valueLength);
@@ -1369,6 +1453,7 @@ namespace Schematix
 
         override public void WriteParameters(BinaryWriter stream)//Ok
         {
+            #region
             // Write local part of body
             stream.Write("Size");
             stream.Write(8);
@@ -1390,7 +1475,7 @@ namespace Schematix
                 stream.Write("GridStoreOwn");
                 stream.Write(0);
             }
-            StreamWriteString("GridStyle", stream, Grid.Style.ToString());
+            WriteStreamString("GridStyle", stream, Grid.Style.ToString());
             stream.Write("GridColor");
             stream.Write(4);
             stream.Write(Grid.Pen.Color.ToArgb());
@@ -1415,11 +1500,11 @@ namespace Schematix
                 stream.Write("BackgroundStoreOwn");
                 stream.Write(0);
             }
-            StreamWriteString("BackgroundStyle", stream, Back.Style.ToString());
+            WriteStreamString("BackgroundStyle", stream, Back.Style.ToString());
             stream.Write("BackgroundColor");
             stream.Write(4);
             stream.Write(Back.Color.ToArgb());
-            StreamWriteString("BackgroundPath", stream, Back.Path);
+            WriteStreamString("BackgroundPath", stream, Back.Path);
             if (Back.Float)
             {
                 stream.Write("BackgroundFloat");
@@ -1441,6 +1526,7 @@ namespace Schematix
                 stream.Write("BackgroundUseAlphaColor");
                 stream.Write(0);
             }
+            #endregion
 
             int pos;
             #region Prototype
@@ -1500,77 +1586,40 @@ namespace Schematix
             // Upper class body
             base.WriteParameters(stream);
         }
-
-        public void Clear()
-        {
-            foreach (var Box in Boxes)
-                DeleteBox(Box);
-            foreach (var Link in Links)
-                DeleteLink(Link);
-            foreach (var Object in Objects)
-                DeleteObject(Object);
-        }
-
-        public void AlignToGridAll(int sx = 0, int sy = 0)//Ok
-        {
-            if (sx == 0)
-                sx = Grid.StepX;
-            if (sy == 0)
-                sy = Grid.StepY;
-            foreach (var Object in Objects)
-            {
-                AlignToGrid(ref Object.X, ref Object.Y);
-                Object.Check();
-            }
-            foreach (var Link in Links)
-            {
-                if (Link.ObjectA == null)
-                    AlignToGrid(ref Link.XA, ref Link.YA);
-                if (Link.ObjectB == null)
-                    AlignToGrid(ref Link.XB, ref Link.YB);
-                Link.Check();
-            }
-        }
-
-        public void AlignToGrid(ref int x, ref int y)//Ok
-        {
-            x = (int)((float)x / Grid.StepX) * Grid.StepX;
-            y = (int)((float)y / Grid.StepY) * Grid.StepY;
-        }
         
-        public void DoAutoSize()
+        public bool DoAutoSize()
         {
             if (!AutoSize)
-                return;
-            int w = options.WindowW,
-                h = options.WindowH;
+                return false;
+            int width  = Options.WindowW,
+                height = Options.WindowH;
             // Look for bigger values
             foreach (var Object in Objects)
             {
-                if (w < Object.Right)
-                    w = Object.Right;
-                if (h < Object.Bottom)
-                    h = Object.Bottom;
+                if (width  < Object.Right)
+                    width  = Object.Right;
+                if (height < Object.Bottom)
+                    height = Object.Bottom;
             }
             foreach (var Link in Links)
             {
-                if (w < Link.Right)
-                    w = Link.Right;
-                if (h < Link.Bottom)
-                    h = Link.Bottom;
+                if (width  < Link.Right)
+                    width  = Link.Right;
+                if (height < Link.Bottom)
+                    height = Link.Bottom;
             }
             foreach (var Box in Boxes)
             {
-                if (w < Box.Right)
-                    w = Box.Right;
-                if (h < Box.Bottom)
-                    h = Box.Bottom;
+                if (width  < Box.Right)
+                    width  = Box.Right;
+                if (height < Box.Bottom)
+                    height = Box.Bottom;
             }
             // Apply
-            ReSize(w, h);
+            return SetCanvas(width, height);
         }
 
-        public void ReSize(int width, int height)
+        public void SetSize(int width, int height)
         {
             if (width < Width || height < Height)
             {
@@ -1610,12 +1659,19 @@ namespace Schematix
                     Box.Check();
                 }
             }
-            // Apply
+            SetCanvas(width, height);
+        }
+
+        bool SetCanvas(int width, int height)
+        {
+            if (Canvas != null)
+                if (Canvas.Width == width && Canvas.Height == height)
+                    return false;
             Width  = width;
             Height = height;
-            // Canvas
-            Canvas = new Bitmap(width, height);
+            Canvas = new Bitmap(Width, Height);
             graphics = Graphics.FromImage(Canvas);
+            return true;
         }
 
         public void CheckAll()
@@ -1652,8 +1708,8 @@ namespace Schematix
             {
                 pX = ScrollX;
                 pY = ScrollY;
-                pW = options.WindowW;
-                pH = options.WindowH;
+                pW = Options.WindowW;
+                pH = Options.WindowH;
             }
             int imgW = Back.Image.Width,
                 imgH = Back.Image.Height;
@@ -1797,36 +1853,41 @@ namespace Schematix
             // Draw Boxes
             foreach (var Box in Boxes)
             {
-                switch ((Box.Prototype as xPBox).BoxType)
+                switch (Box.Prototype.BoxType)
                 {
                     case BoxTypes.Rectangle:
-                        graphics.DrawRectangle((Box.Prototype as xPBox).Pen, Box.Left, Box.Top, Box.Width, Box.Height);
+                        graphics.DrawRectangle(Box.Prototype.Pen, Box.Left, Box.Top, Box.Width, Box.Height);
                         break;
                     case BoxTypes.Ellipse:
-                        graphics.DrawEllipse((Box.Prototype as xPBox).Pen, Box.Left, Box.Top, Box.Width, Box.Height);
+                        graphics.DrawEllipse(Box.Prototype.Pen, Box.Left, Box.Top, Box.Width, Box.Height);
                         break;
                 }
                 if (Box.Text != "")
-                    graphics.DrawString(Box.Text, (Box.Prototype as xPBox).Font, (Box.Prototype as xPBox).Brush, Box.TextX, Box.TextY);
+                    graphics.DrawString(Box.Text, Box.Prototype.Font, Box.Prototype.Brush, Box.TextX, Box.TextY);
             }
 
             // Draw Links
             foreach (var Link in Links)
-                graphics.DrawLine((Link.Prototype as xPLink).Pen, Link.XA, Link.YA, Link.XB, Link.YB);
+                graphics.DrawLine(Link.Prototype.Pen, Link.XA, Link.YA, Link.XB, Link.YB);
 
             // Draw Objects
             foreach (var Object in Objects)
-                graphics.DrawImageUnscaled((Object.Prototype as xPObject).ImageCanva, Object.X, Object.Y);
+                graphics.DrawImageUnscaled(Object.Prototype.Canvas, Object.X, Object.Y);
+        }
+
+        public xExemplar AnythingAt(int x, int y)//
+        {
+            xExemplar selected = Objects.Find(O => O.isOver(x, y));
+            if (selected == null)
+                selected = Links.Find(L => L.isOver(x, y));
+            if (selected == null)
+                selected = Boxes.Find(B => B.isOver(x, y));
+            return selected;
         }
 
         public xExemplar SelectAt(int x, int y)//
         {
-            Selected = Objects.Find(O => O.isOver(x, y));
-            if (Selected == null)
-                Selected = Links.Find(L => L.isOver(x, y));
-            if (Selected == null)
-                Selected = Boxes.Find(B => B.isOver(x, y));
-            return Selected;
+            return Selected = AnythingAt(x, y);
         }
 
         //...

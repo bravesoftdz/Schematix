@@ -10,7 +10,7 @@ namespace Schematix
         public LinkOptionsForm(xLink link)
         {
             InitializeComponent();
-            Text = options.LangCur.lEOTitle + " " + options.LangCur.lEETitleLink;
+            Text = Options.LangCur.lEOTitle + " " + Options.LangCur.lEETitleLink;
             Link = link;
             if (Link == null)
             {

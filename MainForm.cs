@@ -13,40 +13,41 @@ namespace Schematix
         LibraryForm libraryForm = new LibraryForm();
         List<xMap> Maps = new List<xMap>();
         xMap Map = null;
+        int msX, msY;
 
         public MainForm()//!
         {
             InitializeComponent();
-            options.mainForm = this;
+            Options.mainForm = this;
             //options.Init();
 
             //Loads
             String eStr = "";
-            options.Load();
+            Options.Load();
             // Check folders
-            if (Directory.Exists(options.LangPath))
+            if (Directory.Exists(Options.LangPath))
             {
-                eStr = options.LoadLanguages(options.LangPath);
-                options.SelectLanguage(options.LangName);
+                eStr = Options.LoadLanguages(Options.LangPath);
+                Options.SelectLanguage(Options.LangName);
                 if (eStr != "")
                     MessageBox.Show(
-                        options.LangCur.mErrorsOccurred + "\r\n" + eStr,
-                        options.LangCur.dLanguagesLoading);
+                        Options.LangCur.mErrorsOccurred + "\r\n" + eStr,
+                        Options.LangCur.dLanguagesLoading);
             }
             else
-                eStr += "\r\n" + options.LangPath;
-            if (!Directory.Exists(options.RootMaps))
-                eStr += "\r\n" + options.RootMaps;
-            if (!Directory.Exists(options.RootObjects))
-                eStr += "\r\n" + options.RootObjects;
-            if (!Directory.Exists(options.RootLinks))
-                eStr += "\r\n" + options.RootLinks;
-            if (!Directory.Exists(options.RootBoxes))
-                eStr += "\r\n" + options.RootBoxes;
+                eStr += "\r\n" + Options.LangPath;
+            if (!Directory.Exists(Options.RootMaps))
+                eStr += "\r\n" + Options.RootMaps;
+            if (!Directory.Exists(Options.RootObjects))
+                eStr += "\r\n" + Options.RootObjects;
+            if (!Directory.Exists(Options.RootLinks))
+                eStr += "\r\n" + Options.RootLinks;
+            if (!Directory.Exists(Options.RootBoxes))
+                eStr += "\r\n" + Options.RootBoxes;
             if (eStr != "")
                 MessageBox.Show(
-                    options.LangCur.mNoFolders + eStr, 
-                    options.LangCur.dOptionsLoading);
+                    Options.LangCur.mNoFolders + eStr, 
+                    Options.LangCur.dOptionsLoading);
             SetText();
             //
             Map = new xMap();
@@ -61,18 +62,18 @@ namespace Schematix
         {
             toolTip.RemoveAll();
             //# Maps panel
-            toolTip.SetToolTip(tabPageAddNew, options.LangCur.hMFTabNew);
-            toolTip.SetToolTip(btnCloseMap,   options.LangCur.hMFTabClose);
-            toolTip.SetToolTip(btnOptions,    options.LangCur.hMFOptions);
-            toolTip.SetToolTip(btnLibrary,    options.LangCur.hMFLibrary);
+            toolTip.SetToolTip(tabPageAddNew, Options.LangCur.hMFTabNew);
+            toolTip.SetToolTip(btnCloseMap,   Options.LangCur.hMFTabClose);
+            toolTip.SetToolTip(btnOptions,    Options.LangCur.hMFOptions);
+            toolTip.SetToolTip(btnLibrary,    Options.LangCur.hMFLibrary);
             //# Map
-            toolTip.SetToolTip(pnlMapOptions, options.LangCur.hMFMapOptions);
+            toolTip.SetToolTip(pnlMapOptions, Options.LangCur.hMFMapOptions);
             // Context menu
-            tsmiMapOptions.Text = options.LangCur.lMFMapCMOptions;
-            tsmiMapSave.Text    = options.LangCur.lMFMapCMSave;
-            tsmiMapLoad.Text    = options.LangCur.lMFMapCMLoad;
-            tsmiMapReload.Text  = options.LangCur.lMFMapCMReload;
-            tsmiMapClose.Text   = options.LangCur.lMFMapCMClose;
+            tsmiMapOptions.Text = Options.LangCur.lMFMapCMOptions;
+            tsmiMapSave.Text    = Options.LangCur.lMFMapCMSave;
+            tsmiMapLoad.Text    = Options.LangCur.lMFMapCMLoad;
+            tsmiMapReload.Text  = Options.LangCur.lMFMapCMReload;
+            tsmiMapClose.Text   = Options.LangCur.lMFMapCMClose;
         }
 
         private void btnLibrary_Click(object sender, EventArgs e)//!!!
@@ -124,7 +125,7 @@ namespace Schematix
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)//!!!
         {
             //...
-            options.Save();
+            Options.Save();
         }
         #endregion
 
@@ -203,11 +204,11 @@ namespace Schematix
             int i = (tabPageAddNew.Tag != null) ? (int)tabPageAddNew.Tag : 2;
             tabPageAddNew.Tag = i + 1;
             // Add new tab
-            int idx = tcMaps.SelectedIndex;
-            Map = AddMap(idx, "New " + i);
+            Map = AddMap(tcMaps.SelectedIndex, "New " + i);
             Map.DoAutoSize();
+            Map.ReDraw();
             // Select new tab
-            tcMaps.SelectedTab = Map.Tab;
+            tcMaps.SelectTab(Map.Tab);
         }
 
         private xMap AddMap(int TabIdx, String MapName)
@@ -245,7 +246,10 @@ namespace Schematix
             var mapOptionsForm = new MapOptionsForm(Map);
             if (mapOptionsForm.ShowDialog() == DialogResult.OK)
             {
-                Map.DoAutoSize();
+                if (Map.AutoSize)
+                    Map.DoAutoSize();
+                else
+                    Map.SetSize(Map.Width, Map.Height);
                 Map.ReDraw();
                 CheckScrollers();
                 DrawMap();
@@ -261,38 +265,34 @@ namespace Schematix
 
         private void tsmiMapLoad_Click(object sender, EventArgs e)//Ok
         {
-            LoadMap(options.LangCur.dMapLoading, "");
+            LoadMap(Options.LangCur.dMapLoad, "");
         }
 
         private void tsmiMapReload_Click(object sender, EventArgs e)//Ok
         {
-            LoadMap(options.LangCur.dMapLoading, Map.FileName);
+            LoadMap(Options.LangCur.dMapReload, Map.FileName);
         }
 
         private void LoadMap(String actionTitle, String fileName)//
         {
             if (Map.Changed)
             {
-                var res = MessageBox.Show(options.LangCur.mMapHasChanges, actionTitle, MessageBoxButtons.YesNoCancel);
+                var res = MessageBox.Show(Options.LangCur.mMapHasChanges, actionTitle, MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Cancel)
                     return;
                 if (res == DialogResult.OK)
                     Map.SaveToFile(Map.FileName);
             }
-            Map.Clear();
             Map.LoadFromFile(fileName);
-            Map.DoAutoSize();
-            Map.ReDraw();
             CheckScrollers();
             DrawMap();
-            Map.Changed = false;
         }
 
         private void tsmiMapClose_Click(object sender, EventArgs e)//
         {
             if (Map.Changed)
             {
-                var res = MessageBox.Show(options.LangCur.mMapHasChanges, options.LangCur.dMapClosing, MessageBoxButtons.YesNoCancel);
+                var res = MessageBox.Show(Options.LangCur.mMapHasChanges, Options.LangCur.dMapClosing, MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Cancel)
                     return;
                 if (res == DialogResult.OK)
@@ -315,48 +315,50 @@ namespace Schematix
         #endregion
 
         #region Map pad
-        private void MainForm_ResizeEnd(object sender, EventArgs e)
+        private void MainForm_ResizeEnd(object sender, EventArgs e)//
         {
-            options.WindowW = ClientSize.Width  - 2;
-            options.WindowH = ClientSize.Height - 2;
+            Options.WindowW = ClientSize.Width  - 2; // -2 - PictureBox border
+            Options.WindowH = ClientSize.Height - 2;
             if (Map == null)
                 return;
-            Map.DoAutoSize();
-            Map.ReDraw();
+            if (Map.DoAutoSize())
+                Map.ReDraw();
             CheckScrollers();
             DrawMap();
         }
 
-        private void CheckScrollers()
+        private void CheckScrollers()//Ok
         {
-            hScrollBar.LargeChange = options.WindowW;
-            vScrollBar.LargeChange = options.WindowH;
-            if (Map == null)
-                return;
-            if (Map.Width  < Map.ScrollX + options.WindowW)
-                Map.ScrollX = (Map.Width  < options.WindowW) ? 0 : Map.Width  - options.WindowW;
-            if (Map.Height < Map.ScrollY + options.WindowH)
-                Map.ScrollY = (Map.Height < options.WindowH) ? 0 : Map.Height - options.WindowH;
+            hScrollBar.LargeChange = Options.WindowW;
+            vScrollBar.LargeChange = Options.WindowH;
+            if (Map.ScrollX < 0)
+                Map.ScrollX = 0;
+            if (Map.ScrollY < 0)
+                Map.ScrollY = 0;
+            if (Map.Width   < Map.ScrollX + Options.WindowW)
+                Map.ScrollX = (Map.Width  < Options.WindowW) ? 0 : Map.Width  - Options.WindowW;
+            if (Map.Height  < Map.ScrollY + Options.WindowH)
+                Map.ScrollY = (Map.Height < Options.WindowH) ? 0 : Map.Height - Options.WindowH;
             hScrollBar.Maximum = Map.Width;
             vScrollBar.Maximum = Map.Height;
             hScrollBar.Value = Map.ScrollX;
             vScrollBar.Value = Map.ScrollY;
         }
 
-        private void ScrollBar_Scroll(object sender, ScrollEventArgs e)
+        private void ScrollBar_Scroll(object sender, ScrollEventArgs e)//
         {
             Map.ScrollX = hScrollBar.Value;
             Map.ScrollY = vScrollBar.Value;
             DrawMap();
         }
 
-        private void DrawMap()
+        private void DrawMap()//
         {
             if (Map == null)
                 return;
             // Canvas
-            int w = (options.WindowW < Map.Width ) ? options.WindowW : Map.Width,
-                h = (options.WindowH < Map.Height) ? options.WindowH : Map.Height;
+            int w = (Options.WindowW < Map.Width ) ? Options.WindowW : Map.Width,
+                h = (Options.WindowH < Map.Height) ? Options.WindowH : Map.Height;
             var image = new Bitmap(w, h);
             var gr = Graphics.FromImage(image);
             gr.DrawImage(Map.Canvas,
@@ -377,17 +379,41 @@ namespace Schematix
             else
                 pbMap.Cursor =  Cursors.SizeAll;
             // ...
+            msX = e.X;
+            msY = e.Y;
+        }
+
+        private void pbMap_MouseMove(object sender, MouseEventArgs e)//!!!
+        {
+            if (e.Button == MouseButtons.None)
+            {
+                pbMap.Cursor = (Map.AnythingAt(e.X + Map.ScrollX, e.Y + Map.ScrollY) == null) ? Cursors.Default : Cursors.Hand;
+                // ...
+            }
+            else
+            {
+                // ...
+                if (Map.AnythingAt(e.X + Map.ScrollX, e.Y + Map.ScrollY) == null)
+                {
+                    Map.ScrollX += msX - e.X;
+                    Map.ScrollY += msY - e.Y;
+                    CheckScrollers();
+                    DrawMap();
+                    msX = e.X;
+                    msY = e.Y;
+                }
+                else
+                {
+                    //Map.Selected
+                    // ...
+                }
+            }
         }
 
         private void pbMap_MouseUp(object sender, MouseEventArgs e)//!!!
         {
             //
-            pbMap.Cursor = Cursors.Default;
-        }
-
-        private void pbMap_MouseMove(object sender, MouseEventArgs e)//!!!
-        {
-            // ...
+            pbMap.Cursor = (Map.AnythingAt(e.X + Map.ScrollX, e.Y + Map.ScrollY) == null) ? Cursors.Default : Cursors.Hand;
         }
 
         private void pbMap_MouseDoubleClick(object sender, MouseEventArgs e)//!!!
@@ -396,7 +422,12 @@ namespace Schematix
                 tsmiMapOptions_Click(null, null);
             else
             {
-                MessageBox.Show(Map.Selected.GetType().ToString(), Map.Selected.ToString());
+                if (Map.Selected.IsObject)
+                    new ObjectOptionsForm(Map.Selected as xObject).ShowDialog();
+                else if (Map.Selected.IsLink)
+                    new LinkOptionsForm(Map.Selected as xLink).ShowDialog();
+                else if (Map.Selected.IsBox)
+                    new BoxOptionsForm(Map.Selected as xBox).ShowDialog();
             }
             //
         }

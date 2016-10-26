@@ -10,7 +10,7 @@ namespace Schematix
         public BoxOptionsForm(xBox box)
         {
             InitializeComponent();
-            Text = options.LangCur.lEOTitle + " " + options.LangCur.lEETitleBox;
+            Text = Options.LangCur.lEOTitle + " " + Options.LangCur.lEETitleBox;
             Box = box;
             if (Box == null)
             {

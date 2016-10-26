@@ -10,19 +10,19 @@ namespace Schematix
         public ObjectOptionsForm(xObject obj)
         {
             InitializeComponent();
-            Text = options.LangCur.lEOTitle + " " + options.LangCur.lEETitleObject;
+            Text = Options.LangCur.lEOTitle + " " + Options.LangCur.lEETitleObject;
             // Share
-            lblName.Text      = options.LangCur.lEOName;
-            lblReference.Text = options.LangCur.lEOReference;
-            toolTip.SetToolTip(btnGetReference, options.LangCur.hEOGetReference);
+            lblName.Text      = Options.LangCur.lEOName;
+            lblReference.Text = Options.LangCur.lEOReference;
+            toolTip.SetToolTip(btnGetReference, Options.LangCur.hEOGetReference);
             // Own
-            toolTip.SetToolTip(btnIPAdd,        options.LangCur.hOOIPAdd);
-            toolTip.SetToolTip(btnIPDelete,     options.LangCur.hOOIPDelete);
-            clmIP.Text        = options.LangCur.lOOColumIP;
-            clmPeriod.Text    = options.LangCur.lOOColumPeriod;
-            clmTimeLast.Text  = options.LangCur.lOOColumTimeLast;
-            clmTimeNext.Text  = options.LangCur.lOOColumTimeNext;
-            clmPing.Text      = options.LangCur.lOOColumPing;
+            toolTip.SetToolTip(btnIPAdd,        Options.LangCur.hOOIPAdd);
+            toolTip.SetToolTip(btnIPDelete,     Options.LangCur.hOOIPDelete);
+            clmIP.Text        = Options.LangCur.lOOColumIP;
+            clmPeriod.Text    = Options.LangCur.lOOColumPeriod;
+            clmTimeLast.Text  = Options.LangCur.lOOColumTimeLast;
+            clmTimeNext.Text  = Options.LangCur.lOOColumTimeNext;
+            clmPing.Text      = Options.LangCur.lOOColumPing;
             // Fill
             Object = obj;
             if (Object == null)
