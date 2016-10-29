@@ -225,13 +225,55 @@ namespace Schematix
             return Map;
         }
 
-        private void tcMaps_Selected(object sender, TabControlEventArgs e)//!
+        private void tcMaps_Selected(object sender, TabControlEventArgs e)//
         {
+            // Remove last map info
+            if (Map != null)
+            {
+                foreach (ListViewItem lvItem in Options.lvUsedObjects.Items)
+                    (lvItem.Tag as xPrototype).lvItemUsed = null;
+                foreach (ListViewItem lvItem in Options.lvUsedLinks.Items)
+                    (lvItem.Tag as xPrototype).lvItemUsed = null;
+                foreach (ListViewItem lvItem in Options.lvUsedBoxes.Items)
+                    (lvItem.Tag as xPrototype).lvItemUsed = null;
+                Options.lvUsedObjects.Items.Clear();
+                Options.lvUsedLinks.Items.Clear();
+                Options.lvUsedBoxes.Items.Clear();
+                Map.lv_PObjects = null;
+                Map.lv_PLinks   = null;
+                Map.lv_PBoxes   = null;
+            }
+            // Case new
             Map = tcMaps.SelectedTab.Tag as xMap;
             if (Map == null)
                 return;
             CheckScrollers();
             DrawMap();
+            // Add current map info
+            Options.lvUsedObjects.BeginUpdate();
+            Options.lvUsedLinks.BeginUpdate();
+            Options.lvUsedBoxes.BeginUpdate();
+            foreach (var PObject in Map.PObjects)
+            {
+                PObject.lvItemUsed = Options.lvUsedObjects.Items.Add("");
+                Share.UpdateNodeName(PObject);
+            }
+            foreach (var PLink in Map.PLinks)
+            {
+                PLink.lvItemUsed = Options.lvUsedLinks.Items.Add("");
+                Share.UpdateNodeName(PLink);
+            }
+            foreach (var PBox in Map.PBoxes)
+            {
+                PBox.lvItemUsed = Options.lvUsedBoxes.Items.Add("");
+                Share.UpdateNodeName(PBox);
+            }
+            Options.lvUsedObjects.EndUpdate();
+            Options.lvUsedLinks.EndUpdate();
+            Options.lvUsedBoxes.EndUpdate();
+            Map.lv_PObjects = Options.lvUsedObjects;
+            Map.lv_PLinks   = Options.lvUsedLinks;
+            Map.lv_PBoxes   = Options.lvUsedBoxes;
         }
         #endregion
 

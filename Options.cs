@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Schematix
 {
@@ -18,13 +19,12 @@ namespace Schematix
         public const bool DEFAULT_PING_ONN            = false;
         public const int  DEFAULT_PING_ARRAY          = 5;
 
+        public static String RECORD_FILENAME = "\\Node.rec";
         // Object Prototype
         public static readonly Color DEFAULT_OBJECT_IMAGE_COLOR = Color.Black; // for preview
         public static readonly Color DEFAULT_OBJECT_APLHA_COLOR = Color.White;
-
         // Link Prototype
         public static readonly Color DEFAULT_LINK_LINE_COLOR = Color.Maroon;
-
         // Box Prototype
         public static readonly Font  DEFAULT_BOX_FONT       = new Font("Curier", 14);
         public static readonly Color DEFAULT_BOX_TEXT_COLOR = Color.Black;
@@ -84,6 +84,9 @@ namespace Schematix
             WindowW,
             WindowH;
         // Catalog
+        static public ListView lvUsedObjects;
+        static public ListView lvUsedLinks;
+        static public ListView lvUsedBoxes;
         static public List<xPObject> PObjects = new List<xPObject>();
         static public List<xPLink>   PLinks   = new List<xPLink>();
         static public List<xPBox>    PBoxes   = new List<xPBox>();

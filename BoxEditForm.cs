@@ -7,14 +7,15 @@ namespace Schematix
 {
     public partial class BoxEditForm : Form
     {
-        xPBox PBox;
+        public xPBox PBox;
 
-        public BoxEditForm(xPBox pBox)
+        public BoxEditForm(xPBox pBox, String rootPath)
         {
             InitializeComponent();
             if (pBox == null)
             {
                 pBox = new xPBox();
+                pBox.FileName = rootPath + "\\" + pBox.ID.ToString() + "\\" + Options.RECORD_FILENAME;
                 Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleBox;
             }
             else
@@ -102,8 +103,10 @@ namespace Schematix
             PBox.Text          = tbText.Text;
             PBox.TextAlign     = (AlignTypes)cbbAlign.SelectedIndex;
             PBox.TextColor     = btnFont.BackColor;
-            PBox.Font      = btnFont.Font;
+            PBox.Font          = btnFont.Font;
 
+            PBox.SaveToFile(PBox.FileName);
+            Share.UpdateNodeName(PBox);
             // Out
             DialogResult = DialogResult.OK;
             Close();

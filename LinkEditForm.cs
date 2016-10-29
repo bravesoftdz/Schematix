@@ -6,14 +6,15 @@ namespace Schematix
 {
     public partial class LinkEditForm : Form
     {
-        xPLink PLink;
+        public xPLink PLink;
 
-        public LinkEditForm(xPLink pLink)
+        public LinkEditForm(xPLink pLink, String rootPath)
         {
             InitializeComponent();
             if (pLink == null)
             {
                 pLink = new xPLink();
+                pLink.FileName = rootPath + "\\" + pLink.ID.ToString() + "\\" + Options.RECORD_FILENAME;
                 Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleLink;
             }
             else
@@ -61,6 +62,8 @@ namespace Schematix
             PLink.Pen.Color     = btnLineColor.BackColor;
             PLink.Pen.DashStyle = (DashStyle)cbbStyle.SelectedIndex;
 
+            PLink.SaveToFile(PLink.FileName);
+            Share.UpdateNodeName(PLink);
             // Out
             DialogResult = DialogResult.OK;
             Close();

@@ -182,5 +182,10 @@ namespace Schematix
                 lvIPs.Items.RemoveAt(i);
             }
         }
+
+        static public void UpdateNodeName(xPrototype prototype)
+        {
+            prototype.tvNode.Text = (prototype.NodeName != "") ? prototype.NodeName : prototype.Name;
+        }
     }
 }

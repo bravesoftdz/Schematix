@@ -15,12 +15,13 @@ namespace Schematix
 
         public xPObject PObject;
 
-        public ObjectEditForm(xPObject pObject)
+        public ObjectEditForm(xPObject pObject, String rootPath)
         {
             InitializeComponent();
             if (pObject == null)
             {
                 pObject = new xPObject();
+                pObject.FileName = rootPath + "\\" + pObject.ID.ToString() + "\\" + Options.RECORD_FILENAME;
                 Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleBox;
             }
             else
@@ -266,8 +267,10 @@ namespace Schematix
             PObject.ImagePath     = tbImagePath.Text;
             PObject.ImageBPP      = (ImageBPPs)cbbImageBPP.SelectedIndex;
             PObject.BackColor     = btnBackColor.BackColor;
-            PObject.Canvas    = loadedBitmap;
+            PObject.Canvas        = loadedBitmap;
 
+            PObject.SaveToFile(PObject.FileName);
+            Share.UpdateNodeName(PObject);
             // Out
             DialogResult = DialogResult.OK;
             Close();

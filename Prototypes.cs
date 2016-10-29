@@ -156,7 +156,7 @@ namespace Schematix
         public String       NodeName;
         public Int64        Revision    = DateTime.Now.ToBinary();
         public ListViewItem lvItemUsed;
-        public ListViewItem lvItem;
+        public TreeNode     tvNode;
 
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {

@@ -29,34 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node2");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node0", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Node1");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Dot", new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode3});
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("obj");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("obj 2");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Node2");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Node0", new System.Windows.Forms.TreeNode[] {
-            treeNode5});
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Node1");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Link", new System.Windows.Forms.TreeNode[] {
-            treeNode6,
-            treeNode7});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Dot");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Link");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryForm));
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("link");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("link 2");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Node2");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Node0", new System.Windows.Forms.TreeNode[] {
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Node1");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Box", new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11});
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("box");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("box 2");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Box");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblObjectsCatalog = new System.Windows.Forms.Label();
@@ -189,16 +165,10 @@
             this.tvObjects.HideSelection = false;
             this.tvObjects.Location = new System.Drawing.Point(3, 28);
             this.tvObjects.Name = "tvObjects";
-            treeNode1.Name = "Node2";
-            treeNode1.Text = "Node2";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "Node0";
-            treeNode3.Name = "Node1";
-            treeNode3.Text = "Node1";
-            treeNode4.Name = "tvNodeDot";
-            treeNode4.Text = "Dot";
+            treeNode1.Name = "tvNodeDot";
+            treeNode1.Text = "Dot";
             this.tvObjects.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
+            treeNode1});
             this.tvObjects.Size = new System.Drawing.Size(255, 87);
             this.tvObjects.TabIndex = 0;
             this.tvObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvObjects_AfterSelect);
@@ -268,9 +238,6 @@
             this.tableLayoutPanel4.SetColumnSpan(this.lvObjects, 2);
             this.lvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvObjects.HideSelection = false;
-            this.lvObjects.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
             this.lvObjects.Location = new System.Drawing.Point(3, 28);
             this.lvObjects.MultiSelect = false;
             this.lvObjects.Name = "lvObjects";
@@ -335,16 +302,10 @@
             this.tvLinks.HideSelection = false;
             this.tvLinks.Location = new System.Drawing.Point(3, 28);
             this.tvLinks.Name = "tvLinks";
-            treeNode5.Name = "Node2";
-            treeNode5.Text = "Node2";
-            treeNode6.Name = "Node0";
-            treeNode6.Text = "Node0";
-            treeNode7.Name = "Node1";
-            treeNode7.Text = "Node1";
-            treeNode8.Name = "tvNodeLink";
-            treeNode8.Text = "Link";
+            treeNode2.Name = "tvNodeLink";
+            treeNode2.Text = "Link";
             this.tvLinks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode8});
+            treeNode2});
             this.tvLinks.Size = new System.Drawing.Size(255, 87);
             this.tvLinks.TabIndex = 0;
             this.tvLinks.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvLinks_AfterSelect);
@@ -424,9 +385,6 @@
             this.tableLayoutPanel5.SetColumnSpan(this.lvLinks, 2);
             this.lvLinks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvLinks.HideSelection = false;
-            this.lvLinks.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
             this.lvLinks.Location = new System.Drawing.Point(3, 28);
             this.lvLinks.MultiSelect = false;
             this.lvLinks.Name = "lvLinks";
@@ -589,16 +547,10 @@
             this.tvBoxes.HideSelection = false;
             this.tvBoxes.Location = new System.Drawing.Point(3, 28);
             this.tvBoxes.Name = "tvBoxes";
-            treeNode9.Name = "Node2";
-            treeNode9.Text = "Node2";
-            treeNode10.Name = "Node0";
-            treeNode10.Text = "Node0";
-            treeNode11.Name = "Node1";
-            treeNode11.Text = "Node1";
-            treeNode12.Name = "tvNodeBox";
-            treeNode12.Text = "Box";
+            treeNode3.Name = "tvNodeBox";
+            treeNode3.Text = "Box";
             this.tvBoxes.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode12});
+            treeNode3});
             this.tvBoxes.Size = new System.Drawing.Size(255, 87);
             this.tvBoxes.TabIndex = 0;
             this.tvBoxes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvBoxes_AfterSelect);
@@ -678,9 +630,6 @@
             this.tableLayoutPanel6.SetColumnSpan(this.lvBoxes, 2);
             this.lvBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvBoxes.HideSelection = false;
-            this.lvBoxes.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
             this.lvBoxes.Location = new System.Drawing.Point(3, 28);
             this.lvBoxes.MultiSelect = false;
             this.lvBoxes.Name = "lvBoxes";
@@ -810,11 +759,8 @@
         private System.Windows.Forms.TabPage tpBoxes;
         private System.Windows.Forms.TreeView tvLinks;
         private System.Windows.Forms.TreeView tvBoxes;
-        private System.Windows.Forms.ListView lvLinks;
         private System.Windows.Forms.ColumnHeader clmLinkName;
-        private System.Windows.Forms.ListView lvObjects;
         private System.Windows.Forms.ColumnHeader clmObjectName;
-        private System.Windows.Forms.ListView lvBoxes;
         private System.Windows.Forms.ColumnHeader clmBoxName;
         private System.Windows.Forms.Label lblObjectsCatalog;
         private System.Windows.Forms.Label lblUsedObjects;
@@ -850,5 +796,8 @@
         private System.Windows.Forms.ColumnHeader clmBoxLocation;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ToolTip toolTip;
+        public System.Windows.Forms.ListView lvLinks;
+        public System.Windows.Forms.ListView lvObjects;
+        public System.Windows.Forms.ListView lvBoxes;
     }
 }

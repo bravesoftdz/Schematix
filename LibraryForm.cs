@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -12,9 +13,15 @@ namespace Schematix
         {
             InitializeComponent();
             tvObjects.SelectedNode = tvObjects.Nodes[0];
-            tvLinks.SelectedNode = tvLinks.Nodes[0];
-            tvBoxes.SelectedNode = tvBoxes.Nodes[0];
+            tvLinks.SelectedNode   = tvLinks.Nodes[0];
+            tvBoxes.SelectedNode   = tvBoxes.Nodes[0];
+            Options.lvUsedObjects = lvObjects;
+            Options.lvUsedLinks   = lvLinks;
+            Options.lvUsedBoxes   = lvBoxes;
             SetText();
+            LoadTree(tvObjects.Nodes[0], Options.RootObjects, MakeNodeObject);
+            LoadTree(tvLinks.Nodes[0],   Options.RootLinks,   MakeNodeLink);
+            LoadTree(tvBoxes.Nodes[0],   Options.RootBoxes,   MakeNodeBox);
         }
 
         public void SetText()
@@ -74,6 +81,53 @@ namespace Schematix
             Hide();
         }
 
+        #region Load Tree
+        delegate xPrototype LoadTreeCallBack();
+
+        private void LoadTree(TreeNode rootNode, String rootDir, LoadTreeCallBack MakeRecord)
+        {
+            if (MakeRecord == null)
+                return;
+            var dirs = Directory.GetDirectories(rootDir);
+            foreach (var dir in dirs)
+                LoadTree(rootNode.Nodes.Add(Path.GetDirectoryName(dir)), dir, MakeRecord);
+            String fileName = rootDir + Options.RECORD_FILENAME;
+            if (File.Exists(fileName))
+            {
+                xPrototype prototype = MakeRecord();
+                try
+                {
+                    prototype.LoadFromFile(fileName);
+                }
+                catch { }
+                prototype.tvNode = rootNode;
+                rootNode.Tag = prototype;
+                Share.UpdateNodeName(prototype);
+            }
+        }
+
+        private xPrototype MakeNodeObject()
+        {
+            var PObject = new xPObject();
+            Options.PObjects.Add(PObject);
+            return PObject;
+        }
+
+        private xPrototype MakeNodeLink()
+        {
+            var PLink = new xPLink();
+            Options.PLinks.Add(PLink);
+            return PLink;
+        }
+
+        private xPrototype MakeNodeBox()
+        {
+            var PBox = new xPBox();
+            Options.PBoxes.Add(PBox);
+            return PBox;
+        }
+        #endregion
+
         #region Catalog
         private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -90,12 +144,17 @@ namespace Schematix
             btnBoxEdit.Enabled = (tvBoxes.SelectedNode?.Tag != null);
         }
 
-        private void btnObjectAdd_Click(object sender, EventArgs e)
+        private void btnObjectAdd_Click(object sender, EventArgs e)//
         {
-            var form = new ObjectEditForm(null);
+            if (tvObjects.SelectedNode?.Tag == null)
+                return;
+            var form = new ObjectEditForm(null, Path.GetDirectoryName((tvObjects.SelectedNode.Tag as xPrototype).FileName));
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //...
+                form.PObject.tvNode = tvObjects.SelectedNode.Nodes.Add("");
+                form.PObject.tvNode.Tag = form.PObject;
+                Options.PObjects.Add(form.PObject);
+                Share.UpdateNodeName(form.PObject);
             }
         }
 
@@ -103,19 +162,25 @@ namespace Schematix
         {
             if (tvObjects.SelectedNode?.Tag == null)
                 return;
-            var form = new ObjectEditForm(tvObjects.SelectedNode.Tag as xPObject);
+            var form = new ObjectEditForm(tvObjects.SelectedNode.Tag as xPObject, "");
             if (form.ShowDialog() == DialogResult.OK)
             {
+                Share.UpdateNodeName(form.PObject);
                 //...
             }
         }
 
-        private void btnLinkAdd_Click(object sender, EventArgs e)
+        private void btnLinkAdd_Click(object sender, EventArgs e)//
         {
-            var form = new LinkEditForm(null);
+            if (tvLinks.SelectedNode?.Tag == null)
+                return;
+            var form = new LinkEditForm(null, Path.GetDirectoryName((tvLinks.SelectedNode.Tag as xPrototype).FileName));
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //...
+                form.PLink.tvNode = tvObjects.SelectedNode.Nodes.Add("");
+                form.PLink.tvNode.Tag = form.PLink;
+                Options.PLinks.Add(form.PLink);
+                Share.UpdateNodeName(form.PLink);
             }
         }
 
@@ -123,19 +188,25 @@ namespace Schematix
         {
             if (tvLinks.SelectedNode?.Tag == null)
                 return;
-            var form = new LinkEditForm(tvLinks.SelectedNode.Tag as xPLink);
+            var form = new LinkEditForm(tvLinks.SelectedNode.Tag as xPLink, "");
             if (form.ShowDialog() == DialogResult.OK)
             {
+                Share.UpdateNodeName(form.PLink);
                 //...
             }
         }
 
-        private void btnBoxAdd_Click(object sender, EventArgs e)
+        private void btnBoxAdd_Click(object sender, EventArgs e)//
         {
-            var form = new BoxEditForm(null);
+            if (tvBoxes.SelectedNode?.Tag == null)
+                return;
+            var form = new BoxEditForm(null, Path.GetDirectoryName((tvBoxes.SelectedNode.Tag as xPrototype).FileName));
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //...
+                form.PBox.tvNode = tvObjects.SelectedNode.Nodes.Add("");
+                form.PBox.tvNode.Tag = form.PBox;
+                Options.PBoxes.Add(form.PBox);
+                Share.UpdateNodeName(form.PBox);
             }
         }
 
@@ -143,9 +214,10 @@ namespace Schematix
         {
             if (tvBoxes.SelectedNode?.Tag == null)
                 return;
-            var form = new BoxEditForm(tvBoxes.SelectedNode.Tag as xPBox);
+            var form = new BoxEditForm(tvBoxes.SelectedNode.Tag as xPBox, "");
             if (form.ShowDialog() == DialogResult.OK)
             {
+                Share.UpdateNodeName(form.PBox);
                 //...
             }
         }
