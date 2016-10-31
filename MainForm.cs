@@ -19,7 +19,10 @@ namespace Schematix
         {
             InitializeComponent();
             Options.mainForm = this;
-            //options.Init();
+            Options.rbObject = rbObject;
+            Options.rbLink   = rbLink;
+            Options.rbBox    = rbBox;
+            Options.ToolTip  = toolTip;
 
             //Loads
             String eStr = "";
@@ -49,12 +52,17 @@ namespace Schematix
                     Options.LangCur.mNoFolders + eStr, 
                     Options.LangCur.dOptionsLoading);
             SetText();
-            //
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
             Map = new xMap();
             Map.Tab = tcMaps.TabPages[0];
             Map.Tab.Tag = Map;
             Maps.Add(Map);
             MainForm_ResizeEnd(null, null);
+            //
+            libraryForm.StartInit();
         }
 
         #region Main
@@ -385,13 +393,34 @@ namespace Schematix
             vScrollBar.Maximum = Map.Height;
             hScrollBar.Value = Map.ScrollX;
             vScrollBar.Value = Map.ScrollY;
+            // Scroll bar icons
+            pbPullHScroll.Visible = (Options.WindowW < Map.Width );
+            pbPullVScroll.Visible = (Options.WindowH < Map.Height);
+            CheckScrollSquar();
         }
 
-        private void ScrollBar_Scroll(object sender, ScrollEventArgs e)//
+        private void ScrollBar_Scroll(object sender, ScrollEventArgs e)//Ok
         {
             Map.ScrollX = hScrollBar.Value;
             Map.ScrollY = vScrollBar.Value;
+            CheckScrollSquar();
             DrawMap();
+        }
+
+        private void CheckScrollSquar()//Ok
+        {
+            int cw = pnlMapOptions.ClientSize.Width,
+                ch = pnlMapOptions.ClientSize.Height;
+            // Top-left
+            pnlMapFrame.Left = cw * Map.ScrollX / Map.Width;
+            pnlMapFrame.Top  = ch * Map.ScrollY / Map.Height;
+            // Width-height based on bottom-right corner
+            pnlMapFrame.Width  = (int)Math.Round(cw * (double)(Map.ScrollX + Options.WindowW) / Map.Width  - pnlMapFrame.Left);
+            pnlMapFrame.Height = (int)Math.Round(ch * (double)(Map.ScrollY + Options.WindowH) / Map.Height - pnlMapFrame.Top );
+            if (cw < pnlMapFrame.Left + pnlMapFrame.Width )
+                pnlMapFrame.Width  = cw - pnlMapFrame.Left;
+            if (ch < pnlMapFrame.Top  + pnlMapFrame.Height)
+                pnlMapFrame.Height = ch - pnlMapFrame.Top;
         }
 
         private void DrawMap()//
@@ -477,6 +506,26 @@ namespace Schematix
         private void pbMap_MouseClick(object sender, MouseEventArgs e)//!!!
         {
             //
+        }
+
+        private void pnlMapOptions_MouseAction(object sender, MouseEventArgs e)//Ok
+        {
+            if (e.Button == MouseButtons.Right)
+                tsmiMapOptions_Click(null, null);
+            if (e.Button == MouseButtons.Left)
+            {
+                int x = e.X,
+                    y = e.Y;
+                if (sender == pnlMapFrame)
+                {
+                    x += pnlMapFrame.Left;
+                    y += pnlMapFrame.Top;
+                }
+                Map.ScrollX = (Map.Width  - Options.WindowW) * x / (pnlMapOptions.ClientSize.Width  - 1);
+                Map.ScrollY = (Map.Height - Options.WindowH) * y / (pnlMapOptions.ClientSize.Height - 1);
+                CheckScrollers();
+                DrawMap();
+            }
         }
         #endregion
     }

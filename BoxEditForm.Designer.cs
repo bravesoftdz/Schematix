@@ -52,7 +52,7 @@
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
-            this.lblNodeName = new System.Windows.Forms.Label();
+            this.lblNode = new System.Windows.Forms.Label();
             this.tbNode = new System.Windows.Forms.TextBox();
             this.tbRevision = new System.Windows.Forms.TextBox();
             this.tbID = new System.Windows.Forms.TextBox();
@@ -321,7 +321,7 @@
             this.tableLayoutPanel2.Controls.Add(this.tbDescription, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.lblName, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.tbName, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.lblNodeName, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblNode, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tbNode, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tbRevision, 3, 1);
             this.tableLayoutPanel2.Controls.Add(this.tbID, 4, 0);
@@ -383,15 +383,15 @@
             this.tbName.Size = new System.Drawing.Size(304, 20);
             this.tbName.TabIndex = 1;
             // 
-            // lblNodeName
+            // lblNode
             // 
-            this.lblNodeName.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblNodeName.AutoSize = true;
-            this.lblNodeName.Location = new System.Drawing.Point(3, 6);
-            this.lblNodeName.Name = "lblNodeName";
-            this.lblNodeName.Size = new System.Drawing.Size(62, 13);
-            this.lblNodeName.TabIndex = 0;
-            this.lblNodeName.Text = "Node name";
+            this.lblNode.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblNode.AutoSize = true;
+            this.lblNode.Location = new System.Drawing.Point(3, 6);
+            this.lblNode.Name = "lblNode";
+            this.lblNode.Size = new System.Drawing.Size(62, 13);
+            this.lblNode.TabIndex = 0;
+            this.lblNode.Text = "Node name";
             // 
             // tbNode
             // 
@@ -481,7 +481,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.Label lblNodeName;
+        private System.Windows.Forms.Label lblNode;
         private System.Windows.Forms.TextBox tbNode;
         private System.Windows.Forms.TextBox tbRevision;
         private System.Windows.Forms.TextBox tbID;

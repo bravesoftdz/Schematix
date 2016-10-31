@@ -19,6 +19,8 @@ namespace Schematix
             hMFLibrary    = "Open map objects catalog",
             hMFAbout      = "Open about program",
             hMFMapOptions = "Open new options",
+            hMFElement    = "Element",
+            hMFNoElement  = "Element not selected",
             // Context menu
             lMFMapCMOptions = "Options",
             lMFMapCMSave    = "Save",
@@ -217,7 +219,7 @@ namespace Schematix
             
         #region Dialongs & About
             // Dialongs
-            dLanguagesLoading = "Language packs loading",
+            dLanguagesLoading  = "Language packs loading",
             mErrorsOccurred    = "The following errors occurred:",
             dOptionsLoading    = "Loading options",
             dOptionsSaving     = "Saving options",
@@ -231,6 +233,7 @@ namespace Schematix
             dMapReload         = "Reload map",
             dMapLoad           = "Load map",
             dMapSave           = "Save map",
+            mElementHasNoName  = "The name of the element is not specified",
 
             // About form
             lAbout        = "About",
@@ -295,6 +298,8 @@ namespace Schematix
                                 case "hMFLibrary":      hMFLibrary      = lblText;   break;
                                 case "hMFAbout":        hMFAbout        = lblText;   break;
                                 case "hMFMapOptions":   hMFMapOptions   = lblText;   break;
+                                case "hMFElement":      hMFElement      = lblText;   break;
+                                case "hMFNoElement":    hMFNoElement    = lblText;   break;
                                 // Context menu
                                 case "lMFMapCMOptions": lMFMapCMOptions = lblText;   break;
                                 case "lMFMapCMSave":    lMFMapCMSave    = lblText;   break;
@@ -561,6 +566,7 @@ namespace Schematix
                                 case "dMapReload":        dMapReload        = lblText;   break;
                                 case "dMapLoad":          dMapLoad          = lblText;   break;
                                 case "dMapSave":          dMapSave          = lblText;   break;
+                                case "mElementHasNoName": mElementHasNoName = lblText;   break;
 
                                 //# About form
                                 case "lAbout":    lAbout       = lblText;          break;

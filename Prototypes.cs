@@ -26,15 +26,24 @@ namespace Schematix
         {
         }
 
-        public void LoadFromFile(String fileName)//Ok
+        public bool LoadFromFileCheck(String fileName)//Ok
         {
             if (fileName == "")
             {
                 var dlg = new OpenFileDialog();
+                dlg.Filter = Options.RECORD_FILEEXT;
                 if (dlg.ShowDialog() == DialogResult.Cancel)
-                    return;
-                fileName = dlg.FileName;
+                    return false;
+                using (var file = File.OpenRead(fileName)) { }
+                FileName = dlg.FileName;
             }
+            return true;
+        }
+
+        public bool LoadFromFile(String fileName)//Ok
+        {
+            if (!LoadFromFileCheck(fileName))
+                return false;
             try
             {
                 using (var file = File.OpenRead(fileName))
@@ -42,13 +51,15 @@ namespace Schematix
                     using (var stream = new BinaryReader(file))
                     {
                         ReadParameters(stream);
+                        FileName = fileName;
+                        return true;
                     }
                 }
-                FileName = fileName;
             }
             catch (Exception e)
             {
                 MessageBox.Show(Options.LangCur.mErrorsOccurred + "" + e.Message, Options.LangCur.dFileLoading);
+                return false;
             }
         }
 
@@ -91,30 +102,43 @@ namespace Schematix
         }
 
         // Save
-        
-        public void SaveToFile(String fileName)//Ok
+
+        public bool SaveToFileCheck(String fileName)//Ok
         {
             if (fileName == "")
             {
                 var dlg = new SaveFileDialog();
+                dlg.Filter = Options.RECORD_FILEEXT;
                 if (dlg.ShowDialog() == DialogResult.Cancel)
-                    return;
-                fileName = dlg.FileName;
+                    return false;
+                using (var file = File.OpenWrite(fileName)) { }
+                FileName = dlg.FileName;
             }
+            return true;
+        }
+
+        public bool SaveToFile(String fileName)//Ok
+        {
+            if (!SaveToFileCheck(fileName))
+                return false;
             try
             {
+                if (!File.Exists(fileName))
+                    Directory.CreateDirectory(Path.GetDirectoryName(fileName));
                 using (var file = File.OpenWrite(fileName))
                 {
                     using (var stream = new BinaryWriter(file))
                     {
                         WriteParameters(stream);
+                        FileName = fileName;
+                        return true;
                     }
                 }
-                FileName = fileName;
             }
             catch (Exception e)
             {
                 MessageBox.Show(Options.LangCur.mErrorsOccurred + "" + e.Message, Options.LangCur.dFileSaving);
+                return false;
             }
         }
         
@@ -333,17 +357,13 @@ namespace Schematix
             stream.Write("BackColor");
             stream.Write(4);
             stream.Write(BackColor.ToArgb());
-            if (ImageType != ImageTypes.None)
-            {
-                stream.Write("InitializeImage");
-                stream.Write(0);
-            }
             // Dots
             int pos = 0;
             foreach (var Dot in Dots)
             {
                 stream.Write("Dot");
                 pos = (int)stream.Seek(0, SeekOrigin.Current);
+                stream.Write(pos);
                 Dot.WriteParameters(stream);
                 WriteStream_CloseBlock(stream, pos);
             }
@@ -694,6 +714,7 @@ namespace Schematix
             {
                 stream.Write("IP");
                 pos = (int)stream.Seek(0, SeekOrigin.Current);
+                stream.Write(pos);
                 IP.WriteParameters(stream);
                 WriteStream_CloseBlock(stream, pos);
             }

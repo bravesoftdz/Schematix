@@ -7,8 +7,9 @@ namespace Schematix
     public partial class LinkEditForm : Form
     {
         public xPLink PLink;
+        bool IsRoot;
 
-        public LinkEditForm(xPLink pLink, String rootPath)
+        public LinkEditForm(xPLink pLink, String rootPath, bool isRoot)
         {
             InitializeComponent();
             if (pLink == null)
@@ -20,7 +21,12 @@ namespace Schematix
             else
                 Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleLink;
             PLink = pLink;
+            IsRoot = isRoot;
+
             // Share
+            chkIsPrototype.Enabled =
+            tbNode.Enabled = !isRoot;
+            //
             lblNode.Text        = Options.LangCur.lEENodeName;
             chkIsPrototype.Text = Options.LangCur.lEEPrototype;
             lblName.Text        = Options.LangCur.lEEName;
@@ -51,6 +57,13 @@ namespace Schematix
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (tbNode.Text == "" && tbName.Text == "")
+            {
+                MessageBox.Show(Options.LangCur.mElementHasNoName, Options.LangCur.dFileSaving);
+                return;
+            }
+            if (!PLink.SaveToFileCheck(PLink.FileName))
+                return;
             // Share
             PLink.NodeName    = tbNode.Text;
             PLink.isPrototype = chkIsPrototype.Checked;
@@ -62,7 +75,8 @@ namespace Schematix
             PLink.Pen.Color     = btnLineColor.BackColor;
             PLink.Pen.DashStyle = (DashStyle)cbbStyle.SelectedIndex;
 
-            PLink.SaveToFile(PLink.FileName);
+            if (!PLink.SaveToFile(PLink.FileName))
+                return;
             Share.UpdateNodeName(PLink);
             // Out
             DialogResult = DialogResult.OK;

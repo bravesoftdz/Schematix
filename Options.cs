@@ -19,7 +19,8 @@ namespace Schematix
         public const bool DEFAULT_PING_ONN            = false;
         public const int  DEFAULT_PING_ARRAY          = 5;
 
-        public static String RECORD_FILENAME = "\\Node.rec";
+        public static String RECORD_FILENAME = "\\Node.xRec";
+        public static String RECORD_FILEEXT  = "Schematix Prototype file|*.xRec";
         // Object Prototype
         public static readonly Color DEFAULT_OBJECT_IMAGE_COLOR = Color.Black; // for preview
         public static readonly Color DEFAULT_OBJECT_APLHA_COLOR = Color.White;
@@ -37,7 +38,7 @@ namespace Schematix
         public const int    MAX_PING_PERIOD = 24 * 3600000;
         public const int    MAX_PING_COUNT  = 10;
         public const int    DEFAULT_MAP_WIDTH  = 820;
-        public const int    DEFAULT_MAP_HEIGHT = 240;
+        public const int    DEFAULT_MAP_HEIGHT = 400;
         public const bool   DEFAULT_MAP_AUTOSIZE = false;
         // Grid
         public const int             MAX_GRID_STEP      = 1000;
@@ -50,8 +51,6 @@ namespace Schematix
         public const BackgroundStyles   DEFAULT_BACK_STYLE = BackgroundStyles.Color;
         public const AlignTypes         DEFAULT_BACK_ALIGN = AlignTypes.TopLeft;
         public static readonly Color    DEFAULT_BACK_COLOR = Color.SteelBlue;
-
-        static public MainForm mainForm = null;
 
         // Language
         static public LanguageRecord LangCur = new LanguageRecord();
@@ -78,11 +77,17 @@ namespace Schematix
 
         static public xGrid Grid = new xGrid();
         static public xBackground Back = new xBackground();
-
+        
         // Display window
+        static public MainForm mainForm = null;
         static public int
             WindowW,
             WindowH;
+        // Tools
+        static public RadioButton rbObject;
+        static public RadioButton rbLink;
+        static public RadioButton rbBox;
+        static public ToolTip ToolTip;
         // Catalog
         static public ListView lvUsedObjects;
         static public ListView lvUsedLinks;
@@ -94,13 +99,13 @@ namespace Schematix
         static public List<xIP> IPs = new List<xIP>();
         static public int LastSendIPIdx = -1;
 
-        static public void AddIP(xIP IP)
+        static public void AddIP(xIP IP)//
         {
             if (!IPs.Contains(IP))
                 IPs.Add(IP);
         }
 
-        static public void RemoveIP(xIP IP)
+        static public void RemoveIP(xIP IP)//
         {
             int idx = IPs.IndexOf(IP);
             if (0 <= idx)

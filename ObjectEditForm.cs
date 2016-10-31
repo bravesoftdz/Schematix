@@ -14,8 +14,9 @@ namespace Schematix
         Bitmap loadedBitmap = new Bitmap(7, 7);
 
         public xPObject PObject;
+        bool IsRoot;
 
-        public ObjectEditForm(xPObject pObject, String rootPath)
+        public ObjectEditForm(xPObject pObject, String rootPath, bool isRoot)
         {
             InitializeComponent();
             if (pObject == null)
@@ -27,7 +28,12 @@ namespace Schematix
             else
                 Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleBox;
             PObject = pObject;
+            IsRoot = isRoot;
+
             // Main
+            chkIsPrototype.Enabled =
+            tbNode.Enabled = !isRoot;
+            //
             tpMain.Text         = Options.LangCur.lOETabMain;
             chkIsPrototype.Text = Options.LangCur.lEEPrototype;
             lblNode.Text        = Options.LangCur.lEENodeName;
@@ -75,7 +81,7 @@ namespace Schematix
             toolTip.SetToolTip(btnDotSave,     Options.LangCur.hOEDotSave);
             toolTip.SetToolTip(btnDotDelete,   Options.LangCur.hOEDotDelete);
             // Fill
-            cbbNodesRefill(0);
+            cbbDotsRefill(0);
         }
 
         #region Image
@@ -123,19 +129,19 @@ namespace Schematix
                 loadedBitmap.Height + DOT_PICKER_PADDING * 2,
                 PixelFormat.Format32bppArgb);
             dotGraphics = Graphics.FromImage(dotBmap);
-            nudNodeXY_ValueChanged(null, null);
+            nudDotXY_ValueChanged(null, null);
         }
 
-        private void pbNodePicker_MouseDoubleClick(object sender, MouseEventArgs e)//
+        private void pbDotPicker_MouseDoubleClick(object sender, MouseEventArgs e)//
         {
             int x = (e.X < 5) ? 0 : e.X - DOT_PICKER_PADDING;
             int y = (e.Y < 5) ? 0 : e.Y - DOT_PICKER_PADDING;
             nudDotX.Value = (nudDotX.Maximum < x) ? nudDotX.Maximum : x;
             nudDotY.Value = (nudDotY.Maximum < y) ? nudDotY.Maximum : y;
-            nudNodeXY_ValueChanged(null, null);
+            nudDotXY_ValueChanged(null, null);
         }
 
-        private void nudNodeXY_ValueChanged(object sender, EventArgs e)//Ok
+        private void nudDotXY_ValueChanged(object sender, EventArgs e)//Ok
         {
             int x = (int)nudDotX.Value + DOT_PICKER_PADDING;
             int y = (int)nudDotY.Value + DOT_PICKER_PADDING;
@@ -157,7 +163,7 @@ namespace Schematix
             btnDotSave.Enabled = true;
         }
         
-        private void cbbNodesRefill(int idx)//
+        private void cbbDotsRefill(int idx)//
         {
             cbbDots.Items.Clear();
             int i = 0;
@@ -180,21 +186,21 @@ namespace Schematix
                 return;
             else
             {
-                tbDotName.Text     = PObject.Dots[idx].Name;
-                tbDescription.Text = PObject.Dots[idx].Description;
-                nudDotX.Value = PObject.Dots[idx].X;
-                nudDotY.Value = PObject.Dots[idx].Y;
+                tbDotName.Text        = PObject.Dots[idx].Name;
+                tbDotDescription.Text = PObject.Dots[idx].Description;
+                nudDotX.Value         = PObject.Dots[idx].X;
+                nudDotY.Value         = PObject.Dots[idx].Y;
             }
             btnDotSave.Enabled = false;
         }
 
-        private void btnNodeAdd_Click(object sender, EventArgs e)//
+        private void btnDotAdd_Click(object sender, EventArgs e)//
         {
             PObject.Dots.Add(new xDot(PObject));
-            cbbNodesRefill(cbbDots.Items.Count);
+            cbbDotsRefill(cbbDots.Items.Count);
         }
 
-        private void btnNodeMoveUp_Click(object sender, EventArgs e)//Ok
+        private void btnDotMoveUp_Click(object sender, EventArgs e)//Ok
         {
             int idx = cbbDots.SelectedIndex;
             if (0 < idx)
@@ -202,11 +208,11 @@ namespace Schematix
                 xDot d = PObject.Dots[idx];
                 PObject.Dots[idx] = PObject.Dots[idx - 1];
                 PObject.Dots[idx - 1] = d;
-                cbbNodesRefill(idx - 1);
+                cbbDotsRefill(idx - 1);
             }
         }
 
-        private void btnNodeMoveDown_Click(object sender, EventArgs e)//Ok
+        private void btnDotMoveDown_Click(object sender, EventArgs e)//Ok
         {
             int idx = cbbDots.SelectedIndex;
             if (idx + 1 < cbbDots.Items.Count)
@@ -214,18 +220,18 @@ namespace Schematix
                 xDot d = PObject.Dots[idx];
                 PObject.Dots[idx] = PObject.Dots[idx + 1];
                 PObject.Dots[idx + 1] = d;
-                cbbNodesRefill(idx + 1);
+                cbbDotsRefill(idx + 1);
             }
         }
 
-        private void btnNodeDelete_Click(object sender, EventArgs e)//Ok
+        private void btnDotDelete_Click(object sender, EventArgs e)//Ok
         {
             int idx = cbbDots.SelectedIndex;
             if (idx < 0)
                 return;
             cbbDots.Items.RemoveAt(idx);
             PObject.DeleteDot(PObject.Dots[idx]);
-            cbbNodesRefill(idx);
+            cbbDotsRefill(idx);
         }
 
         private void Dot_TextChanged(object sender, EventArgs e)//Ok
@@ -233,27 +239,34 @@ namespace Schematix
             btnDotSave.Enabled = true;
         }
 
-        private void btnNodeSave_EnabledChanged(object sender, EventArgs e)//Ok
+        private void btnDotSave_EnabledChanged(object sender, EventArgs e)//Ok
         {
             btnDotMoveUp.Enabled =
             btnDotMoveDown.Enabled = !btnDotSave.Enabled;
         }
 
-        private void btnNodeSave_Click(object sender, EventArgs e)//Ok
+        private void btnDotSave_Click(object sender, EventArgs e)//Ok
         {
             int idx = cbbDots.SelectedIndex;
             if (idx < 0)
                 return;
             PObject.Dots[idx].Name        = tbDotName.Text;
-            PObject.Dots[idx].Description = tbDescription.Text;
+            PObject.Dots[idx].Description = tbDotDescription.Text;
             PObject.Dots[idx].X = (short)nudDotX.Value;
             PObject.Dots[idx].Y = (short)nudDotY.Value;
-            cbbNodesRefill(idx);
+            cbbDotsRefill(idx);
         }
         #endregion
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (tbNode.Text == "" && tbName.Text == "")
+            {
+                MessageBox.Show(Options.LangCur.mElementHasNoName, Options.LangCur.dFileSaving);
+                return;
+            }
+            if (!PObject.SaveToFileCheck(PObject.FileName))
+                return;
             // Main
             PObject.NodeName    = tbNode.Text;
             PObject.isPrototype = chkIsPrototype.Checked;
@@ -269,7 +282,8 @@ namespace Schematix
             PObject.BackColor     = btnBackColor.BackColor;
             PObject.Canvas        = loadedBitmap;
 
-            PObject.SaveToFile(PObject.FileName);
+            if (!PObject.SaveToFile(PObject.FileName))
+                return;
             Share.UpdateNodeName(PObject);
             // Out
             DialogResult = DialogResult.OK;

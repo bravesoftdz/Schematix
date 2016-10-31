@@ -8,8 +8,9 @@ namespace Schematix
     public partial class BoxEditForm : Form
     {
         public xPBox PBox;
+        bool IsRoot;
 
-        public BoxEditForm(xPBox pBox, String rootPath)
+        public BoxEditForm(xPBox pBox, String rootPath, bool isRoot)
         {
             InitializeComponent();
             if (pBox == null)
@@ -21,8 +22,13 @@ namespace Schematix
             else
                 Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleBox;
             PBox = pBox;
+            IsRoot = isRoot;
+
             // Share
-            lblNodeName.Text    = Options.LangCur.lEENodeName;
+            chkIsPrototype.Enabled =
+            tbNode.Enabled = !isRoot;
+            //
+            lblNode.Text    = Options.LangCur.lEENodeName;
             chkIsPrototype.Text = Options.LangCur.lEEPrototype;
             lblName.Text        = Options.LangCur.lEEName;
             lblID.Text          = Options.LangCur.lEEID;
@@ -89,6 +95,13 @@ namespace Schematix
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (tbNode.Text == "" && tbName.Text == "")
+            {
+                MessageBox.Show(Options.LangCur.mElementHasNoName, Options.LangCur.dFileSaving);
+                return;
+            }
+            if (!PBox.SaveToFileCheck(PBox.FileName))
+                return;
             // Share
             PBox.NodeName    = tbNode.Text;
             PBox.isPrototype = chkIsPrototype.Checked;
@@ -105,7 +118,8 @@ namespace Schematix
             PBox.TextColor     = btnFont.BackColor;
             PBox.Font          = btnFont.Font;
 
-            PBox.SaveToFile(PBox.FileName);
+            if (!PBox.SaveToFile(PBox.FileName))
+                return;
             Share.UpdateNodeName(PBox);
             // Out
             DialogResult = DialogResult.OK;

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Dot");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Link");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Dot");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Link");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryForm));
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Box");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Box");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblObjectsCatalog = new System.Windows.Forms.Label();
@@ -165,10 +165,10 @@
             this.tvObjects.HideSelection = false;
             this.tvObjects.Location = new System.Drawing.Point(3, 28);
             this.tvObjects.Name = "tvObjects";
-            treeNode1.Name = "tvNodeDot";
-            treeNode1.Text = "Dot";
+            treeNode4.Name = "tvNodeDot";
+            treeNode4.Text = "Dot";
             this.tvObjects.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode4});
             this.tvObjects.Size = new System.Drawing.Size(255, 87);
             this.tvObjects.TabIndex = 0;
             this.tvObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvObjects_AfterSelect);
@@ -302,10 +302,10 @@
             this.tvLinks.HideSelection = false;
             this.tvLinks.Location = new System.Drawing.Point(3, 28);
             this.tvLinks.Name = "tvLinks";
-            treeNode2.Name = "tvNodeLink";
-            treeNode2.Text = "Link";
+            treeNode5.Name = "tvNodeLink";
+            treeNode5.Text = "Link";
             this.tvLinks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode5});
             this.tvLinks.Size = new System.Drawing.Size(255, 87);
             this.tvLinks.TabIndex = 0;
             this.tvLinks.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvLinks_AfterSelect);
@@ -547,10 +547,10 @@
             this.tvBoxes.HideSelection = false;
             this.tvBoxes.Location = new System.Drawing.Point(3, 28);
             this.tvBoxes.Name = "tvBoxes";
-            treeNode3.Name = "tvNodeBox";
-            treeNode3.Text = "Box";
+            treeNode6.Name = "tvNodeBox";
+            treeNode6.Text = "Box";
             this.tvBoxes.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode6});
             this.tvBoxes.Size = new System.Drawing.Size(255, 87);
             this.tvBoxes.TabIndex = 0;
             this.tvBoxes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvBoxes_AfterSelect);

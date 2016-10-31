@@ -185,7 +185,8 @@ namespace Schematix
 
         static public void UpdateNodeName(xPrototype prototype)
         {
-            prototype.tvNode.Text = (prototype.NodeName != "") ? prototype.NodeName : prototype.Name;
+            if(prototype.tvNode != null)
+                prototype.tvNode.Text = (prototype.NodeName != "") ? prototype.NodeName : prototype.Name;
         }
     }
 }
