@@ -4,18 +4,15 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows.Forms;
 
 namespace Schematix
 {
-    public abstract class xRecord
-    {
-        public UInt64 ID          = (UInt64)DateTime.Now.ToBinary();
-        public String Name        = "";
-        public String Description = "";
-        public String FileName    = "";
 
+    public abstract class xBase
+    {
         // Load
 
         virtual protected void BeforeReadParameters()//Ok
@@ -26,6 +23,68 @@ namespace Schematix
         {
         }
 
+        virtual public void ReadParameters(BinaryReader stream)//Ok
+        {
+            BeforeReadParameters();
+            while (stream.PeekChar() > -1)
+            {
+                String parameterName = stream.ReadString();
+                // Check for record's end
+                if (parameterName == "END")
+                    return;
+                int valueLength = stream.ReadInt32();
+                // Load(/skip) parameters
+                ReadParameter(stream, parameterName, valueLength);
+            }
+            AfterReadParameters();
+        }
+
+        virtual protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        {
+            stream.ReadBytes(valueLength);
+            return false;
+        }
+
+        protected String ReadStreamString(BinaryReader stream, int length)//Ok
+        {
+            return Encoding.UTF8.GetString(stream.ReadBytes(length));
+        }
+
+        // Save
+           
+        virtual public void WriteParameters(BinaryWriter stream)//Ok
+        {
+            // Mark the end
+            stream.Write("END");
+        }
+
+        protected void WriteStreamString(String parameterName, BinaryWriter stream, String text)//Ok
+        {
+            stream.Write(parameterName);
+            byte[] b = Encoding.UTF8.GetBytes(text);
+            stream.Write(b.Length);
+            stream.Write(b);
+        }
+
+        protected void WriteStream_CloseBlock(BinaryWriter stream, int start)//Ok
+        {
+            // Jump back and fill size value
+            int pos = (int)stream.Seek(0, SeekOrigin.Current);
+            stream.Seek(start, SeekOrigin.Begin);
+            stream.Write(pos - start);
+            stream.Seek(pos, SeekOrigin.Begin);
+        }
+    }
+    
+    public abstract class xRecord : xBase
+    {
+        public UInt64 ID          = (UInt64)DateTime.Now.ToBinary();
+        public String Name        = "";
+        public String Description = "";
+        public String FileName    = "";
+
+        // Load
+        
         public bool LoadFromFileCheck(String fileName)//Ok
         {
             if (fileName == "")
@@ -62,24 +121,8 @@ namespace Schematix
                 return false;
             }
         }
-
-        virtual public void ReadParameters(BinaryReader stream)//Ok
-        {
-            BeforeReadParameters();
-            while (stream.PeekChar() > -1)
-            {
-                String parameterName = stream.ReadString();
-                // Check for record's end
-                if (parameterName == "END")
-                    return;
-                int valueLength = stream.ReadInt32();
-                // Load(/skip) parameters
-                ReadParameter(stream, parameterName, valueLength);
-            }
-            AfterReadParameters();
-        }
         
-        virtual protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (parameterName == "Name")
                 Name = new String(stream.ReadChars(valueLength));
@@ -89,16 +132,8 @@ namespace Schematix
                 ID = stream.ReadUInt64();
             // Skip unknown data
             else
-            {
-                stream.ReadBytes(valueLength);
-                return false;
-            }
+                return base.ReadParameter(stream, parameterName, valueLength);
             return true;
-        }
-
-        protected String ReadStreamString(BinaryReader stream, int length)//Ok
-        {
-            return Encoding.UTF8.GetString(stream.ReadBytes(length));
         }
 
         // Save
@@ -142,32 +177,14 @@ namespace Schematix
             }
         }
         
-        virtual public void WriteParameters(BinaryWriter stream)//Ok
+        override public void WriteParameters(BinaryWriter stream)//Ok
         {
             WriteStreamString("Name", stream, Name);
             WriteStreamString("Description", stream, Description);
             stream.Write("ID");
             stream.Write(8);
             stream.Write(ID);
-            // Mark the end
-            stream.Write("END");
-        }
-
-        protected void WriteStreamString(String parameterName, BinaryWriter stream, String text)//Ok
-        {
-            stream.Write(parameterName);
-            byte[] b = Encoding.UTF8.GetBytes(text);
-            stream.Write(b.Length);
-            stream.Write(b);
-        }
-
-        protected void WriteStream_CloseBlock(BinaryWriter stream, int start)//Ok
-        {
-            // Jump back and fill size value
-            int pos = (int)stream.Seek(0, SeekOrigin.Current);
-            stream.Seek(start, SeekOrigin.Begin);
-            stream.Write(pos - start);
-            stream.Seek(pos, SeekOrigin.Begin);
+            base.WriteParameters(stream);
         }
     }
     
@@ -562,44 +579,120 @@ namespace Schematix
         }
     }
 
+    public enum PingStates
+    {
+        NotSend,
+        Send,
+        Replayed,
+        Cancelled
+    }
+
+    public class xPing : xBase
+    {
+        public PingStates State;
+        public DateTime   SendTime = DateTime.Now;
+        public IPStatus   Status;
+        public String     Error;
+        public int        TripTime;
+        public String     Replayer;
+
+        override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
+        {
+            if (parameterName == "State")
+                Enum.TryParse(ReadStreamString(stream, valueLength), out State);
+            else if (valueLength == 2 && parameterName == "Status")
+                Status = (IPStatus)stream.ReadInt16();
+            else if (valueLength == 8 && parameterName == "SendTime")
+                SendTime = DateTime.FromBinary(stream.ReadInt64());
+            else if (parameterName == "Error")
+                Error = ReadStreamString(stream, valueLength);
+            else if (valueLength == 4 && parameterName == "TripTime")
+                TripTime = stream.ReadInt32();
+            else if (parameterName == "Replayer")
+                Replayer = ReadStreamString(stream, valueLength);
+            // Pass unprocessed data up
+            else
+                return base.ReadParameter(stream, parameterName, valueLength);
+            return true;
+        }
+
+        override public void WriteParameters(BinaryWriter stream)//Ok
+        {
+            // Write local part of body
+            WriteStreamString("State", stream, State.ToString());
+            if (State != PingStates.NotSend)
+            {
+                stream.Write("Status");
+                stream.Write(2);
+                stream.Write((Int16)Status);
+                stream.Write("SendTime");
+                stream.Write(8);
+                stream.Write(SendTime.ToBinary());
+                if (Error != "")
+                    WriteStreamString("Error", stream, Error);
+                stream.Write("TripTime");
+                stream.Write(4);
+                stream.Write(TripTime);
+                if (Replayer != "")
+                    WriteStreamString("Replayer", stream, Replayer);
+            }
+            // Upper class body
+            base.WriteParameters(stream);
+        }
+    }
+
     public class xIP : xRecord
     {
         xObject Object { get; }
-        public ListViewItem lvItem          = null;
-        public String       Address         = "";
-        public int          Period          = Options.DEFAULT_PING_PERIOD;
-        public int          TimeOutGreen    = Options.DEFAULT_PING_TIMEOUT_GREEN;
-        public int          TimeOutYellow   = Options.DEFAULT_PING_TIMEOUT_YELLOW;
-        public int          TimeOutRed      = Options.DEFAULT_PING_TIMEOUT_RED;
-        public bool         Onn             = Options.DEFAULT_PING_ONN;
-        public DateTime     TimeLast        = DateTime.Now;
-        public DateTime     TimeNext        = DateTime.Now;
-        public int[]        PingTimeArray   = new int[Options.DEFAULT_PING_ARRAY];
-        protected int       PingTimeCount   = 0;
+        public ListViewItem Map_lvItem    = null;
+        public ListViewItem Obj_lvItem    = null;
+        public ListView     IP_lv         = null;
+        public String       Address       = "";
+        public int          Period        = Options.DEFAULT_PING_PERIOD;
+        public int          TimeOutGreen  = Options.DEFAULT_PING_TIMEOUT_GREEN;
+        public int          TimeOutYellow = Options.DEFAULT_PING_TIMEOUT_YELLOW;
+        public int          TimeOutRed    = Options.DEFAULT_PING_TIMEOUT_RED;
+        public bool         Onn           = Options.DEFAULT_PING_ONN;
+        public DateTime     TimeLast      = DateTime.Now;
+        public DateTime     TimeNext      = DateTime.Now;
+        public xPing[]      Pings         = new xPing[Options.DEFAULT_PING_ARRAY];
+        public int          PingsCount    = 0;
 
         public xIP(xObject owner)//Ok
         {
             Object = owner;
-            PingClearValues();
         }
 
-        public void PingClearValues()//Ok
+        public void ClearPings()//Ok
         {
-            for (int i = PingTimeArray.Length - 1; 0 <= i; i--)
-                PingTimeArray[i] = -1;
-            PingTimeCount = 0;
+            Pings = new xPing[Options.DEFAULT_PING_ARRAY];
+            PingsCount = 0;
         }
 
-        public void PingPushNewValue(int v)//Ok
+        public void PushNewPing(xPing Ping)//Ok
         {
-            if (PingTimeArray.Length < PingTimeCount)
-                PingTimeCount = PingTimeArray.Length;
-            for (int i = PingTimeCount - 1; 0 < i; i--)
-                PingTimeArray[i] = PingTimeArray[i - 1];
-            PingTimeArray[0] = v;
-            if (PingTimeCount < PingTimeArray.Length)
-                PingTimeCount++;
+            if (Pings.Length < ++PingsCount)
+                PingsCount = Pings.Length;
+            for (int i = PingsCount - 1; 0 < i; i--)
+                Pings[i] = Pings[i - 1];
+            Pings[0] = Ping;
         }
+
+        public bool AddPing(DateTime now)//Ok
+        {
+            if (now < TimeNext)
+                return false;
+            TimeLast = now;
+            TimeNext = now.AddMilliseconds(Period);
+            PushNewPing(new xPing());
+            Pings[0].State = PingStates.Send;
+            Pings[0].SendTime = now;
+            if(IP_lv != null)
+                Share.lvPings_Add(IP_lv, this, Pings[0]);
+            return true;
+        }
+
+        protected override void BeforeReadParameters() => ClearPings();//Ok
 
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
@@ -619,8 +712,12 @@ namespace Schematix
                 TimeLast = DateTime.FromBinary(stream.ReadInt64());
             else if (valueLength == 8 && parameterName == "TimeNext")
                 TimeNext = DateTime.FromBinary(stream.ReadInt64());
-            else if (valueLength == 4 && parameterName == "PingTime")
-                PingPushNewValue(stream.ReadInt32());
+            else if (parameterName == "Ping")
+            {
+                var Ping = new xPing();
+                Ping.ReadParameters(stream);
+                PushNewPing(Ping);
+            }
             // Pass unprocessed data up
             else
                 return base.ReadParameter(stream, parameterName, valueLength);
@@ -652,22 +749,23 @@ namespace Schematix
             stream.Write("TimeNext");
             stream.Write(8);
             stream.Write(TimeNext.ToBinary());
-            for (int i = 0; i < PingTimeArray.Length; i++)
-            {
-                if (PingTimeArray[i] < 0)
-                    break;
-                stream.Write("PingTime");
-                stream.Write(4);
-                stream.Write(PingTimeArray[i]);
-            }
+            // Ping records
+            int pos = 0;
+            for (int i = Pings.Length - 1; 0 <= i; i--)
+                if (Pings[i] != null)
+                    if (Pings[i].State != PingStates.NotSend)
+                    {
+                        stream.Write("Ping");
+                        pos = (int)stream.Seek(0, SeekOrigin.Current);
+                        stream.Write(pos);
+                        Pings[i].WriteParameters(stream);
+                        WriteStream_CloseBlock(stream, pos);
+                    }
             // Upper class body
             base.WriteParameters(stream);
         }
 
-        public void Delete()
-        {
-            Object.DeleteIP(this);
-        }
+        public void Delete() => Object.DeleteIP(this);//Ok
     }
 
     public class xObject : xExemplar
@@ -746,7 +844,8 @@ namespace Schematix
 
         public void DeleteIP(xIP IP)
         {
-            IP.lvItem = null;
+            IP.Map_lvItem?.Remove();
+            IP.Obj_lvItem?.Remove();
             Map.DeleteIP(IP);
             IPs.Remove(IP);
         }

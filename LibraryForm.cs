@@ -108,6 +108,11 @@ namespace Schematix
             Hide();
         }
 
+        internal void SelectTab(int v)
+        {
+            tcCatalog.SelectedIndex = v;
+        }
+
         #region Load Tree
         delegate xPrototype LoadTreeCallBack();
 

@@ -36,7 +36,7 @@ namespace Schematix
             tbDescription.Text = Object.Description;
             // Fill IPs
             foreach (var IP in obj.IPs)
-                Share.lvIPs_AddIP(lvIPs, IP);
+                Share.lvIPs_Add(lvIPs, IP, ref IP.Obj_lvItem);
         }
 
         private void btnGetReference_Click(object sender, EventArgs e)//Ok
@@ -53,7 +53,7 @@ namespace Schematix
         {
             var form = new IPEditForm(null, Object);
             if (form.ShowDialog() == DialogResult.OK)
-                Share.lvIPs_AddIP(lvIPs, form.IP);
+                Share.lvIPs_Add(lvIPs, form.IP, ref form.IP.Obj_lvItem);
         }
 
         private void lvIPs_DoubleClick(object sender, EventArgs e)//O
@@ -64,6 +64,13 @@ namespace Schematix
         private void btnIPDelete_Click(object sender, EventArgs e)//O
         {
             Share.lvIPs_Delete(lvIPs);
+        }
+
+        private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            if (e?.Item.Tag == null)
+                return;
+            (e.Item.Tag as xIP).Onn = e.Item.Checked;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -80,7 +87,7 @@ namespace Schematix
                 xIP IP = (lvi.Tag as xIP);
                 if (IP == null)
                     continue;
-                IP.lvItem = null;
+                IP.Obj_lvItem = null;
                 Object.AddIP(IP);                
             }
 

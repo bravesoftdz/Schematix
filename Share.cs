@@ -108,7 +108,7 @@ namespace Schematix
             return true;
         }
 
-        static public void lvIPs_AddIP(ListView lvIPs, xIP IP)//Ok
+        static public void lvIPs_Add(ListView lvIPs, xIP IP, ref ListViewItem target_lvItem)//Ok
         {
             if (lvIPs == null)
                 return;
@@ -121,33 +121,33 @@ namespace Schematix
             ip_item.SubItems.Add("");
             lvIPs.Items.Add(ip_item);
             ip_item.Tag = IP;
-            IP.lvItem = ip_item;
-            lvIPs_RenewIP(IP);
+            target_lvItem = ip_item;
+            lvIPs_Renew(target_lvItem, IP);
         }
 
-        static public void lvIPs_RenewIP(xIP IP)//Ok
+        static public void lvIPs_Renew(ListViewItem lvItem, xIP IP)//Ok
         {
             if (IP == null)
                 return;
-            if (IP.lvItem == null)
+            if (lvItem == null)
                 return;
-            IP.lvItem.Text = IP.Address;
-            IP.lvItem.Checked = IP.Onn;
-            IP.lvItem.SubItems[0].Text = IP.Period.ToString();
-            if (IP.PingTimeArray[0] < 0)
-                IP.lvItem.SubItems[1].Text = "-";
+            lvItem.Text = IP.Address;
+            lvItem.Checked = IP.Onn;
+            lvItem.SubItems[0].Text = IP.Period.ToString();
+            if (IP.Pings[0].TripTime < 0)
+                lvItem.SubItems[1].Text = "-";
             else
-                IP.lvItem.SubItems[1].Text = IP.TimeLast.ToString(Options.TIME_FORMAT);
-            IP.lvItem.SubItems[2].Text = IP.TimeNext.ToString(Options.TIME_FORMAT);
+                lvItem.SubItems[1].Text = IP.TimeLast.ToString(Options.TIME_FORMAT);
+            lvItem.SubItems[2].Text = IP.TimeNext.ToString(Options.TIME_FORMAT);
             String s = "";
-            foreach (var ping in IP.PingTimeArray)
-                if (ping < 0)
+            foreach (var ping in IP.Pings)
+                if (ping.TripTime < 0)
                     break;
-                else if (ping < IP.TimeOutGreen)
+                else if (ping.TripTime < IP.TimeOutGreen)
                     s += "G";
-                else if (ping < IP.TimeOutYellow)
+                else if (ping.TripTime < IP.TimeOutYellow)
                     s += "Y";
-                else if (ping < IP.TimeOutRed)
+                else if (ping.TripTime < IP.TimeOutRed)
                     s += "R";
                 else
                     s += "-";
@@ -155,8 +155,8 @@ namespace Schematix
             if (s == "")
                 s = "-";
             else
-                s = IP.PingTimeArray[0] + "ms [" + s + "]";
-            IP.lvItem.SubItems[3].Text = s;
+                s = IP.Pings[0] + "ms [" + s + "]";
+            lvItem.SubItems[3].Text = s;
         }
 
         static public void lvIPs_Edit(ListView lvIPs)//Ok
@@ -169,7 +169,8 @@ namespace Schematix
             if (ip == null)
                 return;
             new IPEditForm(ip, null).ShowDialog();
-            lvIPs_RenewIP(ip);
+            lvIPs_Renew(ip.Obj_lvItem, ip);
+            lvIPs_Renew(ip.Map_lvItem, ip);
         }
 
         static public void lvIPs_Delete(ListView lvIPs)//Ok
@@ -177,9 +178,57 @@ namespace Schematix
             if (lvIPs == null)
                 return;
             for (int i = lvIPs.SelectedItems.Count - 1; 0 <= i; i--)
-            {
                 (lvIPs.SelectedItems[i].Tag as xIP)?.Delete();
-                lvIPs.Items.RemoveAt(i);
+        }
+
+        static public ListViewItem lvPings_Add(ListView lvPings, xIP IP, xPing Ping)//Ok
+        {
+            if (lvPings == null)
+                return null;
+            if (Ping == null)
+                return null;
+            var ping_item = new ListViewItem("");
+            ping_item.SubItems.Add("");
+            ping_item.SubItems.Add("");
+            ping_item.SubItems.Add("");
+            lvPings.Items.Add(ping_item);
+            ping_item.Tag = Ping;
+            lvPings_Renew(ping_item, IP, Ping);
+            return ping_item;
+        }
+
+        static public void lvPings_Renew(ListViewItem lvItem, xIP IP, xPing Ping)//Ok
+        {
+            if (lvItem == null)
+                return;
+            if (Ping == null)
+                return;
+            lvItem.Text = Ping.SendTime.ToString(Options.TIME_FORMAT);
+            lvItem.SubItems[0].Text = Ping.Replayer.ToString();
+            if (Ping.State == PingStates.Send)
+                lvItem.SubItems[1].Text = Options.LangCur.lIPPingSend;
+            else if (Ping.State == PingStates.Cancelled)
+            {
+                lvItem.SubItems[1].Text = Options.LangCur.lIPPingCancelled;
+                lvItem.ImageIndex = 5;
+            }
+            else if (Ping.Error != "")
+            {
+                lvItem.SubItems[1].Text = Ping.Error;
+                lvItem.ImageIndex = 5;
+            }
+            else
+            {
+                lvItem.SubItems[1].Text = Ping.Replayer;
+                lvItem.SubItems[2].Text = Ping.TripTime.ToString();
+                if (Ping.TripTime < IP.TimeOutGreen)
+                    lvItem.ImageIndex = 1;
+                else if (Ping.TripTime < IP.TimeOutYellow)
+                    lvItem.ImageIndex = 2;
+                else if (Ping.TripTime < IP.TimeOutRed)
+                    lvItem.ImageIndex = 3;
+                else
+                    lvItem.ImageIndex = 4;
             }
         }
 

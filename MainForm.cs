@@ -11,7 +11,6 @@ namespace Schematix
     {
         const int TOOLS_HIDE_DELAY = 500; // mseconds
         LibraryForm libraryForm = new LibraryForm();
-        List<xMap> Maps = new List<xMap>();
         xMap Map = null;
         int msX, msY;
 
@@ -52,17 +51,10 @@ namespace Schematix
                     Options.LangCur.mNoFolders + eStr, 
                     Options.LangCur.dOptionsLoading);
             SetText();
-        }
-
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            Map = new xMap();
-            Map.Tab = tcMaps.TabPages[0];
-            Map.Tab.Tag = Map;
-            Maps.Add(Map);
-            MainForm_ResizeEnd(null, null);
-            //
-            libraryForm.StartInit();
+            // Ping timer
+            timerPing.Tick += Options.timerPing_Tick;
+            timerPing.Interval = Options.PingPeriod;
+            timerPing.Enabled = Options.PingOnn;
         }
 
         #region Main
@@ -82,6 +74,83 @@ namespace Schematix
             tsmiMapLoad.Text    = Options.LangCur.lMFMapCMLoad;
             tsmiMapReload.Text  = Options.LangCur.lMFMapCMReload;
             tsmiMapClose.Text   = Options.LangCur.lMFMapCMClose;
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            Map = new xMap();
+            Map.Tab = tcMaps.TabPages[0];
+            Map.Tab.Tag = Map;
+            Options.Maps.Add(Map);
+            MainForm_ResizeEnd(null, null);
+            //
+            libraryForm.StartInit();
+            //
+            if (0 < Options.OnStart && 0 < Options.MapFiles.Count)
+            {
+                if (Options.OnStart == 1)
+                    if (MessageBox.Show(Options.LangCur.hMFOpenLastMaps, Options.LangCur.hMFLoading, MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                        return;
+                foreach (var MapFile in Options.MapFiles)
+                    if (File.Exists(MapFile))
+                        if (Map.LoadFromFile(MapFile))
+                            tcMaps.SelectedTab = tabPageAddNew;
+                //...
+                Options.MapFiles.Clear();
+            }
+        }
+
+        private void MainForm_Move(object sender, EventArgs e)
+        {
+            MoveLibraryForm();
+        }
+
+        public void MoveLibraryForm()
+        {
+            if (libraryForm.Visible && libraryForm.bind)
+                libraryForm.Location = new Point(Location.X + Width, Location.Y);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)//!
+        {
+            bool changes = false;
+            if (0 < Options.OnClose)
+                foreach (var Map in Options.Maps)
+                    if (Map.Changed)
+                        changes = true;
+            if (Options.OnClose == 1 && changes)
+            {
+                var res = MessageBox.Show(Options.LangCur.hMFSaveOpenedMaps, Options.LangCur.hMFClosing, MessageBoxButtons.YesNoCancel);
+                if (res == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                changes = (res != DialogResult.No);
+            }
+            if (changes)
+                foreach (var Map in Options.Maps)
+                    if (Map.Changed)
+                        if (Map.SaveToFileCheck(Map.FileName))
+                            Map.SaveToFile(Map.FileName);
+            Options.Save();
+        }
+        #endregion
+
+        #region Tools
+        private void rbTool_Click(object sender, EventArgs e)
+        {
+            if ((sender as RadioButton).Checked)
+                (sender as RadioButton).Click += btnLibrary_Click;
+        }
+
+        private void rbTool_CheckedChanged(object sender, EventArgs e)
+        {
+            (sender as RadioButton).Click -= btnLibrary_Click;
+            libraryForm.SelectTab(
+                sender == rbObject ? 0 :
+                sender == rbLink ? 1 : 2);
+            Focus();
         }
 
         private void btnLibrary_Click(object sender, EventArgs e)//!!!
@@ -118,40 +187,13 @@ namespace Schematix
         {
             new AboutForm().ShowDialog();
         }
-
-        private void MainForm_Move(object sender, EventArgs e)
-        {
-            MoveLibraryForm();
-        }
-
-        public void MoveLibraryForm()
-        {
-            if (libraryForm.Visible && libraryForm.bind)
-                libraryForm.Location = new Point(Location.X + Width, Location.Y);
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)//!!!
-        {
-            //...
-            Options.Save();
-        }
         #endregion
 
         #region Tools Pull/Push
-        private void PullMaps_Over(object sender, EventArgs e)//Ok
-        {
-            PullControl(pnlMaps, TOOLS_HIDE_DELAY * 2);
-        }
-        
-        private void PullVScroll_Over(object sender, EventArgs e)//Ok
-        {
-            PullControl(vScrollBar, TOOLS_HIDE_DELAY);
-        }
-
-        private void PullHScroll_Over(object sender, EventArgs e)//Ok
-        {
-            PullControl(hScrollBar, TOOLS_HIDE_DELAY);
-        }
+        private void PullMaps_Over(object sender, EventArgs e)    => PullControl(pnlMaps,    TOOLS_HIDE_DELAY * 2);//Ok
+        private void PullTools_Over(object sender, EventArgs e)   => PullControl(pnlTools,   TOOLS_HIDE_DELAY);//Ok
+        private void PullVScroll_Over(object sender, EventArgs e) => PullControl(vScrollBar, TOOLS_HIDE_DELAY);//Ok
+        private void PullHScroll_Over(object sender, EventArgs e) => PullControl(hScrollBar, TOOLS_HIDE_DELAY);//Ok
 
         private void PullControl(Control control, int time)//Ok
         {
@@ -229,7 +271,7 @@ namespace Schematix
             page.Tag = Map;
             Map.Tab = page;
             tcMaps.TabPages.Insert(TabIdx, page);
-            Maps.Add(Map);
+            Options.Maps.Add(Map);
             return Map;
         }
 
@@ -346,7 +388,8 @@ namespace Schematix
                 if (res == DialogResult.Cancel)
                     return;
                 if (res == DialogResult.OK)
-                    Map.SaveToFile(Map.FileName);
+                    if (Map.SaveToFileCheck(Map.FileName))
+                        Map.SaveToFile(Map.FileName);
             }
             CloseMap(Map);
         }
@@ -359,7 +402,7 @@ namespace Schematix
                     idx--;
             tcMaps.SelectedIndex = idx;
             Map.Clear();
-            Maps.Remove(Map);
+            Options.Maps.Remove(Map);
             tcMaps.TabPages.Remove(Map.Tab);
         }
         #endregion

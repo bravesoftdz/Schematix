@@ -10,6 +10,7 @@ namespace Schematix
         public IPEditForm(xIP ip, xObject owner)//Ok
         {
             InitializeComponent();
+            //Main
             lblAddress.Text  = Options.LangCur.lIPAddress;
             lblName.Text     = Options.LangCur.lEOName;
             lblPeriod.Text   = Options.LangCur.lIPPeriod;
@@ -17,6 +18,7 @@ namespace Schematix
             lblTimeOutGreen.Text  = Options.LangCur.lIPTimeOutGreen;
             lblTimeOutYellow.Text = Options.LangCur.lIPTimeOutYellow;
             lblTimeOutRed.Text    = Options.LangCur.lIPTimeOutRed;
+            // Fill
             if (ip == null)
             {
                 Text = Options.LangCur.lIPTitleAdd;
@@ -25,17 +27,33 @@ namespace Schematix
             else
                 Text = Options.LangCur.lIPTitleEdit;
             IP = ip;
-            tbName.Text         = IP.Name;
-            tbDescription.Text  = IP.Description;
-            tbAddress.Text      = IP.Address;
+            tbName.Text        = IP.Name;
+            tbDescription.Text = IP.Description;
+            tbAddress.Text     = IP.Address;
             //
-            nudTimeOutGreen.Value   = IP.TimeOutGreen;
-            nudTimeOutYellow.Value  = IP.TimeOutYellow;
-            nudTimeOutRed.Value     = IP.TimeOutRed;
+            nudTimeOutGreen.Value  = IP.TimeOutGreen;
+            nudTimeOutYellow.Value = IP.TimeOutYellow;
+            nudTimeOutRed.Value    = IP.TimeOutRed;
             //
             dtpDateNext.Value   = IP.TimeNext;
             dtpDateNext.Checked = IP.Onn;
             nudPeriod.Value     = IP.Period;
+
+            // Pings
+            clmSendTime.Text = Options.LangCur.lIPColumSendTime;
+            clmState.Text    = Options.LangCur.lIPColumState;
+            clmTripTime.Text = Options.LangCur.lIPColumTripTime;
+            toolTip.SetToolTip(btnClearPings, Options.LangCur.hIPClearPings);
+            // Fill
+            for (int i = 0; i < IP.PingsCount; i++)
+                if(IP.Pings[i].State != PingStates.NotSend)
+                    Share.lvPings_Add(lvPings, IP, IP.Pings[i]);
+            IP.IP_lv = lvPings;
+        }
+
+        private void btnClearPings_Click(object sender, EventArgs e)
+        {
+            IP.ClearPings();
         }
 
         private void btnOk_Click(object sender, EventArgs e)//Ok

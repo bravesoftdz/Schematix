@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -67,6 +68,9 @@ namespace Schematix
             PingCount  =   1;
         static public bool
             PingOnn = false;
+        static public  xIP[]       PingIPsIDs  = new xIP[10];
+        static public  Ping[]      PingSenders = new Ping[10];
+        static private PingOptions PingOptions = new PingOptions(64, true);
 
         // Path roots
         static public String
@@ -95,9 +99,11 @@ namespace Schematix
         static public List<xPObject> PObjects = new List<xPObject>();
         static public List<xPLink>   PLinks   = new List<xPLink>();
         static public List<xPBox>    PBoxes   = new List<xPBox>();
+        static public List<xMap>     Maps     = new List<xMap>();
+        static public List<String>   MapFiles = new List<String>();
         // Ping list
         static public List<xIP> IPs = new List<xIP>();
-        static public int LastSendIPIdx = -1;
+        static public int LastSendIPIdx = 0;
 
         static public void AddIP(xIP IP)//
         {
@@ -109,7 +115,7 @@ namespace Schematix
         {
             int idx = IPs.IndexOf(IP);
             if (0 <= idx)
-                if (idx <= LastSendIPIdx)
+                if (idx < LastSendIPIdx)
                     LastSendIPIdx--;
             IPs.Remove(IP);
         }
@@ -193,7 +199,7 @@ namespace Schematix
             return SetCounter(StrToInt(str, defaultValue), maxValue, minValue, defaultValue);
         }
 
-        static public String Load(String fileName = iniFile)//!!!
+        static public String Load(String fileName = iniFile)//!
         {
             try
             {
@@ -215,30 +221,30 @@ namespace Schematix
                             case "Language":      LangName    = value;   break;
                             case "LanguagesPath": LangPath    = value;   break;
                             // Root folders
-                            case "RootMaps":      RootMaps    = value;   break;
-                            case "RootObjects":   RootObjects = value;   break;
-                            case "RootLinks":     RootLinks   = value;   break;
-                            case "RootBoxes":     RootBoxes   = value;   break;
+                            case "RootMaps":    RootMaps    = value;   break;
+                            case "RootObjects": RootObjects = value;   break;
+                            case "RootLinks":   RootLinks   = value;   break;
+                            case "RootBoxes":   RootBoxes   = value;   break;
                             // Behavior
-                            case "OnStart":       OnStart    = SetCounter(value, 2);                    break;
-                            case "OnClose":       OnClose    = SetCounter(value, 2);                    break;
-                            case "PingOnn":       PingOnn    = (value.ToUpper() == "YES");              break;
-                            case "PingPeriod":    PingPeriod = SetCounter(value, MAX_PING_PERIOD, 1);   break;
-                            case "PingCount":     PingCount  = SetCounter(value, 10, 1);                break;
+                            case "OnStart":    OnStart    = SetCounter(value, 2);                    break;
+                            case "OnClose":    OnClose    = SetCounter(value, 2);                    break;
+                            case "PingOnn":    PingOnn    = (value.ToUpper() == "YES");              break;
+                            case "PingPeriod": PingPeriod = SetCounter(value, MAX_PING_PERIOD, 1);   break;
+                            case "PingCount":  PingCount  = SetCounter(value, 10, 1);                break;
 
                             //# Map
                             // Grid
-                            case "GridStoreOwn":  Grid.StoreOwn  = (value.ToUpper() == "YES");                               break;
-                            case "GridStyle":     Grid.Style     = (GridStyles)SetCounter(value, 4);                         break;
-                            case "GridColor":     Grid.Pen.Color = Color.FromArgb(StrToInt(value));                          break;
-                            case "GridStepX":     Grid.StepX     = (Int16)SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
-                            case "GridStepY":     Grid.StepY     = (Int16)SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
-                            case "GridThick":     Grid.Pen.Width = (Int16)SetCounter(value, MAX_GRID_THICK, 1);              break;
-                            case "GridAlign":     Grid.Snap      = (value.ToUpper() == "YES");                               break;
-                            // Background
-                            case "BackgroundStoreOwn":  Back.StoreOwn  = (value.ToUpper() == "YES");        break;
-                            case "BackgroundStyle":     Back.Style     = (BackgroundStyles)SetCounter(value, 5);  break;
-                            case "BackgroundColor":     Back.Color     = Color.FromArgb(StrToInt(value));   break;
+                            case "GridStoreOwn": Grid.StoreOwn  = (value.ToUpper() == "YES");                               break;
+                            case "GridStyle":    Grid.Style     = (GridStyles)SetCounter(value, 4);                         break;
+                            case "GridColor":    Grid.Pen.Color = Color.FromArgb(StrToInt(value));                          break;
+                            case "GridStepX":    Grid.StepX     = (Int16)SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
+                            case "GridStepY":    Grid.StepY     = (Int16)SetCounter(value, MAX_GRID_STEP, MIN_GRID_STEP);   break;
+                            case "GridThick":    Grid.Pen.Width = (Int16)SetCounter(value, MAX_GRID_THICK, 1);              break;
+                            case "GridAlign":    Grid.Snap      = (value.ToUpper() == "YES");                               break;
+                            // Background   
+                            case "BackgroundStoreOwn":  Back.StoreOwn  = (value.ToUpper() == "YES");               break;
+                            case "BackgroundStyle":     Back.Style     = (BackgroundStyles)SetCounter(value, 5);   break;
+                            case "BackgroundColor":     Back.Color     = Color.FromArgb(StrToInt(value));          break;
                             case "BackgroundImagePath":
                                 Back.Path = value;
                                 if (File.Exists(value))
@@ -249,6 +255,7 @@ namespace Schematix
                             case "BackgroundImageBuildIn": Back.BuildIn = (value.ToUpper() == "YES");         break;
 
                             //# Map list
+                            case "MapFile": MapFiles.Add(value);   break;
 
                             default:
                                 break;
@@ -263,7 +270,7 @@ namespace Schematix
             return "";
         }
 
-        static public String Save(String fileName = iniFile)//!!!
+        static public String Save(String fileName = iniFile)//!
         {
             try
             {
@@ -303,6 +310,9 @@ namespace Schematix
                     file.WriteLine("BackgroundImageBuildIn\t" + (Back.BuildIn ? "yes" : "no"));
 
                     //# Map list
+                    foreach(var Map in Maps)
+                        if (Map.FileName != "")
+                            file.WriteLine("MapFile\t" + Map.FileName);
                 }
             }
             catch (Exception e)
@@ -314,7 +324,88 @@ namespace Schematix
 
         static public void Init()//Ok
         {
+            for (int i = PingSenders.Length - 1; 0 <= i; i--)
+            {
+                PingIPsIDs[i] = null;
+                PingSenders[i] = new Ping();
+                PingSenders[i].PingCompleted += PingCallback;
+            }
+        }
+        
+        static public void timerPing_Tick(object sender, EventArgs e)//!
+        {
+            if (IPs.Count < 1)
+                return;
+            // Init loop
+            if (IPs.Count <= LastSendIPIdx)
+                LastSendIPIdx = 0;
+            int count = 0;
+            xIP startIP = IPs[LastSendIPIdx];
+            int SendersIdx = PingSenders.Length - 1;
+            do
+            {
+                // Find free sender
+                for (; 0 <= SendersIdx; SendersIdx--)
+                    if (PingIPsIDs[SendersIdx] == null)
+                        break;
+                // No free sender
+                if (SendersIdx < 0)
+                    break;
+                // Send
+                xIP IP = IPs[LastSendIPIdx];
+                if (IP.AddPing(DateTime.Now))
+                {
+                    PingIPsIDs[SendersIdx] = IP;
+                    PingSenders[SendersIdx].SendPingAsync(
+                        IP.Address,
+                        IP.TimeOutGreen + IP.TimeOutYellow + IP.TimeOutRed,
+                        Encoding.ASCII.GetBytes(IP.ID.ToString()),
+                        PingOptions);
+                }
+                // Step
+                LastSendIPIdx++;
+                count++;
+                // Finish?
+                if (IPs.Count <= LastSendIPIdx)
+                    LastSendIPIdx = 0;
+                if (startIP == IPs[LastSendIPIdx])
+                    break;
+            } while (count < PingCount);
         }
 
+        private static void PingCallback(object sender, PingCompletedEventArgs e)//!
+        {
+            // Find sender index
+            int SendersIdx = PingSenders.Length - 1;
+            for (; 0 <= SendersIdx; SendersIdx--)
+                if (PingSenders[SendersIdx] == sender)
+                    break;
+            // Error
+            if (SendersIdx < 0)
+                return;
+            // Get IP record
+            xIP IP = PingIPsIDs[SendersIdx];
+            if (IPs.Contains(IP))
+                if (IP.Pings[0] != null)
+                {
+                    // Update record
+                    if (e.Cancelled)
+                        IP.Pings[0].State = PingStates.Cancelled;
+                    else
+                    {
+                        if (e.Error != null)
+                            IP.Pings[0].Error = e.Error.Message;
+                        IP.Pings[0].State = PingStates.Replayed;
+                        IP.Pings[0].Replayer = e.Reply.Address.ToString();
+                        IP.Pings[0].Status = e.Reply.Status;
+                        IP.Pings[0].TripTime = (int)e.Reply.RoundtripTime;
+                        // Update showed info
+                        Share.lvIPs_Renew(IP.Obj_lvItem, IP);
+                        Share.lvIPs_Renew(IP.Map_lvItem, IP);
+                        Share.lvPings_Renew(IP.IP_lv?.Items[0], IP, IP.Pings[0]);
+                    }
+                }
+            PingIPsIDs[SendersIdx] = null;
+        }
     }
 }

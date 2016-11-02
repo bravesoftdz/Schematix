@@ -1120,6 +1120,7 @@
             this.lvIPs.TabIndex = 3;
             this.lvIPs.UseCompatibleStateImageBehavior = false;
             this.lvIPs.View = System.Windows.Forms.View.Details;
+            this.lvIPs.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvIPs_ItemChecked);
             this.lvIPs.DoubleClick += new System.EventHandler(this.lvIPs_DoubleClick);
             // 
             // clmIPAddress

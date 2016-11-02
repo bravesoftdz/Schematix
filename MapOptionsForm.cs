@@ -18,7 +18,7 @@ namespace Schematix
             Map = map;
             Text = Options.LangCur.lMOTitle;
 
-            // Main
+            #region Main
             tpMain.Text = Options.LangCur.lMOTabMain;
             lblName.Text     = Options.LangCur.lMOName;
             lblSize.Text     = Options.LangCur.lMOSize;
@@ -29,8 +29,9 @@ namespace Schematix
             nudSizeH.Value      = Map.Height;
             tbDescription.Text  = Map.Description;
             chkSizeAuto.Checked = Map.AutoSize;
+            #endregion
 
-            // Background
+            #region Background
             tpBack.Text = Options.LangCur.lMOTabBack;
             // Grid
             gbGrid.Text = Options.LangCur.lMOGrid;
@@ -85,8 +86,9 @@ namespace Schematix
             chkBackImageBuildIn.Checked     = Map.Back.BuildIn;
             cbbBackImageBPP.SelectedIndex   = (int)Map.Back.BPP;
             GotImage(Map.Back.Image);
+            #endregion
 
-            // Objects
+            #region Objects
             tpObjects.Text = Options.LangCur.lMOTabObjects;
             toolTip.SetToolTip(btnIPDelete, Options.LangCur.hEOPrototypeDelete);
             clmObjectName.Text      = Options.LangCur.lMOColumName;
@@ -104,10 +106,11 @@ namespace Schematix
                 item.Tag = obj;
                 // Fill IPs
                 foreach (var IP in obj.IPs)
-                    Share.lvIPs_AddIP(lvIPs, IP);
+                    Share.lvIPs_Add(lvIPs, IP, ref IP.Map_lvItem);
             }
+            #endregion
 
-            // Links
+            #region Links
             tpLinks.Text = Options.LangCur.lMOTabLinks;
             toolTip.SetToolTip(btnIPDelete, Options.LangCur.hEOPrototypeDelete);
             clmLinkName.Text      = Options.LangCur.lMOColumName;
@@ -124,8 +127,9 @@ namespace Schematix
                 lvObjects.Items.Add(item);
                 item.Tag = link;
             }
+            #endregion
 
-            // Boxes
+            #region Boxes
             tpBoxes.Text = Options.LangCur.lMOTabBoxes;
             toolTip.SetToolTip(btnIPDelete, Options.LangCur.hEOPrototypeDelete);
             clmBoxName.Text      = Options.LangCur.lMOColumName;
@@ -142,6 +146,7 @@ namespace Schematix
                 lvObjects.Items.Add(item);
                 item.Tag = box;
             }
+            #endregion
 
             // IPs
             tpIPs.Text = Options.LangCur.lMOTabIPs;
@@ -230,14 +235,14 @@ namespace Schematix
             // Remove IPs
             foreach (var IP in obj.IPs)
             {
-                IP.lvItem.Remove();
-                IP.lvItem = null;
+                IP.Map_lvItem.Remove();
+                IP.Map_lvItem = null;
             }
             // Edit
             new ObjectOptionsForm(obj).ShowDialog();
             // Return IPs in list
             foreach (var IP in obj.IPs)
-                Share.lvIPs_AddIP(lvIPs, IP);
+                Share.lvIPs_Add(lvIPs, IP, ref IP.Map_lvItem);
         }
 
         private void btnLinkDelete_Click(object sender, EventArgs e)//O
@@ -294,6 +299,13 @@ namespace Schematix
             Map.AlignToGridAll((int)nudGridStepX.Value, (int)nudGridStepX.Value);
         }
 
+        private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e)//
+        {
+            if (e?.Item.Tag == null)
+                return;
+            (e.Item.Tag as xIP).Onn = e.Item.Checked;
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Main
@@ -323,7 +335,7 @@ namespace Schematix
             // Clear backtrack
             foreach (ListViewItem lvi in lvIPs.Items)
                 if (lvi.Tag != null)
-                    (lvi.Tag as xIP).lvItem = null;
+                    (lvi.Tag as xIP).Map_lvItem = null;
 
             // Out
             DialogResult = DialogResult.OK;

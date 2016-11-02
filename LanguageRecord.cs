@@ -21,6 +21,11 @@ namespace Schematix
             hMFMapOptions = "Open new options",
             hMFElement    = "Element",
             hMFNoElement  = "Element not selected",
+            //
+            hMFLoading        = "Load maps",
+            hMFOpenLastMaps   = "Open last maps?",
+            hMFClosing        = "Closing",
+            hMFSaveOpenedMaps = "Save opend maps?",
             // Context menu
             lMFMapCMOptions = "Options",
             lMFMapCMSave    = "Save",
@@ -207,6 +212,7 @@ namespace Schematix
         #endregion
 
         #region IP Edit
+            lIPTabMain = "Main",
             lIPTitleAdd  = "Add new IP address",
             lIPTitleEdit = "Edit IP address",
             lIPAddress   = "Address",
@@ -215,8 +221,17 @@ namespace Schematix
             lIPTimeOutGreen  = "Time out Green (ms)",
             lIPTimeOutYellow = "+ time out Yellow (ms)",
             lIPTimeOutRed    = "+ time out Red (ms)",
+            //
+            lIPTabPings = "Pings",
+            lIPColumSendTime = "Send at",
+            lIPColumState    = "State",
+            lIPColumTripTime = "Trip time",
+            hIPClearPings    = "Clear ping results",
+            // State
+            lIPPingSend      = "Send",
+            lIPPingCancelled = "Cancelled",
         #endregion
-            
+
         #region Dialongs & About
             // Dialongs
             dLanguagesLoading  = "Language packs loading",
@@ -300,6 +315,11 @@ namespace Schematix
                                 case "hMFMapOptions":   hMFMapOptions   = lblText;   break;
                                 case "hMFElement":      hMFElement      = lblText;   break;
                                 case "hMFNoElement":    hMFNoElement    = lblText;   break;
+                                //
+                                case "hMFLoading":        hMFLoading        = lblText;   break;
+                                case "hMFOpenLastMaps":   hMFOpenLastMaps   = lblText;   break;
+                                case "hMFClosing":        hMFClosing        = lblText;   break;
+                                case "hMFSaveOpenedMaps": hMFSaveOpenedMaps = lblText;   break;
                                 // Context menu
                                 case "lMFMapCMOptions": lMFMapCMOptions = lblText;   break;
                                 case "lMFMapCMSave":    lMFMapCMSave    = lblText;   break;
@@ -535,6 +555,7 @@ namespace Schematix
                         case "IP":
                             switch (lblName)
                             {
+                                case "lIPTabMain":   lIPTabMain   = lblText;   break;
                                 case "lIPTitleAdd":  lIPTitleAdd  = lblText;   break;
                                 case "lIPTitleEdit": lIPTitleEdit = lblText;   break;
                                 case "lIPAddress":   lIPAddress   = lblText;   break;
@@ -543,6 +564,15 @@ namespace Schematix
                                 case "lIPTimeOutGreen":  lIPTimeOutGreen  = lblText;   break;
                                 case "lIPTimeOutYellow": lIPTimeOutYellow = lblText;   break;
                                 case "lIPTimeOutRed":    lIPTimeOutRed    = lblText;   break;
+                                //
+                                case "lIPTabPings":      lIPTabPings      = lblText;   break;
+                                case "lIPColumSendTime": lIPColumSendTime = lblText;   break;
+                                case "lIPColumState":    lIPColumState    = lblText;   break;
+                                case "lIPColumTripTime": lIPColumTripTime = lblText;   break;
+                                case "hIPClearPings":    hIPClearPings    = lblText;   break;
+                                //
+                                case "lIPPingSend":      lIPPingSend      = lblText;   break;
+                                case "lIPPingCancelled": lIPPingCancelled = lblText;   break;
                             }
                             break;
                         #endregion

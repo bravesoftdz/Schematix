@@ -188,6 +188,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo_Schematix.ico" />
+    <None Include="Resources\deleteAll.png" />
+    <None Include="Resources\PullTabs.png" />
+    <None Include="Resources\PullTools.png" />
     <None Include="Resources\toolLine.png" />
     <None Include="Resources\toolDefault.png" />
     <None Include="Resources\toolBoxes.png" />
@@ -209,7 +212,6 @@
     <None Include="Resources\folderTree.png" />
     <None Include="Resources\close.png" />
     <None Include="Resources\PullScrollV.png" />
-    <None Include="Resources\PullMenu.png" />
     <None Include="Resources\toolObject.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
