@@ -237,5 +237,147 @@ namespace Schematix
             if(prototype.tvNode != null)
                 prototype.tvNode.Text = (prototype.NodeName != "") ? prototype.NodeName : prototype.Name;
         }
+
+        static public void DrawBack(Graphics graphics, xBackground Back, xGrid Grid, int drawX, int drawY, int drawW, int drawH, int portX, int portY, int portW, int portH)//Ok
+        {
+            graphics.Clear(Back.Color);
+
+            int iX, startX, endX,
+                iY, startY, endY;
+
+            #region Backgruond
+            int imgW = Back.Image.Width,
+                imgH = Back.Image.Height;
+
+            switch (Back.Style)
+            {
+                case BackgroundStyles.Color:
+                    // Skip
+                    break;
+
+                case BackgroundStyles.ImageAlign:
+                    graphics.DrawImageUnscaled(Back.Image,
+                        drawX + (portW - imgW) * ((int)Back.Align % 3) / 2,
+                        drawY + (portH - imgH) * ((int)Back.Align / 3) / 2);
+                    break;
+
+                case BackgroundStyles.ImageTile:
+                    int imgOffsetX = 0,
+                        imgOffsetY = 0;
+                    // Align offset strength/2 -> [0, 0.5, 1]
+                    int imgOffsetNX = (int)Back.Align % 3,
+                        imgOffsetNY = (int)Back.Align / 3;
+                    // Calculate align offset X (Center/Right)
+                    if (0 < imgOffsetNX)
+                        imgOffsetX = (imgOffsetNX < 2)
+                            ? ((portW + imgW) % (imgW * 2)) / 2
+                            : portW % imgW;
+                    // Calculate align offset Y (Middle/Bottom)
+                    if (0 < imgOffsetNY)
+                        imgOffsetY = (imgOffsetNY < 2)
+                            ? ((portH + imgH) % (imgH * 2)) / 2
+                            : portH % imgH;
+                    // Calculate first cell
+                    startX = (drawX - imgW + 1 - imgOffsetX) / imgW;
+                    startY = (drawY - imgH + 1 - imgOffsetY) / imgH;
+                    endX = (drawX + drawW - 1 - imgOffsetX) / imgW;
+                    endY = (drawY + drawH - 1 - imgOffsetY) / imgH;
+                    // Colum/row oscillation for float style
+                    portX = portX % imgW + imgOffsetX;
+                    portY = portY % imgH + imgOffsetY;
+                    // Fill
+                    for (iY = startY; iY <= endY; iY++)
+                        for (iX = startX; iX <= endX; iX++)
+                            graphics.DrawImageUnscaled(Back.Image,
+                                portX + iX * imgW,
+                                portY + iY * imgH);
+                    break;/**/
+
+                case BackgroundStyles.ImageStrech:
+                    graphics.DrawImage(Back.Image, portX, portY, portW, portH);
+                    break;
+
+                case BackgroundStyles.ImageZInner:
+                case BackgroundStyles.ImageZOutter:
+                    int imgZW,
+                        imgZH;
+                    // Find most "tight" side
+                    if ((imgH * portW <= imgW * portH) == (Back.Style == BackgroundStyles.ImageZInner))
+                    {
+                        imgZW = portW;
+                        imgZH = (int)(imgH * ((double)portW / imgW));
+                    }
+                    else
+                    {
+                        imgZW = (int)(imgW * ((double)portH / imgH));
+                        imgZH = portH;
+                    }
+                    graphics.DrawImage(Back.Image,
+                        (portW - imgZW) * ((int)Back.Align % 3) / 2,
+                        (portH - imgZH) * ((int)Back.Align / 3) / 2,
+                        imgZW, imgZH);
+                    break;
+            }
+            #endregion
+
+            #region Grid
+            startX = drawX / Grid.StepX;
+            startY = drawY / Grid.StepY;
+            endX = (drawX + drawW) / Grid.StepX;
+            endY = (drawY + drawH) / Grid.StepY;
+            switch (Grid.Style)
+            {
+                case GridStyles.None:
+                    // Skip
+                    break;
+
+                case GridStyles.Dots:
+                    var brush = new SolidBrush(Grid.Pen.Color);
+                    for (iY = startY; iY <= endY; iY++)
+                        for (iX = startX; iX <= endX; iX++)
+                            graphics.FillRectangle(brush,
+                                iX * Grid.StepX, iY * Grid.StepY,
+                                Grid.Pen.Width, Grid.Pen.Width);
+                    break;
+
+                case GridStyles.Corners:
+                    int halfW = Grid.StepX / 2,
+                        halfH = Grid.StepY / 2;
+                    for (iY = startY; iY <= endY; iY++)
+                        for (iX = startX; iX <= endX; iX++)
+                        {
+                            graphics.DrawLine(Grid.Pen,
+                                iX * Grid.StepX,         iY * Grid.StepY,
+                                iX * Grid.StepX + halfW, iY * Grid.StepY);
+                            graphics.DrawLine(Grid.Pen,
+                                iX * Grid.StepX,         iY * Grid.StepY,
+                                iX * Grid.StepX,         iY * Grid.StepY + halfH);
+                        }
+                    break;
+
+                case GridStyles.Crosses:
+                    int quadW = Grid.StepX / 4,
+                        quadH = Grid.StepY / 4;
+                    for (iY = startY; iY <= endY; iY++)
+                        for (iX = startX; iX <= endX; iX++)
+                        {
+                            graphics.DrawLine(Grid.Pen,
+                                iX * Grid.StepX - quadW, iY * Grid.StepY,
+                                iX * Grid.StepX + quadW, iY * Grid.StepY);
+                            graphics.DrawLine(Grid.Pen,
+                                iX * Grid.StepX, iY * Grid.StepY - quadH,
+                                iX * Grid.StepX, iY * Grid.StepY + quadH);
+                        }
+                    break;
+
+                case GridStyles.Grid:
+                    for (iX = startX; iX <= endX; iX++)
+                        graphics.DrawLine(Grid.Pen, iX * Grid.StepX, drawY, iX * Grid.StepX, drawY + drawH);
+                    for (iY = startY; iY <= endY; iY++)
+                        graphics.DrawLine(Grid.Pen, drawX, iY * Grid.StepY, drawX + drawW, iY * Grid.StepY);
+                    break;
+            }
+            #endregion
+        }
     }
 }

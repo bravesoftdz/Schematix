@@ -49,9 +49,10 @@ namespace Schematix
         public const GridStyles      DEFAULT_GRID_STYLE = GridStyles.None;
         public static readonly Color DEFAULT_GRID_COLOR = Color.Silver;
         // Back
-        public const BackgroundStyles   DEFAULT_BACK_STYLE = BackgroundStyles.Color;
-        public const AlignTypes         DEFAULT_BACK_ALIGN = AlignTypes.TopLeft;
-        public static readonly Color    DEFAULT_BACK_COLOR = Color.SteelBlue;
+        public const BackgroundStyles   DEFAULT_BACK_STYLE  = BackgroundStyles.Color;
+        public const AlignTypes         DEFAULT_BACK_ALIGN  = AlignTypes.TopLeft;
+        public static readonly Color    DEFAULT_BACK_COLOR  = Color.LightSkyBlue;
+        public static readonly Color    DEFAULT_BACK_ACOLOR = Color.White;
 
         // Language
         static public LanguageRecord LangCur = new LanguageRecord();
@@ -88,10 +89,11 @@ namespace Schematix
             WindowW,
             WindowH;
         // Tools
+        static public RadioButton rbDefault;
         static public RadioButton rbObject;
         static public RadioButton rbLink;
         static public RadioButton rbBox;
-        static public ToolTip ToolTip;
+        static public ToolTip     ToolTip;
         // Catalog
         static public ListView lvUsedObjects;
         static public ListView lvUsedLinks;

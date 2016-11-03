@@ -62,7 +62,7 @@ namespace Schematix
                 MessageBox.Show(Options.LangCur.mElementHasNoName, Options.LangCur.dFileSaving);
                 return;
             }
-            if (!PLink.SaveToFileCheck(PLink.FileName))
+            if (!PLink.SaveToFileCheck(ref PLink.FileName))
                 return;
             // Share
             PLink.NodeName    = tbNode.Text;

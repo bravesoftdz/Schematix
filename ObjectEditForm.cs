@@ -265,7 +265,7 @@ namespace Schematix
                 MessageBox.Show(Options.LangCur.mElementHasNoName, Options.LangCur.dFileSaving);
                 return;
             }
-            if (!PObject.SaveToFileCheck(PObject.FileName))
+            if (!PObject.SaveToFileCheck(ref PObject.FileName))
                 return;
             // Main
             PObject.NodeName    = tbNode.Text;

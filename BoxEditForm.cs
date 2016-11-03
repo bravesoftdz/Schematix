@@ -100,7 +100,7 @@ namespace Schematix
                 MessageBox.Show(Options.LangCur.mElementHasNoName, Options.LangCur.dFileSaving);
                 return;
             }
-            if (!PBox.SaveToFileCheck(PBox.FileName))
+            if (!PBox.SaveToFileCheck(ref PBox.FileName))
                 return;
             // Share
             PBox.NodeName    = tbNode.Text;

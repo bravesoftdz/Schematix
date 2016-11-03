@@ -8,7 +8,7 @@ namespace Schematix
     {
         public xMap Map;
         Bitmap imageOriginal = new Bitmap(1, 1);
-        Bitmap imageAlpha;
+        Bitmap imageAlpha = null;
 
         public MapOptionsForm(xMap map)
         {
@@ -63,6 +63,7 @@ namespace Schematix
             toolTip.SetToolTip(btnBackColor,    Options.LangCur.hEEColorPick);
             toolTip.SetToolTip(btnGetBackImage, Options.LangCur.hEEImageLoad);
             lblBackgImagePath.Text   = Options.LangCur.lEEImagePath;
+            chkTransparentColor.Text = Options.LangCur.lOETransparentColor;
             chkBackImageFloat.Text   = Options.LangCur.lEEImageFloat;
             chkBackImageBuildIn.Text = Options.LangCur.lEEImageBuildIn;
             lblBackImageAlign.Text   = Options.LangCur.lEEAlign;
@@ -81,10 +82,13 @@ namespace Schematix
             cbbBackStyle.SelectedIndex      = (int)Map.Back.Style;
             btnBackColor.BackColor          = Map.Back.Color;
             tbBackgImagePath.Text           = Map.Back.Path;
+            chkTransparentColor.Checked     = Map.Back.UseAlphaColor;
+            btnAlphaColor.BackColor         = Map.Back.AlphaColor;
             chkBackImageFloat.Checked       = Map.Back.Float;
             cbbBackImageAlign.SelectedIndex = (int)Map.Back.Align;
             chkBackImageBuildIn.Checked     = Map.Back.BuildIn;
             cbbBackImageBPP.SelectedIndex   = (int)Map.Back.BPP;
+            // Redraw sample
             GotImage(Map.Back.Image);
             #endregion
 
@@ -163,56 +167,53 @@ namespace Schematix
             if (dlgColor.ShowDialog() != DialogResult.OK)
                 return;
             (sender as Button).BackColor = dlgColor.Color;
+            RedrawSample(null, null);
         }
+        
+        private void btnGetBackImage_Click(object sender, EventArgs e) => Share.GetImage(tbBackgImagePath, GotImage);//Ok
 
-        private void cbbBackImageAlign_SelectedIndexChanged(object sender, EventArgs e)//!!!
-        {
-            if (cbbBackStyle.SelectedIndex == 0 && pbBackPreview.BackgroundImage != null)
-                pbBackPreview.BackgroundImage = null;
-            if (cbbBackStyle.SelectedIndex != 0 && pbBackPreview.BackgroundImage == null)
-                pbBackPreview.BackgroundImage = imageAlpha;
-            switch (cbbBackStyle.SelectedIndex)
-            {
-                case 1:
-                    pbBackPreview.BackgroundImageLayout = ImageLayout.None;
-                    break;
-                case 2:
-                    pbBackPreview.BackgroundImageLayout = ImageLayout.Tile;
-                    break;
-                case 3:
-                    pbBackPreview.BackgroundImageLayout = ImageLayout.Stretch;
-                    break;
-                case 4:
-                    pbBackPreview.BackgroundImageLayout = ImageLayout.Zoom;
-                    break;
-                case 5:
-                    pbBackPreview.BackgroundImageLayout = ImageLayout.Zoom;
-                    break;
-            }
-        }
-
-        private void btnGetBackImage_Click(object sender, EventArgs e)//!!!
-        {
-            Share.GetImage(tbBackgImagePath, GotImage);
-        }
-
-        private void GotImage(Bitmap img)//!
+        private void GotImage(Bitmap img)//Ok
         {
             imageOriginal = img;
-            Alpha_Changed(null, null);
+            RedrawSample(null, null);
         }
-
-        private void Alpha_Changed(object sender, EventArgs e)
+        
+        private void RedrawSample(object sender, EventArgs e)//Ok
         {
+            if (imageAlpha != null)
+                imageAlpha.Dispose();
             imageAlpha = new Bitmap(imageOriginal);
             if (chkTransparentColor.Checked)
                 imageAlpha.MakeTransparent(btnAlphaColor.BackColor);
-            pbBackPreview.BackgroundImage = imageAlpha;
-        }
-
-        private void btnBackColor_BackColorChanged(object sender, EventArgs e)
-        {
-            pbBackPreview.BackColor = btnBackColor.BackColor;
+            // Grid
+            xGrid Grid;
+            if (chkGridStore.Checked)
+            {
+                Grid = new xGrid();
+                Grid.Style = (GridStyles)cbbGridStyle.SelectedIndex;
+                Grid.Pen.Color = btnGridColor.BackColor;
+                Grid.Pen.Width = (float)nudGridThick.Value;
+                Grid.StepX = (Int16)nudGridStepX.Value;
+                Grid.StepY = (Int16)nudGridStepY.Value;
+            }
+            else
+                Grid = Options.Grid;
+            // Back
+            xBackground Back;
+            if (chkBackStore.Checked)
+            {
+                Back = new xBackground();
+                Back.Style = (BackgroundStyles)cbbBackStyle.SelectedIndex;
+                Back.Color = btnBackColor.BackColor;
+                Back.Align = (AlignTypes)cbbBackImageAlign.SelectedIndex;
+                Back.Image = imageAlpha;
+            }
+            else
+                Back = Options.Back;
+            // Draw
+            var bmap = new Bitmap(pbBackPreview.Width, pbBackPreview.Height);
+            Share.DrawBack(Graphics.FromImage(bmap), Back, Grid, 0, 0, bmap.Width, bmap.Height, 0, 0, bmap.Width, bmap.Height);
+            pbBackPreview.Image = bmap;
         }
 
         #region Elements Tabs
@@ -309,9 +310,9 @@ namespace Schematix
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Main
-            Map.Name = tbName.Text;
-            Map.Width  = (int)nudSizeW.Value;
-            Map.Height = (int)nudSizeH.Value;
+            Map.Name        = tbName.Text;
+            Map.Width       = (int)nudSizeW.Value;
+            Map.Height      = (int)nudSizeH.Value;
             Map.Description = tbDescription.Text;
             Map.AutoSize    = chkSizeAuto.Checked;
             // Grid
@@ -323,15 +324,17 @@ namespace Schematix
             Map.Grid.Pen.Width = (float)nudGridThick.Value;
             Map.Grid.Snap      = chkGridSnap.Checked;
             // Back image
-            Map.Back.StoreOwn = chkBackStore.Checked;
-            Map.Back.Style    = (BackgroundStyles)cbbBackStyle.SelectedIndex;
-            Map.Back.Color    = btnBackColor.BackColor;
-            Map.Back.Path     = tbBackgImagePath.Text;
-            Map.Back.Float    = chkBackImageFloat.Checked;
-            Map.Back.Align    = (AlignTypes)cbbBackImageAlign.SelectedIndex;
-            Map.Back.BuildIn  = chkBackImageBuildIn.Checked;
-            Map.Back.BPP      = (ImageBPPs)cbbBackImageBPP.SelectedIndex;
-            Map.Back.Image    = imageAlpha;
+            Map.Back.StoreOwn      = chkBackStore.Checked;
+            Map.Back.Style         = (BackgroundStyles)cbbBackStyle.SelectedIndex;
+            Map.Back.UseAlphaColor = chkTransparentColor.Checked;
+            Map.Back.AlphaColor    = btnAlphaColor.BackColor;
+            Map.Back.Color         = btnBackColor.BackColor;
+            Map.Back.Path          = tbBackgImagePath.Text;
+            Map.Back.Float         = chkBackImageFloat.Checked;
+            Map.Back.Align         = (AlignTypes)cbbBackImageAlign.SelectedIndex;
+            Map.Back.BuildIn       = chkBackImageBuildIn.Checked;
+            Map.Back.BPP           = (ImageBPPs)cbbBackImageBPP.SelectedIndex;
+            Map.Back.Image         = imageAlpha;
             // Clear backtrack
             foreach (ListViewItem lvi in lvIPs.Items)
                 if (lvi.Tag != null)

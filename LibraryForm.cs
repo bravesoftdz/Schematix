@@ -47,8 +47,8 @@ namespace Schematix
         public void StartInit()
         {
             tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);
-            tvElements_Select(tvLinks, btnLinkEdit, Options.rbLink);
-            tvElements_Select(tvBoxes, btnBoxEdit, Options.rbBox);
+            tvElements_Select(tvLinks,   btnLinkEdit,   Options.rbLink);
+            tvElements_Select(tvBoxes,   btnBoxEdit,    Options.rbBox);
         }
 
         public void SetText()
@@ -161,20 +161,31 @@ namespace Schematix
         #endregion
 
         #region Catalog
-        private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e) =>
-            tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);
-        
-        private void tvLinks_AfterSelect(object sender, TreeViewEventArgs e) =>
-            tvElements_Select(tvLinks, btnLinkEdit, Options.rbLink);
-
-        private void tvBoxes_AfterSelect(object sender, TreeViewEventArgs e) =>
-            tvElements_Select(tvBoxes, btnBoxEdit, Options.rbBox);
+        private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e) => tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);        
+        private void tvLinks_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvLinks,   btnLinkEdit,   Options.rbLink);
+        private void tvBoxes_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvBoxes,   btnBoxEdit,    Options.rbBox);
 
         private void tvElements_Select(TreeView tv, Button btn, RadioButton rb)
         {
             rb.Tag = tv.SelectedNode?.Tag;
-            btn.Enabled = (rb.Tag != null);
-            Options.ToolTip.SetToolTip(rb, (rb.Tag == null) ? Options.LangCur.hMFNoElement : Options.LangCur.hMFElement + " \"" + (rb.Tag as xPrototype).Name + '"');
+            if (rb.Tag != null)
+                if (!(rb.Tag as xPrototype).isPrototype)
+                    rb.Tag = null;
+            if (rb.Tag != null)
+            {
+                rb.BackColor = SystemColors.Control;
+                btn.Enabled = true;
+                Options.ToolTip.SetToolTip(rb, Options.LangCur.hMFElement + " \"" + (rb.Tag as xPrototype).Name + '"');
+            }
+            else
+            {
+                rb.BackColor = Color.Brown;
+                btn.Enabled = false;
+                Options.ToolTip.SetToolTip(rb, Options.LangCur.hMFNoElement);
+                // Reset to default tool if this button was active
+                if (rb.Checked)
+                    Options.rbDefault.Checked = true;
+            }
         }
 
         private void btnObjectAdd_Click(object sender, EventArgs e)//
@@ -197,9 +208,7 @@ namespace Schematix
                 return;
             var form = new ObjectEditForm(tvObjects.SelectedNode.Tag as xPObject, "", (tvObjects.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
-            {
-                //...
-            }
+                Share.UpdateNodeName(form.PObject);
         }
 
         private void btnLinkAdd_Click(object sender, EventArgs e)//
@@ -222,9 +231,7 @@ namespace Schematix
                 return;
             var form = new LinkEditForm(tvLinks.SelectedNode.Tag as xPLink, "", (tvLinks.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
-            {
-                //...
-            }
+                Share.UpdateNodeName(form.PLink);
         }
 
         private void btnBoxAdd_Click(object sender, EventArgs e)//
@@ -247,9 +254,7 @@ namespace Schematix
                 return;
             var form = new BoxEditForm(tvBoxes.SelectedNode.Tag as xPBox, "", (tvBoxes.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
-            {
-                //...
-            }
+                Share.UpdateNodeName(form.PBox);
         }
         #endregion
 

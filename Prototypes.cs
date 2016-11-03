@@ -85,7 +85,7 @@ namespace Schematix
 
         // Load
         
-        public bool LoadFromFileCheck(String fileName)//Ok
+        public bool LoadFromFileCheck(ref String fileName)//Ok
         {
             if (fileName == "")
             {
@@ -93,15 +93,15 @@ namespace Schematix
                 dlg.Filter = Options.RECORD_FILEEXT;
                 if (dlg.ShowDialog() == DialogResult.Cancel)
                     return false;
-                using (var file = File.OpenRead(fileName)) { }
-                FileName = dlg.FileName;
+                using (var file = File.OpenRead(dlg.FileName)) { }
+                fileName = dlg.FileName;
             }
             return true;
         }
 
         public bool LoadFromFile(String fileName)//Ok
         {
-            if (!LoadFromFileCheck(fileName))
+            if (!LoadFromFileCheck(ref fileName))
                 return false;
             try
             {
@@ -138,7 +138,7 @@ namespace Schematix
 
         // Save
 
-        public bool SaveToFileCheck(String fileName)//Ok
+        public bool SaveToFileCheck(ref String fileName)//Ok
         {
             if (fileName == "")
             {
@@ -146,15 +146,15 @@ namespace Schematix
                 dlg.Filter = Options.RECORD_FILEEXT;
                 if (dlg.ShowDialog() == DialogResult.Cancel)
                     return false;
-                using (var file = File.OpenWrite(fileName)) { }
-                FileName = dlg.FileName;
+                using (var file = File.OpenWrite(dlg.FileName)) { }
+                fileName = dlg.FileName;
             }
             return true;
         }
 
         public bool SaveToFile(String fileName)//Ok
         {
-            if (!SaveToFileCheck(fileName))
+            if (!SaveToFileCheck(ref fileName))
                 return false;
             try
             {
@@ -1248,7 +1248,7 @@ namespace Schematix
             UseAlphaColor = false;
         public BackgroundStyles Style      = Options.DEFAULT_BACK_STYLE;
         public Color            Color      = Options.DEFAULT_BACK_COLOR;
-        public Color            AlphaColor = Options.DEFAULT_BACK_COLOR;
+        public Color            AlphaColor = Options.DEFAULT_BACK_ACOLOR;
         public AlignTypes       Align      = Options.DEFAULT_BACK_ALIGN;
         public ImageBPPs        BPP        = ImageBPPs.b32argb;
         public String           Path       = "";
@@ -1430,8 +1430,7 @@ namespace Schematix
         }
         #endregion
 
-        // Map
-
+        #region Save/Load Map
         override protected void BeforeReadParameters()//Ok
         {
             Clear();
@@ -1453,10 +1452,12 @@ namespace Schematix
                 }
             if (Back.UseAlphaColor)
                 Back.Image.MakeTransparent(Back.AlphaColor);
-            if (!DoAutoSize())
+            if (AutoSize)
+                DoAutoSize();
+            else
                 SetSize(Width, Height);
             Changed = false;
-            ReDraw();
+            Draw();
         }
 
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
@@ -1706,7 +1707,9 @@ namespace Schematix
             // Upper class body
             base.WriteParameters(stream);
         }
-        
+        #endregion
+
+        #region Sizing/Drawing
         public bool DoAutoSize()
         {
             if (!AutoSize)
@@ -1789,6 +1792,8 @@ namespace Schematix
                     return false;
             Width  = width;
             Height = height;
+            if (Canvas != null)
+                Canvas.Dispose();
             Canvas = new Bitmap(Width, Height);
             graphics = Graphics.FromImage(Canvas);
             return true;
@@ -1804,196 +1809,66 @@ namespace Schematix
                 Box.Check();
         }
 
-        public void ReDraw(int x = 0, int y = 0, int width = 0, int height = 0)//
+        public void Draw(int drawX = 0, int drawY = 0, int drawW = 0, int drawH = 0)//
         {
-            // Get area
-            if (width  < 1)
-                width  = Width;
-            if (height < 1)
-                height = Height;
+            if (drawW < 1)
+                drawW = Width;
+            if (drawH < 1)
+                drawH = Height;
             // Clear area
-            graphics.Clip = new Region(new Rectangle(x, y, width, height));
-            graphics.Clear(Back.Color);
+            graphics.Clip = new Region(new Rectangle(drawX, drawY, drawW, drawH));
 
-            // Variables
-            int iX, startX, endX, 
-                iY, startY, endY;
-
-            #region Backgruond
-            int pX = 0,
-                pY = 0,
-                pW = Width,
-                pH = Height;
+            // Draw background
+            var back = (Back.StoreOwn) ? Back : Options.Back;
             if (Back.Float)
-            {
-                pX = ScrollX;
-                pY = ScrollY;
-                pW = Options.WindowW;
-                pH = Options.WindowH;
-            }
-            int imgW = Back.Image.Width,
-                imgH = Back.Image.Height;
-            int imgOffsetX,
-                imgOffsetY;
-            switch (Back.Style)
-            {
-                case BackgroundStyles.Color:
-                    // Skip
-                    break;
+                Share.DrawBack(graphics,
+                    back,
+                    (Grid.StoreOwn) ? Grid : Options.Grid,
+                    drawX, drawY, drawW, drawH,
+                    ScrollX, ScrollY, Options.WindowW, Options.WindowH);
+            else
+                Share.DrawBack(graphics,
+                    back,
+                    (Grid.StoreOwn) ? Grid : Options.Grid,
+                    drawX, drawY, drawW, drawH,
+                    0, 0, Width, Height);
+            graphics.DrawRectangle(new Pen(Color.FromArgb(255, back.Color.R ^ 128, back.Color.G ^ 128, back.Color.B ^ 128)), 0, 0, Width - 1, Height - 1);
 
-                case BackgroundStyles.ImageAlign:
-                    // Calculate offset
-                    imgOffsetX = ((pW - imgW) * (int)Back.Align % 3) / 2;
-                    imgOffsetY = ((pH - imgH) * (int)Back.Align / 3) / 2;
-                    // Fill
-                    graphics.DrawImageUnscaled(Back.Image,
-                        pX - imgOffsetX,
-                        pY - imgOffsetY);
-                    break;
-
-                case BackgroundStyles.ImageTile:
-                    startX = x / imgW;
-                    startY = y / imgW;
-                    endX = (x + width ) / imgW + 1;
-                    endY = (y + height) / imgH + 1;
-                    // Colum/row oscillation for float style
-                    pX = pX % imgW;
-                    pY = pY % imgH;
-                    // Calculate align offset
-                    imgOffsetX = ((imgW - pW % imgW) * (int)Back.Align % 3) / 2;
-                    imgOffsetY = ((imgH - pH % imgH) * (int)Back.Align / 3) / 2;
-                    // Fill
-                    for (iY = startX; iY <= endX; iY++)
-                        for (iX = startY; iX <= endY; iX++)
-                            graphics.DrawImageUnscaled(Back.Image,
-                                pX + iX * imgW - imgOffsetX,
-                                pY + iY * imgH - imgOffsetY);
-                    break;
-
-                case BackgroundStyles.ImageStrech:
-                    graphics.DrawImage(Back.Image, pX, pY, pW, pH);
-                    break;
-
-                case BackgroundStyles.ImageZInner:
-                    int imgZiW,
-                        imgZiH;
-                    // Find most "tight" side
-                    if (imgW * pH <= imgH * pW)
-                    {
-                        imgZiW = pW;
-                        imgZiH = (int)(imgH * ((double)pW / imgW));
-                    }
-                    else
-                    {
-                        imgZiW = (int)(imgW * ((double)pH / imgH));
-                        imgZiH = pH;
-                    }
-                    imgOffsetX = ((pW - imgZiW) * (int)Back.Align % 3) / 2;
-                    imgOffsetY = ((pH - imgZiH) * (int)Back.Align / 3) / 2;
-                    graphics.DrawImage(Back.Image, imgOffsetX, imgOffsetY, imgZiW, imgZiH);
-                    break;
-
-                case BackgroundStyles.ImageZOutter:
-                    int imgZoW,
-                        imgZoH;
-                    // Find most "tight" side
-                    if (imgW * pH <= imgH * pW)
-                    {
-                        imgZoW = (int)(imgW * ((double)pH / imgH));
-                        imgZoH = pH;
-                    }
-                    else
-                    {
-                        imgZoW = pW;
-                        imgZoH = (int)(imgH * ((double)pW / imgW));
-                    }
-                    imgOffsetX = ((imgZoW - pW) * (int)Back.Align % 3) / 2;
-                    imgOffsetY = ((imgZoH - pH) * (int)Back.Align / 3) / 2;
-                    graphics.DrawImage(Back.Image, imgOffsetX, imgOffsetY, imgZoW, imgZoH);
-                    break;
-            }
-            #endregion
-
-            #region Grid
-            endX = x / Grid.StepX;
-            endY = y / Grid.StepY;
-            startX = (x + width ) / Grid.StepX;
-            startY = (y + height) / Grid.StepY;
-            switch (Grid.Style)
-            {
-                case GridStyles.None:
-                    break;
-                case GridStyles.Dots:
-                    var brush = new SolidBrush(Grid.Pen.Color);
-                    for (iX = startX; endX <= iX; iX--)
-                        for (iY = startY; endY <= iY; iY--)
-                            graphics.FillRectangle(brush,
-                                iX * Grid.StepX, iY * Grid.StepY,
-                                Grid.Pen.Width, Grid.Pen.Width);
-                    break;
-                case GridStyles.Corners:
-                    int halfW = Grid.StepX / 2,
-                        halfH = Grid.StepY / 2;
-                    for (iX = startX; endX <= iX; iX--)
-                        for (iY = startY; endY <= iY; iY--)
-                        {
-                            graphics.DrawLine(Grid.Pen,
-                                iX * Grid.StepX,         iY * Grid.StepY,
-                                iX * Grid.StepX + halfW, iY * Grid.StepY);
-                            graphics.DrawLine(Grid.Pen,
-                                iX * Grid.StepX,         iY * Grid.StepY,
-                                iX * Grid.StepX,         iY * Grid.StepY + halfH);
-                        }
-                    break;
-                case GridStyles.Crosses:
-                    int quadW,
-                        quadH;
-                    quadW = Grid.StepX / 4;
-                    quadH = Grid.StepY / 4;
-                    for (iX = startX; endX <= iX; iX--)
-                        for (iY = startY; endY <= iY; iY--)
-                        {
-                            graphics.DrawLine(Grid.Pen,
-                                iX * Grid.StepX - quadW, iY * Grid.StepY,
-                                iX * Grid.StepX + quadW, iY * Grid.StepY);
-                            graphics.DrawLine(Grid.Pen,
-                                iX * Grid.StepX,         iY * Grid.StepY - quadH,
-                                iX * Grid.StepX,         iY * Grid.StepY + quadH);
-                        }
-                    break;
-                case GridStyles.Grid:
-                    for (iX = startX; endX <= iX; iX--)
-                        graphics.DrawLine(Grid.Pen, iX * Grid.StepX, y, iX * Grid.StepX, y + height);
-                    for (iY = startY; endY <= iY; iY--)
-                        graphics.DrawLine(Grid.Pen, x, iY * Grid.StepY, x + width, iY * Grid.StepY);
-                    break;
-            }
-            #endregion
-
+            #region Exemplars
+            int drawX2 = drawX + drawW,
+                drawY2 = drawY + drawH;
             // Draw Boxes
             foreach (var Box in Boxes)
-            {
-                switch (Box.Prototype.BoxType)
-                {
-                    case BoxTypes.Rectangle:
-                        graphics.DrawRectangle(Box.Prototype.Pen, Box.Left, Box.Top, Box.Width, Box.Height);
-                        break;
-                    case BoxTypes.Ellipse:
-                        graphics.DrawEllipse(Box.Prototype.Pen, Box.Left, Box.Top, Box.Width, Box.Height);
-                        break;
-                }
-                if (Box.Text != "")
-                    graphics.DrawString(Box.Text, Box.Prototype.Font, Box.Prototype.Brush, Box.TextX, Box.TextY);
-            }
+                if (Box.Left <= drawX2 && drawX <= Box.Right)
+                    if (Box.Top <= drawY2 && drawY <= Box.Bottom)
+                    {
+                        switch (Box.Prototype.BoxType)
+                        {
+                            case BoxTypes.Rectangle:
+                                graphics.DrawRectangle(Box.Prototype.Pen, Box.Left, Box.Top, Box.Width, Box.Height);
+                                break;
+                            case BoxTypes.Ellipse:
+                                graphics.DrawEllipse(Box.Prototype.Pen, Box.Left, Box.Top, Box.Width, Box.Height);
+                                break;
+                        }
+                        if (Box.Text != "")
+                            graphics.DrawString(Box.Text, Box.Prototype.Font, Box.Prototype.Brush, Box.Left, Box.Top);
+                    }
 
             // Draw Links
             foreach (var Link in Links)
-                graphics.DrawLine(Link.Prototype.Pen, Link.XA, Link.YA, Link.XB, Link.YB);
+                if (Link.Left <= drawX2 && drawX <= Link.Right)
+                    if (Link.Top <= drawY2 && drawY <= Link.Bottom)
+                        graphics.DrawLine(Link.Prototype.Pen, Link.Left, Link.Top, Link.Right, Link.Bottom);
 
             // Draw Objects
             foreach (var Object in Objects)
-                graphics.DrawImageUnscaled(Object.Prototype.Canvas, Object.X, Object.Y);
+                if (Object.Left <= drawX2 && drawX <= Object.Right)
+                    if (Object.Top <= drawY2 && drawY <= Object.Bottom)
+                        graphics.DrawImageUnscaled(Object.Prototype.Canvas, Object.Left, Object.Top);
+            #endregion
         }
+        #endregion
 
         public xExemplar AnythingAt(int x, int y)//
         {
@@ -2008,6 +1883,17 @@ namespace Schematix
         public xExemplar SelectAt(int x, int y)//
         {
             return Selected = AnythingAt(x, y);
+        }
+
+        public void UpdateTabName()
+        {
+            if (Tab == null)
+                return;
+            Tab.Text 
+                = ((Name != "") ? Name 
+                : (FileName != "") ? Path.GetFileNameWithoutExtension(FileName) 
+                : "No name") 
+                + (Changed ? " *" : "");
         }
 
         //...

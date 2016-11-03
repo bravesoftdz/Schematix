@@ -38,14 +38,9 @@
             this.pnlMapOptions = new System.Windows.Forms.Panel();
             this.pnlMapFrame = new System.Windows.Forms.Panel();
             this.pnlMaps = new System.Windows.Forms.Panel();
+            this.btnCloseMap = new System.Windows.Forms.Button();
             this.pnlTools = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.timerTools = new System.Windows.Forms.Timer(this.components);
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.cmsMap = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.dlgMapOpen = new System.Windows.Forms.OpenFileDialog();
-            this.dlgMapSave = new System.Windows.Forms.SaveFileDialog();
-            this.timerPing = new System.Windows.Forms.Timer(this.components);
             this.rbDefault = new System.Windows.Forms.RadioButton();
             this.rbObject = new System.Windows.Forms.RadioButton();
             this.rbLink = new System.Windows.Forms.RadioButton();
@@ -53,17 +48,21 @@
             this.btnLibrary = new System.Windows.Forms.Button();
             this.btnAbout = new System.Windows.Forms.Button();
             this.btnOptions = new System.Windows.Forms.Button();
-            this.btnCloseMap = new System.Windows.Forms.Button();
-            this.pbPullHScroll = new System.Windows.Forms.PictureBox();
-            this.pbPullVScroll = new System.Windows.Forms.PictureBox();
-            this.pbPullMaps = new System.Windows.Forms.PictureBox();
-            this.pbPullTools = new System.Windows.Forms.PictureBox();
-            this.pbMap = new System.Windows.Forms.PictureBox();
+            this.timerTools = new System.Windows.Forms.Timer(this.components);
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cmsMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiMapOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMapSave = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMapLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMapReload = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMapClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.dlgMapOpen = new System.Windows.Forms.OpenFileDialog();
+            this.dlgMapSave = new System.Windows.Forms.SaveFileDialog();
+            this.timerPing = new System.Windows.Forms.Timer(this.components);
+            this.pbPullHScroll = new System.Windows.Forms.PictureBox();
+            this.pbPullVScroll = new System.Windows.Forms.PictureBox();
+            this.pbPullMaps = new System.Windows.Forms.PictureBox();
+            this.pbPullTools = new System.Windows.Forms.PictureBox();
             this.tcMaps.SuspendLayout();
             this.pnlMapOptions.SuspendLayout();
             this.pnlMaps.SuspendLayout();
@@ -74,7 +73,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPullVScroll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPullMaps)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPullTools)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbMap)).BeginInit();
             this.SuspendLayout();
             // 
             // tcMaps
@@ -179,6 +177,18 @@
             this.pnlMaps.TabIndex = 4;
             this.pnlMaps.Visible = false;
             // 
+            // btnCloseMap
+            // 
+            this.btnCloseMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCloseMap.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCloseMap.BackgroundImage")));
+            this.btnCloseMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnCloseMap.Location = new System.Drawing.Point(448, 3);
+            this.btnCloseMap.Name = "btnCloseMap";
+            this.btnCloseMap.Size = new System.Drawing.Size(20, 20);
+            this.btnCloseMap.TabIndex = 3;
+            this.btnCloseMap.UseVisualStyleBackColor = true;
+            this.btnCloseMap.Click += new System.EventHandler(this.tsmiMapClose_Click);
+            // 
             // pnlTools
             // 
             this.pnlTools.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -207,22 +217,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(123, 25);
             this.panel1.TabIndex = 6;
-            // 
-            // timerTools
-            // 
-            this.timerTools.Tick += new System.EventHandler(this.timerTools_Tick);
-            // 
-            // cmsMap
-            // 
-            this.cmsMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiMapOptions,
-            this.tsmiMapSave,
-            this.tsmiMapLoad,
-            this.tsmiMapReload,
-            this.tsmiMapClose});
-            this.cmsMap.Name = "cmsMap";
-            this.cmsMap.Size = new System.Drawing.Size(117, 114);
-            this.cmsMap.Opening += new System.ComponentModel.CancelEventHandler(this.cmsMap_Opening);
             // 
             // rbDefault
             // 
@@ -312,17 +306,61 @@
             this.btnOptions.UseVisualStyleBackColor = true;
             this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
             // 
-            // btnCloseMap
+            // timerTools
             // 
-            this.btnCloseMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCloseMap.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCloseMap.BackgroundImage")));
-            this.btnCloseMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnCloseMap.Location = new System.Drawing.Point(448, 3);
-            this.btnCloseMap.Name = "btnCloseMap";
-            this.btnCloseMap.Size = new System.Drawing.Size(20, 20);
-            this.btnCloseMap.TabIndex = 3;
-            this.btnCloseMap.UseVisualStyleBackColor = true;
-            this.btnCloseMap.Click += new System.EventHandler(this.tsmiMapClose_Click);
+            this.timerTools.Tick += new System.EventHandler(this.timerTools_Tick);
+            // 
+            // cmsMap
+            // 
+            this.cmsMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiMapOptions,
+            this.tsmiMapSave,
+            this.tsmiMapLoad,
+            this.tsmiMapReload,
+            this.tsmiMapClose});
+            this.cmsMap.Name = "cmsMap";
+            this.cmsMap.Size = new System.Drawing.Size(117, 114);
+            this.cmsMap.Opening += new System.ComponentModel.CancelEventHandler(this.cmsMap_Opening);
+            // 
+            // tsmiMapOptions
+            // 
+            this.tsmiMapOptions.Image = global::Schematix.Properties.Resources.edit;
+            this.tsmiMapOptions.Name = "tsmiMapOptions";
+            this.tsmiMapOptions.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapOptions.Text = "Options";
+            this.tsmiMapOptions.Click += new System.EventHandler(this.tsmiMapOptions_Click);
+            // 
+            // tsmiMapSave
+            // 
+            this.tsmiMapSave.Image = global::Schematix.Properties.Resources.save;
+            this.tsmiMapSave.Name = "tsmiMapSave";
+            this.tsmiMapSave.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapSave.Text = "Save";
+            this.tsmiMapSave.Click += new System.EventHandler(this.tsmiMapSave_Click);
+            // 
+            // tsmiMapLoad
+            // 
+            this.tsmiMapLoad.Image = global::Schematix.Properties.Resources.load;
+            this.tsmiMapLoad.Name = "tsmiMapLoad";
+            this.tsmiMapLoad.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapLoad.Text = "Load...";
+            this.tsmiMapLoad.Click += new System.EventHandler(this.tsmiMapLoad_Click);
+            // 
+            // tsmiMapReload
+            // 
+            this.tsmiMapReload.Image = global::Schematix.Properties.Resources.reload;
+            this.tsmiMapReload.Name = "tsmiMapReload";
+            this.tsmiMapReload.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapReload.Text = "Reload";
+            this.tsmiMapReload.Click += new System.EventHandler(this.tsmiMapReload_Click);
+            // 
+            // tsmiMapClose
+            // 
+            this.tsmiMapClose.Image = ((System.Drawing.Image)(resources.GetObject("tsmiMapClose.Image")));
+            this.tsmiMapClose.Name = "tsmiMapClose";
+            this.tsmiMapClose.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapClose.Text = "Close";
+            this.tsmiMapClose.Click += new System.EventHandler(this.tsmiMapClose_Click);
             // 
             // pbPullHScroll
             // 
@@ -366,7 +404,7 @@
             // 
             // pbPullTools
             // 
-            this.pbPullTools.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbPullTools.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPullTools.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPullTools.Image = ((System.Drawing.Image)(resources.GetObject("pbPullTools.Image")));
             this.pbPullTools.Location = new System.Drawing.Point(440, 4);
@@ -377,71 +415,13 @@
             this.pbPullTools.TabStop = false;
             this.pbPullTools.MouseEnter += new System.EventHandler(this.PullTools_Over);
             // 
-            // pbMap
-            // 
-            this.pbMap.BackColor = System.Drawing.Color.SteelBlue;
-            this.pbMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbMap.ContextMenuStrip = this.cmsMap;
-            this.pbMap.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pbMap.Location = new System.Drawing.Point(0, 0);
-            this.pbMap.Name = "pbMap";
-            this.pbMap.Size = new System.Drawing.Size(284, 280);
-            this.pbMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbMap.TabIndex = 3;
-            this.pbMap.TabStop = false;
-            this.pbMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbMap_MouseClick);
-            this.pbMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pbMap_MouseDoubleClick);
-            this.pbMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbMap_MouseDown);
-            this.pbMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbMap_MouseMove);
-            this.pbMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbMap_MouseUp);
-            // 
-            // tsmiMapOptions
-            // 
-            this.tsmiMapOptions.Image = global::Schematix.Properties.Resources.edit;
-            this.tsmiMapOptions.Name = "tsmiMapOptions";
-            this.tsmiMapOptions.Size = new System.Drawing.Size(116, 22);
-            this.tsmiMapOptions.Text = "Options";
-            this.tsmiMapOptions.Click += new System.EventHandler(this.tsmiMapOptions_Click);
-            // 
-            // tsmiMapSave
-            // 
-            this.tsmiMapSave.Image = global::Schematix.Properties.Resources.save;
-            this.tsmiMapSave.Name = "tsmiMapSave";
-            this.tsmiMapSave.Size = new System.Drawing.Size(116, 22);
-            this.tsmiMapSave.Text = "Save";
-            this.tsmiMapSave.Click += new System.EventHandler(this.tsmiMapSave_Click);
-            // 
-            // tsmiMapLoad
-            // 
-            this.tsmiMapLoad.Image = global::Schematix.Properties.Resources.load;
-            this.tsmiMapLoad.Name = "tsmiMapLoad";
-            this.tsmiMapLoad.Size = new System.Drawing.Size(116, 22);
-            this.tsmiMapLoad.Text = "Load...";
-            this.tsmiMapLoad.Click += new System.EventHandler(this.tsmiMapLoad_Click);
-            // 
-            // tsmiMapReload
-            // 
-            this.tsmiMapReload.Image = global::Schematix.Properties.Resources.reload;
-            this.tsmiMapReload.Name = "tsmiMapReload";
-            this.tsmiMapReload.Size = new System.Drawing.Size(116, 22);
-            this.tsmiMapReload.Text = "Reload";
-            this.tsmiMapReload.Click += new System.EventHandler(this.tsmiMapReload_Click);
-            // 
-            // tsmiMapClose
-            // 
-            this.tsmiMapClose.Image = ((System.Drawing.Image)(resources.GetObject("tsmiMapClose.Image")));
-            this.tsmiMapClose.Name = "tsmiMapClose";
-            this.tsmiMapClose.Size = new System.Drawing.Size(116, 22);
-            this.tsmiMapClose.Text = "Close";
-            this.tsmiMapClose.Click += new System.EventHandler(this.tsmiMapClose_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightGray;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(485, 261);
+            this.ContextMenuStrip = this.cmsMap;
             this.Controls.Add(this.pnlTools);
             this.Controls.Add(this.pnlMaps);
             this.Controls.Add(this.hScrollBar);
@@ -451,7 +431,6 @@
             this.Controls.Add(this.pbPullMaps);
             this.Controls.Add(this.pbPullTools);
             this.Controls.Add(this.pnlMapOptions);
-            this.Controls.Add(this.pbMap);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -462,7 +441,14 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseClick);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDoubleClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
             this.Move += new System.EventHandler(this.MainForm_Move);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.tcMaps.ResumeLayout(false);
             this.pnlMapOptions.ResumeLayout(false);
             this.pnlMaps.ResumeLayout(false);
@@ -473,7 +459,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPullVScroll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPullMaps)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPullTools)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbMap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -482,7 +467,6 @@
         #endregion
         private System.Windows.Forms.TabControl tcMaps;
         private System.Windows.Forms.TabPage tabPageAddNew;
-        private System.Windows.Forms.PictureBox pbMap;
         private System.Windows.Forms.VScrollBar vScrollBar;
         private System.Windows.Forms.HScrollBar hScrollBar;
         private System.Windows.Forms.Panel pnlMapOptions;
