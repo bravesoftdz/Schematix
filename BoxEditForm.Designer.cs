@@ -41,7 +41,7 @@
             this.lblText = new System.Windows.Forms.Label();
             this.lblType = new System.Windows.Forms.Label();
             this.cbbType = new System.Windows.Forms.ComboBox();
-            this.btnColorFont = new System.Windows.Forms.Button();
+            this.btnFontColor = new System.Windows.Forms.Button();
             this.lblLineStyle = new System.Windows.Forms.Label();
             this.btnFont = new System.Windows.Forms.Button();
             this.lblTextAlign = new System.Windows.Forms.Label();
@@ -104,7 +104,7 @@
             this.tableLayoutPanel3.Controls.Add(this.lblText, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.lblType, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cbbType, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnColorFont, 3, 3);
+            this.tableLayoutPanel3.Controls.Add(this.btnFontColor, 3, 3);
             this.tableLayoutPanel3.Controls.Add(this.lblLineStyle, 4, 1);
             this.tableLayoutPanel3.Controls.Add(this.btnFont, 4, 3);
             this.tableLayoutPanel3.Controls.Add(this.lblTextAlign, 0, 3);
@@ -239,17 +239,17 @@
             this.cbbType.Size = new System.Drawing.Size(132, 21);
             this.cbbType.TabIndex = 5;
             // 
-            // btnColorFont
+            // btnFontColor
             // 
-            this.btnColorFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnColorFont.BackColor = System.Drawing.Color.Black;
-            this.btnColorFont.Location = new System.Drawing.Point(157, 83);
-            this.btnColorFont.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
-            this.btnColorFont.Name = "btnColorFont";
-            this.btnColorFont.Size = new System.Drawing.Size(32, 21);
-            this.btnColorFont.TabIndex = 4;
-            this.btnColorFont.UseVisualStyleBackColor = false;
-            this.btnColorFont.Click += new System.EventHandler(this.PickColor_Click);
+            this.btnFontColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnFontColor.BackColor = System.Drawing.Color.Black;
+            this.btnFontColor.Location = new System.Drawing.Point(157, 83);
+            this.btnFontColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
+            this.btnFontColor.Name = "btnFontColor";
+            this.btnFontColor.Size = new System.Drawing.Size(32, 21);
+            this.btnFontColor.TabIndex = 4;
+            this.btnFontColor.UseVisualStyleBackColor = false;
+            this.btnFontColor.Click += new System.EventHandler(this.PickColor_Click);
             // 
             // lblLineStyle
             // 
@@ -497,7 +497,7 @@
         private System.Windows.Forms.Label lblText;
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.ComboBox cbbType;
-        private System.Windows.Forms.Button btnColorFont;
+        private System.Windows.Forms.Button btnFontColor;
         private System.Windows.Forms.ComboBox cbbAlign;
         private System.Windows.Forms.Button btnFont;
         private System.Windows.Forms.Label lblLineStyle;

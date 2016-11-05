@@ -394,6 +394,24 @@ namespace Schematix
             if (Dots.Count < 1)
                 Dots.Add(new xDot(this));
         }
+
+        public xDot GetNearestDot(int x, int y)
+        {
+            double dotR = 9999, R, dx, dy;
+            xDot dot = null;
+            foreach (var Dot in Dots)
+            {
+                dx = x - Dot.X;
+                dy = y - Dot.Y;
+                R = Math.Sqrt((dx * dx) + (dy * dy));
+                if (R < dotR)
+                {
+                    dotR = R;
+                    dot = Dot;
+                }
+            }
+            return dot;
+        }
     }
     
     public class xPLink : xPrototype
@@ -854,6 +872,8 @@ namespace Schematix
         {
             Map.DeleteObject(this);
         }
+
+        public xDot GetNearestDot(int x, int y) => Prototype.GetNearestDot(x - Left, y - Top);
     }
 
     public class xLink : xExemplar
@@ -971,9 +991,13 @@ namespace Schematix
                 ObjectA = Objects.Find(xE => xE.ID == ObjectAID);
                 if (ObjectA != null)
                 {
+                    ObjectAID = 0;
                     DotA = (ObjectA.Prototype as xPObject).Dots.Find(xE => xE.ID == DotAID);
                     if (DotA == null)
+                    {
                         DotA = (ObjectA.Prototype as xPObject).Dots[0];
+                        DotAID = DotA.ID;
+                    }
                 }
             }
             if (ObjectBID != 0)
@@ -981,9 +1005,13 @@ namespace Schematix
                 ObjectB = Objects.Find(xE => xE.ID == ObjectBID);
                 if (ObjectB != null)
                 {
+                    ObjectBID = 0;
                     DotB = (ObjectB.Prototype as xPObject).Dots.Find(xE => xE.ID == DotBID);
                     if (DotB == null)
+                    {
                         DotB = (ObjectB.Prototype as xPObject).Dots[0];
+                        DotBID = DotB.ID;
+                    }
                 }
             }
         }
@@ -1108,93 +1136,94 @@ namespace Schematix
 
         override public void Check()
         {
-            if (Text == "")
-                return;
-            Graphics g = Graphics.FromImage(new Bitmap(1,1));
-            SizeF textSize = g.MeasureString(Text, (Prototype as xPBox).Font);
-            if ((Prototype as xPBox).BoxType == BoxTypes.Ellipse)
+            if (Text != "")
             {
-                double m  = (1 - Math.Sqrt(2)) / 4;
-                switch ((Prototype as xPBox).TextAlign)
+                Graphics g = Graphics.FromImage(new Bitmap(1, 1));
+                SizeF textSize = g.MeasureString(Text, (Prototype as xPBox).Font);
+                if ((Prototype as xPBox).BoxType == BoxTypes.Ellipse)
                 {
-                    case AlignTypes.TopLeft:
-                        TextX = (int)(Left +  Width  * m);
-                        TextY = (int)(Top  +  Height * m);
-                        break;
-                    case AlignTypes.Top:
-                        TextX = (int)(Left + (Width - textSize.Width) / 2);
-                        TextY = Top;
-                        break;
-                    case AlignTypes.TopRight:
-                        TextX = (int)(Left +  Width  * (1 - m) - textSize.Width );
-                        TextY = (int)(Top  +  Height * m);
-                        break;
-                    case AlignTypes.Left:
-                        TextX = Left;
-                        TextY = (int)(Top  + (Height - textSize.Height) / 2);
-                        break;
-                    case AlignTypes.Center:
-                        TextX = (int)(Left + (Width  - textSize.Width ) / 2);
-                        TextY = (int)(Top  + (Height - textSize.Height) / 2);
-                        break;
-                    case AlignTypes.Right:
-                        TextX = (int)(Left + Width  - textSize.Width);
-                        TextY = (int)(Top + (Height - textSize.Height) / 2);
-                        break;
-                    case AlignTypes.BottomLeft:
-                        TextX = (int)(Left +  Width  * m);
-                        TextY = (int)(Top  +  Height * (1 - m) - textSize.Height);
-                        break;
-                    case AlignTypes.Bottom:
-                        TextX = (int)(Left + (Width  - textSize.Width ) / 2);
-                        TextY = (int)(Top  +  Height - textSize.Height);
-                        break;
-                    case AlignTypes.BottomRight:
-                        TextX = (int)(Left +  Width  * (1 - m) - textSize.Width );
-                        TextY = (int)(Top  +  Height * (1 - m) - textSize.Height);
-                        break;
-                }
-            }
-            else
-            {
-                TextX = Left;
-                TextY = Top;
-                if ((Prototype as xPBox).BoxType == BoxTypes.Rectangle)
+                    double m = (1 - Math.Sqrt(2)) / 4;
                     switch ((Prototype as xPBox).TextAlign)
                     {
+                        case AlignTypes.TopLeft:
+                            TextX = (int)(Left + Width  * m);
+                            TextY = (int)(Top  + Height * m);
+                            break;
                         case AlignTypes.Top:
                             TextX = (int)(Left + (Width - textSize.Width) / 2);
+                            TextY = Top;
                             break;
                         case AlignTypes.TopRight:
-                            TextX = (int)(Left + Width - textSize.Width);
+                            TextX = (int)(Left + Width  * (1 - m) - textSize.Width);
+                            TextY = (int)(Top  + Height * m);
                             break;
                         case AlignTypes.Left:
-                            TextY = (int)(Top + (Height - textSize.Height) / 2);
+                            TextX = Left;
+                            TextY = (int)(Top  + (Height - textSize.Height) / 2);
                             break;
                         case AlignTypes.Center:
-                            TextX = (int)(Left + (Width - textSize.Width) / 2);
-                            TextY = (int)(Top + (Height - textSize.Height) / 2);
+                            TextX = (int)(Left + (Width  - textSize.Width ) / 2);
+                            TextY = (int)(Top  + (Height - textSize.Height) / 2);
                             break;
                         case AlignTypes.Right:
-                            TextX = (int)(Left + Width - textSize.Width);
-                            TextY = (int)(Top + (Height - textSize.Height) / 2);
+                            TextX = (int)(Left +  Width  - textSize.Width );
+                            TextY = (int)(Top  + (Height - textSize.Height) / 2);
                             break;
                         case AlignTypes.BottomLeft:
-                            TextY = (int)(Top + Height - textSize.Height);
+                            TextX = (int)(Left +  Width * m);
+                            TextY = (int)(Top  +  Height * (1 - m) - textSize.Height);
                             break;
                         case AlignTypes.Bottom:
-                            TextX = (int)(Left + (Width - textSize.Width) / 2);
-                            TextY = (int)(Top + Height - textSize.Height);
+                            TextX = (int)(Left + (Width  - textSize.Width ) / 2);
+                            TextY = (int)(Top  +  Height - textSize.Height);
                             break;
                         case AlignTypes.BottomRight:
-                            TextX = (int)(Left + Width - textSize.Width);
-                            TextY = (int)(Top + Height - textSize.Height);
+                            TextX = (int)(Left + Width  * (1 - m) - textSize.Width );
+                            TextY = (int)(Top  + Height * (1 - m) - textSize.Height);
                             break;
                     }
+                }
                 else
                 {
-                    Width  = (int)textSize.Width;
-                    Height = (int)textSize.Height;
+                    TextX = Left;
+                    TextY = Top;
+                    if ((Prototype as xPBox).BoxType == BoxTypes.Rectangle)
+                        switch ((Prototype as xPBox).TextAlign)
+                        {
+                            case AlignTypes.Top:
+                                TextX = (int)(Left + (Width  - textSize.Width ) / 2);
+                                break;
+                            case AlignTypes.TopRight:
+                                TextX = (int)(Left +  Width  - textSize.Width );
+                                break;
+                            case AlignTypes.Left:
+                                TextY = (int)(Top  + (Height - textSize.Height) / 2);
+                                break;
+                            case AlignTypes.Center:
+                                TextX = (int)(Left + (Width  - textSize.Width ) / 2);
+                                TextY = (int)(Top  + (Height - textSize.Height) / 2);
+                                break;
+                            case AlignTypes.Right:
+                                TextX = (int)(Left +  Width  - textSize.Width );
+                                TextY = (int)(Top  + (Height - textSize.Height) / 2);
+                                break;
+                            case AlignTypes.BottomLeft:
+                                TextY = (int)(Top  +  Height - textSize.Height);
+                                break;
+                            case AlignTypes.Bottom:
+                                TextX = (int)(Left + (Width  - textSize.Width ) / 2);
+                                TextY = (int)(Top  +  Height - textSize.Height);
+                                break;
+                            case AlignTypes.BottomRight:
+                                TextX = (int)(Left +  Width  - textSize.Width );
+                                TextY = (int)(Top  +  Height - textSize.Height);
+                                break;
+                        }
+                    else
+                    {
+                        Width  = (int)textSize.Width;
+                        Height = (int)textSize.Height;
+                    }
                 }
             }
             BoxRenew();
@@ -1276,7 +1305,6 @@ namespace Schematix
         public Bitmap    Canvas;
         Graphics         graphics;
         public xExemplar Selected;
-        public xLink     LinkAdding;
         public ListView 
             lv_PObjects,
             lv_PLinks,
@@ -1435,7 +1463,6 @@ namespace Schematix
         {
             Clear();
             Selected = null;
-            LinkAdding = null;
             AutoSize = false;
             Grid = new xGrid();
             Back = new xBackground();
@@ -1852,14 +1879,14 @@ namespace Schematix
                                 break;
                         }
                         if (Box.Text != "")
-                            graphics.DrawString(Box.Text, Box.Prototype.Font, Box.Prototype.Brush, Box.Left, Box.Top);
+                            graphics.DrawString(Box.Text, Box.Prototype.Font, Box.Prototype.Brush, Box.TextX, Box.TextY);
                     }
 
             // Draw Links
             foreach (var Link in Links)
                 if (Link.Left <= drawX2 && drawX <= Link.Right)
                     if (Link.Top <= drawY2 && drawY <= Link.Bottom)
-                        graphics.DrawLine(Link.Prototype.Pen, Link.Left, Link.Top, Link.Right, Link.Bottom);
+                        graphics.DrawLine(Link.Prototype.Pen, Link.XA, Link.YA, Link.XB, Link.YB);
 
             // Draw Objects
             foreach (var Object in Objects)

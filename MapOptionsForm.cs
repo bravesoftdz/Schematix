@@ -128,7 +128,7 @@ namespace Schematix
                 item.SubItems.Add(link.XA + ", " + link.YA + " -> " + link.XB + ", " + link.YB);
                 item.SubItems.Add(link.Prototype.Name);
                 item.SubItems.Add(link.Reference);
-                lvObjects.Items.Add(item);
+                lvLinks.Items.Add(item);
                 item.Tag = link;
             }
             #endregion
@@ -147,7 +147,8 @@ namespace Schematix
                 item.SubItems.Add(box.Left + ", " + box.Top + " : " + box.Width + ", " + box.Height);
                 item.SubItems.Add(box.Prototype.Name);
                 item.SubItems.Add(box.Reference);
-                lvObjects.Items.Add(item);
+                item.SubItems.Add(box.Text);
+                lvBoxes.Items.Add(item);
                 item.Tag = box;
             }
             #endregion
@@ -297,7 +298,12 @@ namespace Schematix
 
         private void btnAlignElements_Click(object sender, EventArgs e)//O
         {
-            Map.AlignToGridAll((int)nudGridStepX.Value, (int)nudGridStepX.Value);
+            if (chkGridStore.Checked)
+                Map.AlignToGridAll((int)nudGridStepX.Value, (int)nudGridStepY.Value);
+            else
+                Map.AlignToGridAll(Options.Grid.StepX, Options.Grid.StepY);
+            Map.Draw();
+            Options.mainForm.Invalidate();
         }
 
         private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e)//

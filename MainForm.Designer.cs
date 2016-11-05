@@ -442,7 +442,6 @@
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseClick);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);

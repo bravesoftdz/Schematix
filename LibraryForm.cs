@@ -208,7 +208,10 @@ namespace Schematix
                 return;
             var form = new ObjectEditForm(tvObjects.SelectedNode.Tag as xPObject, "", (tvObjects.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
+            {
                 Share.UpdateNodeName(form.PObject);
+                Options.mainForm.RenewMaps();
+            }
         }
 
         private void btnLinkAdd_Click(object sender, EventArgs e)//
@@ -231,7 +234,10 @@ namespace Schematix
                 return;
             var form = new LinkEditForm(tvLinks.SelectedNode.Tag as xPLink, "", (tvLinks.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
+            {
                 Share.UpdateNodeName(form.PLink);
+                Options.mainForm.RenewMaps();
+            }
         }
 
         private void btnBoxAdd_Click(object sender, EventArgs e)//
@@ -254,7 +260,10 @@ namespace Schematix
                 return;
             var form = new BoxEditForm(tvBoxes.SelectedNode.Tag as xPBox, "", (tvBoxes.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
+            {
                 Share.UpdateNodeName(form.PBox);
+                Options.mainForm.RenewMaps();
+            }
         }
         #endregion
 

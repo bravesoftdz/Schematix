@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -13,6 +12,7 @@ namespace Schematix
         LibraryForm libraryForm = new LibraryForm();
         xMap Map = null;
         int msX, msY;
+        bool AddingElement = false;
 
         public MainForm()//!
         {
@@ -430,6 +430,13 @@ namespace Schematix
         #endregion
 
         #region Map pad drawings
+        public void RenewMaps()
+        {
+            foreach (var Map in Options.Maps)
+                Map.Draw();
+            Invalidate();
+        }
+
         private void MainForm_Resize(object sender, EventArgs e)
         {
             Options.WindowW = ClientSize.Width;
@@ -512,81 +519,257 @@ namespace Schematix
         #endregion
 
         #region Map pad action
-        private void MainForm_MouseDown(object sender, MouseEventArgs e)//!
+        private void MainForm_MouseDown(object sender, MouseEventArgs e)//
         {
-            Map.SelectAt(e.X, e.Y);
-            if (Map.Selected == null)
+            // Save action start point
+            msX = e.X;
+            msY = e.Y;
+            // Prevent senseless action
+            if (rbObject.Checked && rbObject.Tag == null)
+                rbDefault.Checked = true;
+            else if (rbLink.Checked && rbLink.Tag == null)
+                rbDefault.Checked = true;
+            else if (rbBox.Checked && rbBox.Tag == null)
+                rbDefault.Checked = true;
+
+            // Default tool
+            if (rbDefault.Checked)
             {
-                if (hScrollBar.LargeChange < hScrollBar.Maximum)
-                    if (vScrollBar.LargeChange < vScrollBar.Maximum)
-                        Cursor = Cursors.NoMove2D;
+                if (Map.SelectAt(msX + Map.ScrollX, msY + Map.ScrollY) == null)
+                {
+                    if (hScrollBar.LargeChange < hScrollBar.Maximum)
+                        if (vScrollBar.LargeChange < vScrollBar.Maximum)
+                            Cursor = Cursors.NoMove2D;
+                        else
+                            Cursor = Cursors.NoMoveHoriz;
                     else
-                        Cursor = Cursors.NoMoveHoriz;
-                else
-                    if (vScrollBar.LargeChange < vScrollBar.Maximum)
+                        if (vScrollBar.LargeChange < vScrollBar.Maximum)
                         Cursor = Cursors.NoMoveVert;
                     else
                         Cursor = Cursors.No;
-            }
-            else
-                Cursor =  Cursors.SizeAll;
-            // ...
-            msX = e.X;
-            msY = e.Y;
-        }
-
-        private void MainForm_MouseMove(object sender, MouseEventArgs e)//!!!
-        {
-            if (e.Button == MouseButtons.None)
-            {
-                Cursor = (Map.AnythingAt(e.X + Map.ScrollX, e.Y + Map.ScrollY) == null) ? Cursors.Default : Cursors.Hand;
-                // ...
+                }
+                else
+                    Cursor = Cursors.SizeAll;
             }
             else
             {
-                // ...
-                if (Map.AnythingAt(e.X + Map.ScrollX, e.Y + Map.ScrollY) == null)
+                if (rbObject.Checked)
                 {
-                    Map.ScrollX += msX - e.X;
-                    Map.ScrollY += msY - e.Y;
-                    CheckScrollers();
-                    msX = e.X;
-                    msY = e.Y;
-                    Invalidate();
+                    var PObject = (rbObject.Tag as xPObject);
+                    var Object = new xObject(Map);
+                    Map.AddPObject(PObject);
+                    Map.Objects.Add(Object);
+                    // Set data
+                    Object.Prototype = Map.PObjects.Find(xP => (xP.ID == PObject.ID) && (xP.Revision == PObject.Revision));
+                    Object.PrototypeID = Object.Prototype.ID;
+                    Object.PrototypeRevision = Object.Prototype.Revision;
+                    Object.X = msX + Map.ScrollX;
+                    Object.Y = msY + Map.ScrollY;
+                    // 
+                    Map.Selected = Object;
+                }
+                else if (rbLink.Checked)
+                {
+                    var PLink = (rbLink.Tag as xPLink);
+                    var Link = new xLink(Map);
+                    Map.AddPLink(PLink);
+                    Map.Links.Add(Link);
+                    // Set data
+                    Link.Prototype = Map.PLinks.Find(xP => (xP.ID == PLink.ID) && (xP.Revision == PLink.Revision));
+                    Link.PrototypeID = Link.Prototype.ID;
+                    Link.PrototypeRevision = Link.Prototype.Revision;
+                    Link.XA = Link.XB = msX + Map.ScrollX;
+                    Link.YA = Link.YB = msY + Map.ScrollY;
+                    // Try to bind to object
+                    if (Map.SelectAt(msX + Map.ScrollX, msY + Map.ScrollY) != null)
+                        if (Map.Selected.IsObject)
+                        {
+                            Link.ObjectA = Map.Selected as xObject;
+                            Link.ObjectAID = Link.ObjectA.ID;
+                            Link.DotA = Link.ObjectA.GetNearestDot(msX + Map.ScrollX, msY + Map.ScrollY);
+                            Link.DotAID = Link.DotA.ID;
+                            Link.XA = Link.ObjectA.Left + Link.DotA.X;
+                            Link.YA = Link.ObjectA.Top  + Link.DotA.Y;
+                        }
+                    // 
+                    Map.Selected = Link;
                 }
                 else
                 {
-                    //Map.Selected
-                    // ...
+                    var PBox = (rbBox.Tag as xPBox);
+                    var Box = new xBox(Map);
+                    Map.AddPBox(PBox);
+                    Map.Boxes.Add(Box);
+                    // Set data
+                    Box.Prototype = Map.PBoxes.Find(xP => (xP.ID == PBox.ID) && (xP.Revision == PBox.Revision));
+                    Box.PrototypeID = Box.Prototype.ID;
+                    Box.PrototypeRevision = Box.Prototype.Revision;
+                    Box.Left = msX + Map.ScrollX;
+                    Box.Top  = msY + Map.ScrollY;
+                    Box.Width  = 1;
+                    Box.Height = 1;
+                    Box.Text = PBox.Text;
+                    // 
+                    Map.Selected = Box;
                 }
+                Map.Selected.Check();
+                AddingElement = true;
+                Map.Draw(Map.Selected.Left - 8, Map.Selected.Top - 8, Map.Selected.Width + 16, Map.Selected.Height + 16);
+                Invalidate();
+            }
+        }
+
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)//!
+        {
+            if (e.Button == MouseButtons.None)
+                Cursor = (Map.AnythingAt(e.X + Map.ScrollX, e.Y + Map.ScrollY) == null) ? Cursors.Default : Cursors.Hand;
+            else
+            {
+                int dX = e.X - msX,
+                    dY = e.Y - msY;
+                if (Map.Selected == null)
+                {
+                    Map.ScrollX -= dX;
+                    Map.ScrollY -= dY;
+                    CheckScrollers();
+                    msX = e.X;
+                    msY = e.Y;
+                }
+                else
+                {
+                    if (Map.Selected.IsObject)
+                    {
+                        (Map.Selected as xObject).X += dX;
+                        (Map.Selected as xObject).Y += dY;
+                        msX = e.X;
+                        msY = e.Y;
+                    }
+                    else if(Map.Selected.IsLink)
+                    {
+                        var Link = (Map.Selected as xLink);
+                        if (AddingElement)
+                        {
+                            // Try to bind to object
+                            Link.ObjectB = Map.AnythingAt(e.X + Map.ScrollX, e.Y + Map.ScrollY) as xObject;
+                            if (Link.ObjectB != null)
+                                if (Link.ObjectB.IsObject)
+                                {
+                                    Link.ObjectBID = Link.ObjectB.ID;
+                                    Link.DotB = Link.ObjectB.GetNearestDot(e.X + Map.ScrollX, e.Y + Map.ScrollY);
+                                    Link.DotBID = Link.DotB.ID;
+                                    Link.XB = Link.ObjectB.Left + Link.DotB.X;
+                                    Link.YB = Link.ObjectB.Top  + Link.DotB.Y;
+                                }
+                                else
+                                    Link.ObjectB = null;
+                            if (Link.ObjectB == null)
+                            {
+                                Link.ObjectBID = 0;
+                                Link.XB = e.X + Map.ScrollX;
+                                Link.YB = e.Y + Map.ScrollY;
+                            }
+                        }
+                        else
+                        {
+                            /*Link.ObjectA = Map.AnythingAt(Link.XA + dX, Link.YA + dY) as xObject;
+                            if (Link.ObjectA != null)
+                                if (Link.ObjectA.IsObject)
+                                {
+                                    Link.ObjectAID = Link.ObjectA.ID;
+                                    Link.DotA = Link.ObjectA.GetNearestDot(Link.XA + dX, Link.YA + dY);
+                                    Link.DotAID = Link.DotA.ID;
+                                    Link.XA = Link.ObjectA.Left + Link.DotA.X;
+                                    Link.YA = Link.ObjectA.Top  + Link.DotA.Y;
+                                }
+                                else
+                                    Link.ObjectA = null;
+                            if (Link.ObjectA == null)
+                            {
+                                Link.ObjectAID = 0;
+                                Link.XA += dX;
+                                Link.YA += dY;
+                                msX = e.X;
+                                msY = e.Y;
+                            }
+                            //...
+                            Link.ObjectB = Map.AnythingAt(Link.XB + dX, Link.YB + dY) as xObject;
+                            if (Link.ObjectB != null)
+                                if (Link.ObjectB.IsObject)
+                                {
+                                    Link.ObjectBID = Link.ObjectB.ID;
+                                    Link.DotB = Link.ObjectB.GetNearestDot(Link.XB + dX, Link.YB + dY);
+                                    Link.DotBID = Link.DotB.ID;
+                                    Link.XB = Link.ObjectB.Left + Link.DotB.X;
+                                    Link.YB = Link.ObjectB.Top  + Link.DotB.Y;
+                                }
+                                else
+                                    Link.ObjectB = null;
+                            if (Link.ObjectB == null)
+                            {
+                                Link.ObjectBID = 0;
+                                Link.XB += dX;
+                                Link.YB += dY;
+                                msX = e.X;
+                                msY = e.Y;
+                            }*/
+                        }
+                    }
+                    else
+                    {
+                        if (AddingElement)
+                        {
+                            (Map.Selected as xBox).Width  += dX;
+                            (Map.Selected as xBox).Height += dY;
+                        }
+                        else
+                        {
+                            (Map.Selected as xBox).Left += dX;
+                            (Map.Selected as xBox).Top  += dY;
+                        }
+                        msX = e.X;
+                        msY = e.Y;
+                    }
+                    Map.Selected.Check();
+                    Map.Draw(Map.ScrollX, Map.ScrollY, Options.WindowW, Options.WindowH);
+                }
+                Invalidate();
             }
         }
 
         private void MainForm_MouseUp(object sender, MouseEventArgs e)//!!!
         {
-            //
             Cursor = (Map.AnythingAt(e.X + Map.ScrollX, e.Y + Map.ScrollY) == null) ? Cursors.Default : Cursors.Hand;
+            if (AddingElement)
+            {
+                AddingElement = false;
+                Map.Draw();
+                Map.Changed = true;
+                Map.UpdateTabName();
+                Invalidate();
+            }
+            //...
         }
         
-        private void MainForm_MouseClick(object sender, MouseEventArgs e)//!!!
-        {
-            //
-        }
-
-        private void MainForm_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void MainForm_MouseDoubleClick(object sender, MouseEventArgs e)//
         {
             if (Map.Selected == null)
                 tsmiMapOptions_Click(null, null);
             else
             {
+                var r = DialogResult.Cancel;
                 if (Map.Selected.IsObject)
-                    new ObjectOptionsForm(Map.Selected as xObject).ShowDialog();
+                    r = new ObjectOptionsForm(Map.Selected as xObject).ShowDialog();
                 else if (Map.Selected.IsLink)
-                    new LinkOptionsForm(Map.Selected as xLink).ShowDialog();
+                    r = new LinkOptionsForm(Map.Selected as xLink).ShowDialog();
                 else if (Map.Selected.IsBox)
-                    new BoxOptionsForm(Map.Selected as xBox).ShowDialog();
+                    r = new BoxOptionsForm(Map.Selected as xBox).ShowDialog();
+                if (r != DialogResult.OK)
+                    return;
+                Map.Draw();
+                Map.Changed = true;
+                Map.UpdateTabName();
+                Invalidate();
             }
-            //
         }
 
         private void pnlMapOptions_MouseAction(object sender, MouseEventArgs e)//Ok
@@ -602,8 +785,8 @@ namespace Schematix
                     x += pnlMapFrame.Left;
                     y += pnlMapFrame.Top;
                 }
-                Map.ScrollX = (Map.Width  - Options.WindowW) * x / (pnlMapOptions.ClientSize.Width  - 1);
-                Map.ScrollY = (Map.Height - Options.WindowH) * y / (pnlMapOptions.ClientSize.Height - 1);
+                Map.ScrollX = (int)Math.Round((double)(Map.Width  - Options.WindowW) * x / (pnlMapOptions.ClientSize.Width  - 1));
+                Map.ScrollY = (int)Math.Round((double)(Map.Height - Options.WindowH) * y / (pnlMapOptions.ClientSize.Height - 1));
                 CheckScrollers();
                 Invalidate();
             }

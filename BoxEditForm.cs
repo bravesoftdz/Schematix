@@ -70,7 +70,7 @@ namespace Schematix
             cbbStyle.SelectedIndex = (int)PBox.Pen.DashStyle;
             tbText.Text            = PBox.Text;
             cbbAlign.SelectedIndex = (int)PBox.TextAlign;
-            btnFont.BackColor      = PBox.TextColor;
+            btnFontColor.BackColor = PBox.TextColor;
             SetAndShowFont(PBox.Font);
         }
 
@@ -115,7 +115,7 @@ namespace Schematix
             PBox.Pen.DashStyle = (DashStyle)cbbStyle.SelectedIndex;
             PBox.Text          = tbText.Text;
             PBox.TextAlign     = (AlignTypes)cbbAlign.SelectedIndex;
-            PBox.TextColor     = btnFont.BackColor;
+            PBox.TextColor     = btnFontColor.BackColor;
             PBox.Font          = btnFont.Font;
 
             if (!PBox.SaveToFile(PBox.FileName))
