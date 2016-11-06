@@ -63,6 +63,9 @@
             this.pbPullVScroll = new System.Windows.Forms.PictureBox();
             this.pbPullMaps = new System.Windows.Forms.PictureBox();
             this.pbPullTools = new System.Windows.Forms.PictureBox();
+            this.cmsElement = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiElementOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiElementDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMaps.SuspendLayout();
             this.pnlMapOptions.SuspendLayout();
             this.pnlMaps.SuspendLayout();
@@ -73,6 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPullVScroll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPullMaps)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPullTools)).BeginInit();
+            this.cmsElement.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMaps
@@ -415,6 +419,30 @@
             this.pbPullTools.TabStop = false;
             this.pbPullTools.MouseEnter += new System.EventHandler(this.PullTools_Over);
             // 
+            // cmsElement
+            // 
+            this.cmsElement.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiElementOptions,
+            this.tsmiElementDelete});
+            this.cmsElement.Name = "cmsMap";
+            this.cmsElement.Size = new System.Drawing.Size(153, 70);
+            // 
+            // tsmiElementOptions
+            // 
+            this.tsmiElementOptions.Image = global::Schematix.Properties.Resources.edit;
+            this.tsmiElementOptions.Name = "tsmiElementOptions";
+            this.tsmiElementOptions.Size = new System.Drawing.Size(152, 22);
+            this.tsmiElementOptions.Text = "Options";
+            this.tsmiElementOptions.Click += new System.EventHandler(this.tsmiElementOptions_Click);
+            // 
+            // tsmiElementDelete
+            // 
+            this.tsmiElementDelete.Image = global::Schematix.Properties.Resources.delete;
+            this.tsmiElementDelete.Name = "tsmiElementDelete";
+            this.tsmiElementDelete.Size = new System.Drawing.Size(152, 22);
+            this.tsmiElementDelete.Text = "Delete";
+            this.tsmiElementDelete.Click += new System.EventHandler(this.tsmiElementDelete_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -458,6 +486,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbPullVScroll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPullMaps)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPullTools)).EndInit();
+            this.cmsElement.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -497,6 +526,9 @@
         private System.Windows.Forms.Timer timerPing;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pbPullTools;
+        private System.Windows.Forms.ContextMenuStrip cmsElement;
+        private System.Windows.Forms.ToolStripMenuItem tsmiElementOptions;
+        private System.Windows.Forms.ToolStripMenuItem tsmiElementDelete;
     }
 }
 

@@ -8,6 +8,7 @@ namespace Schematix
     public partial class BoxEditForm : Form
     {
         public xPBox PBox;
+        Font textFont;
         bool IsRoot;
 
         public BoxEditForm(xPBox pBox, String rootPath, bool isRoot)
@@ -89,6 +90,7 @@ namespace Schematix
 
         private void SetAndShowFont(Font font)//Ok
         {
+            textFont = font;
             btnFont.Text = font.Size + "em, " + font.Name;
             btnFont.Font = new Font(font.Name, 8.25f, font.Style);
         }
@@ -116,7 +118,7 @@ namespace Schematix
             PBox.Text          = tbText.Text;
             PBox.TextAlign     = (AlignTypes)cbbAlign.SelectedIndex;
             PBox.TextColor     = btnFontColor.BackColor;
-            PBox.Font          = btnFont.Font;
+            PBox.Font          = textFont;
 
             if (!PBox.SaveToFile(PBox.FileName))
                 return;

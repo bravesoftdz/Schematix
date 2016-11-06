@@ -31,7 +31,7 @@ namespace Schematix
                 String parameterName = stream.ReadString();
                 // Check for record's end
                 if (parameterName == "END")
-                    return;
+                    break;
                 int valueLength = stream.ReadInt32();
                 // Load(/skip) parameters
                 ReadParameter(stream, parameterName, valueLength);
@@ -300,14 +300,14 @@ namespace Schematix
             MustClearDots = true;
         }
 
-        protected override void BeforeReadParameters()
+        override protected void BeforeReadParameters()
         {
             UseAlphaColor = false;
             MustClearDots = false;
             Dots = new List<xDot>();
         }
 
-        protected override void AfterReadParameters()
+        override protected void AfterReadParameters()
         {
             if (ImageType == ImageTypes.None)
                 Canvas = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
@@ -489,7 +489,7 @@ namespace Schematix
 
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
-            if (valueLength == 1 && parameterName == "BoxType")
+            if (parameterName == "BoxType")
                 Enum.TryParse(ReadStreamString(stream, valueLength), out BoxType);
             else if (parameterName == "Text")
                 Text = ReadStreamString(stream, valueLength);
@@ -593,6 +593,10 @@ namespace Schematix
         }
 
         virtual public void Check()
+        {
+        }
+
+        virtual public void Delete()
         {
         }
     }
@@ -868,7 +872,7 @@ namespace Schematix
             IPs.Remove(IP);
         }
 
-        public void Delete()
+        override public void Delete()
         {
             Map.DeleteObject(this);
         }
@@ -974,10 +978,10 @@ namespace Schematix
                 // Find point on line:
                 if (Width < Height)
                     // Vertical
-                    rx = Math.Round(XA + (double)((XB - XA)  *(y - Top )) / Height);
+                    rx = Math.Round(XA + (double)((XB - XA) * Math.Abs(y - YA)) / Height);
                 else if (0 < Width)
                     // Horizontal
-                    ry = Math.Round(YA + (double)((YB - YA) * (x - Left)) / Width);
+                    ry = Math.Round(YA + (double)((YB - YA) * Math.Abs(x - XA)) / Width);
                 // Check if point near line +/-3
                 return (Math.Abs(x - rx) <= padding) && (Math.Abs(y - ry) <= padding);
             }
@@ -1079,7 +1083,7 @@ namespace Schematix
             BoxRenew();
         }
 
-        public void Delete()
+        override public void Delete()
         {
             Map.DeleteLink(this);
         }
@@ -1229,7 +1233,7 @@ namespace Schematix
             BoxRenew();
         }
 
-        public void Delete()
+        override public void Delete()
         {
             Map.DeleteBox(this);
         }
@@ -1901,7 +1905,7 @@ namespace Schematix
         {
             xExemplar selected = Objects.Find(O => O.isOver(x, y));
             if (selected == null)
-                selected = Links.Find(L => L.isOver(x, y));
+                selected = Links.Find(L => L.isOver(x, y, 3));
             if (selected == null)
                 selected = Boxes.Find(B => B.isOver(x, y));
             return selected;
@@ -1924,5 +1928,12 @@ namespace Schematix
         }
 
         //...
+    }
+
+    public struct xFrame
+    {
+        public bool Visible, Active, Hover;
+        public int X, Y, W, H;
+        public Cursor Cursor;
     }
 }

@@ -12,8 +12,8 @@ namespace Schematix
             InitializeComponent();
             Text = Options.LangCur.lEOTitle + " " + Options.LangCur.lEETitleObject;
             // Share
-            lblName.Text      = Options.LangCur.lEOName;
             lblReference.Text = Options.LangCur.lEOReference;
+            lblName.Text      = Options.LangCur.lEOName;
             toolTip.SetToolTip(btnGetReference, Options.LangCur.hEOGetReference);
             // Own
             toolTip.SetToolTip(btnIPAdd,        Options.LangCur.hOOIPAdd);
@@ -23,7 +23,7 @@ namespace Schematix
             clmTimeLast.Text  = Options.LangCur.lOOColumTimeLast;
             clmTimeNext.Text  = Options.LangCur.lOOColumTimeNext;
             clmPing.Text      = Options.LangCur.lOOColumPing;
-            // Fill
+            // Store
             Object = obj;
             if (Object == null)
             {
@@ -31,6 +31,7 @@ namespace Schematix
                 btnOk.Enabled = false;
                 return;
             }
+            // Fill
             tbReference.Text   = Object.Reference;
             tbName.Text        = Object.Name;
             tbDescription.Text = Object.Description;
@@ -39,15 +40,9 @@ namespace Schematix
                 Share.lvIPs_Add(lvIPs, IP, ref IP.Obj_lvItem);
         }
 
-        private void btnGetReference_Click(object sender, EventArgs e)//Ok
-        {
-            Share.GetFile(tbReference);
-        }
+        private void btnGetReference_Click(object sender, EventArgs e) => Share.GetFile(tbReference);//Ok
 
-        private void lvIPs_SelectedIndexChanged(object sender, EventArgs e)//O
-        {
-            btnIPDelete.Enabled = (0 < lvIPs.SelectedItems.Count);
-        }
+        private void lvIPs_SelectedIndexChanged(object sender, EventArgs e) => btnIPDelete.Enabled = (0 < lvIPs.SelectedItems.Count);//O
 
         private void btnIPAdd_Click(object sender, EventArgs e)//O
         {
@@ -56,22 +51,11 @@ namespace Schematix
                 Share.lvIPs_Add(lvIPs, form.IP, ref form.IP.Obj_lvItem);
         }
 
-        private void lvIPs_DoubleClick(object sender, EventArgs e)//O
-        {
-            Share.lvIPs_Edit(lvIPs);
-        }
+        private void lvIPs_DoubleClick(object sender, EventArgs e) => Share.lvIPs_Edit(lvIPs);//O
 
-        private void btnIPDelete_Click(object sender, EventArgs e)//O
-        {
-            Share.lvIPs_Delete(lvIPs);
-        }
+        private void btnIPDelete_Click(object sender, EventArgs e) => Share.lvIPs_Delete(lvIPs);//O
 
-        private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-            if (e?.Item.Tag == null)
-                return;
-            (e.Item.Tag as xIP).Onn = e.Item.Checked;
-        }
+        private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e) => (e.Item.Tag as xIP).Onn = e.Item.Checked;//
 
         private void btnOk_Click(object sender, EventArgs e)
         {

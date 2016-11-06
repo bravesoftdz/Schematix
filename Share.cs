@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -69,10 +68,9 @@ namespace Schematix
             if (tb.Text == "")
                 tb.Text = Directory.GetCurrentDirectory();
             dlgFolder.SelectedPath = tb.Text;
-            if (dlgFolder.ShowDialog() == DialogResult.OK)
-                tb.Text = dlgFolder.SelectedPath;
-            else
+            if (dlgFolder.ShowDialog() != DialogResult.OK)
                 return false;
+            tb.Text = dlgFolder.SelectedPath;
             return true;
         }
 
@@ -80,14 +78,12 @@ namespace Schematix
         {
             var dlgOpen = new OpenFileDialog();
             if (tb.Text == "")
-                dlgOpen.InitialDirectory = Directory.GetCurrentDirectory();
-            else
-                dlgOpen.InitialDirectory = Path.GetDirectoryName(tb.Text);
+                tb.Text = Directory.GetCurrentDirectory();
+            dlgOpen.InitialDirectory = Path.GetDirectoryName(tb.Text);
             dlgOpen.FileName = Path.GetFileName(tb.Text);
-            if (dlgOpen.ShowDialog() == DialogResult.OK)
-                tb.Text = dlgOpen.FileName;
-            else
+            if (dlgOpen.ShowDialog() != DialogResult.OK)
                 return false;
+            tb.Text = dlgOpen.FileName;
             return true;
         }
 
@@ -378,6 +374,28 @@ namespace Schematix
                     break;
             }
             #endregion
+        }
+
+        static public void TryToBindToObject(xMap Map, int X, int Y, ref xObject Object, ref UInt64 ObjectID, ref xDot Dot, ref UInt64 DotID, ref int paramX, ref int paramY)
+        {
+            Object = Map.AnythingAt(X, Y) as xObject;
+            if (Object != null)
+                if (Object.IsObject)
+                {
+                    ObjectID = Object.ID;
+                    Dot = Object.GetNearestDot(X, Y);
+                    DotID = Dot.ID;
+                    paramX = Object.Left + Dot.X;
+                    paramY = Object.Top  + Dot.Y;
+                }
+                else
+                    Object = null;
+            if (Object == null)
+            {
+                ObjectID = 0;
+                paramX = X;
+                paramY = Y;
+            }
         }
     }
 }

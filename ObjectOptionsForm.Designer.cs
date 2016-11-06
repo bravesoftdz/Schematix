@@ -61,7 +61,7 @@
             // 
             this.btnOk.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel2.SetColumnSpan(this.btnOk, 3);
-            this.btnOk.Location = new System.Drawing.Point(179, 318);
+            this.btnOk.Location = new System.Drawing.Point(221, 270);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 6;
@@ -92,14 +92,14 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(433, 344);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(518, 296);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // btnGetReference
             // 
             this.btnGetReference.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnGetReference.Image = global::Schematix.Properties.Resources.Reference;
-            this.btnGetReference.Location = new System.Drawing.Point(407, 3);
+            this.btnGetReference.Location = new System.Drawing.Point(492, 3);
             this.btnGetReference.Name = "btnGetReference";
             this.btnGetReference.Size = new System.Drawing.Size(23, 23);
             this.btnGetReference.TabIndex = 2;
@@ -123,7 +123,7 @@
             this.tbName.Location = new System.Drawing.Point(66, 32);
             this.tbName.MaxLength = 255;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(364, 20);
+            this.tbName.Size = new System.Drawing.Size(449, 20);
             this.tbName.TabIndex = 1;
             // 
             // lblReference
@@ -142,7 +142,7 @@
             this.tbReference.Location = new System.Drawing.Point(66, 4);
             this.tbReference.MaxLength = 32;
             this.tbReference.Name = "tbReference";
-            this.tbReference.Size = new System.Drawing.Size(335, 20);
+            this.tbReference.Size = new System.Drawing.Size(420, 20);
             this.tbReference.TabIndex = 0;
             // 
             // splitContainer1
@@ -160,8 +160,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(427, 254);
-            this.splitContainer1.SplitterDistance = 127;
+            this.splitContainer1.Size = new System.Drawing.Size(512, 206);
+            this.splitContainer1.SplitterDistance = 66;
             this.splitContainer1.TabIndex = 10;
             // 
             // tbDescription
@@ -172,7 +172,7 @@
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDescription.Size = new System.Drawing.Size(427, 127);
+            this.tbDescription.Size = new System.Drawing.Size(512, 66);
             this.tbDescription.TabIndex = 9;
             // 
             // tableLayoutPanel1
@@ -190,7 +190,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(427, 123);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(512, 136);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // btnIPAdd
@@ -209,7 +209,7 @@
             this.btnIPDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnIPDelete.Enabled = false;
             this.btnIPDelete.Image = global::Schematix.Properties.Resources.delete;
-            this.btnIPDelete.Location = new System.Drawing.Point(401, 3);
+            this.btnIPDelete.Location = new System.Drawing.Point(486, 3);
             this.btnIPDelete.Name = "btnIPDelete";
             this.btnIPDelete.Size = new System.Drawing.Size(23, 23);
             this.btnIPDelete.TabIndex = 2;
@@ -232,7 +232,7 @@
             this.lvIPs.HideSelection = false;
             this.lvIPs.Location = new System.Drawing.Point(3, 32);
             this.lvIPs.Name = "lvIPs";
-            this.lvIPs.Size = new System.Drawing.Size(421, 88);
+            this.lvIPs.Size = new System.Drawing.Size(506, 101);
             this.lvIPs.TabIndex = 3;
             this.lvIPs.UseCompatibleStateImageBehavior = false;
             this.lvIPs.View = System.Windows.Forms.View.Details;
@@ -271,9 +271,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 360);
+            this.ClientSize = new System.Drawing.Size(534, 312);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "ObjectOptionsForm";
             this.Padding = new System.Windows.Forms.Padding(8);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

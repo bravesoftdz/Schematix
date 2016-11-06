@@ -170,6 +170,7 @@ namespace Schematix
 
         #region Box Options
             lBOText = "Text",
+            lBOSize = "Box size",
         #endregion
 
         #region Map Options
@@ -503,6 +504,7 @@ namespace Schematix
                             switch (lblName)
                             {
                                 case "lBOText": lBOText = lblText;   break;
+                                case "lBOSize": lBOSize = lblText;   break;
                             }
                             break;
                         #endregion

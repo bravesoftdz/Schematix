@@ -28,15 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LinkOptionsForm));
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbDescription = new System.Windows.Forms.TextBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnGetReference = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.lblReference = new System.Windows.Forms.Label();
             this.tbReference = new System.Windows.Forms.TextBox();
-            this.tbDescription = new System.Windows.Forms.TextBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +69,18 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(284, 162);
             this.tableLayoutPanel2.TabIndex = 2;
+            // 
+            // tbDescription
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 3);
+            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDescription.Location = new System.Drawing.Point(3, 58);
+            this.tbDescription.MaxLength = 8192;
+            this.tbDescription.Multiline = true;
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbDescription.Size = new System.Drawing.Size(278, 72);
+            this.tbDescription.TabIndex = 10;
             // 
             // btnOk
             // 
@@ -130,18 +144,6 @@
             this.tbReference.Size = new System.Drawing.Size(185, 20);
             this.tbReference.TabIndex = 0;
             // 
-            // tbDescription
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 3);
-            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDescription.Location = new System.Drawing.Point(3, 58);
-            this.tbDescription.MaxLength = 8192;
-            this.tbDescription.Multiline = true;
-            this.tbDescription.Name = "tbDescription";
-            this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDescription.Size = new System.Drawing.Size(278, 72);
-            this.tbDescription.TabIndex = 10;
-            // 
             // LinkOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,5 +172,6 @@
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.Label lblReference;
         private System.Windows.Forms.TextBox tbReference;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
