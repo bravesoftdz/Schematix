@@ -29,23 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "2011.00.00 00:00:00",
-            "127.255.255.255",
-            "send",
-            "1000"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IPEditForm));
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.lblAddress = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.tbAddress = new System.Windows.Forms.TextBox();
             this.tbName = new System.Windows.Forms.TextBox();
             this.tbDescription = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpTimers = new System.Windows.Forms.TableLayoutPanel();
             this.lblTimeOutYellow = new System.Windows.Forms.Label();
             this.nudTimeOutYellow = new System.Windows.Forms.NumericUpDown();
             this.lblTimeOutGreen = new System.Windows.Forms.Label();
@@ -69,9 +64,9 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
+            this.tlpMain.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tlpTimers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeOutYellow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeOutGreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeOutRed)).BeginInit();
@@ -82,6 +77,7 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.AutoSize = true;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.tabControl, 0, 1);
@@ -111,7 +107,7 @@
             // tpMain
             // 
             this.tpMain.BackColor = System.Drawing.SystemColors.Control;
-            this.tpMain.Controls.Add(this.tableLayoutPanel5);
+            this.tpMain.Controls.Add(this.tlpMain);
             this.tpMain.Location = new System.Drawing.Point(4, 22);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
@@ -119,26 +115,25 @@
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             // 
-            // tableLayoutPanel5
+            // tlpMain
             // 
-            this.tableLayoutPanel5.ColumnCount = 1;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel3, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.tbDescription, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel1, 0, 2);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 3;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(398, 229);
-            this.tableLayoutPanel5.TabIndex = 0;
+            this.tlpMain.ColumnCount = 1;
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpMain.Controls.Add(this.tableLayoutPanel3, 0, 0);
+            this.tlpMain.Controls.Add(this.tbDescription, 0, 1);
+            this.tlpMain.Controls.Add(this.tlpTimers, 0, 2);
+            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMain.Location = new System.Drawing.Point(3, 3);
+            this.tlpMain.Name = "tlpMain";
+            this.tlpMain.RowCount = 3;
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMain.Size = new System.Drawing.Size(398, 229);
+            this.tlpMain.TabIndex = 0;
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.AutoSize = true;
             this.tableLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -154,7 +149,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(392, 52);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(418, 52);
             this.tableLayoutPanel3.TabIndex = 17;
             // 
             // lblAddress
@@ -183,7 +178,7 @@
             this.tbAddress.Location = new System.Drawing.Point(54, 3);
             this.tbAddress.MaxLength = 255;
             this.tbAddress.Name = "tbAddress";
-            this.tbAddress.Size = new System.Drawing.Size(335, 20);
+            this.tbAddress.Size = new System.Drawing.Size(361, 20);
             this.tbAddress.TabIndex = 3;
             // 
             // tbName
@@ -192,50 +187,49 @@
             this.tbName.Location = new System.Drawing.Point(54, 29);
             this.tbName.MaxLength = 255;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(335, 20);
+            this.tbName.Size = new System.Drawing.Size(361, 20);
             this.tbName.TabIndex = 5;
             // 
             // tbDescription
             // 
-            this.tableLayoutPanel5.SetColumnSpan(this.tbDescription, 4);
+            this.tlpMain.SetColumnSpan(this.tbDescription, 4);
             this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbDescription.Location = new System.Drawing.Point(3, 61);
             this.tbDescription.MaxLength = 4096;
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDescription.Size = new System.Drawing.Size(392, 81);
+            this.tbDescription.Size = new System.Drawing.Size(418, 81);
             this.tbDescription.TabIndex = 15;
             // 
-            // tableLayoutPanel1
+            // tlpTimers
             // 
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.lblTimeOutYellow, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.nudTimeOutYellow, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lblTimeOutGreen, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.nudTimeOutGreen, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblTimeOutRed, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.nudTimeOutRed, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblTimeNext, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.dtpDateNext, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblPeriod, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.nudPeriod, 3, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 148);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(392, 78);
-            this.tableLayoutPanel1.TabIndex = 16;
+            this.tlpTimers.AutoSize = true;
+            this.tlpTimers.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tlpTimers.ColumnCount = 5;
+            this.tlpTimers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpTimers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpTimers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpTimers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpTimers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpTimers.Controls.Add(this.lblTimeOutYellow, 0, 1);
+            this.tlpTimers.Controls.Add(this.nudTimeOutYellow, 1, 1);
+            this.tlpTimers.Controls.Add(this.lblTimeOutGreen, 0, 0);
+            this.tlpTimers.Controls.Add(this.nudTimeOutGreen, 1, 0);
+            this.tlpTimers.Controls.Add(this.lblTimeOutRed, 0, 2);
+            this.tlpTimers.Controls.Add(this.nudTimeOutRed, 1, 2);
+            this.tlpTimers.Controls.Add(this.lblTimeNext, 2, 0);
+            this.tlpTimers.Controls.Add(this.dtpDateNext, 3, 0);
+            this.tlpTimers.Controls.Add(this.lblPeriod, 2, 1);
+            this.tlpTimers.Controls.Add(this.nudPeriod, 3, 1);
+            this.tlpTimers.Location = new System.Drawing.Point(3, 148);
+            this.tlpTimers.Name = "tlpTimers";
+            this.tlpTimers.RowCount = 3;
+            this.tlpTimers.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTimers.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTimers.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTimers.Size = new System.Drawing.Size(418, 78);
+            this.tlpTimers.TabIndex = 16;
             // 
             // lblTimeOutYellow
             // 
@@ -259,6 +253,7 @@
             this.nudTimeOutYellow.Name = "nudTimeOutYellow";
             this.nudTimeOutYellow.Size = new System.Drawing.Size(67, 20);
             this.nudTimeOutYellow.TabIndex = 15;
+            this.nudTimeOutYellow.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudTimeOutYellow.Value = new decimal(new int[] {
             100,
             0,
@@ -292,6 +287,7 @@
             this.nudTimeOutGreen.Name = "nudTimeOutGreen";
             this.nudTimeOutGreen.Size = new System.Drawing.Size(67, 20);
             this.nudTimeOutGreen.TabIndex = 15;
+            this.nudTimeOutGreen.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudTimeOutGreen.Value = new decimal(new int[] {
             100,
             0,
@@ -320,6 +316,7 @@
             this.nudTimeOutRed.Name = "nudTimeOutRed";
             this.nudTimeOutRed.Size = new System.Drawing.Size(67, 20);
             this.nudTimeOutRed.TabIndex = 15;
+            this.nudTimeOutRed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudTimeOutRed.Value = new decimal(new int[] {
             100,
             0,
@@ -346,7 +343,7 @@
             this.dtpDateNext.Location = new System.Drawing.Point(275, 3);
             this.dtpDateNext.Name = "dtpDateNext";
             this.dtpDateNext.ShowCheckBox = true;
-            this.dtpDateNext.Size = new System.Drawing.Size(114, 20);
+            this.dtpDateNext.Size = new System.Drawing.Size(140, 20);
             this.dtpDateNext.TabIndex = 16;
             this.dtpDateNext.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
@@ -362,8 +359,8 @@
             // 
             // nudPeriod
             // 
-            this.nudPeriod.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nudPeriod.Location = new System.Drawing.Point(275, 29);
+            this.nudPeriod.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.nudPeriod.Location = new System.Drawing.Point(335, 29);
             this.nudPeriod.Maximum = new decimal(new int[] {
             86400000,
             0,
@@ -377,6 +374,7 @@
             this.nudPeriod.Name = "nudPeriod";
             this.nudPeriod.Size = new System.Drawing.Size(80, 20);
             this.nudPeriod.TabIndex = 15;
+            this.nudPeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudPeriod.Value = new decimal(new int[] {
             1000,
             0,
@@ -422,14 +420,10 @@
             this.lvPings.GridLines = true;
             this.lvPings.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvPings.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            this.lvPings.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.lvPings.Location = new System.Drawing.Point(3, 33);
+            this.lvPings.Location = new System.Drawing.Point(3, 27);
             this.lvPings.Name = "lvPings";
-            this.lvPings.Size = new System.Drawing.Size(392, 193);
-            this.lvPings.Sorting = System.Windows.Forms.SortOrder.Descending;
-            this.lvPings.StateImageList = this.ilPingColor;
+            this.lvPings.Size = new System.Drawing.Size(392, 199);
+            this.lvPings.SmallImageList = this.ilPingColor;
             this.lvPings.TabIndex = 0;
             this.lvPings.UseCompatibleStateImageBehavior = false;
             this.lvPings.View = System.Windows.Forms.View.Details;
@@ -464,7 +458,8 @@
             // 
             this.btnClearPings.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnClearPings.Image = global::Schematix.Properties.Resources.deleteAll;
-            this.btnClearPings.Location = new System.Drawing.Point(371, 3);
+            this.btnClearPings.Location = new System.Drawing.Point(371, 0);
+            this.btnClearPings.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.btnClearPings.Name = "btnClearPings";
             this.btnClearPings.Size = new System.Drawing.Size(24, 24);
             this.btnClearPings.TabIndex = 6;
@@ -487,7 +482,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(434, 312);
             this.Controls.Add(this.tableLayoutPanel2);
             this.MaximizeBox = false;
@@ -498,15 +492,16 @@
             this.Padding = new System.Windows.Forms.Padding(8);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit IP";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.IPEditForm_FormClosing);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
+            this.tlpMain.ResumeLayout(false);
+            this.tlpMain.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.tlpTimers.ResumeLayout(false);
+            this.tlpTimers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeOutYellow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeOutGreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeOutRed)).EndInit();
@@ -514,13 +509,14 @@
             this.tpPings.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tlpTimers;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Label lblTimeOutYellow;
         private System.Windows.Forms.NumericUpDown nudTimeOutYellow;
@@ -540,7 +536,7 @@
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tpMain;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
         private System.Windows.Forms.TabPage tpPings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.ListView lvPings;

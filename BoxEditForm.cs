@@ -83,7 +83,7 @@ namespace Schematix
 
         private void btnFont_Click(object sender, EventArgs e)//Ok
         {
-            dlgFont.Font = btnFont.Font;
+            dlgFont.Font = textFont;
             if (dlgFont.ShowDialog() == DialogResult.OK)
                 SetAndShowFont(dlgFont.Font);
         }
@@ -122,7 +122,7 @@ namespace Schematix
 
             if (!PBox.SaveToFile(PBox.FileName))
                 return;
-            Share.UpdateNodeName(PBox);
+            Share.Library_UpdateNodeName(PBox);
             // Out
             DialogResult = DialogResult.OK;
             Close();

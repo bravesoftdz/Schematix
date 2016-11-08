@@ -45,9 +45,11 @@
             this.lvIPs = new System.Windows.Forms.ListView();
             this.clmIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmPeriod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTimeLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmTimeNext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmPing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLastCheck = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmLastResult = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ilPingColor = new System.Windows.Forms.ImageList(this.components);
+            this.btnIPEdit = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -184,6 +186,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnIPAdd, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnIPDelete, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.lvIPs, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnIPEdit, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -195,7 +198,7 @@
             // 
             // btnIPAdd
             // 
-            this.btnIPAdd.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnIPAdd.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnIPAdd.Image = global::Schematix.Properties.Resources.plus;
             this.btnIPAdd.Location = new System.Drawing.Point(3, 3);
             this.btnIPAdd.Name = "btnIPAdd";
@@ -222,9 +225,9 @@
             this.lvIPs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmIP,
             this.clmPeriod,
-            this.clmTimeLast,
             this.clmTimeNext,
-            this.clmPing});
+            this.clmLastCheck,
+            this.clmLastResult});
             this.tableLayoutPanel1.SetColumnSpan(this.lvIPs, 3);
             this.lvIPs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvIPs.FullRowSelect = true;
@@ -233,6 +236,7 @@
             this.lvIPs.Location = new System.Drawing.Point(3, 32);
             this.lvIPs.Name = "lvIPs";
             this.lvIPs.Size = new System.Drawing.Size(506, 101);
+            this.lvIPs.SmallImageList = this.ilPingColor;
             this.lvIPs.TabIndex = 3;
             this.lvIPs.UseCompatibleStateImageBehavior = false;
             this.lvIPs.View = System.Windows.Forms.View.Details;
@@ -250,22 +254,43 @@
             this.clmPeriod.Text = "Period";
             this.clmPeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // clmTimeLast
-            // 
-            this.clmTimeLast.Text = "Last check";
-            this.clmTimeLast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmTimeLast.Width = 120;
-            // 
             // clmTimeNext
             // 
             this.clmTimeNext.Text = "Next check";
-            this.clmTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.clmTimeNext.Width = 120;
             // 
-            // clmPing
+            // clmLastCheck
             // 
-            this.clmPing.Text = "Ping";
-            this.clmPing.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmLastCheck.Text = "Last check";
+            this.clmLastCheck.Width = 120;
+            // 
+            // clmLastResult
+            // 
+            this.clmLastResult.Text = "Last result";
+            this.clmLastResult.Width = 180;
+            // 
+            // ilPingColor
+            // 
+            this.ilPingColor.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilPingColor.ImageStream")));
+            this.ilPingColor.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilPingColor.Images.SetKeyName(0, "dotWhite.png");
+            this.ilPingColor.Images.SetKeyName(1, "dotGreen.png");
+            this.ilPingColor.Images.SetKeyName(2, "dotYellow.png");
+            this.ilPingColor.Images.SetKeyName(3, "dotRed.png");
+            this.ilPingColor.Images.SetKeyName(4, "dotGray.png");
+            this.ilPingColor.Images.SetKeyName(5, "dotRedGreen.png");
+            // 
+            // btnIPEdit
+            // 
+            this.btnIPEdit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnIPEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnIPEdit.Location = new System.Drawing.Point(32, 3);
+            this.btnIPEdit.Name = "btnIPEdit";
+            this.btnIPEdit.Size = new System.Drawing.Size(23, 23);
+            this.btnIPEdit.TabIndex = 2;
+            this.btnIPEdit.UseVisualStyleBackColor = true;
+            this.btnIPEdit.Click += new System.EventHandler(this.btnIPEdit_Click);
             // 
             // ObjectOptionsForm
             // 
@@ -279,6 +304,7 @@
             this.Padding = new System.Windows.Forms.Padding(8);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ObjectOptionsForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ObjectOptionsForm_FormClosing);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -308,9 +334,11 @@
         private System.Windows.Forms.ListView lvIPs;
         private System.Windows.Forms.ColumnHeader clmIP;
         private System.Windows.Forms.ColumnHeader clmPeriod;
-        private System.Windows.Forms.ColumnHeader clmTimeLast;
+        private System.Windows.Forms.ColumnHeader clmLastResult;
         private System.Windows.Forms.ColumnHeader clmTimeNext;
-        private System.Windows.Forms.ColumnHeader clmPing;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.ImageList ilPingColor;
+        private System.Windows.Forms.ColumnHeader clmLastCheck;
+        private System.Windows.Forms.Button btnIPEdit;
     }
 }

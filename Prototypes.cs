@@ -109,9 +109,8 @@ namespace Schematix
                 {
                     using (var stream = new BinaryReader(file))
                     {
-                        ReadParameters(stream);
                         FileName = fileName;
-                        return true;
+                        ReadParameters(stream);
                     }
                 }
             }
@@ -120,6 +119,7 @@ namespace Schematix
                 MessageBox.Show(Options.LangCur.mErrorsOccurred + "" + e.Message, Options.LangCur.dFileLoading);
                 return false;
             }
+            return true;
         }
         
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
@@ -160,21 +160,24 @@ namespace Schematix
             {
                 if (!File.Exists(fileName))
                     Directory.CreateDirectory(Path.GetDirectoryName(fileName));
-                using (var file = File.OpenWrite(fileName))
+                using (var file = File.Create(fileName + ".tmp"))
                 {
                     using (var stream = new BinaryWriter(file))
                     {
                         WriteParameters(stream);
                         FileName = fileName;
-                        return true;
                     }
                 }
+                if (File.Exists(fileName + ".bak"))
+                    File.Delete(fileName + ".bak");
+                File.Replace(fileName + ".tmp", fileName, fileName + ".bak");
             }
             catch (Exception e)
             {
                 MessageBox.Show(Options.LangCur.mErrorsOccurred + "" + e.Message, Options.LangCur.dFileSaving);
                 return false;
             }
+            return true;
         }
         
         override public void WriteParameters(BinaryWriter stream)//Ok
@@ -291,7 +294,7 @@ namespace Schematix
         public ImageBPPs    ImageBPP      = ImageBPPs.b32argb;
         public Color        BackColor     = Options.DEFAULT_OBJECT_IMAGE_COLOR;
         public List<xDot>   Dots          = new List<xDot>();
-        public Bitmap       Canvas        = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+        public Bitmap       Canvas        = Share.GetNoImage();
         bool MustClearDots = false;
         
         public xPObject()
@@ -545,8 +548,8 @@ namespace Schematix
         public int Width = 0, Height = 0;
 
         virtual public bool IsObject { get; }
-        virtual public bool IsLink { get; }
-        virtual public bool IsBox { get; }
+        virtual public bool IsLink   { get; }
+        virtual public bool IsBox    { get; }
 
         public xExemplar(xMap owner)
         {
@@ -581,19 +584,15 @@ namespace Schematix
             base.WriteParameters(stream);
         }
 
-        public void BoxRenew()//Ok
-        {
-            Right  = Left + Width;
-            Bottom = Top  + Height;
-        }
-
         virtual public bool isOver(int x, int y, byte padding = 0)//Ok
         {
             return (Left <= x + padding) && (x <= Right + padding) && (Top <= y + padding) && (y <= Bottom + padding);
         }
 
-        virtual public void Check()
+        virtual public void Check()//Ok
         {
+            Right  = Left + Width;
+            Bottom = Top  + Height;
         }
 
         virtual public void Delete()
@@ -614,9 +613,9 @@ namespace Schematix
         public PingStates State;
         public DateTime   SendTime = DateTime.Now;
         public IPStatus   Status;
-        public String     Error;
+        public String     Error = "";
         public int        TripTime;
-        public String     Replayer;
+        public String     Replayer = "";
 
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
@@ -668,7 +667,7 @@ namespace Schematix
         xObject Object { get; }
         public ListViewItem Map_lvItem    = null;
         public ListViewItem Obj_lvItem    = null;
-        public ListView     IP_lv         = null;
+        public ListView     Pings_lv      = null;
         public String       Address       = "";
         public int          Period        = Options.DEFAULT_PING_PERIOD;
         public int          TimeOutGreen  = Options.DEFAULT_PING_TIMEOUT_GREEN;
@@ -678,7 +677,9 @@ namespace Schematix
         public DateTime     TimeLast      = DateTime.Now;
         public DateTime     TimeNext      = DateTime.Now;
         public xPing[]      Pings         = new xPing[Options.DEFAULT_PING_ARRAY];
-        public int          PingsCount    = 0;
+        int pingsCount = 0;
+
+        public int PingsCount { get { return pingsCount; } }
 
         public xIP(xObject owner)//Ok
         {
@@ -688,29 +689,29 @@ namespace Schematix
         public void ClearPings()//Ok
         {
             Pings = new xPing[Options.DEFAULT_PING_ARRAY];
-            PingsCount = 0;
+            pingsCount = 0;
         }
 
         public void PushNewPing(xPing Ping)//Ok
         {
-            if (Pings.Length < ++PingsCount)
-                PingsCount = Pings.Length;
-            for (int i = PingsCount - 1; 0 < i; i--)
+            if (Pings.Length < ++pingsCount)
+                pingsCount = Pings.Length;
+            for (int i = pingsCount - 1; 0 < i; i--)
                 Pings[i] = Pings[i - 1];
             Pings[0] = Ping;
         }
 
         public bool AddPing(DateTime now)//Ok
         {
-            if (now < TimeNext)
+            if (now < TimeNext || !Onn)
                 return false;
             TimeLast = now;
             TimeNext = now.AddMilliseconds(Period);
             PushNewPing(new xPing());
             Pings[0].State = PingStates.Send;
             Pings[0].SendTime = now;
-            if(IP_lv != null)
-                Share.lvPings_Add(IP_lv, this, Pings[0]);
+            if(Pings_lv != null)
+                Share.lvPings_Add(Pings_lv, this, Pings[0]);
             return true;
         }
 
@@ -773,7 +774,7 @@ namespace Schematix
             stream.Write(TimeNext.ToBinary());
             // Ping records
             int pos = 0;
-            for (int i = Pings.Length - 1; 0 <= i; i--)
+            for (int i = pingsCount - 1; 0 <= i; i--)
                 if (Pings[i] != null)
                     if (Pings[i].State != PingStates.NotSend)
                     {
@@ -848,7 +849,7 @@ namespace Schematix
             Top  = Y - (Prototype as xPObject).Dots[0].Y;
             Width  = (Prototype as xPObject).Canvas.Width;
             Height = (Prototype as xPObject).Canvas.Height;
-            BoxRenew();
+            base.Check();
         }
 
         public void AddIP(xIP IP)
@@ -995,7 +996,6 @@ namespace Schematix
                 ObjectA = Objects.Find(xE => xE.ID == ObjectAID);
                 if (ObjectA != null)
                 {
-                    ObjectAID = 0;
                     DotA = (ObjectA.Prototype as xPObject).Dots.Find(xE => xE.ID == DotAID);
                     if (DotA == null)
                     {
@@ -1003,19 +1003,28 @@ namespace Schematix
                         DotAID = DotA.ID;
                     }
                 }
+                else
+                {
+                    ObjectAID = 0;
+                    DotAID = 0;
+                }
             }
             if (ObjectBID != 0)
             {
                 ObjectB = Objects.Find(xE => xE.ID == ObjectBID);
                 if (ObjectB != null)
                 {
-                    ObjectBID = 0;
                     DotB = (ObjectB.Prototype as xPObject).Dots.Find(xE => xE.ID == DotBID);
                     if (DotB == null)
                     {
                         DotB = (ObjectB.Prototype as xPObject).Dots[0];
                         DotBID = DotB.ID;
                     }
+                }
+                else
+                {
+                    ObjectBID = 0;
+                    DotBID = 0;
                 }
             }
         }
@@ -1039,8 +1048,8 @@ namespace Schematix
                             DotA = Dots[0];
                             DotAID = DotA.ID;
                         }
-                    XA = ObjectA.Left - Dots[0].X + DotA.X;
-                    YA = ObjectA.Top  - Dots[0].Y + DotA.Y;
+                    XA = ObjectA.Left + DotA.X;
+                    YA = ObjectA.Top  + DotA.Y;
                 }
                 catch
                 {
@@ -1065,8 +1074,8 @@ namespace Schematix
                             DotB = Dots[0];
                             DotBID = DotB.ID;
                         }
-                    XB = ObjectB.Left - Dots[0].X + DotB.X;
-                    YB = ObjectB.Top  - Dots[0].Y + DotB.Y;
+                    XB = ObjectB.Left + DotB.X;
+                    YB = ObjectB.Top  + DotB.Y;
                 }
                 catch
                 {
@@ -1080,7 +1089,7 @@ namespace Schematix
             Height = Math.Abs(YB - YA);
             Left = ((XA < XB) ? XA : XB);
             Top  = ((YA < YB) ? YA : YB);
-            BoxRenew();
+            base.Check();
         }
 
         override public void Delete()
@@ -1230,7 +1239,7 @@ namespace Schematix
                     }
                 }
             }
-            BoxRenew();
+            base.Check();
         }
 
         override public void Delete()
@@ -1238,6 +1247,8 @@ namespace Schematix
             Map.DeleteBox(this);
         }
     }
+
+    // Map
 
     public enum GridStyles
     {
@@ -1285,7 +1296,7 @@ namespace Schematix
         public AlignTypes       Align      = Options.DEFAULT_BACK_ALIGN;
         public ImageBPPs        BPP        = ImageBPPs.b32argb;
         public String           Path       = "";
-        public Bitmap           Image      = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+        public Bitmap           Image      = Share.GetEmptyImage();
     }
 
     public class xMap : xRecord
@@ -1320,31 +1331,55 @@ namespace Schematix
         }
 
         #region Prototypes
-        public void AddPObject(xPObject PObject)//
+        public xPObject AddPObject(xPObject PObject)//
         {
             xPObject uPObject = Options.PObjects.Find(PO => (PO.ID == PObject.ID) && (PO.Revision == PObject.Revision));
             if (uPObject == null)
-                uPObject = PObject;
-            PObjects.Add(uPObject);
-            uPObject.lvItemUsed = lv_PObjects?.Items.Add(uPObject.NodeName);
+                uPObject = PObjects.Find(PO => (PO.ID == PObject.ID) && (PO.Revision == PObject.Revision));
+            if (uPObject != null)
+                return uPObject;
+            PObjects.Add(PObject);
+            if (lv_PObjects != null)
+            {
+                PObject.lvItemUsed = lv_PObjects.Items.Add(PObject.NodeName);
+                PObject.lvItemUsed.Tag = PObject;
+                Share.Library_UpdateNodeName(PObject);
+            }
+            return PObject;
         }
 
-        public void AddPLink(xPLink PLink)//
+        public xPLink AddPLink(xPLink PLink)//
         {
             xPLink uPLink = Options.PLinks.Find(PL => (PL.ID == PLink.ID) && (PL.Revision == PLink.Revision));
             if (uPLink == null)
-                uPLink = PLink;
-            PLinks.Add(uPLink);
-            uPLink.lvItemUsed = lv_PLinks?.Items.Add(uPLink.NodeName);
+                uPLink = PLinks.Find(PL => (PL.ID == PLink.ID) && (PL.Revision == PLink.Revision));
+            if (uPLink != null)
+                return uPLink;
+            PLinks.Add(PLink);
+            if (lv_PLinks != null)
+            {
+                PLink.lvItemUsed = lv_PLinks.Items.Add(PLink.NodeName);
+                PLink.lvItemUsed.Tag = PLink;
+                Share.Library_UpdateNodeName(PLink);
+            }
+            return PLink;
         }
 
-        public void AddPBox(xPBox PBox)//
+        public xPBox AddPBox(xPBox PBox)//
         {
             xPBox uPBox = Options.PBoxes.Find(PB => (PB.ID == PBox.ID) && (PB.Revision == PBox.Revision));
             if (uPBox == null)
-                uPBox = PBox;
-            PBoxes.Add(uPBox);
-            uPBox.lvItemUsed = lv_PBoxes?.Items.Add(uPBox.NodeName);
+                uPBox = PBoxes.Find(PB => (PB.ID == PBox.ID) && (PB.Revision == PBox.Revision));
+            if (uPBox != null)
+                return uPBox;
+            PBoxes.Add(PBox);
+            if (lv_PBoxes != null)
+            {
+                PBox.lvItemUsed = lv_PBoxes.Items.Add(PBox.NodeName);
+                PBox.lvItemUsed.Tag = PBox;
+                Share.Library_UpdateNodeName(PBox);
+            }
+            return PBox;
         }
 
         public void RemovePObject(xPObject PObject)//
@@ -1382,6 +1417,24 @@ namespace Schematix
         #endregion
 
         #region Exemplars
+        public void SnapXY(ref int X, ref int Y)//Ok
+        {
+            xGrid grid = (Grid.StoreOwn) ? Grid : Options.Grid;
+            if (grid.Snap)
+            {
+                X = (X + grid.StepX / 2) / grid.StepX * grid.StepX;
+                Y = (Y + grid.StepY / 2) / grid.StepY * grid.StepY;
+            }
+        }
+
+        public void CheckLinksToObject(UInt64 ObjectID)//O
+        {
+            // Check all links to this object
+            for (int i = Links.Count - 1; 0 <= i; i--)
+                if (Links[i].ObjectAID == ObjectID || Links[i].ObjectBID == ObjectID)
+                    Links[i].Check();
+        }
+
         public void DeleteObject(xObject obj)//O
         {
             if (obj == null)
@@ -1392,26 +1445,26 @@ namespace Schematix
             for (int i = Links.Count - 1; 0 <= i; i--)
                 if (Links[i].ObjectA == obj || Links[i].ObjectB == obj)
                     Links.RemoveAt(i);
-            // Try to remove it's prototype
-            RemovePObject(obj.Prototype);
             // Remove object
             Objects.Remove(obj);
+            // Try to remove it's prototype
+            RemovePObject(obj.Prototype);
         }
 
         public void DeleteLink(xLink link)//Ok
         {
-            // Try to remove it's prototype
-            RemovePLink(link.Prototype);
             // Remove object
             Links.Remove(link);
+            // Try to remove it's prototype
+            RemovePLink(link.Prototype);
         }
 
         public void DeleteBox(xBox box)//Ok
         {
-            // Try to remove it's prototype
-            RemovePBox(box.Prototype);
             // Remove object
             Boxes.Remove(box);
+            // Try to remove it's prototype
+            RemovePBox(box.Prototype);
         }
 
         public void AddIP(xIP IP)//
@@ -1577,6 +1630,7 @@ namespace Schematix
                 Object.ReadParameters(stream);
                 Object.Prototype = PObjects.Find(xP => (xP.ID == Object.PrototypeID) && (xP.Revision == Object.PrototypeRevision));
                 Objects.Add(Object);
+                Object.Check();
             }
             // Links
             else if (parameterName == "Link")
@@ -1586,6 +1640,7 @@ namespace Schematix
                 Link.Prototype = PLinks.Find(xP => (xP.ID == Link.PrototypeID) && (xP.Revision == Link.PrototypeRevision));
                 Link.BondEnds(Objects);
                 Links.Add(Link);
+                Link.Check();
             }
             // Boxes
             else if (parameterName == "Box")
@@ -1594,6 +1649,7 @@ namespace Schematix
                 Box.ReadParameters(stream);
                 Box.Prototype = PBoxes.Find(xP => (xP.ID == Box.PrototypeID) && (xP.Revision == Box.PrototypeRevision));
                 Boxes.Add(Box);
+                Box.Check();
             }
             #endregion
 
@@ -1605,7 +1661,7 @@ namespace Schematix
 
         override public void WriteParameters(BinaryWriter stream)//Ok
         {
-            #region
+            #region Map setings
             // Write local part of body
             stream.Write("Size");
             stream.Write(8);
@@ -1687,14 +1743,16 @@ namespace Schematix
             {
                 stream.Write("PObject");
                 pos = (int)stream.Seek(0, SeekOrigin.Current);
+                stream.Write(pos);
                 PObject.WriteParameters(stream);
                 WriteStream_CloseBlock(stream, pos);
             }
             // PLinks
-            foreach (var PLink in Links)
+            foreach (var PLink in PLinks)
             {
                 stream.Write("PLink");
                 pos = (int)stream.Seek(0, SeekOrigin.Current);
+                stream.Write(pos);
                 PLink.WriteParameters(stream);
                 WriteStream_CloseBlock(stream, pos);
             }
@@ -1703,6 +1761,7 @@ namespace Schematix
             {
                 stream.Write("PBox");
                 pos = (int)stream.Seek(0, SeekOrigin.Current);
+                stream.Write(pos);
                 PBox.WriteParameters(stream);
                 WriteStream_CloseBlock(stream, pos);
             }
@@ -1714,6 +1773,7 @@ namespace Schematix
             {
                 stream.Write("Object");
                 pos = (int)stream.Seek(0, SeekOrigin.Current);
+                stream.Write(pos);
                 Object.WriteParameters(stream);
                 WriteStream_CloseBlock(stream, pos);
             }
@@ -1722,6 +1782,7 @@ namespace Schematix
             {
                 stream.Write("Link");
                 pos = (int)stream.Seek(0, SeekOrigin.Current);
+                stream.Write(pos);
                 Link.WriteParameters(stream);
                 WriteStream_CloseBlock(stream, pos);
             }
@@ -1730,6 +1791,7 @@ namespace Schematix
             {
                 stream.Write("Box");
                 pos = (int)stream.Seek(0, SeekOrigin.Current);
+                stream.Write(pos);
                 Box.WriteParameters(stream);
                 WriteStream_CloseBlock(stream, pos);
             }
@@ -1901,20 +1963,21 @@ namespace Schematix
         }
         #endregion
 
+        public xExemplar ObjectAt(int x, int y) => Objects.Find(O => O.isOver(x, y));
+        public xExemplar LinkAt  (int x, int y) => Links.Find(L => L.isOver(x, y, 3));
+        public xExemplar BoxAt   (int x, int y) => Boxes.Find(B => B.isOver(x, y));
+
         public xExemplar AnythingAt(int x, int y)//
         {
-            xExemplar selected = Objects.Find(O => O.isOver(x, y));
+            xExemplar selected = ObjectAt(x, y);
             if (selected == null)
-                selected = Links.Find(L => L.isOver(x, y, 3));
+                selected = LinkAt(x, y);
             if (selected == null)
-                selected = Boxes.Find(B => B.isOver(x, y));
+                selected = BoxAt(x, y);
             return selected;
         }
 
-        public xExemplar SelectAt(int x, int y)//
-        {
-            return Selected = AnythingAt(x, y);
-        }
+        public xExemplar SelectAt(int x, int y) => Selected = AnythingAt(x, y);
 
         public void UpdateTabName()
         {
@@ -1926,14 +1989,5 @@ namespace Schematix
                 : "No name") 
                 + (Changed ? " *" : "");
         }
-
-        //...
-    }
-
-    public struct xFrame
-    {
-        public bool Visible, Active, Hover;
-        public int X, Y, W, H;
-        public Cursor Cursor;
     }
 }

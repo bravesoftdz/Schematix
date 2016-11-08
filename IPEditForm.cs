@@ -48,13 +48,19 @@ namespace Schematix
             for (int i = 0; i < IP.PingsCount; i++)
                 if(IP.Pings[i].State != PingStates.NotSend)
                     Share.lvPings_Add(lvPings, IP, IP.Pings[i]);
-            IP.IP_lv = lvPings;
+            IP.Pings_lv = lvPings;
+
+            // Push window sizes
+            tabControl.Width = tlpTimers.Width + 16;
         }
 
         private void btnClearPings_Click(object sender, EventArgs e)
         {
+            lvPings.Items.Clear();
             IP.ClearPings();
         }
+
+        private void IPEditForm_FormClosing(object sender, FormClosingEventArgs e) => IP.Pings_lv = null;
 
         private void btnOk_Click(object sender, EventArgs e)//Ok
         {

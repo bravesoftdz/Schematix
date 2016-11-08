@@ -102,12 +102,12 @@ namespace Schematix
             // Fill
             foreach (var obj in Map.Objects)
             {
-                var item = new ListViewItem(obj.Name);
-                item.SubItems.Add(obj.X + ", " + obj.Y);
-                item.SubItems.Add(obj.Prototype.Name);
-                item.SubItems.Add(obj.Reference);
-                lvObjects.Items.Add(item);
+                var item = lvObjects.Items.Add(obj.Name);
+                item.SubItems.Add("");
+                item.SubItems.Add("");
+                item.SubItems.Add("");
                 item.Tag = obj;
+                UpdateObjectNode(item, obj);
                 // Fill IPs
                 foreach (var IP in obj.IPs)
                     Share.lvIPs_Add(lvIPs, IP, ref IP.Map_lvItem);
@@ -124,12 +124,12 @@ namespace Schematix
             // Fill
             foreach (var link in Map.Links)
             {
-                var item = new ListViewItem(link.Name);
-                item.SubItems.Add(link.XA + ", " + link.YA + " -> " + link.XB + ", " + link.YB);
-                item.SubItems.Add(link.Prototype.Name);
-                item.SubItems.Add(link.Reference);
-                lvLinks.Items.Add(item);
+                var item = lvLinks.Items.Add(link.Name);
+                item.SubItems.Add("");
+                item.SubItems.Add("");
+                item.SubItems.Add("");
                 item.Tag = link;
+                UpdateLinkNode(item, link);
             }
             #endregion
 
@@ -143,24 +143,24 @@ namespace Schematix
             // Fill
             foreach (var box in Map.Boxes)
             {
-                var item = new ListViewItem(box.Name);
-                item.SubItems.Add(box.Left + ", " + box.Top + " : " + box.Width + ", " + box.Height);
-                item.SubItems.Add(box.Prototype.Name);
-                item.SubItems.Add(box.Reference);
-                item.SubItems.Add(box.Text);
-                lvBoxes.Items.Add(item);
+                var item = lvBoxes.Items.Add(box.Name);
+                item.SubItems.Add("");
+                item.SubItems.Add("");
+                item.SubItems.Add("");
+                item.SubItems.Add("");
                 item.Tag = box;
+                UpdateBoxNode(item, box);
             }
             #endregion
 
             // IPs
             tpIPs.Text = Options.LangCur.lMOTabIPs;
             toolTip.SetToolTip(btnIPDelete, Options.LangCur.hOOIPDelete);
-            clmIPAddress.Text   = Options.LangCur.lOOColumIP;
-            clmIPPeriod.Text    = Options.LangCur.lOOColumPeriod;
-            clmIPTimeLast.Text  = Options.LangCur.lOOColumTimeLast;
-            clmIPTimeNext.Text  = Options.LangCur.lOOColumTimeNext;
-            clmIPPing.Text      = Options.LangCur.lOOColumPing;
+            clmIPAddress.Text    = Options.LangCur.lOOColumIP;
+            clmIPPeriod.Text     = Options.LangCur.lOOColumPeriod;
+            clmIPTimeLast.Text   = Options.LangCur.lOOColumTimeLast;
+            clmIPTimeNext.Text   = Options.LangCur.lOOColumTimeNext;
+            clmIPLastResult.Text = Options.LangCur.lOOColumResult;
         }
 
         private void btnColor_Click(object sender, EventArgs e)//Ok
@@ -169,6 +169,16 @@ namespace Schematix
                 return;
             (sender as Button).BackColor = dlgColor.Color;
             RedrawSample(null, null);
+        }
+
+        private void btnAlignElements_Click(object sender, EventArgs e)//Ok
+        {
+            if (chkGridStore.Checked)
+                Map.AlignToGridAll((int)nudGridStepX.Value, (int)nudGridStepY.Value);
+            else
+                Map.AlignToGridAll(Options.Grid.StepX, Options.Grid.StepY);
+            Map.Draw();
+            Options.mainForm.Invalidate();
         }
         
         private void btnGetBackImage_Click(object sender, EventArgs e) => Share.GetImage(tbBackgImagePath, GotImage);//Ok
@@ -218,16 +228,18 @@ namespace Schematix
         }
 
         #region Elements Tabs
-        private void btnObjectsDelete_Click(object sender, EventArgs e)//
+        private void btnObjectsDelete_Click(object sender, EventArgs e)//Ok
         {
             for (int i = lvObjects.SelectedItems.Count - 1; 0 <= i; i--)
             {
                 (lvObjects.SelectedItems[i].Tag as xObject)?.Delete();
                 lvObjects.Items.RemoveAt(i);
             }
+            Map.Draw();
+            Options.mainForm.Invalidate();
         }
         
-        private void lvObjects_DoubleClick(object sender, EventArgs e)//
+        private void btnObjectEdit_Click(object sender, EventArgs e)//Ok
         {
             if (lvObjects.SelectedItems.Count < 1)
                 return;
@@ -242,21 +254,32 @@ namespace Schematix
             }
             // Edit
             new ObjectOptionsForm(obj).ShowDialog();
+            UpdateObjectNode(lvObjects.SelectedItems[0], obj);
             // Return IPs in list
             foreach (var IP in obj.IPs)
                 Share.lvIPs_Add(lvIPs, IP, ref IP.Map_lvItem);
         }
 
-        private void btnLinkDelete_Click(object sender, EventArgs e)//O
+        private void UpdateObjectNode(ListViewItem lvItem, xObject Object)//Ok
+        {
+            lvItem.SubItems[0].Text = '"' + Object.Name + '"';
+            lvItem.SubItems[1].Text = Object.X + ", " + Object.Y;
+            lvItem.SubItems[2].Text = '"' + Object.Prototype.Name + '"';
+            lvItem.SubItems[3].Text = '"' + Object.Reference + '"';
+        }
+
+        private void btnLinksDelete_Click(object sender, EventArgs e)//Ok
         {
             for (int i = lvLinks.SelectedItems.Count - 1; 0 <= i; i--)
             {
                 (lvLinks.SelectedItems[i].Tag as xLink)?.Delete();
                 lvLinks.Items.RemoveAt(i);
             }
+            Map.Draw();
+            Options.mainForm.Invalidate();
         }
 
-        private void lvLinks_DoubleClick(object sender, EventArgs e)//Ok
+        private void btnLinkEdit_Click(object sender, EventArgs e)//Ok
         {
             if (lvLinks.SelectedItems.Count < 1)
                 return;
@@ -264,56 +287,78 @@ namespace Schematix
             if (link == null)
                 return;
             new LinkOptionsForm(link).ShowDialog();
+            UpdateLinkNode(lvLinks.SelectedItems[0], link);
         }
 
-        private void btnBoxDelete_Click(object sender, EventArgs e)//O
+        private void UpdateLinkNode(ListViewItem lvItem, xLink Link)//Ok
+        {
+            lvItem.SubItems[0].Text = '"' + Link.Name + '"';
+            lvItem.SubItems[1].Text = Link.XA + ", " + Link.YA + " -> " + Link.XB + ", " + Link.YB;
+            lvItem.SubItems[2].Text = '"' + Link.Prototype.Name + '"';
+            lvItem.SubItems[3].Text = '"' + Link.Reference + '"';
+        }
+
+        private void btnBoxesDelete_Click(object sender, EventArgs e)//Ok
         {
             for (int i = lvBoxes.SelectedItems.Count - 1; 0 <= i; i--)
             {
                 (lvBoxes.SelectedItems[i].Tag as xBox)?.Delete();
                 lvBoxes.Items.RemoveAt(i);
             }
+            Map.Draw();
+            Options.mainForm.Invalidate();
         }
 
-        private void lvBoxes_DoubleClick(object sender, EventArgs e)//Ok
+        private void btnBoxEdit_Click(object sender, EventArgs e)//Ok
         {
             if (lvBoxes.SelectedItems.Count < 1)
                 return;
             xBox box = (lvBoxes.SelectedItems[0].Tag as xBox);
             if (box == null)
                 return;
-            new BoxOptionsForm(box).ShowDialog();
+            if (new BoxOptionsForm(box).ShowDialog() == DialogResult.OK)
+            {
+                Map.Draw();
+                Options.mainForm.Invalidate();
+            }
+            UpdateBoxNode(lvBoxes.SelectedItems[0], box);
         }
 
-        private void btnIPDelete_Click(object sender, EventArgs e)//O
+        private void UpdateBoxNode(ListViewItem lvItem, xBox Box)//Ok
         {
-            Share.lvIPs_Delete(lvIPs);
+            lvItem.SubItems[0].Text = '"' + Box.Name + '"';
+            lvItem.SubItems[1].Text = Box.Left + ", " + Box.Top + " : " + Box.Width + ", " + Box.Height;
+            lvItem.SubItems[2].Text = '"' + Box.Prototype.Name + '"';
+            lvItem.SubItems[3].Text = '"' + Box.Reference + '"';
+            lvItem.SubItems[4].Text = '"' + Box.Text + '"';
         }
 
-        private void lvIPs_DoubleClick(object sender, EventArgs e)//O
+        private void btnIPsDelete_Click(object sender, EventArgs e) => Share.lvIPs_Delete(lvIPs);//Ok
+
+        private void btnIPEdit_Click(object sender, EventArgs e) => Share.lvIPs_Edit(lvIPs);//Ok
+
+        private void lvIPs_DoubleClick(object sender, EventArgs e)
         {
-            Share.lvIPs_Edit(lvIPs);
+            (sender as ListView).SelectedItems[0].Checked = !(sender as ListView).SelectedItems[0].Checked;
+            btnIPEdit_Click(null, null);
+        }
+
+        private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e)//Ok
+        {
+            if (e.Item.Tag != null)
+                (e.Item.Tag as xIP).Onn = e.Item.Checked;
         }
         #endregion
 
-        private void btnAlignElements_Click(object sender, EventArgs e)//O
+        private void MapOptionsForm_FormClosing(object sender, FormClosingEventArgs e)//Ok
         {
-            if (chkGridStore.Checked)
-                Map.AlignToGridAll((int)nudGridStepX.Value, (int)nudGridStepY.Value);
-            else
-                Map.AlignToGridAll(Options.Grid.StepX, Options.Grid.StepY);
-            Map.Draw();
-            Options.mainForm.Invalidate();
+            // Clear backtrack
+            foreach (ListViewItem lvi in lvIPs.Items)
+                if (lvi.Tag != null)
+                    (lvi.Tag as xIP).Map_lvItem = null;
         }
 
-        private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e)//
-        {
-            if (e?.Item.Tag == null)
-                return;
-            (e.Item.Tag as xIP).Onn = e.Item.Checked;
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)//Ok
         {
             // Main
             Map.Name        = tbName.Text;
@@ -341,10 +386,6 @@ namespace Schematix
             Map.Back.BuildIn       = chkBackImageBuildIn.Checked;
             Map.Back.BPP           = (ImageBPPs)cbbBackImageBPP.SelectedIndex;
             Map.Back.Image         = imageAlpha;
-            // Clear backtrack
-            foreach (ListViewItem lvi in lvIPs.Items)
-                if (lvi.Tag != null)
-                    (lvi.Tag as xIP).Map_lvItem = null;
 
             // Out
             DialogResult = DialogResult.OK;

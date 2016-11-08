@@ -78,6 +78,7 @@
             this.chkGridStore = new System.Windows.Forms.CheckBox();
             this.tpObjects = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnObjectEdit = new System.Windows.Forms.Button();
             this.btnObjectsDelete = new System.Windows.Forms.Button();
             this.lvObjects = new System.Windows.Forms.ListView();
             this.clmObjectName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -86,6 +87,7 @@
             this.clmObjectReference = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpLinks = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnLinkEdit = new System.Windows.Forms.Button();
             this.lvLinks = new System.Windows.Forms.ListView();
             this.clmLinkName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmLinkLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -94,6 +96,7 @@
             this.btnLinkDelete = new System.Windows.Forms.Button();
             this.tpBoxes = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnBoxEdit = new System.Windows.Forms.Button();
             this.lvBoxes = new System.Windows.Forms.ListView();
             this.clmBoxName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmBoxLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -103,13 +106,15 @@
             this.btnBoxDelete = new System.Windows.Forms.Button();
             this.tpIPs = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnIPEdit = new System.Windows.Forms.Button();
             this.btnIPDelete = new System.Windows.Forms.Button();
             this.lvIPs = new System.Windows.Forms.ListView();
             this.clmIPAddress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmIPPeriod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmIPTimeLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmIPTimeNext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmIPPing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmIPTimeLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmIPLastResult = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ilPingColor = new System.Windows.Forms.ImageList(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel1.SuspendLayout();
@@ -837,6 +842,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel5.Controls.Add(this.btnObjectEdit, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnObjectsDelete, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.lvObjects, 0, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -847,6 +853,17 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(408, 359);
             this.tableLayoutPanel5.TabIndex = 2;
+            // 
+            // btnObjectEdit
+            // 
+            this.btnObjectEdit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnObjectEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnObjectEdit.Location = new System.Drawing.Point(3, 3);
+            this.btnObjectEdit.Name = "btnObjectEdit";
+            this.btnObjectEdit.Size = new System.Drawing.Size(23, 23);
+            this.btnObjectEdit.TabIndex = 5;
+            this.btnObjectEdit.UseVisualStyleBackColor = true;
+            this.btnObjectEdit.Click += new System.EventHandler(this.btnObjectEdit_Click);
             // 
             // btnObjectsDelete
             // 
@@ -877,7 +894,7 @@
             this.lvObjects.TabIndex = 3;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
             this.lvObjects.View = System.Windows.Forms.View.Details;
-            this.lvObjects.DoubleClick += new System.EventHandler(this.lvObjects_DoubleClick);
+            this.lvObjects.DoubleClick += new System.EventHandler(this.btnObjectEdit_Click);
             // 
             // clmObjectName
             // 
@@ -917,6 +934,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.Controls.Add(this.btnLinkEdit, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.lvLinks, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.btnLinkDelete, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -927,6 +945,17 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(408, 359);
             this.tableLayoutPanel4.TabIndex = 2;
+            // 
+            // btnLinkEdit
+            // 
+            this.btnLinkEdit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnLinkEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnLinkEdit.Location = new System.Drawing.Point(3, 3);
+            this.btnLinkEdit.Name = "btnLinkEdit";
+            this.btnLinkEdit.Size = new System.Drawing.Size(23, 23);
+            this.btnLinkEdit.TabIndex = 5;
+            this.btnLinkEdit.UseVisualStyleBackColor = true;
+            this.btnLinkEdit.Click += new System.EventHandler(this.btnLinkEdit_Click);
             // 
             // lvLinks
             // 
@@ -946,7 +975,7 @@
             this.lvLinks.TabIndex = 4;
             this.lvLinks.UseCompatibleStateImageBehavior = false;
             this.lvLinks.View = System.Windows.Forms.View.Details;
-            this.lvLinks.DoubleClick += new System.EventHandler(this.lvLinks_DoubleClick);
+            this.lvLinks.DoubleClick += new System.EventHandler(this.btnLinkEdit_Click);
             // 
             // clmLinkName
             // 
@@ -978,7 +1007,7 @@
             this.btnLinkDelete.Size = new System.Drawing.Size(23, 23);
             this.btnLinkDelete.TabIndex = 2;
             this.btnLinkDelete.UseVisualStyleBackColor = true;
-            this.btnLinkDelete.Click += new System.EventHandler(this.btnLinkDelete_Click);
+            this.btnLinkDelete.Click += new System.EventHandler(this.btnLinksDelete_Click);
             // 
             // tpBoxes
             // 
@@ -997,6 +1026,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Controls.Add(this.btnBoxEdit, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.lvBoxes, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.btnBoxDelete, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1007,6 +1037,17 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(408, 359);
             this.tableLayoutPanel3.TabIndex = 2;
+            // 
+            // btnBoxEdit
+            // 
+            this.btnBoxEdit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnBoxEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnBoxEdit.Location = new System.Drawing.Point(3, 3);
+            this.btnBoxEdit.Name = "btnBoxEdit";
+            this.btnBoxEdit.Size = new System.Drawing.Size(23, 23);
+            this.btnBoxEdit.TabIndex = 5;
+            this.btnBoxEdit.UseVisualStyleBackColor = true;
+            this.btnBoxEdit.Click += new System.EventHandler(this.btnBoxEdit_Click);
             // 
             // lvBoxes
             // 
@@ -1027,7 +1068,7 @@
             this.lvBoxes.TabIndex = 4;
             this.lvBoxes.UseCompatibleStateImageBehavior = false;
             this.lvBoxes.View = System.Windows.Forms.View.Details;
-            this.lvBoxes.DoubleClick += new System.EventHandler(this.lvBoxes_DoubleClick);
+            this.lvBoxes.DoubleClick += new System.EventHandler(this.btnBoxEdit_Click);
             // 
             // clmBoxName
             // 
@@ -1063,7 +1104,7 @@
             this.btnBoxDelete.Size = new System.Drawing.Size(23, 23);
             this.btnBoxDelete.TabIndex = 2;
             this.btnBoxDelete.UseVisualStyleBackColor = true;
-            this.btnBoxDelete.Click += new System.EventHandler(this.btnBoxDelete_Click);
+            this.btnBoxDelete.Click += new System.EventHandler(this.btnBoxesDelete_Click);
             // 
             // tpIPs
             // 
@@ -1082,6 +1123,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Controls.Add(this.btnIPEdit, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnIPDelete, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.lvIPs, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1090,8 +1132,20 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(408, 359);
             this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // btnIPEdit
+            // 
+            this.btnIPEdit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnIPEdit.Image = global::Schematix.Properties.Resources.edit;
+            this.btnIPEdit.Location = new System.Drawing.Point(3, 3);
+            this.btnIPEdit.Name = "btnIPEdit";
+            this.btnIPEdit.Size = new System.Drawing.Size(23, 23);
+            this.btnIPEdit.TabIndex = 4;
+            this.btnIPEdit.UseVisualStyleBackColor = true;
+            this.btnIPEdit.Click += new System.EventHandler(this.btnIPEdit_Click);
             // 
             // btnIPDelete
             // 
@@ -1102,7 +1156,7 @@
             this.btnIPDelete.Size = new System.Drawing.Size(23, 23);
             this.btnIPDelete.TabIndex = 2;
             this.btnIPDelete.UseVisualStyleBackColor = true;
-            this.btnIPDelete.Click += new System.EventHandler(this.btnIPDelete_Click);
+            this.btnIPDelete.Click += new System.EventHandler(this.btnIPsDelete_Click);
             // 
             // lvIPs
             // 
@@ -1110,9 +1164,9 @@
             this.lvIPs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmIPAddress,
             this.clmIPPeriod,
-            this.clmIPTimeLast,
             this.clmIPTimeNext,
-            this.clmIPPing});
+            this.clmIPTimeLast,
+            this.clmIPLastResult});
             this.tableLayoutPanel2.SetColumnSpan(this.lvIPs, 2);
             this.lvIPs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvIPs.FullRowSelect = true;
@@ -1121,6 +1175,7 @@
             this.lvIPs.Location = new System.Drawing.Point(3, 32);
             this.lvIPs.Name = "lvIPs";
             this.lvIPs.Size = new System.Drawing.Size(402, 324);
+            this.lvIPs.SmallImageList = this.ilPingColor;
             this.lvIPs.TabIndex = 3;
             this.lvIPs.UseCompatibleStateImageBehavior = false;
             this.lvIPs.View = System.Windows.Forms.View.Details;
@@ -1137,22 +1192,33 @@
             this.clmIPPeriod.Text = "Period";
             this.clmIPPeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // clmIPTimeLast
-            // 
-            this.clmIPTimeLast.Text = "Last check";
-            this.clmIPTimeLast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.clmIPTimeLast.Width = 120;
-            // 
             // clmIPTimeNext
             // 
             this.clmIPTimeNext.Text = "Next check";
-            this.clmIPTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmIPTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.clmIPTimeNext.Width = 120;
             // 
-            // clmIPPing
+            // clmIPTimeLast
             // 
-            this.clmIPPing.Text = "Ping";
-            this.clmIPPing.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmIPTimeLast.Text = "Last check";
+            this.clmIPTimeLast.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.clmIPTimeLast.Width = 120;
+            // 
+            // clmIPLastResult
+            // 
+            this.clmIPLastResult.Text = "Last result";
+            this.clmIPLastResult.Width = 180;
+            // 
+            // ilPingColor
+            // 
+            this.ilPingColor.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilPingColor.ImageStream")));
+            this.ilPingColor.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilPingColor.Images.SetKeyName(0, "dotWhite.png");
+            this.ilPingColor.Images.SetKeyName(1, "dotGreen.png");
+            this.ilPingColor.Images.SetKeyName(2, "dotYellow.png");
+            this.ilPingColor.Images.SetKeyName(3, "dotRed.png");
+            this.ilPingColor.Images.SetKeyName(4, "dotGray.png");
+            this.ilPingColor.Images.SetKeyName(5, "dotRedGreen.png");
             // 
             // MapOptionsForm
             // 
@@ -1166,6 +1232,7 @@
             this.Padding = new System.Windows.Forms.Padding(8);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MapOptionsForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapOptionsForm_FormClosing);
             this.ResizeEnd += new System.EventHandler(this.RedrawSample);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
@@ -1221,7 +1288,7 @@
         private System.Windows.Forms.ColumnHeader clmIPPeriod;
         private System.Windows.Forms.ColumnHeader clmIPTimeLast;
         private System.Windows.Forms.ColumnHeader clmIPTimeNext;
-        private System.Windows.Forms.ColumnHeader clmIPPing;
+        private System.Windows.Forms.ColumnHeader clmIPLastResult;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button btnObjectsDelete;
         private System.Windows.Forms.ListView lvObjects;
@@ -1288,5 +1355,10 @@
         private System.Windows.Forms.Button btnAlphaColor;
         private System.Windows.Forms.CheckBox chkTransparentColor;
         private System.Windows.Forms.ColorDialog dlgColor;
+        private System.Windows.Forms.ImageList ilPingColor;
+        private System.Windows.Forms.Button btnIPEdit;
+        private System.Windows.Forms.Button btnObjectEdit;
+        private System.Windows.Forms.Button btnLinkEdit;
+        private System.Windows.Forms.Button btnBoxEdit;
     }
 }

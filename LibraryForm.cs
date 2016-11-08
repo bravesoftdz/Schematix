@@ -44,14 +44,14 @@ namespace Schematix
             LoadTree(tvBoxes.Nodes[0],   Options.RootBoxes,   MakeNodeBox);
         }
 
-        public void StartInit()
+        internal void StartInit()
         {
             tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);
             tvElements_Select(tvLinks,   btnLinkEdit,   Options.rbLink);
             tvElements_Select(tvBoxes,   btnBoxEdit,    Options.rbBox);
         }
 
-        public void SetText()
+        internal void SetText()
         {
             toolTip.RemoveAll();
             // Hints
@@ -134,7 +134,7 @@ namespace Schematix
                 catch { }
                 prototype.tvNode = rootNode;
                 rootNode.Tag = prototype;
-                Share.UpdateNodeName(prototype);
+                Share.Library_UpdateNodeName(prototype);
             }
         }
 
@@ -168,19 +168,18 @@ namespace Schematix
         private void tvElements_Select(TreeView tv, Button btn, RadioButton rb)
         {
             rb.Tag = tv.SelectedNode?.Tag;
-            if (rb.Tag != null)
+            btn.Enabled = (rb.Tag != null);
+            if (btn.Enabled)
                 if (!(rb.Tag as xPrototype).isPrototype)
                     rb.Tag = null;
             if (rb.Tag != null)
             {
                 rb.BackColor = SystemColors.Control;
-                btn.Enabled = true;
                 Options.ToolTip.SetToolTip(rb, Options.LangCur.hMFElement + " \"" + (rb.Tag as xPrototype).Name + '"');
             }
             else
             {
                 rb.BackColor = Color.Brown;
-                btn.Enabled = false;
                 Options.ToolTip.SetToolTip(rb, Options.LangCur.hMFNoElement);
                 // Reset to default tool if this button was active
                 if (rb.Checked)
@@ -198,7 +197,7 @@ namespace Schematix
                 form.PObject.tvNode = tvObjects.SelectedNode.Nodes.Add("");
                 form.PObject.tvNode.Tag = form.PObject;
                 Options.PObjects.Add(form.PObject);
-                Share.UpdateNodeName(form.PObject);
+                Share.Library_UpdateNodeName(form.PObject);
             }
         }
 
@@ -209,7 +208,7 @@ namespace Schematix
             var form = new ObjectEditForm(tvObjects.SelectedNode.Tag as xPObject, "", (tvObjects.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
             {
-                Share.UpdateNodeName(form.PObject);
+                Share.Library_UpdateNodeName(form.PObject);
                 Options.mainForm.RenewMaps();
             }
         }
@@ -224,7 +223,7 @@ namespace Schematix
                 form.PLink.tvNode = tvObjects.SelectedNode.Nodes.Add("");
                 form.PLink.tvNode.Tag = form.PLink;
                 Options.PLinks.Add(form.PLink);
-                Share.UpdateNodeName(form.PLink);
+                Share.Library_UpdateNodeName(form.PLink);
             }
         }
 
@@ -235,7 +234,7 @@ namespace Schematix
             var form = new LinkEditForm(tvLinks.SelectedNode.Tag as xPLink, "", (tvLinks.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
             {
-                Share.UpdateNodeName(form.PLink);
+                Share.Library_UpdateNodeName(form.PLink);
                 Options.mainForm.RenewMaps();
             }
         }
@@ -250,7 +249,7 @@ namespace Schematix
                 form.PBox.tvNode = tvObjects.SelectedNode.Nodes.Add("");
                 form.PBox.tvNode.Tag = form.PBox;
                 Options.PBoxes.Add(form.PBox);
-                Share.UpdateNodeName(form.PBox);
+                Share.Library_UpdateNodeName(form.PBox);
             }
         }
 
@@ -261,62 +260,34 @@ namespace Schematix
             var form = new BoxEditForm(tvBoxes.SelectedNode.Tag as xPBox, "", (tvBoxes.SelectedNode.Level == 0));
             if (form.ShowDialog() == DialogResult.OK)
             {
-                Share.UpdateNodeName(form.PBox);
+                Share.Library_UpdateNodeName(form.PBox);
                 Options.mainForm.RenewMaps();
             }
         }
         #endregion
 
         #region Split containers
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            splitContainer2.SplitterDistance = splitContainer1.SplitterDistance;
-        }
-
-        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            splitContainer3.SplitterDistance = splitContainer2.SplitterDistance;
-        }
-
-        private void splitContainer3_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            splitContainer1.SplitterDistance = splitContainer3.SplitterDistance;
-        }
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e) => splitContainer2.SplitterDistance = splitContainer1.SplitterDistance;
+        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e) => splitContainer3.SplitterDistance = splitContainer2.SplitterDistance;
+        private void splitContainer3_SplitterMoved(object sender, SplitterEventArgs e) => splitContainer1.SplitterDistance = splitContainer3.SplitterDistance;
         #endregion
 
         #region Used on map
-        private void lvObjects_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (0 < lvObjects.SelectedItems.Count)
-                btnUsedObjectEdit.Enabled = (lvObjects.SelectedItems[0].Tag != null);
-            else
-                btnUsedObjectEdit.Enabled = false;
-        }
+        private void lvObjects_SelectedIndexChanged(object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvObjects, btnUsedObjectEdit);
+        private void lvLinks_SelectedIndexChanged  (object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvLinks,   btnUsedLinkEdit);
+        private void lvBoxes_SelectedIndexChanged  (object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvBoxes,   btnUsedBoxEdit);
 
-        private void lvLinks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (0 < lvLinks.SelectedItems.Count)
-                btnUsedLinkEdit.Enabled = (lvLinks.SelectedItems[0].Tag != null);
-            else
-                btnUsedLinkEdit.Enabled = false;
-        }
-
-        private void lvBoxes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (0 < lvBoxes.SelectedItems.Count)
-                btnUsedBoxEdit.Enabled = (lvBoxes.SelectedItems[0].Tag != null);
-            else
-                btnUsedBoxEdit.Enabled = false;
-        }
+        private void lvUsed_SelectedIndexChanged(ListView lv, Button btn) => btn.Enabled = (0 < lv.SelectedItems.Count) ? (lv.SelectedItems[0].Tag != null) : false;
 
         private void btnUsedObjectEdit_Click(object sender, EventArgs e)
         {
             if (lvObjects.SelectedItems[0].Tag == null)
                 return;
-            var form = new ObjectOptionsForm(lvObjects.SelectedItems[0].Tag as xObject);
+            var form = new ObjectEditForm(lvObjects.SelectedItems[0].Tag as xPObject, "", false);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //...
+                Share.Library_UpdateNodeName(form.PObject);
+                Options.mainForm.RenewMaps();
             }
         }
 
@@ -324,10 +295,11 @@ namespace Schematix
         {
             if (lvLinks.SelectedItems[0].Tag == null)
                 return;
-            var form = new LinkOptionsForm(lvLinks.SelectedItems[0].Tag as xLink);
+            var form = new LinkEditForm(lvLinks.SelectedItems[0].Tag as xPLink, "", false);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //...
+                Share.Library_UpdateNodeName(form.PLink);
+                Options.mainForm.RenewMaps();
             }
         }
 
@@ -335,10 +307,11 @@ namespace Schematix
         {
             if (lvBoxes.SelectedItems[0].Tag == null)
                 return;
-            var form = new BoxOptionsForm(lvBoxes.SelectedItems[0].Tag as xBox);
+            var form = new BoxEditForm(lvBoxes.SelectedItems[0].Tag as xPBox, "", false);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //...
+                Share.Library_UpdateNodeName(form.PBox);
+                Options.mainForm.RenewMaps();
             }
         }
         #endregion

@@ -106,53 +106,61 @@ namespace Schematix
 
         static public void lvIPs_Add(ListView lvIPs, xIP IP, ref ListViewItem target_lvItem)//Ok
         {
-            if (lvIPs == null)
+            if (lvIPs == null || IP == null)
                 return;
-            if (IP == null)
-                return;
-            var ip_item = new ListViewItem("");
-            ip_item.SubItems.Add("");
-            ip_item.SubItems.Add("");
-            ip_item.SubItems.Add("");
-            ip_item.SubItems.Add("");
-            lvIPs.Items.Add(ip_item);
-            ip_item.Tag = IP;
-            target_lvItem = ip_item;
+            target_lvItem = lvIPs.Items.Add("");
+            target_lvItem.SubItems.Add("");
+            target_lvItem.SubItems.Add("");
+            target_lvItem.SubItems.Add("");
+            target_lvItem.SubItems.Add("");
             lvIPs_Renew(target_lvItem, IP);
+            target_lvItem.Tag = IP;
         }
 
         static public void lvIPs_Renew(ListViewItem lvItem, xIP IP)//Ok
         {
-            if (IP == null)
+            if (IP == null || lvItem == null)
                 return;
-            if (lvItem == null)
-                return;
-            lvItem.Text = IP.Address;
             lvItem.Checked = IP.Onn;
-            lvItem.SubItems[0].Text = IP.Period.ToString();
-            if (IP.Pings[0].TripTime < 0)
-                lvItem.SubItems[1].Text = "-";
-            else
-                lvItem.SubItems[1].Text = IP.TimeLast.ToString(Options.TIME_FORMAT);
+            lvItem.SubItems[0].Text = IP.Address;
+            lvItem.SubItems[1].Text = IP.Period.ToString();
             lvItem.SubItems[2].Text = IP.TimeNext.ToString(Options.TIME_FORMAT);
-            String s = "";
-            foreach (var ping in IP.Pings)
-                if (ping.TripTime < 0)
-                    break;
-                else if (ping.TripTime < IP.TimeOutGreen)
-                    s += "G";
-                else if (ping.TripTime < IP.TimeOutYellow)
-                    s += "Y";
-                else if (ping.TripTime < IP.TimeOutRed)
-                    s += "R";
+            lvItem.SubItems[3].Text = "-//-";
+            lvItem.SubItems[4].Text = "-//-";
+            lvItem.ImageIndex = 0;
+            if (IP.Pings[0] == null)
+                return;
+            if (IP.Pings[0].State != PingStates.NotSend)
+            {
+                lvItem.SubItems[3].Text = IP.TimeLast.ToString(Options.TIME_FORMAT);
+                if (IP.Pings[0].State == PingStates.Send)
+                {
+                    lvItem.SubItems[4].Text = Options.LangCur.lIPPingSend;
+                    lvItem.ImageIndex = 0;
+                }
+                else if (IP.Pings[0].State == PingStates.Cancelled)
+                {
+                    lvItem.SubItems[4].Text = Options.LangCur.lIPPingCancelled;
+                    lvItem.ImageIndex = 5;
+                }
+                else if (IP.Pings[0].Error != "")
+                {
+                    lvItem.SubItems[4].Text = IP.Pings[0].Error;
+                    lvItem.ImageIndex = 5;
+                }
                 else
-                    s += "-";
-            s += "";
-            if (s == "")
-                s = "-";
-            else
-                s = IP.Pings[0] + "ms [" + s + "]";
-            lvItem.SubItems[3].Text = s;
+                {
+                    lvItem.SubItems[4].Text = IP.Pings[0].TripTime.ToString() + " (" + IP.Pings[0].Replayer + ")";
+                    if (IP.Pings[0].TripTime < IP.TimeOutGreen)
+                        lvItem.ImageIndex = 1;
+                    else if (IP.Pings[0].TripTime < IP.TimeOutGreen + IP.TimeOutYellow)
+                        lvItem.ImageIndex = 2;
+                    else if (IP.Pings[0].TripTime < IP.TimeOutGreen + IP.TimeOutYellow + IP.TimeOutRed)
+                        lvItem.ImageIndex = 3;
+                    else
+                        lvItem.ImageIndex = 4;
+                }
+            }
         }
 
         static public void lvIPs_Edit(ListView lvIPs)//Ok
@@ -171,38 +179,36 @@ namespace Schematix
 
         static public void lvIPs_Delete(ListView lvIPs)//Ok
         {
-            if (lvIPs == null)
-                return;
-            for (int i = lvIPs.SelectedItems.Count - 1; 0 <= i; i--)
-                (lvIPs.SelectedItems[i].Tag as xIP)?.Delete();
+            if (lvIPs != null)
+                for (int i = lvIPs.SelectedItems.Count - 1; 0 <= i; i--)
+                    (lvIPs.SelectedItems[i].Tag as xIP)?.Delete();
         }
 
-        static public ListViewItem lvPings_Add(ListView lvPings, xIP IP, xPing Ping)//Ok
+        static public void lvPings_Add(ListView lvPings, xIP IP, xPing Ping)//Ok
         {
-            if (lvPings == null)
-                return null;
-            if (Ping == null)
-                return null;
-            var ping_item = new ListViewItem("");
+            if (lvPings == null || Ping == null)
+                return;
+            var ping_item = lvPings.Items.Insert(0, "");
             ping_item.SubItems.Add("");
             ping_item.SubItems.Add("");
             ping_item.SubItems.Add("");
-            lvPings.Items.Add(ping_item);
-            ping_item.Tag = Ping;
+            if (IP.PingsCount < lvPings.Items.Count)
+                lvPings.Items.RemoveAt(IP.PingsCount);
             lvPings_Renew(ping_item, IP, Ping);
-            return ping_item;
+            ping_item.Tag = Ping;
         }
 
         static public void lvPings_Renew(ListViewItem lvItem, xIP IP, xPing Ping)//Ok
         {
-            if (lvItem == null)
+            if (lvItem == null || Ping == null)
                 return;
-            if (Ping == null)
-                return;
-            lvItem.Text = Ping.SendTime.ToString(Options.TIME_FORMAT);
-            lvItem.SubItems[0].Text = Ping.Replayer.ToString();
+            lvItem.SubItems[0].Text = Ping.SendTime.ToString(Options.TIME_FORMAT);
+            lvItem.SubItems[2].Text = "";
             if (Ping.State == PingStates.Send)
+            {
                 lvItem.SubItems[1].Text = Options.LangCur.lIPPingSend;
+                lvItem.ImageIndex = 0;
+            }
             else if (Ping.State == PingStates.Cancelled)
             {
                 lvItem.SubItems[1].Text = Options.LangCur.lIPPingCancelled;
@@ -219,19 +225,21 @@ namespace Schematix
                 lvItem.SubItems[2].Text = Ping.TripTime.ToString();
                 if (Ping.TripTime < IP.TimeOutGreen)
                     lvItem.ImageIndex = 1;
-                else if (Ping.TripTime < IP.TimeOutYellow)
+                else if (Ping.TripTime < IP.TimeOutGreen + IP.TimeOutYellow)
                     lvItem.ImageIndex = 2;
-                else if (Ping.TripTime < IP.TimeOutRed)
+                else if (Ping.TripTime < IP.TimeOutGreen + IP.TimeOutYellow + IP.TimeOutRed)
                     lvItem.ImageIndex = 3;
                 else
                     lvItem.ImageIndex = 4;
             }
         }
 
-        static public void UpdateNodeName(xPrototype prototype)
+        static public void Library_UpdateNodeName(xPrototype prototype)//
         {
-            if(prototype.tvNode != null)
+            if (prototype.tvNode != null)
                 prototype.tvNode.Text = (prototype.NodeName != "") ? prototype.NodeName : prototype.Name;
+            if (prototype.lvItemUsed != null)
+                prototype.lvItemUsed.Text = (prototype.NodeName != "") ? prototype.NodeName : prototype.Name;
         }
 
         static public void DrawBack(Graphics graphics, xBackground Back, xGrid Grid, int drawX, int drawY, int drawW, int drawH, int portX, int portY, int portW, int portH)//Ok
@@ -376,26 +384,19 @@ namespace Schematix
             #endregion
         }
 
-        static public void TryToBindToObject(xMap Map, int X, int Y, ref xObject Object, ref UInt64 ObjectID, ref xDot Dot, ref UInt64 DotID, ref int paramX, ref int paramY)
+        static public Bitmap GetEmptyImage()
         {
-            Object = Map.AnythingAt(X, Y) as xObject;
-            if (Object != null)
-                if (Object.IsObject)
-                {
-                    ObjectID = Object.ID;
-                    Dot = Object.GetNearestDot(X, Y);
-                    DotID = Dot.ID;
-                    paramX = Object.Left + Dot.X;
-                    paramY = Object.Top  + Dot.Y;
-                }
-                else
-                    Object = null;
-            if (Object == null)
-            {
-                ObjectID = 0;
-                paramX = X;
-                paramY = Y;
-            }
+            return new Bitmap(1, 1);
+        }
+
+        static public Bitmap GetNoImage()
+        {
+            var bmap = new Bitmap(16, 16);
+            var g = Graphics.FromImage(bmap);
+            g.DrawRectangle(Pens.Red, 0, 0, 15, 15);
+            g.DrawLine(Pens.Red, 0, 0, 15, 15);
+            g.DrawLine(Pens.Red, 0, 15, 15, 0);
+            return bmap;
         }
     }
 }

@@ -161,9 +161,9 @@ namespace Schematix
             // List
             lOOColumIP       = "Address",
             lOOColumPeriod   = "Period",
-            lOOColumTimeLast = "Last check",
             lOOColumTimeNext = "Next check",
-            lOOColumPing     = "Ping",
+            lOOColumTimeLast = "Last check",
+            lOOColumResult   = "Last result",
         #endregion
 
         /*Link Options*/
@@ -490,9 +490,9 @@ namespace Schematix
                                 // List
                                 case "lOOColumIP":       lOOColumIP       = lblText;   break;
                                 case "lOOColumPeriod":   lOOColumPeriod   = lblText;   break;
-                                case "lOOColumTimeLast": lOOColumTimeLast = lblText;   break;
                                 case "lOOColumTimeNext": lOOColumTimeNext = lblText;   break;
-                                case "lOOColumPing":     lOOColumPing     = lblText;   break;
+                                case "lOOColumTimeLast": lOOColumTimeLast = lblText;   break;
+                                case "lOOColumResult":   lOOColumResult   = lblText;   break;
                             }
                             break;
                         #endregion

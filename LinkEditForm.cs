@@ -77,7 +77,7 @@ namespace Schematix
 
             if (!PLink.SaveToFile(PLink.FileName))
                 return;
-            Share.UpdateNodeName(PLink);
+            Share.Library_UpdateNodeName(PLink);
             // Out
             DialogResult = DialogResult.OK;
             Close();

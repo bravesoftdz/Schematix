@@ -8,10 +8,10 @@ namespace Schematix
     public partial class ObjectEditForm : Form
     {
         const int DOT_PICKER_PADDING = 5;
-        static Bitmap dotBmap = new Bitmap(7, 7, PixelFormat.Format32bppArgb); // (3+ 7 +3)x(3+ 7 +3)
+        static Bitmap dotBmap = Share.GetEmptyImage(); // (3+ 7 +3)x(3+ 7 +3)
         Graphics dotGraphics = Graphics.FromImage(dotBmap);
         Pen pen = new Pen(Color.Black);
-        Bitmap loadedBitmap = new Bitmap(7, 7);
+        Bitmap loadedBitmap = Share.GetNoImage();
 
         public xPObject PObject;
         bool IsRoot;
@@ -284,7 +284,7 @@ namespace Schematix
 
             if (!PObject.SaveToFile(PObject.FileName))
                 return;
-            Share.UpdateNodeName(PObject);
+            Share.Library_UpdateNodeName(PObject);
             // Out
             DialogResult = DialogResult.OK;
             Close();

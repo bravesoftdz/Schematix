@@ -404,7 +404,7 @@ namespace Schematix
                         // Update showed info
                         Share.lvIPs_Renew(IP.Obj_lvItem, IP);
                         Share.lvIPs_Renew(IP.Map_lvItem, IP);
-                        Share.lvPings_Renew(IP.IP_lv?.Items[0], IP, IP.Pings[0]);
+                        Share.lvPings_Renew(IP.Pings_lv?.Items[0], IP, IP.Pings[0]);
                     }
                 }
             PingIPsIDs[SendersIdx] = null;

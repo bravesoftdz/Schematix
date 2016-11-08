@@ -18,11 +18,11 @@ namespace Schematix
             // Own
             toolTip.SetToolTip(btnIPAdd,        Options.LangCur.hOOIPAdd);
             toolTip.SetToolTip(btnIPDelete,     Options.LangCur.hOOIPDelete);
-            clmIP.Text        = Options.LangCur.lOOColumIP;
-            clmPeriod.Text    = Options.LangCur.lOOColumPeriod;
-            clmTimeLast.Text  = Options.LangCur.lOOColumTimeLast;
-            clmTimeNext.Text  = Options.LangCur.lOOColumTimeNext;
-            clmPing.Text      = Options.LangCur.lOOColumPing;
+            clmIP.Text         = Options.LangCur.lOOColumIP;
+            clmPeriod.Text     = Options.LangCur.lOOColumPeriod;
+            clmLastResult.Text = Options.LangCur.lOOColumTimeLast;
+            clmTimeNext.Text   = Options.LangCur.lOOColumTimeNext;
+            clmLastResult.Text = Options.LangCur.lOOColumResult;
             // Store
             Object = obj;
             if (Object == null)
@@ -42,38 +42,46 @@ namespace Schematix
 
         private void btnGetReference_Click(object sender, EventArgs e) => Share.GetFile(tbReference);//Ok
 
-        private void lvIPs_SelectedIndexChanged(object sender, EventArgs e) => btnIPDelete.Enabled = (0 < lvIPs.SelectedItems.Count);//O
-
-        private void btnIPAdd_Click(object sender, EventArgs e)//O
+        private void btnIPAdd_Click(object sender, EventArgs e)//Ok
         {
             var form = new IPEditForm(null, Object);
             if (form.ShowDialog() == DialogResult.OK)
                 Share.lvIPs_Add(lvIPs, form.IP, ref form.IP.Obj_lvItem);
         }
 
-        private void lvIPs_DoubleClick(object sender, EventArgs e) => Share.lvIPs_Edit(lvIPs);//O
+        private void btnIPEdit_Click(object sender, EventArgs e) => Share.lvIPs_Edit(lvIPs);
 
-        private void btnIPDelete_Click(object sender, EventArgs e) => Share.lvIPs_Delete(lvIPs);//O
+        private void btnIPDelete_Click(object sender, EventArgs e) => Share.lvIPs_Delete(lvIPs);//Ok
 
-        private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e) => (e.Item.Tag as xIP).Onn = e.Item.Checked;//
+        private void lvIPs_SelectedIndexChanged(object sender, EventArgs e) => btnIPDelete.Enabled = (0 < lvIPs.SelectedItems.Count);//Ok
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e)//Ok
         {
-            if (Object != null)
-            {
-                Object.Reference   = tbReference.Text;
-                Object.Name        = tbName.Text;
-                Object.Description = tbDescription.Text;
-            }
+            if (e.Item.Tag != null)
+                (e.Item.Tag as xIP).Onn = e.Item.Checked;
+        }
+
+        private void lvIPs_DoubleClick(object sender, EventArgs e)//
+        {
+            (sender as ListView).SelectedItems[0].Checked = !(sender as ListView).SelectedItems[0].Checked;
+            btnIPEdit_Click(null, null);
+        }
+
+        private void ObjectOptionsForm_FormClosing(object sender, FormClosingEventArgs e)//Ok
+        {
+            // Clear backtrack
+            foreach (ListViewItem lvItem in lvIPs.Items)
+                (lvItem.Tag as xIP).Obj_lvItem = null;
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)//Ok
+        {
+            Object.Reference   = tbReference.Text;
+            Object.Name        = tbName.Text;
+            Object.Description = tbDescription.Text;
             // Register IPs
-            foreach (ListViewItem lvi in lvIPs.Items)
-            {
-                xIP IP = (lvi.Tag as xIP);
-                if (IP == null)
-                    continue;
-                IP.Obj_lvItem = null;
-                Object.AddIP(IP);                
-            }
+            foreach (ListViewItem lvItem in lvIPs.Items)
+                Object.AddIP((lvItem.Tag as xIP));
 
             // Out
             DialogResult = DialogResult.OK;
