@@ -88,9 +88,12 @@ namespace Schematix
         
         // Display window
         static public MainForm mainForm = null;
+        static public bool
+            MainFormXY = false,
+            MainFormWH = false;
         static public int
-            WindowW,
-            WindowH;
+            MainFormX, MainFormW, PortW,
+            MainFormY, MainFormH, PortH;
         // Tools
         static public RadioButton rbDefault;
         static public RadioButton rbObject;
@@ -215,7 +218,8 @@ namespace Schematix
                         if (rec.Count() < 2)
                             continue; //not an option:value pair - skip
                         String option = rec[0],
-                               value = rec[1];
+                               value = rec[1],
+                               value2 = ((rec.Count() < 3) ? "" : rec[2]);
                         //Set option
                         switch (option)
                         {
@@ -233,6 +237,13 @@ namespace Schematix
                             case "PingOnn":    PingOnn    = (value.ToUpper() == "YES");                     break;
                             case "PingPeriod": PingPeriod = SetCounter(value, MAX_PING_PERIOD, 100, 100);   break;
                             case "PingCount":  PingCount  = SetCounter(value, 10, 1);                       break;
+                            // MainForm
+                            case "MainForm:XY": MainFormX = SetCounter(value,  99999, 0);
+                                                MainFormY = SetCounter(value2, 99999, 0);
+                                                MainFormXY = true;                            break;
+                            case "MainForm:WH": MainFormW = SetCounter(value,  99999, 500);
+                                                MainFormH = SetCounter(value2, 99999, 300);
+                                                MainFormWH = true;                            break;
 
                             //# Map
                             // Grid
@@ -292,6 +303,9 @@ namespace Schematix
                     file.WriteLine("PingOnn\t"    + (PingOnn ? "yes" : "no"));
                     file.WriteLine("PingPeriod\t" + PingPeriod);
                     file.WriteLine("PingCount\t"  + PingCount);
+                    // MainForm
+                    file.WriteLine("MainForm:XY\t" + mainForm.Left  + "\t" + mainForm.Top);
+                    file.WriteLine("MainForm:WH\t" + mainForm.Width + "\t" + mainForm.Height);
 
                     //# Map
                     // Grid

@@ -1730,8 +1730,8 @@ namespace Schematix
         {
             if (!AutoSize)
                 return false;
-            int width  = Options.WindowW,
-                height = Options.WindowH;
+            int width  = Options.PortW,
+                height = Options.PortH;
             // Look for bigger values
             foreach (var Object in Objects)
             {
@@ -1836,12 +1836,12 @@ namespace Schematix
 
             // Draw background
             var back = (Back.StoreOwn) ? Back : Options.Back;
-            if (Back.Float)
+            if (back.Float)
                 Share.DrawBack(graphics,
                     back,
                     (Grid.StoreOwn) ? Grid : Options.Grid,
                     drawX, drawY, drawW, drawH,
-                    ScrollX, ScrollY, Options.WindowW, Options.WindowH);
+                    ScrollX, ScrollY, Options.PortW, Options.PortH);
             else
                 Share.DrawBack(graphics,
                     back,

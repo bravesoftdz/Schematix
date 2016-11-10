@@ -118,8 +118,8 @@
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel4);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(261, 222);
-            this.splitContainer1.SplitterDistance = 118;
+            this.splitContainer1.Size = new System.Drawing.Size(262, 221);
+            this.splitContainer1.SplitterDistance = 117;
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
@@ -139,7 +139,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(261, 118);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 117);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // lblObjectsCatalog
@@ -159,7 +159,7 @@
             this.tvObjects.HideSelection = false;
             this.tvObjects.Location = new System.Drawing.Point(3, 28);
             this.tvObjects.Name = "tvObjects";
-            this.tvObjects.Size = new System.Drawing.Size(255, 87);
+            this.tvObjects.Size = new System.Drawing.Size(256, 86);
             this.tvObjects.TabIndex = 0;
             this.tvObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvObjects_AfterSelect);
             this.tvObjects.DoubleClick += new System.EventHandler(this.btnObjectEdit_Click);
@@ -170,7 +170,7 @@
             this.btnObjectEdit.Enabled = false;
             this.btnObjectEdit.Image = global::Schematix.Properties.Resources.edit;
             this.btnObjectEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnObjectEdit.Location = new System.Drawing.Point(204, 0);
+            this.btnObjectEdit.Location = new System.Drawing.Point(205, 0);
             this.btnObjectEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnObjectEdit.Name = "btnObjectEdit";
             this.btnObjectEdit.Size = new System.Drawing.Size(24, 24);
@@ -183,7 +183,7 @@
             this.btnObjectAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnObjectAdd.Image = global::Schematix.Properties.Resources.plus;
             this.btnObjectAdd.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnObjectAdd.Location = new System.Drawing.Point(234, 0);
+            this.btnObjectAdd.Location = new System.Drawing.Point(235, 0);
             this.btnObjectAdd.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnObjectAdd.Name = "btnObjectAdd";
             this.btnObjectAdd.Size = new System.Drawing.Size(24, 24);
@@ -205,7 +205,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(261, 100);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(262, 100);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // lblUsedObjects
@@ -232,7 +232,7 @@
             this.lvObjects.Location = new System.Drawing.Point(3, 28);
             this.lvObjects.MultiSelect = false;
             this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(255, 69);
+            this.lvObjects.Size = new System.Drawing.Size(256, 69);
             this.lvObjects.TabIndex = 1;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
             this.lvObjects.View = System.Windows.Forms.View.Details;
@@ -256,7 +256,7 @@
             this.btnUsedObjectEdit.Enabled = false;
             this.btnUsedObjectEdit.Image = global::Schematix.Properties.Resources.edit;
             this.btnUsedObjectEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnUsedObjectEdit.Location = new System.Drawing.Point(234, 0);
+            this.btnUsedObjectEdit.Location = new System.Drawing.Point(235, 0);
             this.btnUsedObjectEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnUsedObjectEdit.Name = "btnUsedObjectEdit";
             this.btnUsedObjectEdit.Size = new System.Drawing.Size(24, 24);
@@ -280,7 +280,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(261, 118);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(262, 118);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // tvLinks
@@ -290,7 +290,7 @@
             this.tvLinks.HideSelection = false;
             this.tvLinks.Location = new System.Drawing.Point(3, 28);
             this.tvLinks.Name = "tvLinks";
-            this.tvLinks.Size = new System.Drawing.Size(255, 87);
+            this.tvLinks.Size = new System.Drawing.Size(256, 87);
             this.tvLinks.TabIndex = 0;
             this.tvLinks.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvLinks_AfterSelect);
             this.tvLinks.DoubleClick += new System.EventHandler(this.btnLinkEdit_Click);
@@ -311,7 +311,7 @@
             this.btnLinkEdit.Enabled = false;
             this.btnLinkEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkEdit.Image")));
             this.btnLinkEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnLinkEdit.Location = new System.Drawing.Point(204, 0);
+            this.btnLinkEdit.Location = new System.Drawing.Point(205, 0);
             this.btnLinkEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnLinkEdit.Name = "btnLinkEdit";
             this.btnLinkEdit.Size = new System.Drawing.Size(24, 24);
@@ -324,7 +324,7 @@
             this.btnLinkAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkAdd.Image = global::Schematix.Properties.Resources.plus;
             this.btnLinkAdd.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnLinkAdd.Location = new System.Drawing.Point(234, 0);
+            this.btnLinkAdd.Location = new System.Drawing.Point(235, 0);
             this.btnLinkAdd.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnLinkAdd.Name = "btnLinkAdd";
             this.btnLinkAdd.Size = new System.Drawing.Size(24, 24);
@@ -346,7 +346,7 @@
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(261, 100);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(262, 100);
             this.tableLayoutPanel5.TabIndex = 3;
             // 
             // lblUsedLinks
@@ -373,7 +373,7 @@
             this.lvLinks.Location = new System.Drawing.Point(3, 28);
             this.lvLinks.MultiSelect = false;
             this.lvLinks.Name = "lvLinks";
-            this.lvLinks.Size = new System.Drawing.Size(255, 69);
+            this.lvLinks.Size = new System.Drawing.Size(256, 69);
             this.lvLinks.TabIndex = 1;
             this.lvLinks.UseCompatibleStateImageBehavior = false;
             this.lvLinks.View = System.Windows.Forms.View.Details;
@@ -397,7 +397,7 @@
             this.btnUsedLinkEdit.Enabled = false;
             this.btnUsedLinkEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnUsedLinkEdit.Image")));
             this.btnUsedLinkEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnUsedLinkEdit.Location = new System.Drawing.Point(234, 0);
+            this.btnUsedLinkEdit.Location = new System.Drawing.Point(235, 0);
             this.btnUsedLinkEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnUsedLinkEdit.Name = "btnUsedLinkEdit";
             this.btnUsedLinkEdit.Size = new System.Drawing.Size(24, 24);
@@ -416,7 +416,7 @@
             this.tcCatalog.Margin = new System.Windows.Forms.Padding(0);
             this.tcCatalog.Name = "tcCatalog";
             this.tcCatalog.SelectedIndex = 0;
-            this.tcCatalog.Size = new System.Drawing.Size(275, 255);
+            this.tcCatalog.Size = new System.Drawing.Size(276, 254);
             this.tcCatalog.TabIndex = 1;
             // 
             // tpObjects
@@ -427,7 +427,7 @@
             this.tpObjects.Location = new System.Drawing.Point(4, 23);
             this.tpObjects.Name = "tpObjects";
             this.tpObjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tpObjects.Size = new System.Drawing.Size(267, 228);
+            this.tpObjects.Size = new System.Drawing.Size(268, 227);
             this.tpObjects.TabIndex = 0;
             this.tpObjects.Text = "Objects";
             // 
@@ -439,7 +439,7 @@
             this.tpLinks.Location = new System.Drawing.Point(4, 23);
             this.tpLinks.Name = "tpLinks";
             this.tpLinks.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLinks.Size = new System.Drawing.Size(267, 228);
+            this.tpLinks.Size = new System.Drawing.Size(268, 228);
             this.tpLinks.TabIndex = 1;
             this.tpLinks.Text = "Links";
             // 
@@ -462,7 +462,7 @@
             this.splitContainer2.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel5);
             this.splitContainer2.Panel2MinSize = 100;
-            this.splitContainer2.Size = new System.Drawing.Size(261, 222);
+            this.splitContainer2.Size = new System.Drawing.Size(262, 222);
             this.splitContainer2.SplitterDistance = 118;
             this.splitContainer2.TabIndex = 1;
             this.splitContainer2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer2_SplitterMoved);
@@ -475,7 +475,7 @@
             this.tpBoxes.Location = new System.Drawing.Point(4, 23);
             this.tpBoxes.Name = "tpBoxes";
             this.tpBoxes.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBoxes.Size = new System.Drawing.Size(267, 228);
+            this.tpBoxes.Size = new System.Drawing.Size(268, 228);
             this.tpBoxes.TabIndex = 2;
             this.tpBoxes.Text = "Boxes";
             // 
@@ -498,7 +498,7 @@
             this.splitContainer3.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel6);
             this.splitContainer3.Panel2MinSize = 100;
-            this.splitContainer3.Size = new System.Drawing.Size(261, 222);
+            this.splitContainer3.Size = new System.Drawing.Size(262, 222);
             this.splitContainer3.SplitterDistance = 118;
             this.splitContainer3.TabIndex = 1;
             this.splitContainer3.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer3_SplitterMoved);
@@ -519,7 +519,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(261, 118);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(262, 118);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
             // tvBoxes
@@ -529,7 +529,7 @@
             this.tvBoxes.HideSelection = false;
             this.tvBoxes.Location = new System.Drawing.Point(3, 28);
             this.tvBoxes.Name = "tvBoxes";
-            this.tvBoxes.Size = new System.Drawing.Size(255, 87);
+            this.tvBoxes.Size = new System.Drawing.Size(256, 87);
             this.tvBoxes.TabIndex = 0;
             this.tvBoxes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvBoxes_AfterSelect);
             this.tvBoxes.DoubleClick += new System.EventHandler(this.btnBoxEdit_Click);
@@ -550,7 +550,7 @@
             this.btnBoxEdit.Enabled = false;
             this.btnBoxEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnBoxEdit.Image")));
             this.btnBoxEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnBoxEdit.Location = new System.Drawing.Point(204, 0);
+            this.btnBoxEdit.Location = new System.Drawing.Point(205, 0);
             this.btnBoxEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnBoxEdit.Name = "btnBoxEdit";
             this.btnBoxEdit.Size = new System.Drawing.Size(24, 24);
@@ -563,7 +563,7 @@
             this.btnBoxAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBoxAdd.Image = global::Schematix.Properties.Resources.plus;
             this.btnBoxAdd.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnBoxAdd.Location = new System.Drawing.Point(234, 0);
+            this.btnBoxAdd.Location = new System.Drawing.Point(235, 0);
             this.btnBoxAdd.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnBoxAdd.Name = "btnBoxAdd";
             this.btnBoxAdd.Size = new System.Drawing.Size(24, 24);
@@ -585,7 +585,7 @@
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(261, 100);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(262, 100);
             this.tableLayoutPanel6.TabIndex = 3;
             // 
             // lblUsedBoxes
@@ -612,7 +612,7 @@
             this.lvBoxes.Location = new System.Drawing.Point(3, 28);
             this.lvBoxes.MultiSelect = false;
             this.lvBoxes.Name = "lvBoxes";
-            this.lvBoxes.Size = new System.Drawing.Size(255, 69);
+            this.lvBoxes.Size = new System.Drawing.Size(256, 69);
             this.lvBoxes.TabIndex = 1;
             this.lvBoxes.UseCompatibleStateImageBehavior = false;
             this.lvBoxes.View = System.Windows.Forms.View.Details;
@@ -636,7 +636,7 @@
             this.btnUsedBoxEdit.Enabled = false;
             this.btnUsedBoxEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnUsedBoxEdit.Image")));
             this.btnUsedBoxEdit.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnUsedBoxEdit.Location = new System.Drawing.Point(234, 0);
+            this.btnUsedBoxEdit.Location = new System.Drawing.Point(235, 0);
             this.btnUsedBoxEdit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
             this.btnUsedBoxEdit.Name = "btnUsedBoxEdit";
             this.btnUsedBoxEdit.Size = new System.Drawing.Size(24, 24);
@@ -660,7 +660,7 @@
             this.chkPin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.chkPin.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
             this.chkPin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkPin.Location = new System.Drawing.Point(268, 0);
+            this.chkPin.Location = new System.Drawing.Point(269, 0);
             this.chkPin.Name = "chkPin";
             this.chkPin.Size = new System.Drawing.Size(12, 12);
             this.chkPin.TabIndex = 2;
@@ -682,11 +682,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(283, 263);
+            this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.chkPin);
             this.Controls.Add(this.tcCatalog);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(299, 301);
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "LibraryForm";
             this.Padding = new System.Windows.Forms.Padding(4);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

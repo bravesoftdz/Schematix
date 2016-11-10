@@ -125,7 +125,7 @@
             this.vScrollBar.Location = new System.Drawing.Point(464, 4);
             this.vScrollBar.Maximum = 9;
             this.vScrollBar.Name = "vScrollBar";
-            this.vScrollBar.Size = new System.Drawing.Size(17, 230);
+            this.vScrollBar.Size = new System.Drawing.Size(17, 231);
             this.vScrollBar.SmallChange = 5;
             this.vScrollBar.TabIndex = 5;
             this.vScrollBar.Value = 1;
@@ -136,7 +136,7 @@
             // 
             this.hScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.hScrollBar.Location = new System.Drawing.Point(4, 240);
+            this.hScrollBar.Location = new System.Drawing.Point(4, 241);
             this.hScrollBar.Name = "hScrollBar";
             this.hScrollBar.Size = new System.Drawing.Size(454, 17);
             this.hScrollBar.SmallChange = 10;
@@ -150,7 +150,7 @@
             this.pnlMapOptions.BackColor = System.Drawing.Color.White;
             this.pnlMapOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlMapOptions.Controls.Add(this.pnlMapFrame);
-            this.pnlMapOptions.Location = new System.Drawing.Point(460, 236);
+            this.pnlMapOptions.Location = new System.Drawing.Point(460, 237);
             this.pnlMapOptions.Margin = new System.Windows.Forms.Padding(0);
             this.pnlMapOptions.Name = "pnlMapOptions";
             this.pnlMapOptions.Size = new System.Drawing.Size(25, 25);
@@ -383,7 +383,7 @@
             this.pbPullHScroll.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.pbPullHScroll.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPullHScroll.Image = global::Schematix.Properties.Resources.PullScrollH;
-            this.pbPullHScroll.Location = new System.Drawing.Point(233, 250);
+            this.pbPullHScroll.Location = new System.Drawing.Point(233, 251);
             this.pbPullHScroll.Name = "pbPullHScroll";
             this.pbPullHScroll.Size = new System.Drawing.Size(18, 7);
             this.pbPullHScroll.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -396,7 +396,7 @@
             this.pbPullVScroll.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.pbPullVScroll.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPullVScroll.Image = global::Schematix.Properties.Resources.PullScrollV;
-            this.pbPullVScroll.Location = new System.Drawing.Point(474, 121);
+            this.pbPullVScroll.Location = new System.Drawing.Point(474, 122);
             this.pbPullVScroll.Name = "pbPullVScroll";
             this.pbPullVScroll.Size = new System.Drawing.Size(7, 18);
             this.pbPullVScroll.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -470,7 +470,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(485, 261);
+            this.ClientSize = new System.Drawing.Size(485, 262);
             this.ContextMenuStrip = this.cmsMap;
             this.Controls.Add(this.pnlTools);
             this.Controls.Add(this.pnlMaps);
@@ -484,7 +484,7 @@
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(501, 299);
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Schematix 0.0";

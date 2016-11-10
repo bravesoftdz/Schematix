@@ -31,7 +31,7 @@ lOFTitle	Настройки приложения
 //* Main tab
 lOFTabMain	Основное
 // Language
-lOFMainLanguage	Языки
+lOFMainLanguage	Язык
 lOFMainLanguagePath	Загружать из
 // Root folders
 lOFMainRoots	Корневые каталоги
@@ -51,11 +51,14 @@ lOFMainOnClose0Exit	Просто выйти
 lOFMainOnClose1Ask	Спросить, о сохранении карт
 lOFMainOnClose2Save	Сохраненить карты
 lOFMainPingPeriod	Период отправки пингов (мс)
-lOFMainPingCount	Максимальное количество отправленных сообщений за период
+lOFMainPingCount	Максимум сообщений за период
 //* Map tab
 lOFTabMap	Новая карта | По умолчанию
 
 //# Тека
+lLFTabObjects	Объекты
+lLFTabLinks	Связи
+lLFTabBoxes	Боксы
 lLFTitle	Тека
 lLFCatalog	В каталоге
 lLFUsed	Использовано на карте

@@ -652,7 +652,7 @@
             "16 (5r6g5b)",
             "8 (256)",
             "4 (16)"});
-            this.cbbBackImageBPP.Location = new System.Drawing.Point(199, 136);
+            this.cbbBackImageBPP.Location = new System.Drawing.Point(219, 136);
             this.cbbBackImageBPP.Name = "cbbBackImageBPP";
             this.cbbBackImageBPP.Size = new System.Drawing.Size(100, 21);
             this.cbbBackImageBPP.TabIndex = 12;
@@ -675,7 +675,7 @@
             this.cbbBackStyle.FormattingEnabled = true;
             this.cbbBackStyle.Location = new System.Drawing.Point(3, 26);
             this.cbbBackStyle.Name = "cbbBackStyle";
-            this.cbbBackStyle.Size = new System.Drawing.Size(120, 21);
+            this.cbbBackStyle.Size = new System.Drawing.Size(140, 21);
             this.cbbBackStyle.TabIndex = 1;
             this.cbbBackStyle.SelectedIndexChanged += new System.EventHandler(this.RedrawSample);
             // 
@@ -683,7 +683,7 @@
             // 
             this.lblBackgImagePath.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblBackgImagePath.AutoSize = true;
-            this.lblBackgImagePath.Location = new System.Drawing.Point(51, 58);
+            this.lblBackgImagePath.Location = new System.Drawing.Point(71, 58);
             this.lblBackgImagePath.Name = "lblBackgImagePath";
             this.lblBackgImagePath.Size = new System.Drawing.Size(72, 13);
             this.lblBackgImagePath.TabIndex = 5;
@@ -704,9 +704,9 @@
             // 
             this.tbBackgImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel5.SetColumnSpan(this.tbBackgImagePath, 3);
-            this.tbBackgImagePath.Location = new System.Drawing.Point(129, 54);
+            this.tbBackgImagePath.Location = new System.Drawing.Point(149, 54);
             this.tbBackgImagePath.Name = "tbBackgImagePath";
-            this.tbBackgImagePath.Size = new System.Drawing.Size(235, 20);
+            this.tbBackgImagePath.Size = new System.Drawing.Size(215, 20);
             this.tbBackgImagePath.TabIndex = 3;
             // 
             // chkBackStore
@@ -756,7 +756,7 @@
             // 
             this.btnBackColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnBackColor.BackColor = System.Drawing.Color.SkyBlue;
-            this.btnBackColor.Location = new System.Drawing.Point(137, 26);
+            this.btnBackColor.Location = new System.Drawing.Point(157, 26);
             this.btnBackColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnBackColor.Name = "btnBackColor";
             this.btnBackColor.Size = new System.Drawing.Size(32, 21);
@@ -781,7 +781,7 @@
             this.cbbBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cbbBackImageAlign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbBackImageAlign.FormattingEnabled = true;
-            this.cbbBackImageAlign.Location = new System.Drawing.Point(199, 109);
+            this.cbbBackImageAlign.Location = new System.Drawing.Point(219, 109);
             this.cbbBackImageAlign.Name = "cbbBackImageAlign";
             this.cbbBackImageAlign.Size = new System.Drawing.Size(120, 21);
             this.cbbBackImageAlign.TabIndex = 5;
@@ -791,7 +791,7 @@
             // 
             this.lblBackImageAlign.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblBackImageAlign.AutoSize = true;
-            this.lblBackImageAlign.Location = new System.Drawing.Point(132, 113);
+            this.lblBackImageAlign.Location = new System.Drawing.Point(152, 113);
             this.lblBackImageAlign.Name = "lblBackImageAlign";
             this.lblBackImageAlign.Size = new System.Drawing.Size(61, 13);
             this.lblBackImageAlign.TabIndex = 5;
@@ -801,7 +801,7 @@
             // 
             this.lblBackImageBPP.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblBackImageBPP.AutoSize = true;
-            this.lblBackImageBPP.Location = new System.Drawing.Point(129, 140);
+            this.lblBackImageBPP.Location = new System.Drawing.Point(149, 140);
             this.lblBackImageBPP.Name = "lblBackImageBPP";
             this.lblBackImageBPP.Size = new System.Drawing.Size(64, 13);
             this.lblBackImageBPP.TabIndex = 13;
@@ -811,7 +811,7 @@
             // 
             this.btnAlphaColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnAlphaColor.BackColor = System.Drawing.Color.White;
-            this.btnAlphaColor.Location = new System.Drawing.Point(137, 82);
+            this.btnAlphaColor.Location = new System.Drawing.Point(157, 82);
             this.btnAlphaColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnAlphaColor.Name = "btnAlphaColor";
             this.btnAlphaColor.Size = new System.Drawing.Size(32, 21);
@@ -879,7 +879,7 @@
             this.cbbGridStyle.FormattingEnabled = true;
             this.cbbGridStyle.Location = new System.Drawing.Point(3, 26);
             this.cbbGridStyle.Name = "cbbGridStyle";
-            this.cbbGridStyle.Size = new System.Drawing.Size(120, 21);
+            this.cbbGridStyle.Size = new System.Drawing.Size(140, 21);
             this.cbbGridStyle.TabIndex = 1;
             this.cbbGridStyle.SelectedIndexChanged += new System.EventHandler(this.RedrawSample);
             // 
@@ -887,7 +887,7 @@
             // 
             this.lblGridThick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGridThick.AutoSize = true;
-            this.lblGridThick.Location = new System.Drawing.Point(287, 30);
+            this.lblGridThick.Location = new System.Drawing.Point(307, 30);
             this.lblGridThick.Name = "lblGridThick";
             this.lblGridThick.Size = new System.Drawing.Size(56, 13);
             this.lblGridThick.TabIndex = 5;
@@ -898,7 +898,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(226, 30);
+            this.label1.Location = new System.Drawing.Point(246, 30);
             this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(12, 13);
@@ -909,7 +909,7 @@
             // nudGridThick
             // 
             this.nudGridThick.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nudGridThick.Location = new System.Drawing.Point(349, 26);
+            this.nudGridThick.Location = new System.Drawing.Point(369, 26);
             this.nudGridThick.Maximum = new decimal(new int[] {
             5,
             0,
@@ -921,7 +921,7 @@
             0,
             0});
             this.nudGridThick.Name = "nudGridThick";
-            this.nudGridThick.Size = new System.Drawing.Size(35, 20);
+            this.nudGridThick.Size = new System.Drawing.Size(24, 20);
             this.nudGridThick.TabIndex = 5;
             this.nudGridThick.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudGridThick.Value = new decimal(new int[] {
@@ -934,7 +934,7 @@
             // nudGridStepY
             // 
             this.nudGridStepY.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.nudGridStepY.Location = new System.Drawing.Point(241, 26);
+            this.nudGridStepY.Location = new System.Drawing.Point(261, 26);
             this.nudGridStepY.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -959,7 +959,7 @@
             // nudGridStepX
             // 
             this.nudGridStepX.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.nudGridStepX.Location = new System.Drawing.Point(183, 26);
+            this.nudGridStepX.Location = new System.Drawing.Point(203, 26);
             this.nudGridStepX.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -999,7 +999,7 @@
             // 
             this.btnGridColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnGridColor.BackColor = System.Drawing.Color.Silver;
-            this.btnGridColor.Location = new System.Drawing.Point(137, 26);
+            this.btnGridColor.Location = new System.Drawing.Point(157, 26);
             this.btnGridColor.Margin = new System.Windows.Forms.Padding(11, 3, 11, 3);
             this.btnGridColor.Name = "btnGridColor";
             this.btnGridColor.Size = new System.Drawing.Size(32, 21);

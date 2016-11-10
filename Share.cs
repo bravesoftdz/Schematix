@@ -292,11 +292,11 @@ namespace Schematix
                     // Calculate first cell
                     startX = (drawX - imgW + 1 - imgOffsetX) / imgW;
                     startY = (drawY - imgH + 1 - imgOffsetY) / imgH;
-                    endX = (drawX + drawW - 1 - imgOffsetX) / imgW;
-                    endY = (drawY + drawH - 1 - imgOffsetY) / imgH;
+                    endX = (drawX + drawW - imgOffsetX) / imgW;
+                    endY = (drawY + drawH - imgOffsetY) / imgH;
                     // Colum/row oscillation for float style
-                    portX = portX % imgW + imgOffsetX;
-                    portY = portY % imgH + imgOffsetY;
+                    portX = (portX + imgOffsetX) % imgW;
+                    portY = (portY + imgOffsetY) % imgH;
                     // Fill
                     for (iY = startY; iY <= endY; iY++)
                         for (iX = startX; iX <= endX; iX++)

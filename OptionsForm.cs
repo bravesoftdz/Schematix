@@ -17,13 +17,13 @@ namespace Schematix
             InitializeComponent();
 
             //# Main
+            SetText(Options.LangCur);
             // Language
             tbLanguagePath.Text = Options.LangPath;
             cbbLanguage.Items.AddRange(Options.Langs.Select(l => l.Name).ToArray());
             cbbLanguage.Text = Options.LangName;
             if (cbbLanguage.SelectedIndex < 0)
                 cbbLanguage.SelectedIndex = 0;
-            SetText(Options.Langs[cbbLanguage.SelectedIndex]);
 
             // Behaiour
             cbbOnStart.SelectedIndex = Options.OnStart;
@@ -54,7 +54,7 @@ namespace Schematix
             nudGridThick.Value         = (int)Options.Grid.Pen.Width;
             chkGridAlign.Checked       = Options.Grid.Snap;
             // Background
-            chkBackStore.Checked       = Options.Back.StoreOwn;
+            chkBackStore.Checked            = Options.Back.StoreOwn;
             cbbBackStyle.SelectedIndex      = (int)Options.Back.Style;
             cbbBackImageAlign.SelectedIndex = (int)Options.Back.Align;
             btnBackColor.BackColor          = Options.Back.Color;
@@ -63,6 +63,7 @@ namespace Schematix
             btnAlphaColor.BackColor         = Options.Back.AlphaColor;
             chkBackImageFloat.Checked       = Options.Back.Float;
             chkBackImageBuildIn.Checked     = Options.Back.BuildIn;
+            cbbBackImageBPP.SelectedIndex   = (int)Options.Back.BPP;
             // Redraw sample
             GotImage(Options.Back.Image);
         }
@@ -77,17 +78,17 @@ namespace Schematix
             // Language
             gbLanguage.Text      = lang.lOFMainLanguage;
             lblLanguagePath.Text = lang.lOFMainLanguagePath;
-            toolTip.SetToolTip(btnGetLanguagePath, Options.LangCur.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetLanguagePath, lang.hOFMainRootGet);
             // Behaiour
             gbRoots.Text        = lang.lOFMainRoots;
             lblRootMaps.Text    = lang.lOFMainRootMaps;
             lblRootObjects.Text = lang.lOFMainRootObjects;
             lblRootLinks.Text   = lang.lOFMainRootLinks;
             lblRootBoxes.Text   = lang.lOFMainRootBoxes;
-            toolTip.SetToolTip(btnGetRootMaps,    Options.LangCur.hOFMainRootGet);
-            toolTip.SetToolTip(btnGetRootObjects, Options.LangCur.hOFMainRootGet);
-            toolTip.SetToolTip(btnGetRootLinks,   Options.LangCur.hOFMainRootGet);
-            toolTip.SetToolTip(btnGetRootBoxes,   Options.LangCur.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetRootMaps,    lang.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetRootObjects, lang.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetRootLinks,   lang.hOFMainRootGet);
+            toolTip.SetToolTip(btnGetRootBoxes,   lang.hOFMainRootGet);
             // Folders
             idx = cbbOnStart.SelectedIndex;
             cbbOnStart.Items.Clear();
@@ -120,7 +121,7 @@ namespace Schematix
             cbbGridStyle.Items.Add(lang.lMOGridStyle3Crosses);
             cbbGridStyle.Items.Add(lang.lMOGridStyle4Grid);
             cbbGridStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(btnGridColor, Options.LangCur.hEEColorPick);
+            toolTip.SetToolTip(btnGridColor, lang.hEEColorPick);
             lblGridThick.Text = lang.lEELineThick;
             chkGridAlign.Text = lang.lMOGridAlign;
             // Background
@@ -135,9 +136,9 @@ namespace Schematix
             cbbBackStyle.Items.Add(lang.lMOBackStyle4ImageZInner);
             cbbBackStyle.Items.Add(lang.lMOBackStyle5ImageZOutter);
             cbbBackStyle.SelectedIndex = idx;
-            toolTip.SetToolTip(btnBackColor,        Options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnAlphaColor, Options.LangCur.hEEColorPick);
-            toolTip.SetToolTip(btnGetBackImage, Options.LangCur.hEEImageLoad);
+            toolTip.SetToolTip(btnBackColor,    lang.hEEColorPick);
+            toolTip.SetToolTip(btnAlphaColor,   lang.hEEColorPick);
+            toolTip.SetToolTip(btnGetBackImage, lang.hEEImageLoad);
             chkTransparentColor.Text = lang.lMOBackTransparentColor;
             lblBackgImagePath.Text   = lang.lEEImagePath;
             chkBackImageFloat.Text   = lang.lEEImageFloat;
@@ -158,13 +159,13 @@ namespace Schematix
             cbbBackImageAlign.SelectedIndex = idx;
         }
 
-        private void Path_TextChanged(object sender, EventArgs e)//Ok
-        {
+        private void cbbLanguage_SelectedIndexChanged(object sender, EventArgs e) => SetText(Options.Langs[cbbLanguage.SelectedIndex]);
+
+        private void Path_TextChanged(object sender, EventArgs e) =>
             (sender as TextBox).BackColor = (
                 Directory.Exists((sender as TextBox).Text) 
                 ? Color.White 
-                : Color.MistyRose);
-        }
+                : Color.MistyRose);//Ok
 
         #region Get folder
         private void btnGetLanguagePath_Click(object sender, EventArgs e) => Share.GetFolder(tbLanguagePath);
@@ -197,30 +198,18 @@ namespace Schematix
             if (chkTransparentColor.Checked)
                 imageAlpha.MakeTransparent(btnAlphaColor.BackColor);
             // Grid
-            xGrid Grid;
-            if (chkGridStore.Checked)
-            {
-                Grid = new xGrid();
-                Grid.Style = (GridStyles)cbbGridStyle.SelectedIndex;
-                Grid.Pen.Color = btnGridColor.BackColor;
-                Grid.Pen.Width = (float)nudGridThick.Value;
-                Grid.StepX = (Int16)nudGridStepX.Value;
-                Grid.StepY = (Int16)nudGridStepY.Value;
-            }
-            else
-                Grid = Options.Grid;
+            xGrid Grid = new xGrid();
+            Grid.Style = (GridStyles)cbbGridStyle.SelectedIndex;
+            Grid.Pen.Color = btnGridColor.BackColor;
+            Grid.Pen.Width = (float)nudGridThick.Value;
+            Grid.StepX = (Int16)nudGridStepX.Value;
+            Grid.StepY = (Int16)nudGridStepY.Value;
             // Back
-            xBackground Back;
-            if (chkBackStore.Checked)
-            {
-                Back = new xBackground();
-                Back.Style = (BackgroundStyles)cbbBackStyle.SelectedIndex;
-                Back.Color = btnBackColor.BackColor;
-                Back.Align = (AlignTypes)cbbBackImageAlign.SelectedIndex;
-                Back.Image = imageAlpha;
-            }
-            else
-                Back = Options.Back;
+            xBackground Back = new xBackground();
+            Back.Style = (BackgroundStyles)cbbBackStyle.SelectedIndex;
+            Back.Color = btnBackColor.BackColor;
+            Back.Align = (AlignTypes)cbbBackImageAlign.SelectedIndex;
+            Back.Image = imageAlpha;
             // Draw
             var bmap = new Bitmap(pbBackPreview.Width, pbBackPreview.Height);
             Share.DrawBack(Graphics.FromImage(bmap), Back, Grid, 0, 0, bmap.Width, bmap.Height, 0, 0, bmap.Width, bmap.Height);
@@ -342,7 +331,10 @@ namespace Schematix
             Options.Back.Path          = tbBackgImagePath.Text;
             Options.Back.UseAlphaColor = chkTransparentColor.Checked;
             Options.Back.AlphaColor    = btnAlphaColor.BackColor;
+            Options.Back.Float         = chkBackImageFloat.Checked;
+            Options.Back.Align         = (AlignTypes)cbbBackImageAlign.SelectedIndex;
             Options.Back.BuildIn       = chkBackImageBuildIn.Checked;
+            Options.Back.BPP           = (ImageBPPs)cbbBackImageBPP.SelectedIndex;
             Options.Back.Image         = imageAlpha;
 
             // Out

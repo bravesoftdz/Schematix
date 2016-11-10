@@ -70,6 +70,9 @@ namespace Schematix
         #endregion
 
         #region Library
+            lLFTabObjects    = "Objects",
+            lLFTabLinks      = "Links",
+            lLFTabBoxes      = "Boxes",
             lLFTitle         = "Library",
             lLFCatalog       = "Catalog",
             lLFUsed          = "Used on map",
@@ -374,6 +377,9 @@ namespace Schematix
                         case "LF":
                             switch (lblName)
                             {
+                                case "lLFTabObjects":    lLFTabObjects     = lblText;   break;
+                                case "lLFTabLinks":      lLFTabLinks       = lblText;   break;
+                                case "lLFTabBoxes":      lLFTabBoxes       = lblText;   break;
                                 case "lLFTitle":         lLFTitle          = lblText;   break;
                                 case "lLFCatalog":       lLFCatalog        = lblText;   break;
                                 case "lLFUsed":          lLFUsed           = lblText;   break;
@@ -512,8 +518,8 @@ namespace Schematix
                         case "MO":
                             switch (lblName)
                             {
-                                case "lMOTitle":    lMOTitle    = lblText;   break;
-                                case "lMOMapStore": lMOStoreInMap = lblText;   break;
+                                case "lMOTitle":      lMOTitle      = lblText;   break;
+                                case "lMOStoreInMap": lMOStoreInMap = lblText;   break;
                                 // Tabs
                                 case "lMOTabMain":    lMOTabMain    = lblText;   break;
                                 case "lMOTabBack":    lMOTabBack    = lblText;   break;
@@ -527,21 +533,21 @@ namespace Schematix
                                 case "lMOAuto": lMOAuto = lblText;   break;
                                 // Grid
                                 case "lMOGrid":              lMOGrid              = lblText;   break;
-                                case "lMOGridStyle1None":    lMOGridStyle0None    = lblText;   break;
-                                case "lMOGridStyle2Dots":    lMOGridStyle1Dots    = lblText;   break;
-                                case "lMOGridStyle3Corners": lMOGridStyle2Corners = lblText;   break;
-                                case "lMOGridStyle4Crosses": lMOGridStyle3Crosses = lblText;   break;
-                                case "lMOGridStyle5Grid":    lMOGridStyle4Grid    = lblText;   break;
+                                case "lMOGridStyle0None":    lMOGridStyle0None    = lblText;   break;
+                                case "lMOGridStyle1Dots":    lMOGridStyle1Dots    = lblText;   break;
+                                case "lMOGridStyle2Corners": lMOGridStyle2Corners = lblText;   break;
+                                case "lMOGridStyle3Crosses": lMOGridStyle3Crosses = lblText;   break;
+                                case "lMOGridStyle4Grid":    lMOGridStyle4Grid    = lblText;   break;
                                 case "lMOGridAlign":         lMOGridAlign         = lblText;   break;
                                 case "lMOGridAlignNow":      lMOGridAlignNow      = lblText;   break;
                                 // Background
                                 case "lMOBack":                   lMOBack                   = lblText;   break;
-                                case "lMOBackStyle1Color":        lMOBackStyle0Color        = lblText;   break;
-                                case "lMOBackStyle2ImageAlign":   lMOBackStyle1ImageAlign   = lblText;   break;
-                                case "lMOBackStyle3ImageTile":    lMOBackStyle2ImageTile    = lblText;   break;
-                                case "lMOBackStyle4ImageStrech":  lMOBackStyle3ImageStrech  = lblText;   break;
-                                case "lMOBackStyle5ImageZInner":  lMOBackStyle4ImageZInner  = lblText;   break;
-                                case "lMOBackStyle6ImageZOutter": lMOBackStyle5ImageZOutter = lblText;   break;
+                                case "lMOBackStyle0Color":        lMOBackStyle0Color        = lblText;   break;
+                                case "lMOBackStyle1ImageAlign":   lMOBackStyle1ImageAlign   = lblText;   break;
+                                case "lMOBackStyle2ImageTile":    lMOBackStyle2ImageTile    = lblText;   break;
+                                case "lMOBackStyle3ImageStrech":  lMOBackStyle3ImageStrech  = lblText;   break;
+                                case "lMOBackStyle4ImageZInner":  lMOBackStyle4ImageZInner  = lblText;   break;
+                                case "lMOBackStyle5ImageZOutter": lMOBackStyle5ImageZOutter = lblText;   break;
                                 case "lMOBackTransparentColor":   lMOBackTransparentColor   = lblText;   break;
                                 // List
                                 case "lMOColumName":      lMOColumName      = lblText;   break;

@@ -71,30 +71,34 @@ namespace Schematix
             toolTip.RemoveAll();
             // Hints
             toolTip.SetToolTip(btnObjectAdd, Options.LangCur.hLFAdd);
+            toolTip.SetToolTip(btnLinkAdd,   Options.LangCur.hLFAdd);
+            toolTip.SetToolTip(btnBoxAdd,    Options.LangCur.hLFAdd);
             toolTip.SetToolTip(btnObjectEdit, Options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnLinkAdd, Options.LangCur.hLFAdd);
-            toolTip.SetToolTip(btnLinkEdit, Options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnBoxAdd, Options.LangCur.hLFAdd);
-            toolTip.SetToolTip(btnBoxEdit, Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnLinkEdit,   Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnBoxEdit,    Options.LangCur.hLFEdit);
             toolTip.SetToolTip(btnUsedObjectEdit, Options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnUsedLinkEdit, Options.LangCur.hLFEdit);
-            toolTip.SetToolTip(btnUsedBoxEdit, Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnUsedLinkEdit,   Options.LangCur.hLFEdit);
+            toolTip.SetToolTip(btnUsedBoxEdit,    Options.LangCur.hLFEdit);
             toolTip.SetToolTip(chkPin, (chkPin.Checked ? Options.LangCur.hLFPinDown : Options.LangCur.hLFPinUp));
+            // Tabs
+            tpObjects.Text = Options.LangCur.lLFTabObjects;
+            tpLinks.Text   = Options.LangCur.lLFTabLinks;
+            tpBoxes.Text   = Options.LangCur.lLFTabBoxes;
             // Text
             Text = Options.LangCur.lLFTitle;
             lblObjectsCatalog.Text =
-            lblLinksCatalog.Text =
-            lblBoxesCatalog.Text = Options.LangCur.lLFCatalog;
+            lblLinksCatalog.Text   =
+            lblBoxesCatalog.Text   = Options.LangCur.lLFCatalog;
             lblUsedObjects.Text =
-            lblUsedLinks.Text =
-            lblUsedBoxes.Text = Options.LangCur.lLFUsed;
+            lblUsedLinks.Text   =
+            lblUsedBoxes.Text   = Options.LangCur.lLFUsed;
             // Colums
             clmObjectName.Text =
-            clmLinkName.Text =
-            clmBoxName.Text = Options.LangCur.lLFColumName;
+            clmLinkName.Text   =
+            clmBoxName.Text    = Options.LangCur.lLFColumName;
             clmObjectLocation.Text =
-            clmLinkLocation.Text =
-            clmBoxLocation.Text = Options.LangCur.lLFColumLocation;
+            clmLinkLocation.Text   =
+            clmBoxLocation.Text    = Options.LangCur.lLFColumLocation;
         }
 
         private void chkPin_CheckedChanged(object sender, EventArgs e)//
