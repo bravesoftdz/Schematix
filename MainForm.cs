@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -24,10 +25,10 @@ namespace Schematix
 
         public MainForm()//
         {
-            Selection.Cursor = Cursors.SizeAll;
             MoverA.W = 6;
             MoverA.H = 6;
-            MoverA.Cursor = Cursors.SizeAll;
+            MoverA.Cursor =
+            Selection.Cursor = Cursors.SizeAll;
             MoverB = MoverA;
             InitializeComponent();
             Options.mainForm = this;
@@ -42,34 +43,32 @@ namespace Schematix
             Options.Init();
             Options.Load();
             // Check folders
-            if (Directory.Exists(Options.LangPath))
-            {
-                eStr = Options.LoadLanguages(Options.LangPath);
-                Options.SelectLanguage(Options.LangName);
-                if (eStr != "")
-                    MessageBox.Show(
-                        Options.LangCur.mErrorsOccurred + "\r\n" + eStr,
-                        Options.LangCur.dLanguagesLoading);
-            }
-            else
-                eStr += "\r\n" + Options.LangPath;
-            if (!Directory.Exists(Options.RootMaps))
-                eStr += "\r\n" + Options.RootMaps;
-            if (!Directory.Exists(Options.RootObjects))
-                eStr += "\r\n" + Options.RootObjects;
-            if (!Directory.Exists(Options.RootLinks))
-                eStr += "\r\n" + Options.RootLinks;
-            if (!Directory.Exists(Options.RootBoxes))
-                eStr += "\r\n" + Options.RootBoxes;
+            eStr = Options.LoadLanguages(Options.LangPath);
+            Options.SelectLanguage(Options.LangName);
+            if (eStr != "")
+                MessageBox.Show(
+                    Options.LangCur.mErrorsOccurred + "\r\n" + eStr,
+                    Options.LangCur.dLanguagesLoading);
+            // Check folders
+            eStr = "";
+            if (Options.RootMaps != "")
+                if (!Directory.Exists(Options.RootMaps))
+                    eStr += "\r\n" + Options.RootMaps;
+            if (Options.RootObjects != "")
+                if (!Directory.Exists(Options.RootObjects))
+                    eStr += "\r\n" + Options.RootObjects;
+            if (Options.RootLinks != "")
+                if (!Directory.Exists(Options.RootLinks))
+                    eStr += "\r\n" + Options.RootLinks;
+            if (Options.RootBoxes != "")
+                if (!Directory.Exists(Options.RootBoxes))
+                    eStr += "\r\n" + Options.RootBoxes;
             if (eStr != "")
                 MessageBox.Show(
                     Options.LangCur.mNoFolders + eStr, 
                     Options.LangCur.dOptionsLoading);
+
             SetText();
-            // Ping timer
-            timerPing.Tick += Options.timerPing_Tick;
-            timerPing.Interval = Options.PingPeriod;
-            timerPing.Enabled = Options.PingOnn;
         }
 
         #region Main
@@ -83,12 +82,16 @@ namespace Schematix
             toolTip.SetToolTip(btnLibrary,    Options.LangCur.hMFLibrary);
             //# Map
             toolTip.SetToolTip(pnlMapOptions, Options.LangCur.hMFMapOptions);
-            // Context menu
+            // Map context menu
             tsmiMapOptions.Text = Options.LangCur.lMFMapCMOptions;
             tsmiMapSave.Text    = Options.LangCur.lMFMapCMSave;
             tsmiMapLoad.Text    = Options.LangCur.lMFMapCMLoad;
             tsmiMapReload.Text  = Options.LangCur.lMFMapCMReload;
             tsmiMapClose.Text   = Options.LangCur.lMFMapCMClose;
+            // Element context menu
+            tsmiElementOptions.Text       = Options.LangCur.lMFElementCMOptions;
+            tsmiElementDelete.Text        = Options.LangCur.lMFElementCMDelete;
+            tsmiElementOpenReference.Text = Options.LangCur.lMFElementCMOpenReference;
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -119,12 +122,13 @@ namespace Schematix
                 //...
                 Options.MapFiles.Clear();
             }
+            // Ping timer
+            timerPing.Tick    += Options.timerPing_Tick;
+            timerPing.Interval = Options.PingPeriod;
+            timerPing.Enabled  = Options.PingOnn;
         }
 
-        private void MainForm_Move(object sender, EventArgs e)
-        {
-            MoveLibraryForm();
-        }
+        private void MainForm_Move(object sender, EventArgs e) => MoveLibraryForm();
 
         public void MoveLibraryForm()
         {
@@ -155,9 +159,41 @@ namespace Schematix
                         Map.SaveToFile(Map.FileName);
             Options.Save();
         }
-        #endregion
 
-        #region Tools
+        private void btnLibrary_Click(object sender, EventArgs e)//!
+        {
+            if (libraryForm.Visible)
+                libraryForm.Hide();
+            else
+            {
+                libraryForm.Show();
+                MainForm_Move(null, null);
+            }
+        }
+
+        private void btnOptions_Click(object sender, EventArgs e)//
+        {
+            var form = new OptionsForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                SetText();
+                if (libraryForm.Visible)
+                    libraryForm.SetText();
+                foreach (TabPage Tab in tcMaps.TabPages)
+                    if (Tab.Tag != null)
+                    {
+                        (Tab.Tag as xMap).DoAutoSize();
+                        (Tab.Tag as xMap).Draw();
+                    }
+                timerPing.Interval = Options.PingPeriod;
+                timerPing.Enabled  = Options.PingOnn;
+                CheckScrollers();
+                Invalidate();
+            }
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e) => new AboutForm().ShowDialog();//Ok
+
         private void rbTool_Click(object sender, EventArgs e)//
         {
             (sender as RadioButton).Click -= btnLibrary_Click;
@@ -179,46 +215,10 @@ namespace Schematix
             else
                 (sender as RadioButton).Click -= btnLibrary_Click;
         }
-
-        private void btnLibrary_Click(object sender, EventArgs e)//!!!
-        {
-            if (libraryForm.Visible)
-                libraryForm.Hide();
-            else
-            {
-                libraryForm.Show();
-                libraryForm.bind = true;
-                MainForm_Move(null, null);
-            }
-        }
-
-        private void btnOptions_Click(object sender, EventArgs e)//!
-        {
-            var form = new OptionsForm();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                SetText();
-                if (libraryForm.Visible)
-                    libraryForm.SetText();
-                foreach (TabPage Tab in tcMaps.TabPages)
-                    if (Tab.Tag != null)
-                    {
-                        (Tab.Tag as xMap).DoAutoSize();
-                        (Tab.Tag as xMap).Draw();
-                    }
-                CheckScrollers();
-                Invalidate();
-            }
-        }
-
-        private void btnAbout_Click(object sender, EventArgs e)//Ok
-        {
-            new AboutForm().ShowDialog();
-        }
         #endregion
 
         #region Tools Pull/Push
-        private void PullMaps_Over(object sender, EventArgs e)    => PullControl(pnlMaps,    TOOLS_HIDE_DELAY * 2);//Ok
+        private void PullMaps_Over(object sender, EventArgs e)    => PullControl(pnlMaps,    TOOLS_HIDE_DELAY);//Ok
         private void PullTools_Over(object sender, EventArgs e)   => PullControl(pnlTools,   TOOLS_HIDE_DELAY);//Ok
         private void PullVScroll_Over(object sender, EventArgs e) => PullControl(vScrollBar, TOOLS_HIDE_DELAY);//Ok
         private void PullHScroll_Over(object sender, EventArgs e) => PullControl(hScrollBar, TOOLS_HIDE_DELAY);//Ok
@@ -282,14 +282,14 @@ namespace Schematix
             int i = (tabPageAddNew.Tag != null) ? (int)tabPageAddNew.Tag : 2;
             tabPageAddNew.Tag = i + 1;
             // Add new tab
-            Map = AddMap(tcMaps.SelectedIndex, "New " + i);
-            Map.DoAutoSize();
-            Map.Draw();
+            xMap map = AddMap(tcMaps.SelectedIndex, "New " + i);
+            map.DoAutoSize();
+            map.Draw();
             // Select new tab
-            tcMaps.SelectTab(Map.Tab);
+            tcMaps.SelectTab(map.Tab);
         }
 
-        private xMap AddMap(int TabIdx, String MapName)
+        private xMap AddMap(int TabIdx, String MapName)//
         {
             if (tcMaps.TabCount <= TabIdx)
                 TabIdx = tcMaps.TabCount - 1;
@@ -303,8 +303,16 @@ namespace Schematix
             return Map;
         }
 
-        private void tcMaps_Selected(object sender, TabControlEventArgs e)//
+        private void tcMaps_Selected(object sender, TabControlEventArgs e) => tcMaps_SelectedIndexChanged(null, null);
+        private void tcMaps_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Case new not "add new tab"
+            xMap SelectedMap = (tcMaps.SelectedTab == tabPageAddNew)
+                ? null
+                : (tcMaps.SelectedTab.Tag as xMap);
+            if (SelectedMap == null || Map == SelectedMap)
+                return;
+
             // Remove last map info
             if (Map != null)
             {
@@ -321,16 +329,14 @@ namespace Schematix
                 Map.lv_PLinks   =
                 Map.lv_PBoxes   = null;
             }
-            // Case new not "add new tab"
-            Map = (tcMaps.SelectedTab == tabPageAddNew)
-                ? null
-                : (tcMaps.SelectedTab.Tag as xMap);
-            if (Map == null)
-                return;
+
+            // Switching
+            Map = SelectedMap;
             // Draw
             if (Map.DoAutoSize())
                 Map.Draw();
             CheckScrollers();
+            CheckFrames(true);
             Invalidate();
             // Add current map info
             Options.lvUsedObjects.BeginUpdate();
@@ -339,18 +345,24 @@ namespace Schematix
             foreach (var PObject in Map.PObjects)
             {
                 PObject.lvItemUsed = Options.lvUsedObjects.Items.Add("");
+                PObject.lvItemUsed.SubItems.Add("");
+                PObject.lvItemUsed.SubItems.Add("");
                 PObject.lvItemUsed.Tag = PObject;
                 Share.Library_UpdateNodeName(PObject);
             }
             foreach (var PLink in Map.PLinks)
             {
                 PLink.lvItemUsed = Options.lvUsedLinks.Items.Add("");
+                PLink.lvItemUsed.SubItems.Add("");
+                PLink.lvItemUsed.SubItems.Add("");
                 PLink.lvItemUsed.Tag = PLink;
                 Share.Library_UpdateNodeName(PLink);
             }
             foreach (var PBox in Map.PBoxes)
             {
                 PBox.lvItemUsed = Options.lvUsedBoxes.Items.Add("");
+                PBox.lvItemUsed.SubItems.Add("");
+                PBox.lvItemUsed.SubItems.Add("");
                 PBox.lvItemUsed.Tag = PBox;
                 Share.Library_UpdateNodeName(PBox);
             }
@@ -360,18 +372,25 @@ namespace Schematix
             Map.lv_PObjects = Options.lvUsedObjects;
             Map.lv_PLinks   = Options.lvUsedLinks;
             Map.lv_PBoxes   = Options.lvUsedBoxes;
-            // Hide frames
-            Selection.Visible =
-            MoverA.Visible    =
-            MoverB.Visible    = false;
+        }
+        
+        private void CloseMap(xMap Map)//
+        {
+            int idx = tcMaps.SelectedIndex;
+            if (idx + 2 < tcMaps.TabCount)
+                idx++;
+            else
+                idx += (0 < idx) ? -1 : 1;
+            tcMaps.SelectTab(idx);
+            // Remove
+            Map.Clear();
+            Options.Maps.Remove(Map);
+            tcMaps.TabPages.Remove(Map.Tab);
         }
         #endregion
 
-        #region Context menu
-        private void cmsMap_Opening(object sender, CancelEventArgs e)//
-        {
-            tsmiMapReload.Visible = ((tcMaps.SelectedTab.Tag as xMap).FileName != "");
-        }
+        #region Map context menu
+        private void cmsMap_Opening(object sender, CancelEventArgs e) => tsmiMapReload.Visible = (Map.FileName != "");
 
         private void tsmiMapOptions_Click(object sender, EventArgs e)//
         {
@@ -398,10 +417,15 @@ namespace Schematix
             Map.UpdateTabName();
         }
 
-        private void tsmiMapLoad_Click(object sender, EventArgs e)//Ok
+        private void tsmiMapSaveAs_Click(object sender, EventArgs e)//Ok
         {
-            LoadMap(Options.LangCur.dMapLoad, "");
+            if (!Map.SaveToFile(""))
+                return;
+            Map.Changed = false;
+            Map.UpdateTabName();
         }
+
+        private void tsmiMapLoad_Click(object sender, EventArgs e) => LoadMap(Options.LangCur.dMapLoad, "");//Ok
 
         private void tsmiMapReload_Click(object sender, EventArgs e)//Ok
         {
@@ -427,7 +451,7 @@ namespace Schematix
             Invalidate();
         }
 
-        private void tsmiMapClose_Click(object sender, EventArgs e)//
+        private void tsmiMapClose_Click(object sender, EventArgs e)//Ok
         {
             if (Map.Changed)
             {
@@ -439,6 +463,10 @@ namespace Schematix
             }
             CloseMap(Map);
         }
+        #endregion
+
+        #region Element context menu
+        private void cmsElement_Opening(object sender, CancelEventArgs e) => tsmiElementOpenReference.Visible = (Map.Selected.Reference != "");
 
         private void tsmiElementOptions_Click(object sender, EventArgs e)
         {
@@ -473,16 +501,29 @@ namespace Schematix
             MoverB.Visible = false;
         }
 
-        private void CloseMap(xMap Map)//
+        private void tsmiElementOpenReference_Click(object sender, EventArgs e)
         {
-            int idx = tcMaps.SelectedIndex;
-            if (tcMaps.TabPages.IndexOf(Map.Tab) <= idx)
-                if (0 < idx)
-                    idx--;
-            tcMaps.SelectedIndex = idx;
-            Map.Clear();
-            Options.Maps.Remove(Map);
-            tcMaps.TabPages.Remove(Map.Tab);
+            String path = Map.Selected.Reference;
+            if (path != "")
+                if (File.Exists(path) || Directory.Exists(path))
+                    if (Path.GetExtension(path) == Options.RECORD_EXT_MAP)
+                    {
+                        foreach (TabPage Tab in tcMaps.TabPages)
+                            if (Tab.Tag != null)
+                                if ((Tab.Tag as xMap).FileName == path)
+                                {
+                                    tcMaps.SelectTab((Tab.Tag as xMap).Tab);
+                                    return;
+                                }
+                        var map = AddMap(tcMaps.TabPages.IndexOf(Map.Tab) + 1, Path.GetFileNameWithoutExtension(path));
+                        map.LoadFromFile(path);
+                        map.UpdateTabName();
+                        map.Draw();
+                        // Select new tab
+                        tcMaps.SelectTab(map.Tab);
+                    }
+                    else
+                        Process.Start(path);
         }
         #endregion
 
@@ -490,7 +531,11 @@ namespace Schematix
         internal void RenewMaps()
         {
             foreach (var Map in Options.Maps)
+            {
+                Map.CheckAll();
                 Map.Draw();
+            }
+            CheckFrames();
             Invalidate();
         }
 
@@ -581,11 +626,11 @@ namespace Schematix
             if (MoverA.Visible)
                 e.Graphics.DrawRectangle(pen,
                     MoverA.X - 3, MoverA.Y - 3,
-                    MoverA.W, MoverA.H);
+                    MoverA.W,     MoverA.H);
             if (MoverB.Visible)
                 e.Graphics.DrawRectangle(pen,
                     MoverB.X - 3, MoverB.Y - 3,
-                    MoverB.W, MoverB.H);
+                    MoverB.W,     MoverB.H);
         }
         #endregion
 
@@ -610,16 +655,16 @@ namespace Schematix
             {
                 ContextMenuStrip = cmsElement;
                 if (MoverB.Visible &&
-                     MoverB.X - 3 <= e.X && e.X <= MoverB.X + MoverB.W - 3 &&
-                     MoverB.Y - 3 <= e.Y && e.Y <= MoverB.Y + MoverB.H - 3)
+                     MoverB.X - 3 <= e.X && e.X <= MoverB.X + MoverB.W &&
+                     MoverB.Y - 3 <= e.Y && e.Y <= MoverB.Y + MoverB.H)
                     MoverB.Active = true;
                 else if (MoverA.Visible &&
-                    MoverA.X - 3 <= e.X && e.X <= MoverA.X + MoverA.W - 3 &&
-                    MoverA.Y - 3 <= e.Y && e.Y <= MoverA.Y + MoverA.H - 3)
+                    MoverA.X - 3 <= e.X && e.X <= MoverA.X + MoverA.W &&
+                    MoverA.Y - 3 <= e.Y && e.Y <= MoverA.Y + MoverA.H)
                     MoverA.Active = true;
                 else if (Selection.Visible &&
-                    Selection.X <= e.X && e.X <= Selection.X + Selection.W &&
-                    Selection.Y <= e.Y && e.Y <= Selection.Y + Selection.H)
+                    Selection.X - 3 <= e.X && e.X <= Selection.X + Selection.W + 6 &&
+                    Selection.Y - 3 <= e.Y && e.Y <= Selection.Y + Selection.H + 6)
                 {
                     Selection.Active = true;
                     Cursor = Selection.Cursor;
@@ -644,32 +689,7 @@ namespace Schematix
                         ContextMenuStrip = cmsMap;
                     }
                     else
-                    {
-                        Cursor = Selection.Cursor;
-                        Selection.X = Map.Selected.Left - Map.ScrollX;
-                        Selection.Y = Map.Selected.Top  - Map.ScrollY;
-                        Selection.W = Map.Selected.Width;
-                        Selection.H = Map.Selected.Height;
-                        Selection.Active =
-                        Selection.Visible = true;
-                        if (Map.Selected.IsLink)
-                        {
-                            MoverA.X = (Map.Selected as xLink).XA - Map.ScrollX;
-                            MoverA.Y = (Map.Selected as xLink).YA - Map.ScrollY;
-                            MoverA.Visible = true;
-                            MoverB.X = (Map.Selected as xLink).XB - Map.ScrollX;
-                            MoverB.Y = (Map.Selected as xLink).YB - Map.ScrollY;
-                            MoverB.Visible = true;
-                            MoverB.Cursor = Cursors.SizeAll;
-                        }
-                        else if (Map.Selected.IsBox)
-                        {
-                            MoverB.X = (Map.Selected as xBox).Right  - Map.ScrollX;
-                            MoverB.Y = (Map.Selected as xBox).Bottom - Map.ScrollY;
-                            MoverB.Visible = true;
-                            MoverB.Cursor = Cursors.SizeNWSE;
-                        }
-                    }
+                        CheckFrames(true);
                 }
             }
             #endregion
@@ -684,7 +704,7 @@ namespace Schematix
                 if (rbObject.Checked)
                 {
                     var Object = new xObject(Map);
-                    Object.Prototype = Map.AddPObject(rbObject.Tag as xPObject);
+                    Object.Prototype = Map.AddPObject(rbObject.Tag as xPrototype);
                     Object.PrototypeID = Object.Prototype.ID;
                     Object.PrototypeRevision = Object.Prototype.Revision;
                     Map.Objects.Add(Object);
@@ -700,7 +720,7 @@ namespace Schematix
                 else if (rbLink.Checked)
                 {
                     var Link = new xLink(Map);
-                    Link.Prototype = Map.AddPLink(rbLink.Tag as xPLink);
+                    Link.Prototype = Map.AddPLink(rbLink.Tag as xPrototype);
                     Link.PrototypeID = Link.Prototype.ID;
                     Link.PrototypeRevision = Link.Prototype.Revision;
                     Map.Links.Add(Link);
@@ -735,7 +755,7 @@ namespace Schematix
                 else
                 {
                     var Box = new xBox(Map);
-                    Box.Prototype = Map.AddPBox(rbBox.Tag as xPBox);
+                    Box.Prototype = Map.AddPBox(rbBox.Tag as xPrototype);
                     Box.PrototypeID = Box.Prototype.ID;
                     Box.PrototypeRevision = Box.Prototype.Revision;
                     Map.Boxes.Add(Box);
@@ -744,7 +764,7 @@ namespace Schematix
                     Box.Top  = msYLast + Map.ScrollY;
                     Box.Width  = 1;
                     Box.Height = 1;
-                    Box.Text = Box.Prototype.Text;
+                    Box.Text = (Box.Prototype as xPBox).Text;
                     Map.SnapXY(ref Box.Left, ref Box.Top);
                     // 
                     Map.Selected = Box;
@@ -768,23 +788,23 @@ namespace Schematix
 
             Invalidate();
         }
-        
+
         private void MainForm_MouseMove(object sender, MouseEventArgs e)//
         {
             #region Cursor selection
             if (e.Button == MouseButtons.None)
             {
                 if (MoverB.Visible &&
-                     MoverB.X - 3 <= e.X && e.X <= MoverB.X + MoverB.W - 3 &&
-                     MoverB.Y - 3 <= e.Y && e.Y <= MoverB.Y + MoverB.H - 3)
+                     MoverB.X - 3 <= e.X && e.X <= MoverB.X + MoverB.W &&
+                     MoverB.Y - 3 <= e.Y && e.Y <= MoverB.Y + MoverB.H)
                     Cursor = MoverB.Cursor;
                 else if (MoverA.Visible &&
-                    MoverA.X - 3 <= e.X && e.X <= MoverA.X + MoverA.W - 3 &&
-                    MoverA.Y - 3 <= e.Y && e.Y <= MoverA.Y + MoverA.H - 3)
+                    MoverA.X - 3 <= e.X && e.X <= MoverA.X + MoverA.W &&
+                    MoverA.Y - 3 <= e.Y && e.Y <= MoverA.Y + MoverA.H)
                     Cursor = MoverA.Cursor;
                 else if (Selection.Visible &&
-                    Selection.X <= e.X && e.X <= Selection.X + Selection.W &&
-                    Selection.Y <= e.Y && e.Y <= Selection.Y + Selection.H)
+                    Selection.X - 3 <= e.X && e.X <= Selection.X + Selection.W + 6 &&
+                    Selection.Y - 3 <= e.Y && e.Y <= Selection.Y + Selection.H + 6)
                     Cursor = Cursors.Hand;
                 else
                     Cursor = (Map.AnythingAt(Map.ScrollX + e.X, Map.ScrollY + e.Y) == null) ? Cursors.Default : Cursors.Hand;
@@ -809,9 +829,8 @@ namespace Schematix
                     {
                         if (Map.Selected.IsObject)
                         {
-                            var Object = (Map.Selected as xObject);
-                            Object.X += dX;
-                            Object.Y += dY;
+                            (Map.Selected as xObject).X += dX;
+                            (Map.Selected as xObject).Y += dY;
                         }
                         else if (Map.Selected.IsBox)
                         {
@@ -876,12 +895,13 @@ namespace Schematix
                     {
                         if (dX != 0 || dY != 0)
                         {
-                            (Map.Selected as xBox).Width += dX;
-                            (Map.Selected as xBox).Height += dY;
-                            if ((Map.Selected as xBox).Width < 1)
-                                (Map.Selected as xBox).Width = 1;
-                            if ((Map.Selected as xBox).Height < 1)
-                                (Map.Selected as xBox).Height = 1;
+                            xBox Box = (Map.Selected as xBox);
+                            Box.Width  += dX;
+                            Box.Height += dY;
+                            if (Box.Width < 1)
+                                Box.Width = 1;
+                            if (Box.Height < 1)
+                                Box.Height = 1;
                         }
                         else
                             redraw = false;
@@ -909,39 +929,59 @@ namespace Schematix
                     Map.Draw(Map.ScrollX, Map.ScrollY, Options.WindowW, Options.WindowH);
                 }
 
-                #region Update frames
-                if (Selection.Visible)
-                {
-                    Selection.X = Map.Selected.Left - Map.ScrollX;
-                    Selection.Y = Map.Selected.Top  - Map.ScrollY;
-                    Selection.W = Map.Selected.Width;
-                    Selection.H = Map.Selected.Height;
-                }
-                if (MoverA.Visible)
-                {
-                    MoverA.X = (Map.Selected as xLink).XA - Map.ScrollX;
-                    MoverA.Y = (Map.Selected as xLink).YA - Map.ScrollY;
-                }
-                if (MoverB.Visible)
-                    if (Map.Selected.IsLink)
-                    {
-                        MoverB.X = (Map.Selected as xLink).XB - Map.ScrollX;
-                        MoverB.Y = (Map.Selected as xLink).YB - Map.ScrollY;
-                    }
-                    else
-                    {
-                        MoverB.X = (Map.Selected as xBox).Right - Map.ScrollX;
-                        MoverB.Y = (Map.Selected as xBox).Bottom - Map.ScrollY;
-                    }
-                #endregion
-
+                CheckFrames();
                 Invalidate();
+
                 msXLast = e.X;
                 msYLast = e.Y;
                 msXnLast = msXn;
                 msYnLast = msYn;
             }
             #endregion
+        }
+
+        private void CheckFrames(bool full = false)
+        {
+            if (Map.Selected == null)
+            {
+                Selection.Visible =
+                MoverA.Visible =
+                MoverB.Visible = false;
+                return;
+            }
+            Selection.X = Map.Selected.Left - Map.ScrollX;
+            Selection.Y = Map.Selected.Top  - Map.ScrollY;
+            Selection.W = Map.Selected.Width;
+            Selection.H = Map.Selected.Height;
+            if (full)
+            {
+                Cursor = Selection.Cursor;
+                Selection.Active =
+                Selection.Visible = true;
+            }
+            if (Map.Selected.IsLink)
+            {
+                MoverA.X = (Map.Selected as xLink).XA - Map.ScrollX;
+                MoverA.Y = (Map.Selected as xLink).YA - Map.ScrollY;
+                MoverB.X = (Map.Selected as xLink).XB - Map.ScrollX;
+                MoverB.Y = (Map.Selected as xLink).YB - Map.ScrollY;
+                if (full)
+                {
+                    MoverA.Visible =
+                    MoverB.Visible = true;
+                    MoverB.Cursor = Cursors.SizeAll;
+                }
+            }
+            else if (Map.Selected.IsBox)
+            {
+                MoverB.X = (Map.Selected as xBox).Right - Map.ScrollX;
+                MoverB.Y = (Map.Selected as xBox).Bottom - Map.ScrollY;
+                if (full)
+                {
+                    MoverB.Visible = true;
+                    MoverB.Cursor = Cursors.SizeNWSE;
+                }
+            }
         }
 
         private void MainForm_MouseUp(object sender, MouseEventArgs e)//Ok
@@ -964,7 +1004,7 @@ namespace Schematix
             if (Map.Selected == null)
                 tsmiMapOptions_Click(null, null);
             else
-                tsmiElementOptions_Click(null, null);
+                tsmiElementOpenReference_Click(null, null);
         }
 
         private void TryToBindToObject(xMap Map, int X, int Y, ref xObject Object, ref UInt64 ObjectID, ref xDot Dot, ref UInt64 DotID, ref int paramX, ref int paramY)

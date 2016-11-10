@@ -100,7 +100,7 @@ namespace Schematix
             clmObjectPrototype.Text = Options.LangCur.lMOColumPrototype;
             clmObjectReference.Text = Options.LangCur.lMOColumReference;
             // Fill
-            foreach (var obj in Map.Objects)
+            foreach (xObject obj in Map.Objects)
             {
                 var item = lvObjects.Items.Add(obj.Name);
                 item.SubItems.Add("");
@@ -122,14 +122,14 @@ namespace Schematix
             clmLinkPrototype.Text = Options.LangCur.lMOColumPrototype;
             clmLinkReference.Text = Options.LangCur.lMOColumReference;
             // Fill
-            foreach (var link in Map.Links)
+            foreach (xLink Link in Map.Links)
             {
-                var item = lvLinks.Items.Add(link.Name);
+                var item = lvLinks.Items.Add(Link.Name);
                 item.SubItems.Add("");
                 item.SubItems.Add("");
                 item.SubItems.Add("");
-                item.Tag = link;
-                UpdateLinkNode(item, link);
+                item.Tag = Link;
+                UpdateLinkNode(item, Link);
             }
             #endregion
 
@@ -141,15 +141,15 @@ namespace Schematix
             clmBoxPrototype.Text = Options.LangCur.lMOColumPrototype;
             clmBoxReference.Text = Options.LangCur.lMOColumReference;
             // Fill
-            foreach (var box in Map.Boxes)
+            foreach (xBox Box in Map.Boxes)
             {
-                var item = lvBoxes.Items.Add(box.Name);
+                var item = lvBoxes.Items.Add(Box.Name);
                 item.SubItems.Add("");
                 item.SubItems.Add("");
                 item.SubItems.Add("");
                 item.SubItems.Add("");
-                item.Tag = box;
-                UpdateBoxNode(item, box);
+                item.Tag = Box;
+                UpdateBoxNode(item, Box);
             }
             #endregion
 

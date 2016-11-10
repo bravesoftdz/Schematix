@@ -53,6 +53,7 @@
             this.cmsMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiMapOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMapSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMapSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMapLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMapReload = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMapClose = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +67,7 @@
             this.cmsElement = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiElementOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiElementDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiElementOpenReference = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMaps.SuspendLayout();
             this.pnlMapOptions.SuspendLayout();
             this.pnlMaps.SuspendLayout();
@@ -91,6 +93,7 @@
             this.tcMaps.Size = new System.Drawing.Size(448, 24);
             this.tcMaps.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tcMaps.TabIndex = 2;
+            this.tcMaps.SelectedIndexChanged += new System.EventHandler(this.tcMaps_SelectedIndexChanged);
             this.tcMaps.Selected += new System.Windows.Forms.TabControlEventHandler(this.tcMaps_Selected);
             // 
             // tabPage1
@@ -319,18 +322,19 @@
             this.cmsMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiMapOptions,
             this.tsmiMapSave,
+            this.tsmiMapSaveAs,
             this.tsmiMapLoad,
             this.tsmiMapReload,
             this.tsmiMapClose});
             this.cmsMap.Name = "cmsMap";
-            this.cmsMap.Size = new System.Drawing.Size(117, 114);
+            this.cmsMap.Size = new System.Drawing.Size(122, 136);
             this.cmsMap.Opening += new System.ComponentModel.CancelEventHandler(this.cmsMap_Opening);
             // 
             // tsmiMapOptions
             // 
             this.tsmiMapOptions.Image = global::Schematix.Properties.Resources.edit;
             this.tsmiMapOptions.Name = "tsmiMapOptions";
-            this.tsmiMapOptions.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapOptions.Size = new System.Drawing.Size(121, 22);
             this.tsmiMapOptions.Text = "Options";
             this.tsmiMapOptions.Click += new System.EventHandler(this.tsmiMapOptions_Click);
             // 
@@ -338,15 +342,23 @@
             // 
             this.tsmiMapSave.Image = global::Schematix.Properties.Resources.save;
             this.tsmiMapSave.Name = "tsmiMapSave";
-            this.tsmiMapSave.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapSave.Size = new System.Drawing.Size(121, 22);
             this.tsmiMapSave.Text = "Save";
             this.tsmiMapSave.Click += new System.EventHandler(this.tsmiMapSave_Click);
+            // 
+            // tsmiMapSaveAs
+            // 
+            this.tsmiMapSaveAs.Image = global::Schematix.Properties.Resources.saveAs;
+            this.tsmiMapSaveAs.Name = "tsmiMapSaveAs";
+            this.tsmiMapSaveAs.Size = new System.Drawing.Size(121, 22);
+            this.tsmiMapSaveAs.Text = "Save as...";
+            this.tsmiMapSaveAs.Click += new System.EventHandler(this.tsmiMapSaveAs_Click);
             // 
             // tsmiMapLoad
             // 
             this.tsmiMapLoad.Image = global::Schematix.Properties.Resources.load;
             this.tsmiMapLoad.Name = "tsmiMapLoad";
-            this.tsmiMapLoad.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapLoad.Size = new System.Drawing.Size(121, 22);
             this.tsmiMapLoad.Text = "Load...";
             this.tsmiMapLoad.Click += new System.EventHandler(this.tsmiMapLoad_Click);
             // 
@@ -354,7 +366,7 @@
             // 
             this.tsmiMapReload.Image = global::Schematix.Properties.Resources.reload;
             this.tsmiMapReload.Name = "tsmiMapReload";
-            this.tsmiMapReload.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapReload.Size = new System.Drawing.Size(121, 22);
             this.tsmiMapReload.Text = "Reload";
             this.tsmiMapReload.Click += new System.EventHandler(this.tsmiMapReload_Click);
             // 
@@ -362,7 +374,7 @@
             // 
             this.tsmiMapClose.Image = ((System.Drawing.Image)(resources.GetObject("tsmiMapClose.Image")));
             this.tsmiMapClose.Name = "tsmiMapClose";
-            this.tsmiMapClose.Size = new System.Drawing.Size(116, 22);
+            this.tsmiMapClose.Size = new System.Drawing.Size(121, 22);
             this.tsmiMapClose.Text = "Close";
             this.tsmiMapClose.Click += new System.EventHandler(this.tsmiMapClose_Click);
             // 
@@ -423,15 +435,17 @@
             // 
             this.cmsElement.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiElementOptions,
-            this.tsmiElementDelete});
+            this.tsmiElementDelete,
+            this.tsmiElementOpenReference});
             this.cmsElement.Name = "cmsMap";
-            this.cmsElement.Size = new System.Drawing.Size(153, 70);
+            this.cmsElement.Size = new System.Drawing.Size(156, 70);
+            this.cmsElement.Opening += new System.ComponentModel.CancelEventHandler(this.cmsElement_Opening);
             // 
             // tsmiElementOptions
             // 
             this.tsmiElementOptions.Image = global::Schematix.Properties.Resources.edit;
             this.tsmiElementOptions.Name = "tsmiElementOptions";
-            this.tsmiElementOptions.Size = new System.Drawing.Size(152, 22);
+            this.tsmiElementOptions.Size = new System.Drawing.Size(155, 22);
             this.tsmiElementOptions.Text = "Options";
             this.tsmiElementOptions.Click += new System.EventHandler(this.tsmiElementOptions_Click);
             // 
@@ -439,9 +453,17 @@
             // 
             this.tsmiElementDelete.Image = global::Schematix.Properties.Resources.delete;
             this.tsmiElementDelete.Name = "tsmiElementDelete";
-            this.tsmiElementDelete.Size = new System.Drawing.Size(152, 22);
+            this.tsmiElementDelete.Size = new System.Drawing.Size(155, 22);
             this.tsmiElementDelete.Text = "Delete";
             this.tsmiElementDelete.Click += new System.EventHandler(this.tsmiElementDelete_Click);
+            // 
+            // tsmiElementOpenReference
+            // 
+            this.tsmiElementOpenReference.Image = global::Schematix.Properties.Resources.Reference;
+            this.tsmiElementOpenReference.Name = "tsmiElementOpenReference";
+            this.tsmiElementOpenReference.Size = new System.Drawing.Size(155, 22);
+            this.tsmiElementOpenReference.Text = "Open reference";
+            this.tsmiElementOpenReference.Click += new System.EventHandler(this.tsmiElementOpenReference_Click);
             // 
             // MainForm
             // 
@@ -529,6 +551,8 @@
         private System.Windows.Forms.ContextMenuStrip cmsElement;
         private System.Windows.Forms.ToolStripMenuItem tsmiElementOptions;
         private System.Windows.Forms.ToolStripMenuItem tsmiElementDelete;
+        private System.Windows.Forms.ToolStripMenuItem tsmiMapSaveAs;
+        private System.Windows.Forms.ToolStripMenuItem tsmiElementOpenReference;
     }
 }
 

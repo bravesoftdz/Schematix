@@ -9,23 +9,24 @@ namespace Schematix
         public xPLink PLink;
         bool IsRoot;
 
-        public LinkEditForm(xPLink pLink, String rootPath, bool isRoot)
+        public LinkEditForm(xPLink pLink, UInt64 NodeParent = 1)
         {
             InitializeComponent();
             if (pLink == null)
             {
                 pLink = new xPLink();
-                pLink.FileName = rootPath + "\\" + pLink.ID.ToString() + "\\" + Options.RECORD_FILENAME;
+                pLink.NodeParent = NodeParent;
+                pLink.FileName = Options.RootLinks + (Options.RootLinks != "" ? "\\" : "") + pLink.ID.ToString() + "\\" + Options.RECORD_EXT_LINK;
                 Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleLink;
             }
             else
                 Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleLink;
             PLink = pLink;
-            IsRoot = isRoot;
+            IsRoot = (PLink.ID == 1);
 
             // Share
             chkIsPrototype.Enabled =
-            tbNode.Enabled = !isRoot;
+            tbNode.Enabled = (PLink.ID != 1);
             //
             lblNode.Text        = Options.LangCur.lEENodeName;
             chkIsPrototype.Text = Options.LangCur.lEEPrototype;

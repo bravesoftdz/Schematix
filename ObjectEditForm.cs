@@ -16,23 +16,24 @@ namespace Schematix
         public xPObject PObject;
         bool IsRoot;
 
-        public ObjectEditForm(xPObject pObject, String rootPath, bool isRoot)
+        public ObjectEditForm(xPObject pObject, UInt64 NodeParent = 1)
         {
             InitializeComponent();
             if (pObject == null)
             {
                 pObject = new xPObject();
-                pObject.FileName = rootPath + "\\" + pObject.ID.ToString() + "\\" + Options.RECORD_FILENAME;
+                pObject.NodeParent = NodeParent;
+                pObject.FileName = Options.RootObjects + (Options.RootObjects != "" ? "\\" : "") + pObject.ID.ToString() + "\\" + Options.RECORD_EXT_OBJECT;
                 Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleBox;
             }
             else
                 Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleBox;
             PObject = pObject;
-            IsRoot = isRoot;
+            IsRoot = (PObject.ID == 1);
 
             // Main
             chkIsPrototype.Enabled =
-            tbNode.Enabled = !isRoot;
+            tbNode.Enabled = (PObject.ID != 1);
             //
             tpMain.Text         = Options.LangCur.lOETabMain;
             chkIsPrototype.Text = Options.LangCur.lEEPrototype;

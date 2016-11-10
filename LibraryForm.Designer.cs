@@ -29,10 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Dot");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Link");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryForm));
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Box");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblObjectsCatalog = new System.Windows.Forms.Label();
@@ -43,7 +40,6 @@
             this.lblUsedObjects = new System.Windows.Forms.Label();
             this.lvObjects = new System.Windows.Forms.ListView();
             this.clmObjectName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmObjectCatalog = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmObjectLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedObjectEdit = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -55,7 +51,6 @@
             this.lblUsedLinks = new System.Windows.Forms.Label();
             this.lvLinks = new System.Windows.Forms.ListView();
             this.clmLinkName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmLinkCatalog = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmLinkLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedLinkEdit = new System.Windows.Forms.Button();
             this.tcCatalog = new System.Windows.Forms.TabControl();
@@ -73,7 +68,6 @@
             this.lblUsedBoxes = new System.Windows.Forms.Label();
             this.lvBoxes = new System.Windows.Forms.ListView();
             this.clmBoxName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmBoxCatalog = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmBoxLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedBoxEdit = new System.Windows.Forms.Button();
             this.imageListTab = new System.Windows.Forms.ImageList(this.components);
@@ -165,13 +159,10 @@
             this.tvObjects.HideSelection = false;
             this.tvObjects.Location = new System.Drawing.Point(3, 28);
             this.tvObjects.Name = "tvObjects";
-            treeNode4.Name = "tvNodeDot";
-            treeNode4.Text = "Dot";
-            this.tvObjects.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
             this.tvObjects.Size = new System.Drawing.Size(255, 87);
             this.tvObjects.TabIndex = 0;
             this.tvObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvObjects_AfterSelect);
+            this.tvObjects.DoubleClick += new System.EventHandler(this.btnObjectEdit_Click);
             // 
             // btnObjectEdit
             // 
@@ -233,10 +224,10 @@
             // 
             this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmObjectName,
-            this.clmObjectCatalog,
             this.clmObjectLocation});
             this.tableLayoutPanel4.SetColumnSpan(this.lvObjects, 2);
             this.lvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvObjects.FullRowSelect = true;
             this.lvObjects.HideSelection = false;
             this.lvObjects.Location = new System.Drawing.Point(3, 28);
             this.lvObjects.MultiSelect = false;
@@ -246,21 +237,18 @@
             this.lvObjects.UseCompatibleStateImageBehavior = false;
             this.lvObjects.View = System.Windows.Forms.View.Details;
             this.lvObjects.SelectedIndexChanged += new System.EventHandler(this.lvObjects_SelectedIndexChanged);
+            this.lvObjects.DoubleClick += new System.EventHandler(this.btnUsedObjectEdit_Click);
             // 
             // clmObjectName
             // 
             this.clmObjectName.Text = "Name";
-            this.clmObjectName.Width = 100;
-            // 
-            // clmObjectCatalog
-            // 
-            this.clmObjectCatalog.Text = "In catalog";
-            this.clmObjectCatalog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.clmObjectName.Width = 150;
             // 
             // clmObjectLocation
             // 
             this.clmObjectLocation.Text = "Location";
             this.clmObjectLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmObjectLocation.Width = 80;
             // 
             // btnUsedObjectEdit
             // 
@@ -302,13 +290,10 @@
             this.tvLinks.HideSelection = false;
             this.tvLinks.Location = new System.Drawing.Point(3, 28);
             this.tvLinks.Name = "tvLinks";
-            treeNode5.Name = "tvNodeLink";
-            treeNode5.Text = "Link";
-            this.tvLinks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5});
             this.tvLinks.Size = new System.Drawing.Size(255, 87);
             this.tvLinks.TabIndex = 0;
             this.tvLinks.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvLinks_AfterSelect);
+            this.tvLinks.DoubleClick += new System.EventHandler(this.btnLinkEdit_Click);
             // 
             // lblLinksCatalog
             // 
@@ -380,10 +365,10 @@
             // 
             this.lvLinks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmLinkName,
-            this.clmLinkCatalog,
             this.clmLinkLocation});
             this.tableLayoutPanel5.SetColumnSpan(this.lvLinks, 2);
             this.lvLinks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvLinks.FullRowSelect = true;
             this.lvLinks.HideSelection = false;
             this.lvLinks.Location = new System.Drawing.Point(3, 28);
             this.lvLinks.MultiSelect = false;
@@ -393,21 +378,18 @@
             this.lvLinks.UseCompatibleStateImageBehavior = false;
             this.lvLinks.View = System.Windows.Forms.View.Details;
             this.lvLinks.SelectedIndexChanged += new System.EventHandler(this.lvLinks_SelectedIndexChanged);
+            this.lvLinks.DoubleClick += new System.EventHandler(this.btnUsedLinkEdit_Click);
             // 
             // clmLinkName
             // 
             this.clmLinkName.Text = "Name";
-            this.clmLinkName.Width = 100;
-            // 
-            // clmLinkCatalog
-            // 
-            this.clmLinkCatalog.Text = "In catalog";
-            this.clmLinkCatalog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.clmLinkName.Width = 150;
             // 
             // clmLinkLocation
             // 
             this.clmLinkLocation.Text = "Location";
             this.clmLinkLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmLinkLocation.Width = 80;
             // 
             // btnUsedLinkEdit
             // 
@@ -547,13 +529,10 @@
             this.tvBoxes.HideSelection = false;
             this.tvBoxes.Location = new System.Drawing.Point(3, 28);
             this.tvBoxes.Name = "tvBoxes";
-            treeNode6.Name = "tvNodeBox";
-            treeNode6.Text = "Box";
-            this.tvBoxes.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6});
             this.tvBoxes.Size = new System.Drawing.Size(255, 87);
             this.tvBoxes.TabIndex = 0;
             this.tvBoxes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvBoxes_AfterSelect);
+            this.tvBoxes.DoubleClick += new System.EventHandler(this.btnBoxEdit_Click);
             // 
             // lblBoxesCatalog
             // 
@@ -625,10 +604,10 @@
             // 
             this.lvBoxes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmBoxName,
-            this.clmBoxCatalog,
             this.clmBoxLocation});
             this.tableLayoutPanel6.SetColumnSpan(this.lvBoxes, 2);
             this.lvBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvBoxes.FullRowSelect = true;
             this.lvBoxes.HideSelection = false;
             this.lvBoxes.Location = new System.Drawing.Point(3, 28);
             this.lvBoxes.MultiSelect = false;
@@ -638,21 +617,18 @@
             this.lvBoxes.UseCompatibleStateImageBehavior = false;
             this.lvBoxes.View = System.Windows.Forms.View.Details;
             this.lvBoxes.SelectedIndexChanged += new System.EventHandler(this.lvBoxes_SelectedIndexChanged);
+            this.lvBoxes.DoubleClick += new System.EventHandler(this.btnUsedBoxEdit_Click);
             // 
             // clmBoxName
             // 
             this.clmBoxName.Text = "Name";
-            this.clmBoxName.Width = 100;
-            // 
-            // clmBoxCatalog
-            // 
-            this.clmBoxCatalog.Text = "In catalog";
-            this.clmBoxCatalog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.clmBoxName.Width = 150;
             // 
             // clmBoxLocation
             // 
             this.clmBoxLocation.Text = "Location";
             this.clmBoxLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmBoxLocation.Width = 80;
             // 
             // btnUsedBoxEdit
             // 
@@ -788,11 +764,8 @@
         private System.Windows.Forms.Button btnUsedBoxEdit;
         private System.Windows.Forms.CheckBox chkPin;
         private System.Windows.Forms.ImageList imageListPin;
-        private System.Windows.Forms.ColumnHeader clmObjectCatalog;
         private System.Windows.Forms.ColumnHeader clmObjectLocation;
-        private System.Windows.Forms.ColumnHeader clmLinkCatalog;
         private System.Windows.Forms.ColumnHeader clmLinkLocation;
-        private System.Windows.Forms.ColumnHeader clmBoxCatalog;
         private System.Windows.Forms.ColumnHeader clmBoxLocation;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ToolTip toolTip;

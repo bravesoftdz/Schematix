@@ -1,0 +1,239 @@
+Русский
+
+//# Main Form
+hMFTabNew	Открыть новую карту
+hMFTabClose	Закрыть карту
+hMFOptions	Открыть настройки программы
+hMFLibrary	Открыть каталог элементов
+hMFAbout	Открыть "О программе"
+hMFMapOptions	Позиционировать / Открыть настройки карты
+hMFElement	Элемент
+hMFNoElement	Элемент не выбран
+//
+hMFLoading	Загрузка
+hMFOpenLastMaps	Открыть последние карты?
+hMFClosing	Закрытие
+hMFSaveOpenedMaps	Сохранить открытые карты?
+// Map context menu
+lMFMapCMOptions	Настройки
+lMFMapCMSave	Сохранить
+lMFMapCMSaveAs	Сохранить как...
+lMFMapCMLoad	Открыть...
+lMFMapCMReload	Перезагрузить
+lMFMapCMClose	Закрыть
+// Element context menu
+lMFElementCMOptions	Настройки
+lMFElementCMDelete	Удалить
+lMFElementCMOpenReference	Открыть ссылку
+
+//# Main Options
+lOFTitle	Настройки приложения
+//* Main tab
+lOFTabMain	Основное
+// Language
+lOFMainLanguage	Языки
+lOFMainLanguagePath	Загружать из
+// Root folders
+lOFMainRoots	Корневые каталоги
+hOFMainRootGet	Выбрать каталог
+lOFMainRootMaps	Карты
+lOFMainRootObjects	Объекты
+lOFMainRootLinks	Связи
+lOFMainRootBoxes	Боксы
+// Behaiour
+lOFMainBehaiour	Поведение
+lOFMainOnStart	При старте программы
+lOFMainOnStart0Empty	Ничего не делать 
+lOFMainOnStart1Ask	Спросить, загружать ли карты
+lOFMainOnStart2Load	Загружать карты
+lOFMainOnClose	При закрытии программы
+lOFMainOnClose0Exit	Просто выйти
+lOFMainOnClose1Ask	Спросить, о сохранении карт
+lOFMainOnClose2Save	Сохраненить карты
+lOFMainPingPeriod	Период отправки пингов (мс)
+lOFMainPingCount	Максимальное количество отправленных сообщений за период
+//* Map tab
+lOFTabMap	Новая карта | По умолчанию
+
+//# Тека
+lLFTitle	Тека
+lLFCatalog	В каталоге
+lLFUsed	Использовано на карте
+hLFPinUp	Включить "Поверх всех"
+hLFPinDown	Выключить "Поверх всех"
+hLFEdit	Редактировать элемент
+hLFAdd	Добавить под-элемент
+lLFColumName	Название
+lLFColumLocation	Размещение
+
+//# Element Edit (share)
+lEETitleAdd	Добавить прототип:
+lEETitleEdit	Редактирование прототипа:
+// +
+lEETitleObject	объект
+lEETitleLink	связь
+lEETitleBox	бокс
+// Share
+lEENodeName	Название узла
+lEEName	Название
+lEEID	ID
+lEERevision	Ревизия
+lEEPrototype	Прототип
+// +
+lEELineThick	Толщина линии
+lEELineStyle	Стиль линии
+hEEColorPick	Выбрать цвет
+lEEImagePath	Путь к изображению
+hEEImageLoad	Выбрать изображение
+lEEImageFloat	Плавающая картинка
+lEEImageBuildIn	Сохранить в файл
+lEEImageBPP	Хранить с BPP
+// Align
+lEEAlign	Выравнивание
+lEEAlign0TL	Сверху слева
+lEEAlign1TC	Сверху
+lEEAlign2TR	Сверху справа
+lEEAlign3ML	Слева
+lEEAlign4MC	Центр
+lEEAlign5MR	Справа
+lEEAlign6BL	Снизу слева
+lEEAlign7BC	Снизу
+lEEAlign8BR	Снизу справа
+
+//# Object Edit
+lOETabMain	Основное
+//
+lOETabImage	Изображение
+lOEImageType	Тип
+lOEImageType0None	Нет
+lOEImageType1Load	Загруженное изображение
+lOEImageType2Link	Ссылка на изображение
+lOETransparentColor	Цвет прозрачности
+lOEUseBackColor	Цвет фона предпросмотра
+//
+lOETabDotes	Точки
+lOEDot	Точка
+lOEDotName	Название
+hOEDotMoveUp	Сдвинуть вверх
+hOEDotMoveDown	Сдвинуть вниз
+hOEDotAdd	Добавиьть точку
+hOEDotSave	Сохранить точку
+hOEDotDelete	Удалить точку
+lOEDotLocation	Позиция
+
+//# Box Edit
+lBEType	Тип
+lBEType0Text	Только текст
+lBEType1Rectangle	Прямоугольник
+lBEType2Ellipse	Элипс
+lBEText	Начальный текст
+
+//# Element Options (share)
+lEOTitle	Редактирование экземпляра:
+// Share
+lEOName	Название
+lEOReference	Ссылка
+hEOGetReference	Выбрать файл
+// +
+hEOPrototypeDelete	Удалить экземпляр
+
+//# Object Options
+hOOIPAdd	Добавить IP адрес
+hOOIPDelete	Удалить выбранные IP адреса
+// List
+lOOColumIP	Адрес
+lOOColumPeriod	Период
+lOOColumTimeNext	След. проверка
+lOOColumTimeLast	Посл. проверка
+lOOColumResult	Посл. результат
+
+//# Box Options
+lBOText	Текст
+lBOSize	Размер бокса
+
+//# Map Options
+lMOTitle	Настройки карты
+lMOStoreInMap	Сохранить в файле карты
+// Tabs
+lMOTabMain	Основные
+lMOTabBack	Фон
+lMOTabObjects	Объекты
+lMOTabLinks	Связи
+lMOTabBoxes	Боксы
+lMOTabIPs	IP адреса
+// Main
+lMOName	Название
+lMOSize	Размер карты
+lMOAuto	Автоматически
+// Grid
+lMOGrid	Сетка
+lMOGridStyle0None	Нет
+lMOGridStyle1Dots	Точки
+lMOGridStyle2Corners	Уголки
+lMOGridStyle3Crosses	Кресты
+lMOGridStyle4Grid	Сетка
+lMOGridAlign	Выравнивать по сетке
+lMOGridAlignNow	Выровнять
+// Back
+lMOBack	Фон
+lMOBackStyle0Color	Цвет
+lMOBackStyle1ImageAlign	Картинка (1:1)
+lMOBackStyle2ImageTile	Картинка (плиткой)
+lMOBackStyle3ImageStrech	Картинка (растянуть)
+lMOBackStyle4ImageZInner	Картинка (вписать)
+lMOBackStyle5ImageZOutter	Картинка (описать)
+lMOBackTransparentColor	Цвет прозрачности
+// List
+lMOColumName	Название
+lMOColumLocation	Размещение
+lMOColumPrototype	Прототип
+lMOColumReference	Ссылка
+
+//# IP Edit
+lIPTabMain	Настройки
+lIPTitleAdd	Добавить IP адрес
+lIPTitleEdit	Редактировать IP адрес
+lIPAddress	Адрес
+lIPPeriod	Период (мс)
+lIPTimeNext	След. проверка
+lIPTimeOutGreen	Тайм-аут Зеленный (мс)
+lIPTimeOutYellow	+ тайм-аут Желтый (мс)
+lIPTimeOutRed	+ тайм-аут Крассный (мс)
+//
+lIPTabPings	Пинг
+lIPColumSendTime	Отправленно в
+lIPColumState	Состаяние
+lIPColumTripTime	Время ответа
+hIPClearPings	Очистить список результатов пинга
+// State
+lIPPingSend	Отправлен
+lIPPingCancelled	Отменен
+
+//# Dialongs
+dLanguagesLoading	Загрузка языковых пакетов
+mErrorsOccurred	Возникли следующие ошибки:
+dOptionsLoading	Загрузка настроек
+dOptionsSaving	Сохранение настроек
+mNoFolders	Не удается найти следующие каталоги:
+mCreateThem	Создать их?
+dImageLoading	Загрузка изображения
+dFileLoading	Загрузка файла
+dFileSaving	Сохранение файла
+mMapHasChanges	Карта была изменена, сохранить изменения?
+dMapClosing	Закрытие карты
+dMapReload	Перегрузить карту
+dMapLoad	Загрузить карту
+dMapSave	Сохранить карту
+mElementHasNoName	Не указано имя элемента
+
+//# About form
+lAbout	О программе
+tAbout
+Описание
+
+Данное приложение предназначено для визуализации и мониторинга компьютерной сети.
+			
+lAName	Название:
+lAVertion	Версия:
+lOwner	Автор:
+lContact	Контакт:

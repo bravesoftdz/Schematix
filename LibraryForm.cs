@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Schematix
@@ -12,46 +14,59 @@ namespace Schematix
         public LibraryForm()
         {
             InitializeComponent();
+            SetText();
+            // Register listviews
             Options.lvUsedObjects = lvObjects;
             Options.lvUsedLinks   = lvLinks;
             Options.lvUsedBoxes   = lvBoxes;
-            // Initial setup
+            // Make initial elements
             var PObject = new xPObject();
             var PLink   = new xPLink();
             var PBox    = new xPBox();
+            PObject.Canvas = Share.GetDotImage();
+            PObject.Dots[0].X = (Int16)(PObject.Canvas.Width  / 2);
+            PObject.Dots[0].Y = (Int16)(PObject.Canvas.Height / 2);
+            PObject.ID =
+            PLink.ID   =
+            PBox.ID    = 1;
+            PObject.Revision =
+            PLink.Revision   =
+            PBox.Revision    = 1;
             PObject.NodeName = "Dot";
             PLink.NodeName   = "Link";
             PBox.NodeName    = "Box";
-            PObject.FileName = Options.RootObjects + "\\" + Options.RECORD_FILENAME;
-            PLink.FileName   = Options.RootLinks   + "\\" + Options.RECORD_FILENAME;
-            PBox.FileName    = Options.RootBoxes   + "\\" + Options.RECORD_FILENAME;
+            PObject.FileName = Options.RootObjects + (Options.RootObjects != "" ? "\\" : "") + "1" + Options.RECORD_EXT_OBJECT;
+            PLink.FileName   = Options.RootLinks   + (Options.RootLinks   != "" ? "\\" : "") + "1" + Options.RECORD_EXT_LINK;
+            PBox.FileName    = Options.RootBoxes   + (Options.RootBoxes   != "" ? "\\" : "") + "1" + Options.RECORD_EXT_BOX;
             PObject.isPrototype =
             PLink.isPrototype   =
             PBox.isPrototype    = true;
+            // Register elements
+            Options.PObjects.Add(PObject);
+            Options.PLinks.Add(PLink);
+            Options.PBoxes.Add(PBox);
+            // Load elements trees
+            LoadElements(Options.RootObjects, "*" + Options.RECORD_EXT_OBJECT, Options.PObjects, () => new xPObject());
+            LoadElements(Options.RootLinks,   "*" + Options.RECORD_EXT_LINK,   Options.PLinks,   () => new xPLink());
+            LoadElements(Options.RootBoxes,   "*" + Options.RECORD_EXT_BOX,    Options.PBoxes,   () => new xPBox());
+            // Make trees
+            BuildTree(tvObjects, Options.PObjects);
+            BuildTree(tvLinks,   Options.PLinks);
+            BuildTree(tvBoxes,   Options.PBoxes);
+            // Select roots
             tvObjects.SelectedNode = tvObjects.Nodes[0];
             tvLinks.SelectedNode   = tvLinks.Nodes[0];
             tvBoxes.SelectedNode   = tvBoxes.Nodes[0];
-            PObject.tvNode = tvObjects.SelectedNode;
-            PLink.tvNode   = tvLinks.SelectedNode;
-            PBox.tvNode    = tvBoxes.SelectedNode;
-            PObject.tvNode.Tag = PObject;
-            PLink.tvNode.Tag   = PLink;
-            PBox.tvNode.Tag    = PBox;
-            SetText();
-            // Load element trees
-            LoadTree(tvObjects.Nodes[0], Options.RootObjects, MakeNodeObject);
-            LoadTree(tvLinks.Nodes[0],   Options.RootLinks,   MakeNodeLink);
-            LoadTree(tvBoxes.Nodes[0],   Options.RootBoxes,   MakeNodeBox);
         }
 
-        internal void StartInit()
+        internal void StartInit()//
         {
             tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);
             tvElements_Select(tvLinks,   btnLinkEdit,   Options.rbLink);
             tvElements_Select(tvBoxes,   btnBoxEdit,    Options.rbBox);
         }
 
-        internal void SetText()
+        internal void SetText()//
         {
             toolTip.RemoveAll();
             // Hints
@@ -77,15 +92,12 @@ namespace Schematix
             clmObjectName.Text =
             clmLinkName.Text =
             clmBoxName.Text = Options.LangCur.lLFColumName;
-            clmObjectCatalog.Text =
-            clmLinkCatalog.Text =
-            clmBoxCatalog.Text = Options.LangCur.lLFColumCatalog;
             clmObjectLocation.Text =
             clmLinkLocation.Text =
             clmBoxLocation.Text = Options.LangCur.lLFColumLocation;
         }
 
-        private void chkPin_CheckedChanged(object sender, EventArgs e)
+        private void chkPin_CheckedChanged(object sender, EventArgs e)//
         {
             chkPin.BackgroundImage = imageListPin.Images[chkPin.Checked ? 1 : 0];
             chkPin.BackColor = (chkPin.Checked ? Color.LightCyan : SystemColors.Control);
@@ -93,10 +105,12 @@ namespace Schematix
             TopMost = chkPin.Checked;
         }
 
-        private void LibraryForm_Move(object sender, EventArgs e)
+        private void LibraryForm_Move(object sender, EventArgs e)//
         {
             int x = Options.mainForm.Location.X + Options.mainForm.Width;
             int y = Options.mainForm.Location.Y;
+            if (ActiveForm != this)
+                return;
             bind = (Math.Abs(x - Location.X) < 16) && (Math.Abs(y - Location.Y) < 16);
             if (bind)
                 Options.mainForm.MoveLibraryForm();
@@ -108,64 +122,65 @@ namespace Schematix
             Hide();
         }
 
-        internal void SelectTab(int v)
-        {
-            tcCatalog.SelectedIndex = v;
-        }
+        internal void SelectTab(int v) => tcCatalog.SelectedIndex = v;//
 
         #region Load Tree
-        delegate xPrototype LoadTreeCallBack();
+        delegate xPrototype LoadElements_Make();
 
-        private void LoadTree(TreeNode rootNode, String rootDir, LoadTreeCallBack MakeRecord)
+        private void LoadElements(String rootDir, String filePattern, List<xPrototype> Prototypes, LoadElements_Make MakeRecord)//
         {
             if (MakeRecord == null)
                 return;
-            var dirs = Directory.GetDirectories(rootDir);
-            foreach (var dir in dirs)
-                LoadTree(rootNode.Nodes.Add(Path.GetDirectoryName(dir)), dir, MakeRecord);
-            String fileName = rootDir + Options.RECORD_FILENAME;
-            if (File.Exists(fileName))
-            {
-                xPrototype prototype = (rootNode.Tag == null) ? MakeRecord() : (rootNode.Tag as xPrototype);
+            // Call to subfolders
+            var dirNames = Directory.GetDirectories(rootDir);
+            foreach (var dirName in dirNames)
+                LoadElements(dirName, filePattern, Prototypes, MakeRecord);
+            // Load files
+            int idx;
+            xPrototype prototype;
+            var fileNames = Directory.GetFiles(rootDir, filePattern);
+            foreach (var fileName in fileNames)
                 try
                 {
-                    prototype.LoadFromFile(fileName);
+                    prototype = MakeRecord();
+                    //If loaded
+                    if (prototype.LoadFromFile(fileName))
+                    {
+                        idx = Prototypes.FindIndex(PE => PE.ID == prototype.ID);
+                        // Add new
+                        if (idx < 0)
+                            Prototypes.Add(prototype);
+                        // Update
+                        else
+                            Prototypes[idx] = prototype;
+                    }
                 }
                 catch { }
-                prototype.tvNode = rootNode;
-                rootNode.Tag = prototype;
-                Share.Library_UpdateNodeName(prototype);
+        }
+
+        private void BuildTree(TreeView tv, List<xPrototype> Prototypes)//
+        {
+            xPrototype Parent;
+            foreach (var Prototype in Prototypes)
+            {
+                Prototype.tvNode = new TreeNode();
+                Prototype.tvNode.Tag = Prototype;
+                Parent = Prototypes.Find(xP => xP.ID == Prototype.NodeParent);
+                if (Parent == null)
+                    tv.Nodes.Add(Prototype.tvNode);
+                else
+                    Parent.tvNode.Nodes.Add(Prototype.tvNode);
+                Share.Library_UpdateNodeName(Prototype);
             }
-        }
-
-        private xPrototype MakeNodeObject()
-        {
-            var PObject = new xPObject();
-            Options.PObjects.Add(PObject);
-            return PObject;
-        }
-
-        private xPrototype MakeNodeLink()
-        {
-            var PLink = new xPLink();
-            Options.PLinks.Add(PLink);
-            return PLink;
-        }
-
-        private xPrototype MakeNodeBox()
-        {
-            var PBox = new xPBox();
-            Options.PBoxes.Add(PBox);
-            return PBox;
         }
         #endregion
 
         #region Catalog
-        private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e) => tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);        
-        private void tvLinks_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvLinks,   btnLinkEdit,   Options.rbLink);
-        private void tvBoxes_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvBoxes,   btnBoxEdit,    Options.rbBox);
+        private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e) => tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);//
+        private void tvLinks_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvLinks,   btnLinkEdit,   Options.rbLink);//
+        private void tvBoxes_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvBoxes,   btnBoxEdit,    Options.rbBox);//
 
-        private void tvElements_Select(TreeView tv, Button btn, RadioButton rb)
+        private void tvElements_Select(TreeView tv, Button btn, RadioButton rb)//
         {
             rb.Tag = tv.SelectedNode?.Tag;
             btn.Enabled = (rb.Tag != null);
@@ -191,7 +206,7 @@ namespace Schematix
         {
             if (tvObjects.SelectedNode?.Tag == null)
                 return;
-            var form = new ObjectEditForm(null, Path.GetDirectoryName((tvObjects.SelectedNode.Tag as xPrototype).FileName), false);
+            var form = new ObjectEditForm(null, (tvObjects.SelectedNode.Tag as xPrototype).ID);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 form.PObject.tvNode = tvObjects.SelectedNode.Nodes.Add("");
@@ -201,11 +216,11 @@ namespace Schematix
             }
         }
 
-        private void btnObjectEdit_Click(object sender, EventArgs e)
+        private void btnObjectEdit_Click(object sender, EventArgs e)//
         {
             if (tvObjects.SelectedNode?.Tag == null)
                 return;
-            var form = new ObjectEditForm(tvObjects.SelectedNode.Tag as xPObject, "", (tvObjects.SelectedNode.Level == 0));
+            var form = new ObjectEditForm(tvObjects.SelectedNode.Tag as xPObject);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PObject);
@@ -217,21 +232,21 @@ namespace Schematix
         {
             if (tvLinks.SelectedNode?.Tag == null)
                 return;
-            var form = new LinkEditForm(null, Path.GetDirectoryName((tvLinks.SelectedNode.Tag as xPrototype).FileName), false);
+            var form = new LinkEditForm(null, (tvLinks.SelectedNode.Tag as xPrototype).ID);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                form.PLink.tvNode = tvObjects.SelectedNode.Nodes.Add("");
+                form.PLink.tvNode = tvLinks.SelectedNode.Nodes.Add("");
                 form.PLink.tvNode.Tag = form.PLink;
                 Options.PLinks.Add(form.PLink);
                 Share.Library_UpdateNodeName(form.PLink);
             }
         }
 
-        private void btnLinkEdit_Click(object sender, EventArgs e)
+        private void btnLinkEdit_Click(object sender, EventArgs e)//
         {
             if (tvLinks.SelectedNode?.Tag == null)
                 return;
-            var form = new LinkEditForm(tvLinks.SelectedNode.Tag as xPLink, "", (tvLinks.SelectedNode.Level == 0));
+            var form = new LinkEditForm(tvLinks.SelectedNode.Tag as xPLink);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PLink);
@@ -243,21 +258,21 @@ namespace Schematix
         {
             if (tvBoxes.SelectedNode?.Tag == null)
                 return;
-            var form = new BoxEditForm(null, Path.GetDirectoryName((tvBoxes.SelectedNode.Tag as xPrototype).FileName), false);
+            var form = new BoxEditForm(null, (tvBoxes.SelectedNode.Tag as xPrototype).ID);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                form.PBox.tvNode = tvObjects.SelectedNode.Nodes.Add("");
+                form.PBox.tvNode = tvBoxes.SelectedNode.Nodes.Add("");
                 form.PBox.tvNode.Tag = form.PBox;
                 Options.PBoxes.Add(form.PBox);
                 Share.Library_UpdateNodeName(form.PBox);
             }
         }
 
-        private void btnBoxEdit_Click(object sender, EventArgs e)
+        private void btnBoxEdit_Click(object sender, EventArgs e)//
         {
             if (tvBoxes.SelectedNode?.Tag == null)
                 return;
-            var form = new BoxEditForm(tvBoxes.SelectedNode.Tag as xPBox, "", (tvBoxes.SelectedNode.Level == 0));
+            var form = new BoxEditForm(tvBoxes.SelectedNode.Tag as xPBox);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PBox);
@@ -283,7 +298,7 @@ namespace Schematix
         {
             if (lvObjects.SelectedItems[0].Tag == null)
                 return;
-            var form = new ObjectEditForm(lvObjects.SelectedItems[0].Tag as xPObject, "", false);
+            var form = new ObjectEditForm(lvObjects.SelectedItems[0].Tag as xPObject);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PObject);
@@ -295,7 +310,7 @@ namespace Schematix
         {
             if (lvLinks.SelectedItems[0].Tag == null)
                 return;
-            var form = new LinkEditForm(lvLinks.SelectedItems[0].Tag as xPLink, "", false);
+            var form = new LinkEditForm(lvLinks.SelectedItems[0].Tag as xPLink);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PLink);
@@ -307,7 +322,7 @@ namespace Schematix
         {
             if (lvBoxes.SelectedItems[0].Tag == null)
                 return;
-            var form = new BoxEditForm(lvBoxes.SelectedItems[0].Tag as xPBox, "", false);
+            var form = new BoxEditForm(lvBoxes.SelectedItems[0].Tag as xPBox);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PBox);

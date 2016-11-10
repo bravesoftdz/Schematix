@@ -90,7 +90,7 @@ namespace Schematix
             if (fileName == "")
             {
                 var dlg = new OpenFileDialog();
-                dlg.Filter = Options.RECORD_FILEEXT;
+                dlg.Filter = Options.RECORD_EXTFILLTER_MAP;
                 if (dlg.ShowDialog() == DialogResult.Cancel)
                     return false;
                 using (var file = File.OpenRead(dlg.FileName)) { }
@@ -143,7 +143,7 @@ namespace Schematix
             if (fileName == "")
             {
                 var dlg = new SaveFileDialog();
-                dlg.Filter = Options.RECORD_FILEEXT;
+                dlg.Filter = Options.RECORD_EXTFILLTER_MAP;
                 if (dlg.ShowDialog() == DialogResult.Cancel)
                     return false;
                 using (var file = File.OpenWrite(dlg.FileName)) { }
@@ -158,8 +158,7 @@ namespace Schematix
                 return false;
             try
             {
-                if (!File.Exists(fileName))
-                    Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+                // Make temporary file
                 using (var file = File.Create(fileName + ".tmp"))
                 {
                     using (var stream = new BinaryWriter(file))
@@ -168,9 +167,17 @@ namespace Schematix
                         FileName = fileName;
                     }
                 }
+                // Delete old backup file
                 if (File.Exists(fileName + ".bak"))
                     File.Delete(fileName + ".bak");
-                File.Replace(fileName + ".tmp", fileName, fileName + ".bak");
+                // Make current file as backup
+                if (File.Exists(fileName))
+                {
+                    File.Move(fileName, fileName + ".bak");
+                    File.SetAttributes(fileName + ".bak", FileAttributes.Hidden);
+                }
+                // Make temporary file as current
+                File.Move(fileName + ".tmp", fileName);
             }
             catch (Exception e)
             {
@@ -201,6 +208,11 @@ namespace Schematix
         public Int64        Revision    = DateTime.Now.ToBinary();
         public ListViewItem lvItemUsed;
         public TreeNode     tvNode;
+        public UInt64       NodeParent = 0;
+
+        virtual public bool IsObject { get; }
+        virtual public bool IsLink   { get; }
+        virtual public bool IsBox    { get; }
 
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
@@ -208,6 +220,8 @@ namespace Schematix
                 NodeName = new String(stream.ReadChars(valueLength));
             else if (valueLength == 8 && parameterName == "Revision")
                 Revision = stream.ReadInt64();
+            else if (valueLength == 8 && parameterName == "NodeParent")
+                NodeParent = stream.ReadUInt64();
             else if (valueLength == 1 && parameterName == "IsPrototype")
                 isPrototype = stream.ReadBoolean();
             // Pass unprocessed data up
@@ -223,6 +237,9 @@ namespace Schematix
             stream.Write("Revision");
             stream.Write(8);
             stream.Write(Revision);
+            stream.Write("NodeParent");
+            stream.Write(8);
+            stream.Write(NodeParent);
             stream.Write("IsPrototype");
             stream.Write(1);
             stream.Write(isPrototype);
@@ -296,7 +313,9 @@ namespace Schematix
         public List<xDot>   Dots          = new List<xDot>();
         public Bitmap       Canvas        = Share.GetNoImage();
         bool MustClearDots = false;
-        
+
+        override public bool IsObject { get; } = true;
+
         public xPObject()
         {
             Dots.Add(new xDot(this) { Name = "", Description = "", X = 0, Y = 0 });
@@ -421,6 +440,8 @@ namespace Schematix
     {
         public Pen Pen = new Pen(Options.DEFAULT_LINK_LINE_COLOR, 1);
 
+        override public bool IsLink { get; } = true;
+
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
             if (valueLength == 4 && parameterName == "Thick")
@@ -479,7 +500,7 @@ namespace Schematix
     public class xPBox : xPLink
     {
         public BoxTypes     BoxType   = BoxTypes.Text;
-        public String       Text      = "";
+        public String       Text      = "Text";
         public AlignTypes   TextAlign = AlignTypes.TopLeft;
         public Font         Font      = Options.DEFAULT_BOX_FONT;
         public Brush        Brush     = new SolidBrush(Options.DEFAULT_BOX_TEXT_COLOR);
@@ -489,6 +510,8 @@ namespace Schematix
             set { Brush = new SolidBrush(_textColor = value); }
             get { return _textColor; }
         }
+
+        override public bool IsBox { get; } = true;
 
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
         {
@@ -540,6 +563,7 @@ namespace Schematix
     public abstract class xExemplar : xRecord
     {
         protected xMap Map { get; }
+        public xPrototype Prototype;
         public UInt64     PrototypeID;
         public Int64      PrototypeRevision;
         public String     Reference = "";
@@ -793,7 +817,6 @@ namespace Schematix
 
     public class xObject : xExemplar
     {
-        public xPObject Prototype;
         public int X;
         public int Y;
         public List<xIP> IPs = new List<xIP>();
@@ -878,12 +901,11 @@ namespace Schematix
             Map.DeleteObject(this);
         }
 
-        public xDot GetNearestDot(int x, int y) => Prototype.GetNearestDot(x - Left, y - Top);
+        public xDot GetNearestDot(int x, int y) => (Prototype as xPObject).GetNearestDot(x - Left, y - Top);
     }
 
     public class xLink : xExemplar
     {
-        public xPLink Prototype;
         public UInt64 ObjectAID, DotAID;
         public UInt64 ObjectBID, DotBID;
         public xObject ObjectA = null;
@@ -931,8 +953,6 @@ namespace Schematix
                 stream.Write("ObjectAID");
                 stream.Write(8);
                 stream.Write(ObjectA.ID);
-                if (DotAID != 0)
-                    DotAID = (ObjectA.Prototype as xPObject).Dots[0].ID;
                 stream.Write("DotAID");
                 stream.Write(8);
                 stream.Write(DotA.ID);
@@ -951,8 +971,6 @@ namespace Schematix
                 stream.Write("ObjectBID");
                 stream.Write(8);
                 stream.Write(ObjectBID);
-                if (DotBID != 0)
-                    DotBID = (ObjectB.Prototype as xPObject).Dots[0].ID;
                 stream.Write("DotBID");
                 stream.Write(8);
                 stream.Write(DotBID);
@@ -989,102 +1007,70 @@ namespace Schematix
             return false;
         }
 
-        public void BondEnds(List<xObject> Objects)
+        private void BondEnd(ref xObject eObject, ref UInt64 eObjectID, ref xDot eDot, ref UInt64 eDotID)//
         {
-            if (ObjectAID != 0)
+            if (eObjectID != 0)
             {
-                ObjectA = Objects.Find(xE => xE.ID == ObjectAID);
-                if (ObjectA != null)
+                UInt64 OID = eObjectID;
+                eObject = Map?.Objects.Find(xE => xE.ID == OID) as xObject;
+                if (eObject != null)
                 {
-                    DotA = (ObjectA.Prototype as xPObject).Dots.Find(xE => xE.ID == DotAID);
-                    if (DotA == null)
+                    UInt64 DID = eDotID;
+                    eDot = (eObject.Prototype as xPObject).Dots.Find(xE => xE.ID == DID);
+                    if (eDot == null)
                     {
-                        DotA = (ObjectA.Prototype as xPObject).Dots[0];
-                        DotAID = DotA.ID;
+                        eDot = (eObject.Prototype as xPObject).Dots[0];
+                        eDotID = eDot.ID;
                     }
                 }
                 else
                 {
-                    ObjectAID = 0;
-                    DotAID = 0;
-                }
-            }
-            if (ObjectBID != 0)
-            {
-                ObjectB = Objects.Find(xE => xE.ID == ObjectBID);
-                if (ObjectB != null)
-                {
-                    DotB = (ObjectB.Prototype as xPObject).Dots.Find(xE => xE.ID == DotBID);
-                    if (DotB == null)
-                    {
-                        DotB = (ObjectB.Prototype as xPObject).Dots[0];
-                        DotBID = DotB.ID;
-                    }
-                }
-                else
-                {
-                    ObjectBID = 0;
-                    DotBID = 0;
+                    eObjectID = 0;
+                    eDotID = 0;
                 }
             }
         }
 
-        override public void Check()
+        public void BondEnds()//Ok
         {
-            List<xDot> Dots;
-            int x;
-            if (ObjectAID != 0)
+            BondEnd(ref ObjectA, ref ObjectAID, ref DotA, ref DotAID);
+            BondEnd(ref ObjectB, ref ObjectBID, ref DotB, ref DotBID);
+        }
+
+        private void CheckEnd(ref xObject eObject, ref UInt64 eObjectID, ref xDot eDot, ref UInt64 eDotID, ref int eX, ref int eY)//
+        {
+            if (eObjectID != 0)
             {
                 try
                 {
-                    Dots = (ObjectA.Prototype as xPObject).Dots;
-                    if (DotAID != 0)
+                    xDot Dot = (eObject.Prototype as xPObject).Dots[0];
+                    if (eDotID != 0)
                         try
                         {
-                            x = DotA.X;
+                            int x = eDot.X;
                         }
                         catch
                         {
-                            DotA = Dots[0];
-                            DotAID = DotA.ID;
+                            eDot = Dot;
+                            eDotID = eDot.ID;
                         }
-                    XA = ObjectA.Left + DotA.X;
-                    YA = ObjectA.Top  + DotA.Y;
+                    eX = eObject.Left + eDot.X;
+                    eY = eObject.Top  + eDot.Y;
                 }
                 catch
                 {
-                    ObjectAID = 0;
-                    ObjectA   = null;
-                    DotAID = 0;
-                    DotA   = null;
+                    eObjectID = 0;
+                    eObject = null;
+                    eDotID = 0;
+                    eDot = null;
                 }
             }
-            if (ObjectBID != 0)
-            {
-                try
-                {
-                    Dots = (ObjectB.Prototype as xPObject).Dots;
-                    if (DotBID != 0)
-                        try
-                        {
-                            x = DotB.X;
-                        }
-                        catch
-                        {
-                            DotB = Dots[0];
-                            DotBID = DotB.ID;
-                        }
-                    XB = ObjectB.Left + DotB.X;
-                    YB = ObjectB.Top  + DotB.Y;
-                }
-                catch
-                {
-                    ObjectBID = 0;
-                    ObjectB = null;
-                    DotBID = 0;
-                    DotB = null;
-                }
-            }
+        }
+
+        override public void Check()//Ok
+        {
+            CheckEnd(ref ObjectA, ref ObjectAID, ref DotA, ref DotAID, ref XA, ref YA);
+            CheckEnd(ref ObjectB, ref ObjectBID, ref DotB, ref DotBID, ref XB, ref YB);
             Width  = Math.Abs(XB - XA);
             Height = Math.Abs(YB - YA);
             Left = ((XA < XB) ? XA : XB);
@@ -1092,15 +1078,11 @@ namespace Schematix
             base.Check();
         }
 
-        override public void Delete()
-        {
-            Map.DeleteLink(this);
-        }
+        override public void Delete() => Map.DeleteLink(this);
     }
 
     public class xBox : xExemplar
     {
-        public xPBox Prototype;
         public String Text = "";
         public int TextX;
         public int TextY;
@@ -1242,10 +1224,7 @@ namespace Schematix
             base.Check();
         }
 
-        override public void Delete()
-        {
-            Map.DeleteBox(this);
-        }
+        override public void Delete() => Map.DeleteBox(this);
     }
 
     // Map
@@ -1303,12 +1282,12 @@ namespace Schematix
     {
         public TabPage Tab;
         public bool Changed;
-        public List<xPObject> PObjects = new List<xPObject>();
-        public List<xPLink>   PLinks   = new List<xPLink>();
-        public List<xPBox>    PBoxes   = new List<xPBox>();
-        public List<xObject>  Objects  = new List<xObject>();
-        public List<xLink>    Links    = new List<xLink>();
-        public List<xBox>     Boxes    = new List<xBox>();
+        public List<xPrototype> PObjects = new List<xPrototype>();
+        public List<xPrototype> PLinks   = new List<xPrototype>();
+        public List<xPrototype> PBoxes   = new List<xPrototype>();
+        public List<xExemplar>  Objects  = new List<xExemplar>();
+        public List<xExemplar>  Links    = new List<xExemplar>();
+        public List<xExemplar>  Boxes    = new List<xExemplar>();
         public xBackground    Back     = new xBackground();
         public xGrid          Grid     = new xGrid();
         public int
@@ -1330,89 +1309,59 @@ namespace Schematix
             SetCanvas(Options.DEFAULT_MAP_WIDTH, Options.DEFAULT_MAP_HEIGHT);
         }
 
+        public void UpdateTabName()
+        {
+            if (Tab == null)
+                return;
+            Tab.Text 
+                = ((Name != "") ? Name 
+                : (FileName != "") ? Path.GetFileNameWithoutExtension(FileName) 
+                : "No name") 
+                + (Changed ? " *" : "");
+        }
+
         #region Prototypes
-        public xPObject AddPObject(xPObject PObject)//
+        public xPObject AddPObject(xPrototype Prototype) => (AddPrototype(Prototype, Options.PObjects, PObjects, lv_PObjects) as xPObject);//Ok
+        public xPLink   AddPLink  (xPrototype Prototype) => (AddPrototype(Prototype, Options.PLinks,   PLinks,   lv_PLinks)   as xPLink);//Ok
+        public xPBox    AddPBox   (xPrototype Prototype) => (AddPrototype(Prototype, Options.PBoxes,   PBoxes,   lv_PBoxes)   as xPBox);//Ok
+
+        public xPrototype AddPrototype(xPrototype Prototype, List<xPrototype> LibPrototypes, List<xPrototype> Prototypes, ListView UsedListView)//Ok
         {
-            xPObject uPObject = Options.PObjects.Find(PO => (PO.ID == PObject.ID) && (PO.Revision == PObject.Revision));
-            if (uPObject == null)
-                uPObject = PObjects.Find(PO => (PO.ID == PObject.ID) && (PO.Revision == PObject.Revision));
-            if (uPObject != null)
-                return uPObject;
-            PObjects.Add(PObject);
-            if (lv_PObjects != null)
+            // Search prototype in library catalog
+            xPrototype uPrototype = LibPrototypes.Find(PO => (PO.ID == Prototype.ID) && (PO.Revision == Prototype.Revision));
+            if (uPrototype != null)
+                Prototype = uPrototype;
+            // Search prototype in map catalog
+            uPrototype = Prototypes.Find(PO => (PO.ID == Prototype.ID) && (PO.Revision == Prototype.Revision));
+            if (uPrototype != null)
+                Prototype = uPrototype;
+            else
             {
-                PObject.lvItemUsed = lv_PObjects.Items.Add(PObject.NodeName);
-                PObject.lvItemUsed.Tag = PObject;
-                Share.Library_UpdateNodeName(PObject);
+                Prototypes.Add(Prototype);
+                if (UsedListView != null)
+                {
+                    Prototype.lvItemUsed = UsedListView.Items.Add("");
+                    Prototype.lvItemUsed.SubItems.Add("");
+                    Prototype.lvItemUsed.SubItems.Add("");
+                    Prototype.lvItemUsed.Tag = Prototype;
+                    Share.Library_UpdateNodeName(Prototype);
+                }
             }
-            return PObject;
+            return Prototype;
         }
 
-        public xPLink AddPLink(xPLink PLink)//
-        {
-            xPLink uPLink = Options.PLinks.Find(PL => (PL.ID == PLink.ID) && (PL.Revision == PLink.Revision));
-            if (uPLink == null)
-                uPLink = PLinks.Find(PL => (PL.ID == PLink.ID) && (PL.Revision == PLink.Revision));
-            if (uPLink != null)
-                return uPLink;
-            PLinks.Add(PLink);
-            if (lv_PLinks != null)
-            {
-                PLink.lvItemUsed = lv_PLinks.Items.Add(PLink.NodeName);
-                PLink.lvItemUsed.Tag = PLink;
-                Share.Library_UpdateNodeName(PLink);
-            }
-            return PLink;
-        }
+        public void RemovePObject(xPObject PObject) => RemovePrototype(PObject, PObjects, Objects);//Ok
+        public void RemovePLink  (xPLink   PLink)   => RemovePrototype(PLink,   PLinks,   Links);//Ok
+        public void RemovePBox   (xPBox    PBox)    => RemovePrototype(PBox,    PBoxes,   Boxes);//Ok
 
-        public xPBox AddPBox(xPBox PBox)//
+        public void RemovePrototype(xPrototype Prototype, List<xPrototype> Prototypes, List<xExemplar> Exemplars)//Ok
         {
-            xPBox uPBox = Options.PBoxes.Find(PB => (PB.ID == PBox.ID) && (PB.Revision == PBox.Revision));
-            if (uPBox == null)
-                uPBox = PBoxes.Find(PB => (PB.ID == PBox.ID) && (PB.Revision == PBox.Revision));
-            if (uPBox != null)
-                return uPBox;
-            PBoxes.Add(PBox);
-            if (lv_PBoxes != null)
-            {
-                PBox.lvItemUsed = lv_PBoxes.Items.Add(PBox.NodeName);
-                PBox.lvItemUsed.Tag = PBox;
-                Share.Library_UpdateNodeName(PBox);
-            }
-            return PBox;
-        }
-
-        public void RemovePObject(xPObject PObject)//
-        {
-            if (PObject == null)
-                return;
-            if (!Objects.Exists(O => (O.Prototype.ID == PObject.ID) && (O.Prototype.Revision == PObject.Revision)))
-            {
-                PObject.lvItemUsed?.Remove();
-                PObjects.Remove(PObject);
-            }
-        }
-
-        public void RemovePLink(xPLink PLink)//
-        {
-            if (PLink == null)
-                return;
-            if (!Links.Exists(L => (L.Prototype.ID == PLink.ID) && (L.Prototype.Revision == PLink.Revision)))
-            {
-                PLink.lvItemUsed?.Remove();
-                PLinks.Remove(PLink);
-            }
-        }
-
-        public void RemovePBox(xPBox PBox)//
-        {
-            if (PBox == null)
-                return;
-            if (!Boxes.Exists(B => (B.Prototype.ID == PBox.ID) && (B.Prototype.Revision == PBox.Revision)))
-            {
-                PBox.lvItemUsed?.Remove();
-                PBoxes.Remove(PBox);
-            }
+            if (Prototype != null)
+                if (!Exemplars.Exists(O => (O.Prototype.ID == Prototype.ID) && (O.Prototype.Revision == Prototype.Revision)))
+                {
+                    Prototype.lvItemUsed?.Remove();
+                    Prototypes.Remove(Prototype);
+                }
         }
         #endregion
 
@@ -1427,91 +1376,78 @@ namespace Schematix
             }
         }
 
-        public void CheckLinksToObject(UInt64 ObjectID)//O
+        public void AlignToGridAll(int sX = 0, int sY = 0)//Ok
         {
-            // Check all links to this object
-            for (int i = Links.Count - 1; 0 <= i; i--)
-                if (Links[i].ObjectAID == ObjectID || Links[i].ObjectBID == ObjectID)
-                    Links[i].Check();
-        }
-
-        public void DeleteObject(xObject obj)//O
-        {
-            if (obj == null)
-                return;
-            // Remove all IPs
-            obj.ClearIPs();
-            // Remove all links to this object
-            for (int i = Links.Count - 1; 0 <= i; i--)
-                if (Links[i].ObjectA == obj || Links[i].ObjectB == obj)
-                    Links.RemoveAt(i);
-            // Remove object
-            Objects.Remove(obj);
-            // Try to remove it's prototype
-            RemovePObject(obj.Prototype);
-        }
-
-        public void DeleteLink(xLink link)//Ok
-        {
-            // Remove object
-            Links.Remove(link);
-            // Try to remove it's prototype
-            RemovePLink(link.Prototype);
-        }
-
-        public void DeleteBox(xBox box)//Ok
-        {
-            // Remove object
-            Boxes.Remove(box);
-            // Try to remove it's prototype
-            RemovePBox(box.Prototype);
-        }
-
-        public void AddIP(xIP IP)//
-        {
-            Options.AddIP(IP);
-        }
-
-        public void DeleteIP(xIP IP)//
-        {
-            Options.RemoveIP(IP);
-        }
-
-        public void Clear()
-        {
-            for (int i = Boxes.Count - 1; 0 <= i; i--)
-                DeleteBox(Boxes[i]);
-            for (int i = Links.Count - 1; 0 <= i; i--)
-                DeleteLink(Links[i]);
-            for (int i = Objects.Count - 1; 0 <= i; i--)
-                DeleteObject(Objects[i]);
-        }
-
-        public void AlignToGridAll(int sx = 0, int sy = 0)//Ok
-        {
-            if (sx == 0)
-                sx = Grid.StepX;
-            if (sy == 0)
-                sy = Grid.StepY;
-            foreach (var Object in Objects)
+            if (sX == 0)
+                sX = Grid.StepX;
+            if (sY == 0)
+                sY = Grid.StepY;
+            foreach (xBox Box in Boxes)
             {
-                AlignToGridXY(ref Object.X, ref Object.Y);
+                SnapXY(ref Box.Left,  ref Box.Top);
+                SnapXY(ref Box.Width, ref Box.Height);
+                Box.Check();
+            }
+            foreach (xObject Object in Objects)
+            {
+                SnapXY(ref Object.X, ref Object.Y);
                 Object.Check();
             }
-            foreach (var Link in Links)
+            foreach (xLink Link in Links)
             {
                 if (Link.ObjectA == null)
-                    AlignToGridXY(ref Link.XA, ref Link.YA);
+                    SnapXY(ref Link.XA, ref Link.YA);
                 if (Link.ObjectB == null)
-                    AlignToGridXY(ref Link.XB, ref Link.YB);
+                    SnapXY(ref Link.XB, ref Link.YB);
                 Link.Check();
             }
         }
 
-        public void AlignToGridXY(ref int x, ref int y)//Ok
+        public void CheckLinksToObject(UInt64 ObjectID)//O
         {
-            x = (int)((float)x / Grid.StepX) * Grid.StepX;
-            y = (int)((float)y / Grid.StepY) * Grid.StepY;
+            // Check all links to this object
+            for (int i = Links.Count - 1; 0 <= i; i--)
+                if ((Links[i] as xLink).ObjectAID == ObjectID || (Links[i] as xLink).ObjectBID == ObjectID)
+                    Links[i].Check();
+        }
+
+        public void DeleteObject(xObject Object)//Ok
+        {
+            if (Object == null)
+                return;
+            // Remove all IPs
+            Object.ClearIPs();
+            // Remove all links to this object
+            for (int i = Links.Count - 1; 0 <= i; i--)
+                if ((Links[i] as xLink).ObjectA == Object || (Links[i] as xLink).ObjectB == Object)
+                    Links.RemoveAt(i);
+            // Remove
+            DeleteExemplar(Object, Objects, PObjects);
+        }
+
+        public void DeleteLink(xLink Link) => DeleteExemplar(Link, Links, PLinks);//Ok
+
+        public void DeleteBox (xBox Box)   => DeleteExemplar(Box,  Boxes, PBoxes);//Ok
+
+        private void DeleteExemplar(xExemplar Exemplar, List<xExemplar> Exemplars, List<xPrototype> Prototypes)//Ok
+        {
+            // Unregister exemplar
+            Exemplars.Remove(Exemplar);
+            // Try to remove it's prototype
+            RemovePrototype(Exemplar.Prototype, Prototypes, Exemplars);
+        }
+
+        public void AddIP   (xIP IP) => Options.AddIP(IP);//Ok
+        public void DeleteIP(xIP IP) => Options.RemoveIP(IP);//Ok
+
+        public void Clear()//Ok
+        {
+            for (int i = Boxes.Count - 1; 0 <= i; i--)
+                DeleteBox(Boxes[i] as xBox);
+            for (int i = Links.Count - 1; 0 <= i; i--)
+                DeleteLink(Links[i] as xLink);
+            for (int i = Objects.Count - 1; 0 <= i; i--)
+                DeleteObject(Objects[i] as xObject);
         }
         #endregion
 
@@ -1542,6 +1478,24 @@ namespace Schematix
                 SetSize(Width, Height);
             Changed = false;
             Draw();
+        }
+
+        private void ReadPrototype(BinaryReader stream, xPrototype Prototype, List<xPrototype> LibPrototypes, List<xPrototype> Prototypes, ListView UsedListView)//Ok
+        {
+            Prototype.ReadParameters(stream);
+            AddPrototype(Prototype, LibPrototypes, Prototypes, UsedListView);
+        }
+
+        private void ReadExemplar(BinaryReader stream, xExemplar Exemplar, List<xExemplar> Exemplars, List<xPrototype> Prototypes, xPrototype DefaultPrototype)//Ok
+        {
+            Exemplar.ReadParameters(stream);
+            Exemplar.Prototype = Prototypes.Find(xP => (xP.ID == Exemplar.PrototypeID) && (xP.Revision == Exemplar.PrototypeRevision));
+            if (Exemplar.Prototype == null)
+                Exemplar.Prototype = DefaultPrototype;
+            if (Exemplar.IsLink)
+                (Exemplar as xLink).BondEnds();
+            Exemplars.Add(Exemplar);
+            Exemplar.Check();
         }
 
         override protected bool ReadParameter(BinaryReader stream, String parameterName, int valueLength)//Ok
@@ -1598,59 +1552,28 @@ namespace Schematix
                 Back.UseAlphaColor = true;
             #endregion
 
-            #region Prototype
+            #region Prototypes
             // PObjects
             else if (parameterName == "PObject")
-            {
-                var PObject = new xPObject();
-                PObject.ReadParameters(stream);
-                AddPObject(PObject);
-            }
+                ReadPrototype(stream, new xPObject(), Options.PObjects, PObjects, lv_PObjects);
             // PLinks
             else if (parameterName == "PLink")
-            {
-                var PLink = new xPLink();
-                PLink.ReadParameters(stream);
-                AddPLink(PLink);
-            }
+                ReadPrototype(stream, new xPLink(), Options.PLinks, PLinks, lv_PLinks);
             // PBoxes
             else if (parameterName == "PBox")
-            {
-                var PBox = new xPBox();
-                PBox.ReadParameters(stream);
-                AddPBox(PBox);
-            }
+                ReadPrototype(stream, new xPBox(), Options.PBoxes, PBoxes, lv_PBoxes);
             #endregion
 
             #region Exemplars
             // Objects
             else if (parameterName == "Object")
-            {
-                var Object = new xObject(this);
-                Object.ReadParameters(stream);
-                Object.Prototype = PObjects.Find(xP => (xP.ID == Object.PrototypeID) && (xP.Revision == Object.PrototypeRevision));
-                Objects.Add(Object);
-                Object.Check();
-            }
+                ReadExemplar(stream, new xObject(this), Objects, PObjects, Options.PObjects[0]);
             // Links
             else if (parameterName == "Link")
-            {
-                var Link = new xLink(this);
-                Link.ReadParameters(stream);
-                Link.Prototype = PLinks.Find(xP => (xP.ID == Link.PrototypeID) && (xP.Revision == Link.PrototypeRevision));
-                Link.BondEnds(Objects);
-                Links.Add(Link);
-                Link.Check();
-            }
+                ReadExemplar(stream, new xLink(this), Links, PLinks, Options.PLinks[0]);
             // Boxes
             else if (parameterName == "Box")
-            {
-                var Box = new xBox(this);
-                Box.ReadParameters(stream);
-                Box.Prototype = PBoxes.Find(xP => (xP.ID == Box.PrototypeID) && (xP.Revision == Box.PrototypeRevision));
-                Boxes.Add(Box);
-                Box.Check();
-            }
+                ReadExemplar(stream, new xBox(this), Boxes, PBoxes, Options.PBoxes[0]);
             #endregion
 
             // Pass unprocessed data up
@@ -1840,7 +1763,7 @@ namespace Schematix
             if (width < Width || height < Height)
             {
                 // Look for out of border elements
-                foreach (var Object in Objects)
+                foreach (xObject Object in Objects)
                 {
                     if (width  < Object.Right )
                         Object.X = (width  < Object.Width ) ? 0 : width  - Object.Width;
@@ -1848,7 +1771,7 @@ namespace Schematix
                         Object.Y = (height < Object.Height) ? 0 : height - Object.Height;
                     Object.Check();
                 }
-                foreach (var Link in Links)
+                foreach (xLink Link in Links)
                 {
                     if (Link.ObjectA == null)
                     {
@@ -1866,7 +1789,7 @@ namespace Schematix
                     }
                     Link.Check();
                 }
-                foreach (var Box in Boxes)
+                foreach (xBox Box in Boxes)
                 {
                     if (width  < Box.Right )
                         Box.Left = (width  < Box.Width ) ? 0 : width  - Box.Width;
@@ -1935,37 +1858,36 @@ namespace Schematix
                 if (Box.Left <= drawX2 && drawX <= Box.Right)
                     if (Box.Top <= drawY2 && drawY <= Box.Bottom)
                     {
-                        switch (Box.Prototype.BoxType)
+                        switch ((Box.Prototype as xPBox).BoxType)
                         {
                             case BoxTypes.Rectangle:
-                                graphics.DrawRectangle(Box.Prototype.Pen, Box.Left, Box.Top, Box.Width, Box.Height);
+                                graphics.DrawRectangle((Box.Prototype as xPBox).Pen, Box.Left, Box.Top, Box.Width, Box.Height);
                                 break;
                             case BoxTypes.Ellipse:
-                                graphics.DrawEllipse(Box.Prototype.Pen, Box.Left, Box.Top, Box.Width, Box.Height);
+                                graphics.DrawEllipse((Box.Prototype as xPBox).Pen, Box.Left, Box.Top, Box.Width, Box.Height);
                                 break;
                         }
-                        if (Box.Text != "")
-                            graphics.DrawString(Box.Text, Box.Prototype.Font, Box.Prototype.Brush, Box.TextX, Box.TextY);
+                        if ((Box as xBox).Text != "")
+                            graphics.DrawString((Box as xBox).Text, (Box.Prototype as xPBox).Font, (Box.Prototype as xPBox).Brush, (Box as xBox).TextX, (Box as xBox).TextY);
                     }
 
             // Draw Links
             foreach (var Link in Links)
                 if (Link.Left <= drawX2 && drawX <= Link.Right)
                     if (Link.Top <= drawY2 && drawY <= Link.Bottom)
-                        graphics.DrawLine(Link.Prototype.Pen, Link.XA, Link.YA, Link.XB, Link.YB);
+                        graphics.DrawLine((Link.Prototype as xPLink).Pen, (Link as xLink).XA, (Link as xLink).YA, (Link as xLink).XB, (Link as xLink).YB);
 
             // Draw Objects
             foreach (var Object in Objects)
                 if (Object.Left <= drawX2 && drawX <= Object.Right)
                     if (Object.Top <= drawY2 && drawY <= Object.Bottom)
-                        graphics.DrawImageUnscaled(Object.Prototype.Canvas, Object.Left, Object.Top);
+                        graphics.DrawImageUnscaled((Object.Prototype as xPObject).Canvas, Object.Left, Object.Top);
             #endregion
         }
         #endregion
 
-        public xExemplar ObjectAt(int x, int y) => Objects.Find(O => O.isOver(x, y));
-        public xExemplar LinkAt  (int x, int y) => Links.Find(L => L.isOver(x, y, 3));
-        public xExemplar BoxAt   (int x, int y) => Boxes.Find(B => B.isOver(x, y));
+        #region Selection
+        public xExemplar SelectAt(int x, int y) => Selected = AnythingAt(x, y);
 
         public xExemplar AnythingAt(int x, int y)//
         {
@@ -1977,17 +1899,9 @@ namespace Schematix
             return selected;
         }
 
-        public xExemplar SelectAt(int x, int y) => Selected = AnythingAt(x, y);
-
-        public void UpdateTabName()
-        {
-            if (Tab == null)
-                return;
-            Tab.Text 
-                = ((Name != "") ? Name 
-                : (FileName != "") ? Path.GetFileNameWithoutExtension(FileName) 
-                : "No name") 
-                + (Changed ? " *" : "");
-        }
+        public xExemplar ObjectAt(int x, int y) => Objects.Find(O => O.isOver(x, y));
+        public xExemplar LinkAt  (int x, int y) => Links.Find(L => L.isOver(x, y, 3));
+        public xExemplar BoxAt   (int x, int y) => Boxes.Find(B => B.isOver(x, y));
+        #endregion
     }
 }

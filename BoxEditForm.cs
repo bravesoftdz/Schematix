@@ -11,23 +11,24 @@ namespace Schematix
         Font textFont;
         bool IsRoot;
 
-        public BoxEditForm(xPBox pBox, String rootPath, bool isRoot)
+        public BoxEditForm(xPBox pBox, UInt64 NodeParent = 1)
         {
             InitializeComponent();
             if (pBox == null)
             {
                 pBox = new xPBox();
-                pBox.FileName = rootPath + "\\" + pBox.ID.ToString() + "\\" + Options.RECORD_FILENAME;
+                pBox.NodeParent = NodeParent;
+                pBox.FileName = Options.RootBoxes + (Options.RootBoxes != "" ? "\\" : "") + pBox.ID.ToString() + Options.RECORD_EXT_BOX;
                 Text = Options.LangCur.lEETitleAdd + " " + Options.LangCur.lEETitleBox;
             }
             else
                 Text = Options.LangCur.lEETitleEdit + " " + Options.LangCur.lEETitleBox;
             PBox = pBox;
-            IsRoot = isRoot;
+            IsRoot = (PBox.ID == 1);
 
             // Share
             chkIsPrototype.Enabled =
-            tbNode.Enabled = !isRoot;
+            tbNode.Enabled = (PBox.ID != 1);
             //
             lblNode.Text    = Options.LangCur.lEENodeName;
             chkIsPrototype.Text = Options.LangCur.lEEPrototype;

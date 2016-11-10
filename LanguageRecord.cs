@@ -16,22 +16,27 @@ namespace Schematix
             hMFTabNew = "Create new map",
             hMFTabClose   = "Close map",
             hMFOptions    = "Open program options",
-            hMFLibrary    = "Open map objects catalog",
+            hMFLibrary    = "Open catalog of elements",
             hMFAbout      = "Open about program",
-            hMFMapOptions = "Open new options",
+            hMFMapOptions = "Seek / Open map options",
             hMFElement    = "Element",
             hMFNoElement  = "Element not selected",
             //
-            hMFLoading        = "Load maps",
+            hMFLoading        = "Loading",
             hMFOpenLastMaps   = "Open last maps?",
             hMFClosing        = "Closing",
             hMFSaveOpenedMaps = "Save opend maps?",
-            // Context menu
+            // Map context menu
             lMFMapCMOptions = "Options",
             lMFMapCMSave    = "Save",
+            lMFMapCMSaveAs  = "Save as...",
             lMFMapCMLoad    = "Load...",
             lMFMapCMReload  = "Reload",
             lMFMapCMClose   = "Close",
+            // Element context menu
+            lMFElementCMOptions       = "Options",
+            lMFElementCMDelete        = "Delete",
+            lMFElementCMOpenReference = "Open reference",
         #endregion
 
         #region Main Options
@@ -73,7 +78,6 @@ namespace Schematix
             hLFEdit          = "Edit element",
             hLFAdd           = "Add new sub-element",
             lLFColumName     = "Name",
-            lLFColumCatalog  = "Catalog",
             lLFColumLocation = "Location",
         #endregion
 
@@ -132,17 +136,14 @@ namespace Schematix
             hOEDotSave      = "Save dot",
             hOEDotDelete    = "Delete dot",
             lOEDotLocation  = "Location",
-            //...
         #endregion
-
-        /*Link Edit*/
 
         #region Box Edit
             lBEType           = "Type",
-            lBEType0Text      = "Default text",
+            lBEType0Text      = "Text only",
             lBEType1Rectangle = "Rectangle",
             lBEType2Ellipse   = "Ellipse",
-            lBEText           = "Text",
+            lBEText           = "Default text",
         #endregion
 
         #region Element Options (share)
@@ -152,7 +153,7 @@ namespace Schematix
             lEOReference       = "Reference",
             hEOGetReference    = "Pick reference",
             // +
-            hEOPrototypeDelete = "Delete prototype",
+            hEOPrototypeDelete = "Delete exemplar",
         #endregion
 
         #region Object Options
@@ -165,8 +166,6 @@ namespace Schematix
             lOOColumTimeLast = "Last check",
             lOOColumResult   = "Last result",
         #endregion
-
-        /*Link Options*/
 
         #region Box Options
             lBOText = "Text",
@@ -257,7 +256,7 @@ namespace Schematix
             lAppVersion   = "Version:",
             lOwner        = "Owner:",
             lContact      = "Contact:",
-            tDescription  = "Description\n\nThis program designed for visualize and monitor computer network.";
+            tDescription  = "Description\r\n\r\nThis program designed for visualize and monitor computer network.";
         #endregion
 
         static public String ReadText(StreamReader file)//Ok
@@ -321,12 +320,17 @@ namespace Schematix
                                 case "hMFOpenLastMaps":   hMFOpenLastMaps   = lblText;   break;
                                 case "hMFClosing":        hMFClosing        = lblText;   break;
                                 case "hMFSaveOpenedMaps": hMFSaveOpenedMaps = lblText;   break;
-                                // Context menu
+                                // Map context menu
                                 case "lMFMapCMOptions": lMFMapCMOptions = lblText;   break;
                                 case "lMFMapCMSave":    lMFMapCMSave    = lblText;   break;
+                                case "lMFMapCMSaveAs":  lMFMapCMSaveAs  = lblText;   break;
                                 case "lMFMapCMLoad":    lMFMapCMLoad    = lblText;   break;
                                 case "lMFMapCMReload":  lMFMapCMReload  = lblText;   break;
                                 case "lMFMapCMClose":   lMFMapCMClose   = lblText;   break;
+                                // Element context menu
+                                case "lMFElementCMOptions":       lMFElementCMOptions       = lblText;   break;
+                                case "lMFElementCMDelete":        lMFElementCMDelete        = lblText;   break;
+                                case "lMFElementCMOpenReference": lMFElementCMOpenReference = lblText;   break;
                             }
                             break;
                         #endregion
@@ -378,7 +382,6 @@ namespace Schematix
                                 case "hLFEdit":          hLFEdit           = lblText;   break;
                                 case "hLFAdd":           hLFAdd            = lblText;   break;
                                 case "lLFColumName":     lLFColumName      = lblText;   break;
-                                case "lLFColumCatalog":  lLFColumCatalog   = lblText;   break;
                                 case "lLFColumLocation": lLFColumLocation  = lblText;   break;
                             }
                             break;
@@ -451,8 +454,6 @@ namespace Schematix
                             break;
                         #endregion
 
-                        /*Link Options*/
-
                         #region Box Edit
                         case "BE":
                             switch (lblName)
@@ -496,8 +497,6 @@ namespace Schematix
                             }
                             break;
                         #endregion
-
-                        /*Link Options*/
 
                         #region Box Options
                         case "BO":

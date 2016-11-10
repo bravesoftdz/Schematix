@@ -20,8 +20,11 @@ namespace Schematix
         public const bool DEFAULT_PING_ONN            = false;
         public const int  DEFAULT_PING_ARRAY          = 5;
 
-        public static String RECORD_FILENAME = "\\Node.xRec";
-        public static String RECORD_FILEEXT  = "Schematix Prototype file|*.xRec";
+        public static String RECORD_EXT_OBJECT = ".xObj";
+        public static String RECORD_EXT_LINK   = ".xLnk";
+        public static String RECORD_EXT_BOX    = ".xBox";
+        public static String RECORD_EXT_MAP    = ".xMap";
+        public static String RECORD_EXTFILLTER_MAP = "Schematix map file|*" + RECORD_EXT_MAP;
         // Object Prototype
         public static readonly Color DEFAULT_OBJECT_IMAGE_COLOR = Color.Black; // for preview
         public static readonly Color DEFAULT_OBJECT_APLHA_COLOR = Color.White;
@@ -38,9 +41,9 @@ namespace Schematix
         public const String iniFile = "Schematix.ini";
         public const int    MAX_PING_PERIOD = 24 * 3600000;
         public const int    MAX_PING_COUNT  = 10;
-        public const int    DEFAULT_MAP_WIDTH  = 820;
-        public const int    DEFAULT_MAP_HEIGHT = 400;
-        public const bool   DEFAULT_MAP_AUTOSIZE = false;
+        public const int    DEFAULT_MAP_WIDTH  = 320;
+        public const int    DEFAULT_MAP_HEIGHT = 240;
+        public const bool   DEFAULT_MAP_AUTOSIZE = true;
         // Grid
         public const int             MAX_GRID_STEP      = 1000;
         public const int             DEFAULT_GRID_STEP  = 32;
@@ -51,14 +54,14 @@ namespace Schematix
         // Back
         public const BackgroundStyles   DEFAULT_BACK_STYLE  = BackgroundStyles.Color;
         public const AlignTypes         DEFAULT_BACK_ALIGN  = AlignTypes.TopLeft;
-        public static readonly Color    DEFAULT_BACK_COLOR  = Color.LightSkyBlue;
+        public static readonly Color    DEFAULT_BACK_COLOR  = Color.SteelBlue;
         public static readonly Color    DEFAULT_BACK_ACOLOR = Color.White;
 
         // Language
         static public LanguageRecord LangCur = new LanguageRecord();
         static public List<LanguageRecord> Langs = new List<LanguageRecord>() { LangCur };
         static public String
-            LangPath = "Languages",
+            LangPath = "",
             LangName = LangCur.Name;
 
         // Behaiour
@@ -98,9 +101,9 @@ namespace Schematix
         static public ListView lvUsedObjects;
         static public ListView lvUsedLinks;
         static public ListView lvUsedBoxes;
-        static public List<xPObject> PObjects = new List<xPObject>();
-        static public List<xPLink>   PLinks   = new List<xPLink>();
-        static public List<xPBox>    PBoxes   = new List<xPBox>();
+        static public List<xPrototype> PObjects = new List<xPrototype>();
+        static public List<xPrototype> PLinks   = new List<xPrototype>();
+        static public List<xPrototype> PBoxes   = new List<xPrototype>();
         static public List<xMap>     Maps     = new List<xMap>();
         static public List<String>   MapFiles = new List<String>();
         // Ping list
@@ -187,21 +190,18 @@ namespace Schematix
 
         static public int SetCounter(int value, int maxValue, int minValue = 0, int defaultValue = 0)//Ok
         {
-            if (defaultValue < minValue)
-                defaultValue = minValue;
+            if (value < minValue || maxValue < value)
+                value = defaultValue;
             if (value < minValue)
-                return defaultValue;
+                return minValue;
             if (maxValue < value)
-                return defaultValue;
+                return maxValue;
             return value;
         }
 
-        static public int SetCounter(String str, int maxValue, int minValue = 0, int defaultValue = 0)//Ok
-        {
-            return SetCounter(StrToInt(str, defaultValue), maxValue, minValue, defaultValue);
-        }
+        static public int SetCounter(String str, int maxValue, int minValue = 0, int defaultValue = 0) => SetCounter(StrToInt(str, defaultValue), maxValue, minValue, defaultValue);//Ok
 
-        static public String Load(String fileName = iniFile)//!
+        static public String Load(String fileName = iniFile)//
         {
             try
             {
@@ -228,11 +228,11 @@ namespace Schematix
                             case "RootLinks":   RootLinks   = value;   break;
                             case "RootBoxes":   RootBoxes   = value;   break;
                             // Behavior
-                            case "OnStart":    OnStart    = SetCounter(value, 2);                    break;
-                            case "OnClose":    OnClose    = SetCounter(value, 2);                    break;
-                            case "PingOnn":    PingOnn    = (value.ToUpper() == "YES");              break;
-                            case "PingPeriod": PingPeriod = SetCounter(value, MAX_PING_PERIOD, 1);   break;
-                            case "PingCount":  PingCount  = SetCounter(value, 10, 1);                break;
+                            case "OnStart":    OnStart    = SetCounter(value, 2);                           break;
+                            case "OnClose":    OnClose    = SetCounter(value, 2);                           break;
+                            case "PingOnn":    PingOnn    = (value.ToUpper() == "YES");                     break;
+                            case "PingPeriod": PingPeriod = SetCounter(value, MAX_PING_PERIOD, 100, 100);   break;
+                            case "PingCount":  PingCount  = SetCounter(value, 10, 1);                       break;
 
                             //# Map
                             // Grid

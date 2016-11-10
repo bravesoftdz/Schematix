@@ -239,7 +239,15 @@ namespace Schematix
             if (prototype.tvNode != null)
                 prototype.tvNode.Text = (prototype.NodeName != "") ? prototype.NodeName : prototype.Name;
             if (prototype.lvItemUsed != null)
+            {
                 prototype.lvItemUsed.Text = (prototype.NodeName != "") ? prototype.NodeName : prototype.Name;
+                if (prototype.IsObject)
+                    prototype.lvItemUsed.SubItems[1].Text = (Options.PObjects.Exists(PO => (PO.ID == prototype.ID) && (PO.Revision == prototype.Revision))) ? "Catalog" : "Map";
+                if (prototype.IsLink)
+                    prototype.lvItemUsed.SubItems[1].Text = (Options.PLinks.Exists  (PL => (PL.ID == prototype.ID) && (PL.Revision == prototype.Revision))) ? "Catalog" : "Map";
+                if (prototype.IsBox)
+                    prototype.lvItemUsed.SubItems[1].Text = (Options.PBoxes.Exists  (PB => (PB.ID == prototype.ID) && (PB.Revision == prototype.Revision))) ? "Catalog" : "Map";
+            }
         }
 
         static public void DrawBack(Graphics graphics, xBackground Back, xGrid Grid, int drawX, int drawY, int drawW, int drawH, int portX, int portY, int portW, int portH)//Ok
@@ -389,13 +397,36 @@ namespace Schematix
             return new Bitmap(1, 1);
         }
 
-        static public Bitmap GetNoImage()
+        static public Bitmap GetNoImage()//Ok
         {
             var bmap = new Bitmap(16, 16);
             var g = Graphics.FromImage(bmap);
+            g.Clear(Color.FromArgb(0,0,0,0));
             g.DrawRectangle(Pens.Red, 0, 0, 15, 15);
             g.DrawLine(Pens.Red, 0, 0, 15, 15);
             g.DrawLine(Pens.Red, 0, 15, 15, 0);
+            return bmap;
+        }
+
+        static public Bitmap GetDotImage()//Ok
+        {
+            var bmap = new Bitmap(7, 7);
+            var g = Graphics.FromImage(bmap);
+            g.Clear(Color.FromArgb(0, 0, 0, 0));
+            g.FillRectangle(Brushes.Brown, 1, 1, 5, 5);
+            Point[] points =
+            {
+                new Point(2, 0),
+                new Point(4, 0),
+                new Point(6, 2),
+                new Point(6, 4),
+                new Point(4, 6),
+                new Point(2, 6),
+                new Point(0, 4),
+                new Point(0, 2),
+                new Point(2, 0)
+            };
+            g.DrawLines(Pens.Black, points);
             return bmap;
         }
     }

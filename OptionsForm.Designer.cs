@@ -69,6 +69,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.gbBack = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.chkTransparentColor = new System.Windows.Forms.CheckBox();
             this.cbbBackImageBPP = new System.Windows.Forms.ComboBox();
             this.chkBackImageBuildIn = new System.Windows.Forms.CheckBox();
             this.cbbBackStyle = new System.Windows.Forms.ComboBox();
@@ -98,7 +99,6 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.chkTransparentColor = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -341,7 +341,7 @@
             0,
             0});
             this.nudPingPeriod.Minimum = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             0});
@@ -627,6 +627,18 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(396, 236);
             this.tableLayoutPanel5.TabIndex = 1;
+            // 
+            // chkTransparentColor
+            // 
+            this.chkTransparentColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkTransparentColor.AutoSize = true;
+            this.chkTransparentColor.Location = new System.Drawing.Point(3, 84);
+            this.chkTransparentColor.Name = "chkTransparentColor";
+            this.chkTransparentColor.Size = new System.Drawing.Size(109, 17);
+            this.chkTransparentColor.TabIndex = 14;
+            this.chkTransparentColor.Text = "Transparent color";
+            this.chkTransparentColor.UseVisualStyleBackColor = true;
+            this.chkTransparentColor.CheckedChanged += new System.EventHandler(this.RedrawSample);
             // 
             // cbbBackImageBPP
             // 
@@ -1021,18 +1033,6 @@
             this.btnSave.Text = "Ok";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // chkTransparentColor
-            // 
-            this.chkTransparentColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkTransparentColor.AutoSize = true;
-            this.chkTransparentColor.Location = new System.Drawing.Point(3, 84);
-            this.chkTransparentColor.Name = "chkTransparentColor";
-            this.chkTransparentColor.Size = new System.Drawing.Size(109, 17);
-            this.chkTransparentColor.TabIndex = 14;
-            this.chkTransparentColor.Text = "Transparent color";
-            this.chkTransparentColor.UseVisualStyleBackColor = true;
-            this.chkTransparentColor.CheckedChanged += new System.EventHandler(this.RedrawSample);
             // 
             // OptionsForm
             // 

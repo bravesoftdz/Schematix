@@ -32,17 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ObjectEditForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblName = new System.Windows.Forms.Label();
-            this.tbName = new System.Windows.Forms.TextBox();
-            this.lblNode = new System.Windows.Forms.Label();
-            this.tbNode = new System.Windows.Forms.TextBox();
-            this.tbRevision = new System.Windows.Forms.TextBox();
-            this.tbID = new System.Windows.Forms.TextBox();
-            this.lblID = new System.Windows.Forms.Label();
-            this.tbDescription = new System.Windows.Forms.TextBox();
-            this.chkIsPrototype = new System.Windows.Forms.CheckBox();
-            this.lblRevision = new System.Windows.Forms.Label();
             this.tpImage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
@@ -86,9 +75,21 @@
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbDescription = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbNode = new System.Windows.Forms.TextBox();
+            this.lblName = new System.Windows.Forms.Label();
+            this.tbRevision = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
+            this.lblNode = new System.Windows.Forms.Label();
+            this.lblRevision = new System.Windows.Forms.Label();
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.chkIsPrototype = new System.Windows.Forms.CheckBox();
+            this.lblID = new System.Windows.Forms.Label();
+            this.tbID = new System.Windows.Forms.TextBox();
             this.tabControl.SuspendLayout();
             this.tpMain.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.tpImage.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
@@ -105,6 +106,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudDotY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDotX)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -129,151 +133,6 @@
             this.tpMain.Size = new System.Drawing.Size(404, 255);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.AutoSize = true;
-            this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel2.ColumnCount = 5;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.Controls.Add(this.lblName, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.tbName, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.lblNode, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tbNode, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tbRevision, 3, 1);
-            this.tableLayoutPanel2.Controls.Add(this.tbID, 4, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblID, 3, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tbDescription, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.chkIsPrototype, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblRevision, 2, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 4;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(398, 249);
-            this.tableLayoutPanel2.TabIndex = 2;
-            // 
-            // lblName
-            // 
-            this.lblName.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(3, 58);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(35, 13);
-            this.lblName.TabIndex = 0;
-            this.lblName.Text = "Name";
-            // 
-            // tbName
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbName, 4);
-            this.tbName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName.Location = new System.Drawing.Point(71, 55);
-            this.tbName.MaxLength = 255;
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(324, 20);
-            this.tbName.TabIndex = 1;
-            // 
-            // lblNode
-            // 
-            this.lblNode.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblNode.AutoSize = true;
-            this.lblNode.Location = new System.Drawing.Point(3, 6);
-            this.lblNode.Name = "lblNode";
-            this.lblNode.Size = new System.Drawing.Size(62, 13);
-            this.lblNode.TabIndex = 0;
-            this.lblNode.Text = "Node name";
-            // 
-            // tbNode
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbNode, 2);
-            this.tbNode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNode.Location = new System.Drawing.Point(71, 3);
-            this.tbNode.MaxLength = 32;
-            this.tbNode.Name = "tbNode";
-            this.tbNode.Size = new System.Drawing.Size(208, 20);
-            this.tbNode.TabIndex = 0;
-            // 
-            // tbRevision
-            // 
-            this.tbRevision.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.tbRevision.BackColor = System.Drawing.Color.OldLace;
-            this.tableLayoutPanel2.SetColumnSpan(this.tbRevision, 2);
-            this.tbRevision.Location = new System.Drawing.Point(285, 29);
-            this.tbRevision.MaxLength = 20;
-            this.tbRevision.Name = "tbRevision";
-            this.tbRevision.ReadOnly = true;
-            this.tbRevision.Size = new System.Drawing.Size(110, 20);
-            this.tbRevision.TabIndex = 7;
-            this.tbRevision.Text = "2000.01.01 12:00:00";
-            this.tbRevision.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tbID
-            // 
-            this.tbID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbID.BackColor = System.Drawing.Color.OldLace;
-            this.tbID.Location = new System.Drawing.Point(315, 3);
-            this.tbID.MaxLength = 20;
-            this.tbID.Name = "tbID";
-            this.tbID.ReadOnly = true;
-            this.tbID.Size = new System.Drawing.Size(80, 20);
-            this.tbID.TabIndex = 8;
-            this.tbID.Text = "1119767714";
-            this.tbID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblID
-            // 
-            this.lblID.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblID.AutoSize = true;
-            this.lblID.Location = new System.Drawing.Point(291, 6);
-            this.lblID.Name = "lblID";
-            this.lblID.Size = new System.Drawing.Size(18, 13);
-            this.lblID.TabIndex = 0;
-            this.lblID.Text = "ID";
-            // 
-            // tbDescription
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 5);
-            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDescription.Location = new System.Drawing.Point(3, 81);
-            this.tbDescription.MaxLength = 8192;
-            this.tbDescription.MinimumSize = new System.Drawing.Size(4, 100);
-            this.tbDescription.Multiline = true;
-            this.tbDescription.Name = "tbDescription";
-            this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDescription.Size = new System.Drawing.Size(392, 165);
-            this.tbDescription.TabIndex = 10;
-            // 
-            // chkIsPrototype
-            // 
-            this.chkIsPrototype.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkIsPrototype.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.chkIsPrototype, 2);
-            this.chkIsPrototype.Location = new System.Drawing.Point(3, 30);
-            this.chkIsPrototype.Name = "chkIsPrototype";
-            this.chkIsPrototype.Size = new System.Drawing.Size(71, 17);
-            this.chkIsPrototype.TabIndex = 11;
-            this.chkIsPrototype.Text = "Prototype";
-            this.chkIsPrototype.UseVisualStyleBackColor = true;
-            // 
-            // lblRevision
-            // 
-            this.lblRevision.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblRevision.AutoSize = true;
-            this.lblRevision.Location = new System.Drawing.Point(254, 32);
-            this.lblRevision.Name = "lblRevision";
-            this.lblRevision.Size = new System.Drawing.Size(25, 13);
-            this.lblRevision.TabIndex = 0;
-            this.lblRevision.Text = "rev.";
-            this.lblRevision.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tpImage
             // 
@@ -814,6 +673,176 @@
             // 
             this.dlgOpen.SupportMultiDottedExtensions = true;
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.tbDescription, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel8, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel9, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(398, 249);
+            this.tableLayoutPanel2.TabIndex = 9;
+            // 
+            // tbDescription
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.tbDescription, 5);
+            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDescription.Location = new System.Drawing.Point(3, 81);
+            this.tbDescription.MaxLength = 8192;
+            this.tbDescription.Multiline = true;
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbDescription.Size = new System.Drawing.Size(392, 165);
+            this.tbDescription.TabIndex = 10;
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.AutoSize = true;
+            this.tableLayoutPanel8.ColumnCount = 4;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel8.Controls.Add(this.tbNode, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.lblName, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.tbRevision, 3, 1);
+            this.tableLayoutPanel8.Controls.Add(this.tbName, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.lblNode, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.lblRevision, 2, 1);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 2;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(398, 52);
+            this.tableLayoutPanel8.TabIndex = 0;
+            // 
+            // tbNode
+            // 
+            this.tbNode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNode.Location = new System.Drawing.Point(71, 29);
+            this.tbNode.MaxLength = 32;
+            this.tbNode.Name = "tbNode";
+            this.tbNode.Size = new System.Drawing.Size(183, 20);
+            this.tbNode.TabIndex = 3;
+            // 
+            // lblName
+            // 
+            this.lblName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(3, 6);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(35, 13);
+            this.lblName.TabIndex = 0;
+            this.lblName.Text = "Name";
+            // 
+            // tbRevision
+            // 
+            this.tbRevision.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.tbRevision.BackColor = System.Drawing.Color.OldLace;
+            this.tbRevision.Location = new System.Drawing.Point(285, 29);
+            this.tbRevision.MaxLength = 20;
+            this.tbRevision.Name = "tbRevision";
+            this.tbRevision.ReadOnly = true;
+            this.tbRevision.Size = new System.Drawing.Size(110, 20);
+            this.tbRevision.TabIndex = 7;
+            this.tbRevision.Text = "2000.01.01 12:00:00";
+            this.tbRevision.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // tbName
+            // 
+            this.tableLayoutPanel8.SetColumnSpan(this.tbName, 3);
+            this.tbName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbName.Location = new System.Drawing.Point(71, 3);
+            this.tbName.MaxLength = 255;
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(324, 20);
+            this.tbName.TabIndex = 2;
+            // 
+            // lblNode
+            // 
+            this.lblNode.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblNode.AutoSize = true;
+            this.lblNode.Location = new System.Drawing.Point(3, 32);
+            this.lblNode.Name = "lblNode";
+            this.lblNode.Size = new System.Drawing.Size(62, 13);
+            this.lblNode.TabIndex = 0;
+            this.lblNode.Text = "Node name";
+            // 
+            // lblRevision
+            // 
+            this.lblRevision.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblRevision.AutoSize = true;
+            this.lblRevision.Location = new System.Drawing.Point(257, 32);
+            this.lblRevision.Margin = new System.Windows.Forms.Padding(0);
+            this.lblRevision.Name = "lblRevision";
+            this.lblRevision.Size = new System.Drawing.Size(25, 13);
+            this.lblRevision.TabIndex = 0;
+            this.lblRevision.Text = "rev.";
+            this.lblRevision.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel9
+            // 
+            this.tableLayoutPanel9.AutoSize = true;
+            this.tableLayoutPanel9.ColumnCount = 3;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel9.Controls.Add(this.chkIsPrototype, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.lblID, 1, 0);
+            this.tableLayoutPanel9.Controls.Add(this.tbID, 2, 0);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(0, 52);
+            this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
+            this.tableLayoutPanel9.RowCount = 1;
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(398, 26);
+            this.tableLayoutPanel9.TabIndex = 1;
+            // 
+            // chkIsPrototype
+            // 
+            this.chkIsPrototype.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkIsPrototype.AutoSize = true;
+            this.chkIsPrototype.Location = new System.Drawing.Point(3, 4);
+            this.chkIsPrototype.Name = "chkIsPrototype";
+            this.chkIsPrototype.Size = new System.Drawing.Size(71, 17);
+            this.chkIsPrototype.TabIndex = 13;
+            this.chkIsPrototype.Text = "Prototype";
+            this.chkIsPrototype.UseVisualStyleBackColor = true;
+            // 
+            // lblID
+            // 
+            this.lblID.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblID.AutoSize = true;
+            this.lblID.Location = new System.Drawing.Point(251, 6);
+            this.lblID.Name = "lblID";
+            this.lblID.Size = new System.Drawing.Size(18, 13);
+            this.lblID.TabIndex = 0;
+            this.lblID.Text = "ID";
+            // 
+            // tbID
+            // 
+            this.tbID.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.tbID.BackColor = System.Drawing.Color.OldLace;
+            this.tbID.Location = new System.Drawing.Point(275, 3);
+            this.tbID.MaxLength = 20;
+            this.tbID.Name = "tbID";
+            this.tbID.ReadOnly = true;
+            this.tbID.Size = new System.Drawing.Size(120, 20);
+            this.tbID.TabIndex = 8;
+            this.tbID.Text = "9859515965827744064";
+            this.tbID.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // ObjectEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -831,9 +860,6 @@
             this.Text = "Edit object";
             this.tabControl.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
-            this.tpMain.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.tpImage.ResumeLayout(false);
             this.tpImage.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
@@ -859,6 +885,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudDotY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDotX)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel8.PerformLayout();
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.tableLayoutPanel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -871,16 +903,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.TabPage tpDotes;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.Label lblNode;
-        private System.Windows.Forms.TextBox tbNode;
-        private System.Windows.Forms.TextBox tbRevision;
-        private System.Windows.Forms.TextBox tbID;
-        private System.Windows.Forms.Label lblID;
-        private System.Windows.Forms.Label lblRevision;
-        private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label lblImagePath;
         private System.Windows.Forms.TextBox tbImagePath;
@@ -918,8 +940,20 @@
         private System.Windows.Forms.Button btnBackColor;
         private System.Windows.Forms.Label lblImageBackColor;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox chkIsPrototype;
         private System.Windows.Forms.Button btnAlphaColor;
         private System.Windows.Forms.CheckBox chkTransparentColor;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TextBox tbDescription;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.TextBox tbNode;
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.TextBox tbRevision;
+        private System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.Label lblNode;
+        private System.Windows.Forms.Label lblRevision;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
+        private System.Windows.Forms.CheckBox chkIsPrototype;
+        private System.Windows.Forms.Label lblID;
+        private System.Windows.Forms.TextBox tbID;
     }
 }

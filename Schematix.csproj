@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo_Schematix.ico" />
+    <None Include="Resources\saveAs.png" />
     <None Include="Resources\deleteAll.png" />
     <None Include="Resources\PullTabs.png" />
     <None Include="Resources\PullTools.png" />
