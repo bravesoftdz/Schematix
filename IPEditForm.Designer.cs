@@ -359,8 +359,8 @@
             // 
             // nudPeriod
             // 
-            this.nudPeriod.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.nudPeriod.Location = new System.Drawing.Point(335, 29);
+            this.nudPeriod.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.nudPeriod.Location = new System.Drawing.Point(275, 29);
             this.nudPeriod.Maximum = new decimal(new int[] {
             86400000,
             0,
@@ -442,6 +442,7 @@
             // 
             this.clmTripTime.Text = "Trip time";
             this.clmTripTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.clmTripTime.Width = 80;
             // 
             // ilPingColor
             // 

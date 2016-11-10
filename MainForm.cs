@@ -83,6 +83,7 @@ namespace Schematix
             toolTip.SetToolTip(btnLibrary,    Options.LangCur.hMFLibrary);
             //# Map
             toolTip.SetToolTip(pnlMapOptions, Options.LangCur.hMFMapOptions);
+            toolTip.SetToolTip(pnlMapFrame,   Options.LangCur.hMFMapOptions);
             // Map context menu
             tsmiMapOptions.Text = Options.LangCur.lMFMapCMOptions;
             tsmiMapSave.Text    = Options.LangCur.lMFMapCMSave;

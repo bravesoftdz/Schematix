@@ -46,7 +46,7 @@
             this.clmIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmPeriod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmTimeNext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmLastCheck = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmTimeLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmLastResult = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ilPingColor = new System.Windows.Forms.ImageList(this.components);
             this.btnIPEdit = new System.Windows.Forms.Button();
@@ -226,7 +226,7 @@
             this.clmIP,
             this.clmPeriod,
             this.clmTimeNext,
-            this.clmLastCheck,
+            this.clmTimeLast,
             this.clmLastResult});
             this.tableLayoutPanel1.SetColumnSpan(this.lvIPs, 3);
             this.lvIPs.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -260,10 +260,10 @@
             this.clmTimeNext.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.clmTimeNext.Width = 120;
             // 
-            // clmLastCheck
+            // clmTimeLast
             // 
-            this.clmLastCheck.Text = "Last check";
-            this.clmLastCheck.Width = 120;
+            this.clmTimeLast.Text = "Last check";
+            this.clmTimeLast.Width = 120;
             // 
             // clmLastResult
             // 
@@ -338,7 +338,7 @@
         private System.Windows.Forms.ColumnHeader clmTimeNext;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ImageList ilPingColor;
-        private System.Windows.Forms.ColumnHeader clmLastCheck;
+        private System.Windows.Forms.ColumnHeader clmTimeLast;
         private System.Windows.Forms.Button btnIPEdit;
     }
 }

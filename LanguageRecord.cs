@@ -161,6 +161,7 @@ namespace Schematix
 
         #region Object Options
             hOOIPAdd         = "Add new IP",
+            hOOIPEdit        = "Edit IP",
             hOOIPDelete      = "Delete selected IP",
             // List
             lOOColumIP       = "Address",
@@ -493,6 +494,7 @@ namespace Schematix
                             switch (lblName)
                             {
                                 case "hOOIPAdd":         hOOIPAdd         = lblText;   break;
+                                case "hOOIPEdit":        hOOIPEdit        = lblText;   break;
                                 case "hOOIPDelete":      hOOIPDelete      = lblText;   break;
                                 // List
                                 case "lOOColumIP":       lOOColumIP       = lblText;   break;

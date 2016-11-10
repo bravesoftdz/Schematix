@@ -142,6 +142,7 @@ hEOPrototypeDelete	Удалить экземпляр
 
 //# Object Options
 hOOIPAdd	Добавить IP адрес
+hOOIPEdit	Редактировать IP адрес
 hOOIPDelete	Удалить выбранные IP адреса
 // List
 lOOColumIP	Адрес

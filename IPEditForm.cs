@@ -11,6 +11,7 @@ namespace Schematix
         {
             InitializeComponent();
             //Main
+            tpPings.Text     = Options.LangCur.lIPTabMain;
             lblAddress.Text  = Options.LangCur.lIPAddress;
             lblName.Text     = Options.LangCur.lEOName;
             lblPeriod.Text   = Options.LangCur.lIPPeriod;
@@ -40,6 +41,7 @@ namespace Schematix
             nudPeriod.Value     = IP.Period;
 
             // Pings
+            tpPings.Text     = Options.LangCur.lIPTabPings;
             clmSendTime.Text = Options.LangCur.lIPColumSendTime;
             clmState.Text    = Options.LangCur.lIPColumState;
             clmTripTime.Text = Options.LangCur.lIPColumTripTime;

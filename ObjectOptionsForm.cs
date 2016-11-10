@@ -17,11 +17,12 @@ namespace Schematix
             toolTip.SetToolTip(btnGetReference, Options.LangCur.hEOGetReference);
             // Own
             toolTip.SetToolTip(btnIPAdd,        Options.LangCur.hOOIPAdd);
+            toolTip.SetToolTip(btnIPEdit,       Options.LangCur.hOOIPEdit);
             toolTip.SetToolTip(btnIPDelete,     Options.LangCur.hOOIPDelete);
             clmIP.Text         = Options.LangCur.lOOColumIP;
             clmPeriod.Text     = Options.LangCur.lOOColumPeriod;
-            clmLastResult.Text = Options.LangCur.lOOColumTimeLast;
             clmTimeNext.Text   = Options.LangCur.lOOColumTimeNext;
+            clmTimeLast.Text   = Options.LangCur.lOOColumTimeLast;
             clmLastResult.Text = Options.LangCur.lOOColumResult;
             // Store
             Object = obj;
@@ -49,11 +50,11 @@ namespace Schematix
                 Share.lvIPs_Add(lvIPs, form.IP, ref form.IP.Obj_lvItem);
         }
 
-        private void btnIPEdit_Click(object sender, EventArgs e) => Share.lvIPs_Edit(lvIPs);
+        private void btnIPEdit_Click(object sender, EventArgs e) => Share.lvIPs_Edit(lvIPs);//Ok
 
         private void btnIPDelete_Click(object sender, EventArgs e) => Share.lvIPs_Delete(lvIPs);//Ok
 
-        private void lvIPs_SelectedIndexChanged(object sender, EventArgs e) => btnIPDelete.Enabled = (0 < lvIPs.SelectedItems.Count);//Ok
+        private void lvIPs_SelectedIndexChanged(object sender, EventArgs e) => btnIPEdit.Enabled = btnIPDelete.Enabled = (0 < lvIPs.SelectedItems.Count);//Ok
 
         private void lvIPs_ItemChecked(object sender, ItemCheckedEventArgs e)//Ok
         {
