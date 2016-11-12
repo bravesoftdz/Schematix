@@ -38,7 +38,7 @@
             this.btnObjectAdd = new System.Windows.Forms.Button();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblUsedObjects = new System.Windows.Forms.Label();
-            this.lvObjects = new System.Windows.Forms.ListView();
+            this.lvUsedObjects = new System.Windows.Forms.ListView();
             this.clmObjectName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmObjectLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedObjectEdit = new System.Windows.Forms.Button();
@@ -49,7 +49,7 @@
             this.btnLinkAdd = new System.Windows.Forms.Button();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.lblUsedLinks = new System.Windows.Forms.Label();
-            this.lvLinks = new System.Windows.Forms.ListView();
+            this.lvUsedLinks = new System.Windows.Forms.ListView();
             this.clmLinkName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmLinkLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedLinkEdit = new System.Windows.Forms.Button();
@@ -66,7 +66,7 @@
             this.btnBoxAdd = new System.Windows.Forms.Button();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.lblUsedBoxes = new System.Windows.Forms.Label();
-            this.lvBoxes = new System.Windows.Forms.ListView();
+            this.lvUsedBoxes = new System.Windows.Forms.ListView();
             this.clmBoxName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmBoxLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUsedBoxEdit = new System.Windows.Forms.Button();
@@ -197,7 +197,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.Controls.Add(this.lblUsedObjects, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.lvObjects, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.lvUsedObjects, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.btnUsedObjectEdit, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
@@ -220,24 +220,24 @@
             this.lblUsedObjects.Text = "Used on map";
             this.lblUsedObjects.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lvObjects
+            // lvUsedObjects
             // 
-            this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvUsedObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmObjectName,
             this.clmObjectLocation});
-            this.tableLayoutPanel4.SetColumnSpan(this.lvObjects, 2);
-            this.lvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvObjects.FullRowSelect = true;
-            this.lvObjects.HideSelection = false;
-            this.lvObjects.Location = new System.Drawing.Point(3, 28);
-            this.lvObjects.MultiSelect = false;
-            this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(256, 69);
-            this.lvObjects.TabIndex = 1;
-            this.lvObjects.UseCompatibleStateImageBehavior = false;
-            this.lvObjects.View = System.Windows.Forms.View.Details;
-            this.lvObjects.SelectedIndexChanged += new System.EventHandler(this.lvObjects_SelectedIndexChanged);
-            this.lvObjects.DoubleClick += new System.EventHandler(this.btnUsedObjectEdit_Click);
+            this.tableLayoutPanel4.SetColumnSpan(this.lvUsedObjects, 2);
+            this.lvUsedObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvUsedObjects.FullRowSelect = true;
+            this.lvUsedObjects.HideSelection = false;
+            this.lvUsedObjects.Location = new System.Drawing.Point(3, 28);
+            this.lvUsedObjects.MultiSelect = false;
+            this.lvUsedObjects.Name = "lvUsedObjects";
+            this.lvUsedObjects.Size = new System.Drawing.Size(256, 69);
+            this.lvUsedObjects.TabIndex = 1;
+            this.lvUsedObjects.UseCompatibleStateImageBehavior = false;
+            this.lvUsedObjects.View = System.Windows.Forms.View.Details;
+            this.lvUsedObjects.SelectedIndexChanged += new System.EventHandler(this.lvObjects_SelectedIndexChanged);
+            this.lvUsedObjects.DoubleClick += new System.EventHandler(this.btnUsedObjectEdit_Click);
             // 
             // clmObjectName
             // 
@@ -280,7 +280,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(262, 118);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(262, 117);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // tvLinks
@@ -290,7 +290,7 @@
             this.tvLinks.HideSelection = false;
             this.tvLinks.Location = new System.Drawing.Point(3, 28);
             this.tvLinks.Name = "tvLinks";
-            this.tvLinks.Size = new System.Drawing.Size(256, 87);
+            this.tvLinks.Size = new System.Drawing.Size(256, 86);
             this.tvLinks.TabIndex = 0;
             this.tvLinks.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvLinks_AfterSelect);
             this.tvLinks.DoubleClick += new System.EventHandler(this.btnLinkEdit_Click);
@@ -338,7 +338,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel5.Controls.Add(this.lblUsedLinks, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.lvLinks, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.lvUsedLinks, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.btnUsedLinkEdit, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
@@ -361,24 +361,24 @@
             this.lblUsedLinks.Text = "Used on map:";
             this.lblUsedLinks.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lvLinks
+            // lvUsedLinks
             // 
-            this.lvLinks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvUsedLinks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmLinkName,
             this.clmLinkLocation});
-            this.tableLayoutPanel5.SetColumnSpan(this.lvLinks, 2);
-            this.lvLinks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvLinks.FullRowSelect = true;
-            this.lvLinks.HideSelection = false;
-            this.lvLinks.Location = new System.Drawing.Point(3, 28);
-            this.lvLinks.MultiSelect = false;
-            this.lvLinks.Name = "lvLinks";
-            this.lvLinks.Size = new System.Drawing.Size(256, 69);
-            this.lvLinks.TabIndex = 1;
-            this.lvLinks.UseCompatibleStateImageBehavior = false;
-            this.lvLinks.View = System.Windows.Forms.View.Details;
-            this.lvLinks.SelectedIndexChanged += new System.EventHandler(this.lvLinks_SelectedIndexChanged);
-            this.lvLinks.DoubleClick += new System.EventHandler(this.btnUsedLinkEdit_Click);
+            this.tableLayoutPanel5.SetColumnSpan(this.lvUsedLinks, 2);
+            this.lvUsedLinks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvUsedLinks.FullRowSelect = true;
+            this.lvUsedLinks.HideSelection = false;
+            this.lvUsedLinks.Location = new System.Drawing.Point(3, 28);
+            this.lvUsedLinks.MultiSelect = false;
+            this.lvUsedLinks.Name = "lvUsedLinks";
+            this.lvUsedLinks.Size = new System.Drawing.Size(256, 69);
+            this.lvUsedLinks.TabIndex = 1;
+            this.lvUsedLinks.UseCompatibleStateImageBehavior = false;
+            this.lvUsedLinks.View = System.Windows.Forms.View.Details;
+            this.lvUsedLinks.SelectedIndexChanged += new System.EventHandler(this.lvLinks_SelectedIndexChanged);
+            this.lvUsedLinks.DoubleClick += new System.EventHandler(this.btnUsedLinkEdit_Click);
             // 
             // clmLinkName
             // 
@@ -439,7 +439,7 @@
             this.tpLinks.Location = new System.Drawing.Point(4, 23);
             this.tpLinks.Name = "tpLinks";
             this.tpLinks.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLinks.Size = new System.Drawing.Size(268, 228);
+            this.tpLinks.Size = new System.Drawing.Size(268, 227);
             this.tpLinks.TabIndex = 1;
             this.tpLinks.Text = "Links";
             // 
@@ -462,8 +462,8 @@
             this.splitContainer2.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel5);
             this.splitContainer2.Panel2MinSize = 100;
-            this.splitContainer2.Size = new System.Drawing.Size(262, 222);
-            this.splitContainer2.SplitterDistance = 118;
+            this.splitContainer2.Size = new System.Drawing.Size(262, 221);
+            this.splitContainer2.SplitterDistance = 117;
             this.splitContainer2.TabIndex = 1;
             this.splitContainer2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer2_SplitterMoved);
             // 
@@ -475,7 +475,7 @@
             this.tpBoxes.Location = new System.Drawing.Point(4, 23);
             this.tpBoxes.Name = "tpBoxes";
             this.tpBoxes.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBoxes.Size = new System.Drawing.Size(268, 228);
+            this.tpBoxes.Size = new System.Drawing.Size(268, 227);
             this.tpBoxes.TabIndex = 2;
             this.tpBoxes.Text = "Boxes";
             // 
@@ -498,8 +498,8 @@
             this.splitContainer3.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel6);
             this.splitContainer3.Panel2MinSize = 100;
-            this.splitContainer3.Size = new System.Drawing.Size(262, 222);
-            this.splitContainer3.SplitterDistance = 118;
+            this.splitContainer3.Size = new System.Drawing.Size(262, 221);
+            this.splitContainer3.SplitterDistance = 117;
             this.splitContainer3.TabIndex = 1;
             this.splitContainer3.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer3_SplitterMoved);
             // 
@@ -519,7 +519,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(262, 118);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(262, 117);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
             // tvBoxes
@@ -529,7 +529,7 @@
             this.tvBoxes.HideSelection = false;
             this.tvBoxes.Location = new System.Drawing.Point(3, 28);
             this.tvBoxes.Name = "tvBoxes";
-            this.tvBoxes.Size = new System.Drawing.Size(256, 87);
+            this.tvBoxes.Size = new System.Drawing.Size(256, 86);
             this.tvBoxes.TabIndex = 0;
             this.tvBoxes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvBoxes_AfterSelect);
             this.tvBoxes.DoubleClick += new System.EventHandler(this.btnBoxEdit_Click);
@@ -577,7 +577,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel6.Controls.Add(this.lblUsedBoxes, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.lvBoxes, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.lvUsedBoxes, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.btnUsedBoxEdit, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
@@ -600,24 +600,24 @@
             this.lblUsedBoxes.Text = "Used on map:";
             this.lblUsedBoxes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lvBoxes
+            // lvUsedBoxes
             // 
-            this.lvBoxes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvUsedBoxes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmBoxName,
             this.clmBoxLocation});
-            this.tableLayoutPanel6.SetColumnSpan(this.lvBoxes, 2);
-            this.lvBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvBoxes.FullRowSelect = true;
-            this.lvBoxes.HideSelection = false;
-            this.lvBoxes.Location = new System.Drawing.Point(3, 28);
-            this.lvBoxes.MultiSelect = false;
-            this.lvBoxes.Name = "lvBoxes";
-            this.lvBoxes.Size = new System.Drawing.Size(256, 69);
-            this.lvBoxes.TabIndex = 1;
-            this.lvBoxes.UseCompatibleStateImageBehavior = false;
-            this.lvBoxes.View = System.Windows.Forms.View.Details;
-            this.lvBoxes.SelectedIndexChanged += new System.EventHandler(this.lvBoxes_SelectedIndexChanged);
-            this.lvBoxes.DoubleClick += new System.EventHandler(this.btnUsedBoxEdit_Click);
+            this.tableLayoutPanel6.SetColumnSpan(this.lvUsedBoxes, 2);
+            this.lvUsedBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvUsedBoxes.FullRowSelect = true;
+            this.lvUsedBoxes.HideSelection = false;
+            this.lvUsedBoxes.Location = new System.Drawing.Point(3, 28);
+            this.lvUsedBoxes.MultiSelect = false;
+            this.lvUsedBoxes.Name = "lvUsedBoxes";
+            this.lvUsedBoxes.Size = new System.Drawing.Size(256, 69);
+            this.lvUsedBoxes.TabIndex = 1;
+            this.lvUsedBoxes.UseCompatibleStateImageBehavior = false;
+            this.lvUsedBoxes.View = System.Windows.Forms.View.Details;
+            this.lvUsedBoxes.SelectedIndexChanged += new System.EventHandler(this.lvBoxes_SelectedIndexChanged);
+            this.lvUsedBoxes.DoubleClick += new System.EventHandler(this.btnUsedBoxEdit_Click);
             // 
             // clmBoxName
             // 
@@ -769,8 +769,8 @@
         private System.Windows.Forms.ColumnHeader clmBoxLocation;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ToolTip toolTip;
-        public System.Windows.Forms.ListView lvLinks;
-        public System.Windows.Forms.ListView lvObjects;
-        public System.Windows.Forms.ListView lvBoxes;
+        public System.Windows.Forms.ListView lvUsedLinks;
+        public System.Windows.Forms.ListView lvUsedObjects;
+        public System.Windows.Forms.ListView lvUsedBoxes;
     }
 }

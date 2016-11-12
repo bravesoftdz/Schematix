@@ -94,16 +94,7 @@ namespace Schematix
         static public int
             MainFormX, MainFormW, PortW,
             MainFormY, MainFormH, PortH;
-        // Tools
-        static public RadioButton rbDefault;
-        static public RadioButton rbObject;
-        static public RadioButton rbLink;
-        static public RadioButton rbBox;
-        static public ToolTip     ToolTip;
         // Catalog
-        static public ListView lvUsedObjects;
-        static public ListView lvUsedLinks;
-        static public ListView lvUsedBoxes;
         static public List<xPrototype> PObjects = new List<xPrototype>();
         static public List<xPrototype> PLinks   = new List<xPrototype>();
         static public List<xPrototype> PBoxes   = new List<xPrototype>();

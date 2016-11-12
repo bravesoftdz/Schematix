@@ -15,10 +15,6 @@ namespace Schematix
         {
             InitializeComponent();
             SetText();
-            // Register listviews
-            Options.lvUsedObjects = lvObjects;
-            Options.lvUsedLinks   = lvLinks;
-            Options.lvUsedBoxes   = lvBoxes;
             // Make initial elements
             var PObject = new xPObject();
             var PLink   = new xPLink();
@@ -61,9 +57,9 @@ namespace Schematix
 
         internal void StartInit()//
         {
-            tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);
-            tvElements_Select(tvLinks,   btnLinkEdit,   Options.rbLink);
-            tvElements_Select(tvBoxes,   btnBoxEdit,    Options.rbBox);
+            tvElements_Select(tvObjects, btnObjectEdit, Options.mainForm.rbObject);
+            tvElements_Select(tvLinks,   btnLinkEdit,   Options.mainForm.rbLink);
+            tvElements_Select(tvBoxes,   btnBoxEdit,    Options.mainForm.rbBox);
         }
 
         internal void SetText()//
@@ -180,9 +176,9 @@ namespace Schematix
         #endregion
 
         #region Catalog
-        private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e) => tvElements_Select(tvObjects, btnObjectEdit, Options.rbObject);//
-        private void tvLinks_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvLinks,   btnLinkEdit,   Options.rbLink);//
-        private void tvBoxes_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvBoxes,   btnBoxEdit,    Options.rbBox);//
+        private void tvObjects_AfterSelect(object sender, TreeViewEventArgs e) => tvElements_Select(tvObjects, btnObjectEdit, Options.mainForm.rbObject);//
+        private void tvLinks_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvLinks,   btnLinkEdit,   Options.mainForm.rbLink);//
+        private void tvBoxes_AfterSelect  (object sender, TreeViewEventArgs e) => tvElements_Select(tvBoxes,   btnBoxEdit,    Options.mainForm.rbBox);//
 
         private void tvElements_Select(TreeView tv, Button btn, RadioButton rb)//
         {
@@ -194,15 +190,15 @@ namespace Schematix
             if (rb.Tag != null)
             {
                 rb.BackColor = SystemColors.Control;
-                Options.ToolTip.SetToolTip(rb, Options.LangCur.hMFElement + " \"" + (rb.Tag as xPrototype).Name + '"');
+                Options.mainForm.toolTip.SetToolTip(rb, Options.LangCur.hMFElement + " \"" + (rb.Tag as xPrototype).Name + '"');
             }
             else
             {
                 rb.BackColor = Color.Brown;
-                Options.ToolTip.SetToolTip(rb, Options.LangCur.hMFNoElement);
+                Options.mainForm.toolTip.SetToolTip(rb, Options.LangCur.hMFNoElement);
                 // Reset to default tool if this button was active
                 if (rb.Checked)
-                    Options.rbDefault.Checked = true;
+                    Options.mainForm.rbDefault.Checked = true;
             }
         }
 
@@ -292,17 +288,17 @@ namespace Schematix
         #endregion
 
         #region Used on map
-        private void lvObjects_SelectedIndexChanged(object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvObjects, btnUsedObjectEdit);
-        private void lvLinks_SelectedIndexChanged  (object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvLinks,   btnUsedLinkEdit);
-        private void lvBoxes_SelectedIndexChanged  (object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvBoxes,   btnUsedBoxEdit);
+        private void lvObjects_SelectedIndexChanged(object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvUsedObjects, btnUsedObjectEdit);
+        private void lvLinks_SelectedIndexChanged  (object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvUsedLinks,   btnUsedLinkEdit);
+        private void lvBoxes_SelectedIndexChanged  (object sender, EventArgs e) => lvUsed_SelectedIndexChanged(lvUsedBoxes,   btnUsedBoxEdit);
 
         private void lvUsed_SelectedIndexChanged(ListView lv, Button btn) => btn.Enabled = (0 < lv.SelectedItems.Count) ? (lv.SelectedItems[0].Tag != null) : false;
 
         private void btnUsedObjectEdit_Click(object sender, EventArgs e)
         {
-            if (lvObjects.SelectedItems[0].Tag == null)
+            if (lvUsedObjects.SelectedItems[0].Tag == null)
                 return;
-            var form = new ObjectEditForm(lvObjects.SelectedItems[0].Tag as xPObject);
+            var form = new ObjectEditForm(lvUsedObjects.SelectedItems[0].Tag as xPObject);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PObject);
@@ -312,9 +308,9 @@ namespace Schematix
 
         private void btnUsedLinkEdit_Click(object sender, EventArgs e)
         {
-            if (lvLinks.SelectedItems[0].Tag == null)
+            if (lvUsedLinks.SelectedItems[0].Tag == null)
                 return;
-            var form = new LinkEditForm(lvLinks.SelectedItems[0].Tag as xPLink);
+            var form = new LinkEditForm(lvUsedLinks.SelectedItems[0].Tag as xPLink);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PLink);
@@ -324,9 +320,9 @@ namespace Schematix
 
         private void btnUsedBoxEdit_Click(object sender, EventArgs e)
         {
-            if (lvBoxes.SelectedItems[0].Tag == null)
+            if (lvUsedBoxes.SelectedItems[0].Tag == null)
                 return;
-            var form = new BoxEditForm(lvBoxes.SelectedItems[0].Tag as xPBox);
+            var form = new BoxEditForm(lvUsedBoxes.SelectedItems[0].Tag as xPBox);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 Share.Library_UpdateNodeName(form.PBox);

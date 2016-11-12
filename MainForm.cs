@@ -16,53 +16,59 @@ namespace Schematix
 
     public partial class MainForm : Form
     {
+        const int FRAME_PADDING = 3;
         const int TOOLS_HIDE_DELAY = 500; // mseconds
         LibraryForm libraryForm = new LibraryForm();
         xMap Map = null;
         int msXLast, msXnLast,
             msYLast, msYnLast;
         xFrame Selection, MoverA, MoverB;
+        Pen FramePen = new Pen(Color.Black);
 
         public MainForm()//
         {
-            MoverA.W = 6;
-            MoverA.H = 6;
+            MoverA.W =
+            MoverA.H = FRAME_PADDING * 2 + 1;
             MoverA.Cursor =
             Selection.Cursor = Cursors.SizeAll;
             MoverB = MoverA;
             InitializeComponent();
             Options.mainForm = this;
-            Options.rbDefault = rbDefault;
-            Options.rbObject  = rbObject;
-            Options.rbLink    = rbLink;
-            Options.rbBox     = rbBox;
-            Options.ToolTip   = toolTip;
 
-            //Loads
+            // Loads
             String eStr = "";
             Options.Init();
             Options.Load();
+
             // Check folders
-            eStr = Options.LoadLanguages(Options.LangPath);
-            Options.SelectLanguage(Options.LangName);
-            if (eStr != "")
-                MessageBox.Show(
-                    Options.LangCur.mErrorsOccurred + "\r\n" + eStr,
-                    Options.LangCur.dLanguagesLoading);
-            // Check folders
-            eStr = "";
+            if (Options.LangPath != "")
+                if (!Directory.Exists(Options.LangPath))
+                    eStr += "\r\n\"" + Options.LangPath + '"';
+            if (eStr == "")
+            {
+                // Load languages
+                eStr = Options.LoadLanguages(Options.LangPath);
+                Options.SelectLanguage(Options.LangName);
+                if (eStr != "")
+                {
+                    MessageBox.Show(
+                        Options.LangCur.mErrorsOccurred + "\r\n" + eStr,
+                        Options.LangCur.dLanguagesLoading);
+                    eStr = "";
+                }
+            }
             if (Options.RootMaps != "")
                 if (!Directory.Exists(Options.RootMaps))
-                    eStr += "\r\n" + Options.RootMaps;
+                    eStr += "\r\n\"" + Options.RootMaps + '"';
             if (Options.RootObjects != "")
                 if (!Directory.Exists(Options.RootObjects))
-                    eStr += "\r\n" + Options.RootObjects;
+                    eStr += "\r\n\"" + Options.RootObjects + '"';
             if (Options.RootLinks != "")
                 if (!Directory.Exists(Options.RootLinks))
-                    eStr += "\r\n" + Options.RootLinks;
+                    eStr += "\r\n\"" + Options.RootLinks + '"';
             if (Options.RootBoxes != "")
                 if (!Directory.Exists(Options.RootBoxes))
-                    eStr += "\r\n" + Options.RootBoxes;
+                    eStr += "\r\n\"" + Options.RootBoxes + '"';
             if (eStr != "")
                 MessageBox.Show(
                     Options.LangCur.mNoFolders + eStr, 
@@ -77,7 +83,7 @@ namespace Schematix
         {
             toolTip.RemoveAll();
             //# Maps panel
-            toolTip.SetToolTip(tabPageAddNew, Options.LangCur.hMFTabNew);
+            toolTip.SetToolTip(tabPage1, Options.LangCur.hMFTabNew);
             toolTip.SetToolTip(btnCloseMap,   Options.LangCur.hMFTabClose);
             toolTip.SetToolTip(btnOptions,    Options.LangCur.hMFOptions);
             toolTip.SetToolTip(btnLibrary,    Options.LangCur.hMFLibrary);
@@ -109,17 +115,6 @@ namespace Schematix
                 Height = Options.MainFormH;
             }
             MainForm_Resize(null, null);
-            Map = new xMap();
-            Map.Tab = tcMaps.TabPages[0];
-            Map.Tab.Tag = Map;
-            Options.Maps.Add(Map);
-            Map.DoAutoSize();
-            CheckScrollers();
-            Map.Draw();
-            Map.lv_PObjects = Options.lvUsedObjects;
-            Map.lv_PLinks   = Options.lvUsedLinks;
-            Map.lv_PBoxes   = Options.lvUsedBoxes;
-            //
             libraryForm.StartInit();
             //
             if (0 < Options.OnStart && 0 < Options.MapFiles.Count)
@@ -129,11 +124,21 @@ namespace Schematix
                         return;
                 foreach (var MapFile in Options.MapFiles)
                     if (File.Exists(MapFile))
+                    {
+                        if (Map == null)
+                            Map = AddMap(Path.GetFileNameWithoutExtension(MapFile));
                         if (Map.LoadFromFile(MapFile))
-                            tcMaps.SelectedTab = tabPageAddNew;
+                        {
+                            Map.UpdateTabName();
+                            Map = null;
+                        }
+                    }
                 //...
                 Options.MapFiles.Clear();
             }
+            if (tcMaps.TabCount < 2)
+                AddMap("New");
+            tcMaps_Selected(null, null);
             // Ping timer
             timerPing.Tick    += Options.timerPing_Tick;
             timerPing.Interval = Options.PingPeriod;
@@ -287,55 +292,67 @@ namespace Schematix
         #endregion
 
         #region Map tabs
-        private void tabPageAddNew_Enter(object sender, EventArgs e)//
+        private void tpAddNew_Enter(object sender, EventArgs e) => AddMap("");
+
+        private xMap AddMap(String MapName)//
         {
+            var page = tcMaps.TabPages[tcMaps.TabCount - 1];
             // Get appendix number
-            int i = (tabPageAddNew.Tag != null) ? (int)tabPageAddNew.Tag : 2;
-            tabPageAddNew.Tag = i + 1;
-            // Add new tab
-            xMap map = AddMap(tcMaps.SelectedIndex, "New " + i);
+            if (MapName == "")
+            {
+                tcMaps.Tag = ((tcMaps.Tag != null) ? (int)tcMaps.Tag : 1) + 1;
+                MapName = "New " + (int)tcMaps.Tag;
+            }
+            // Make as map tab
+            var map = new xMap();
+            Options.Maps.Add(map);
+            page.Enter -= tpAddNew_Enter;
+            page.Text = MapName;
+            page.Tag = map;
+            map.Tab = page;
             map.DoAutoSize();
             map.Draw();
-            // Select new tab
-            tcMaps.SelectTab(map.Tab);
+            // Add new tab
+            page = new TabPage("+");
+            tcMaps.TabPages.Add(page);
+            page.Enter += tpAddNew_Enter;
+            return map;
         }
 
-        private xMap AddMap(int TabIdx, String MapName)//
+        private xMap InsertMap(int TabIdx, String MapName)//
         {
             if (tcMaps.TabCount <= TabIdx)
                 TabIdx = tcMaps.TabCount - 1;
             // Add new tab
+            var map = new xMap();
+            Options.Maps.Add(map);
             var page = new TabPage(MapName);
-            var Map = new xMap();
-            page.Tag = Map;
-            Map.Tab = page;
+            page.Tag = map;
+            map.Tab = page;
             tcMaps.TabPages.Insert(TabIdx, page);
-            Options.Maps.Add(Map);
-            return Map;
+            return map;
         }
 
-        private void tcMaps_Selected(object sender, TabControlEventArgs e) => tcMaps_SelectedIndexChanged(null, null);
-        private void tcMaps_SelectedIndexChanged(object sender, EventArgs e)
+        private void tcMaps_SelectedIndexChanged(object sender, EventArgs e) => tcMaps_Selected(null, null);
+        private void tcMaps_Selected(object sender, TabControlEventArgs e)
         {
             // Case new not "add new tab"
-            xMap SelectedMap = (tcMaps.SelectedTab == tabPageAddNew)
-                ? null
-                : (tcMaps.SelectedTab.Tag as xMap);
+            xMap SelectedMap = (tcMaps.SelectedTab.Tag as xMap);
             if (SelectedMap == null || Map == SelectedMap)
                 return;
 
             // Remove last map info
             if (Map != null)
             {
-                foreach (ListViewItem lvItem in Options.lvUsedObjects.Items)
+                foreach (ListViewItem lvItem in libraryForm.lvUsedObjects.Items)
                     (lvItem.Tag as xPrototype).lvItemUsed = null;
-                foreach (ListViewItem lvItem in Options.lvUsedLinks.Items)
+                foreach (ListViewItem lvItem in libraryForm.lvUsedLinks.Items)
                     (lvItem.Tag as xPrototype).lvItemUsed = null;
-                foreach (ListViewItem lvItem in Options.lvUsedBoxes.Items)
+                foreach (ListViewItem lvItem in libraryForm.lvUsedBoxes.Items)
                     (lvItem.Tag as xPrototype).lvItemUsed = null;
-                Options.lvUsedObjects.Items.Clear();
-                Options.lvUsedLinks.Items.Clear();
-                Options.lvUsedBoxes.Items.Clear();
+                libraryForm.lvUsedObjects.Items.Clear();
+                libraryForm.lvUsedLinks.Items.Clear();
+                libraryForm.lvUsedBoxes.Items.Clear();
                 Map.lv_PObjects =
                 Map.lv_PLinks   =
                 Map.lv_PBoxes   = null;
@@ -350,12 +367,12 @@ namespace Schematix
             CheckFrames(true);
             Invalidate();
             // Add current map info
-            Options.lvUsedObjects.BeginUpdate();
-            Options.lvUsedLinks.BeginUpdate();
-            Options.lvUsedBoxes.BeginUpdate();
+            libraryForm.lvUsedObjects.BeginUpdate();
+            libraryForm.lvUsedLinks.BeginUpdate();
+            libraryForm.lvUsedBoxes.BeginUpdate();
             foreach (var PObject in Map.PObjects)
             {
-                PObject.lvItemUsed = Options.lvUsedObjects.Items.Add("");
+                PObject.lvItemUsed = libraryForm.lvUsedObjects.Items.Add("");
                 PObject.lvItemUsed.SubItems.Add("");
                 PObject.lvItemUsed.SubItems.Add("");
                 PObject.lvItemUsed.Tag = PObject;
@@ -363,7 +380,7 @@ namespace Schematix
             }
             foreach (var PLink in Map.PLinks)
             {
-                PLink.lvItemUsed = Options.lvUsedLinks.Items.Add("");
+                PLink.lvItemUsed = libraryForm.lvUsedLinks.Items.Add("");
                 PLink.lvItemUsed.SubItems.Add("");
                 PLink.lvItemUsed.SubItems.Add("");
                 PLink.lvItemUsed.Tag = PLink;
@@ -371,18 +388,18 @@ namespace Schematix
             }
             foreach (var PBox in Map.PBoxes)
             {
-                PBox.lvItemUsed = Options.lvUsedBoxes.Items.Add("");
+                PBox.lvItemUsed = libraryForm.lvUsedBoxes.Items.Add("");
                 PBox.lvItemUsed.SubItems.Add("");
                 PBox.lvItemUsed.SubItems.Add("");
                 PBox.lvItemUsed.Tag = PBox;
                 Share.Library_UpdateNodeName(PBox);
             }
-            Options.lvUsedObjects.EndUpdate();
-            Options.lvUsedLinks.EndUpdate();
-            Options.lvUsedBoxes.EndUpdate();
-            Map.lv_PObjects = Options.lvUsedObjects;
-            Map.lv_PLinks   = Options.lvUsedLinks;
-            Map.lv_PBoxes   = Options.lvUsedBoxes;
+            libraryForm.lvUsedObjects.EndUpdate();
+            libraryForm.lvUsedLinks.EndUpdate();
+            libraryForm.lvUsedBoxes.EndUpdate();
+            Map.lv_PObjects = libraryForm.lvUsedObjects;
+            Map.lv_PLinks   = libraryForm.lvUsedLinks;
+            Map.lv_PBoxes   = libraryForm.lvUsedBoxes;
         }
         
         private void CloseMap(xMap Map)//
@@ -458,7 +475,6 @@ namespace Schematix
             Map.LoadFromFile(fileName);
             Map.UpdateTabName();
             CheckScrollers();
-            Map.Draw();
             Invalidate();
         }
 
@@ -526,10 +542,9 @@ namespace Schematix
                                     tcMaps.SelectTab((Tab.Tag as xMap).Tab);
                                     return;
                                 }
-                        var map = AddMap(tcMaps.TabPages.IndexOf(Map.Tab) + 1, Path.GetFileNameWithoutExtension(path));
+                        var map = InsertMap(tcMaps.TabPages.IndexOf(Map.Tab) + 1, Path.GetFileNameWithoutExtension(path));
                         map.LoadFromFile(path);
                         map.UpdateTabName();
-                        map.Draw();
                         // Select new tab
                         tcMaps.SelectTab(map.Tab);
                     }
@@ -623,8 +638,6 @@ namespace Schematix
             if (Map == null)
                 return;
             // Canvas
-            int w = (Options.PortW < Map.Width ) ? Options.PortW : Map.Width,
-                h = (Options.PortH < Map.Height) ? Options.PortH : Map.Height;
             e.Graphics.DrawImage(Map.Canvas,
                 e.ClipRectangle,
                 e.ClipRectangle.Left + Map.ScrollX,
@@ -633,19 +646,20 @@ namespace Schematix
                 e.ClipRectangle.Height,
                 GraphicsUnit.Pixel);
             // Frames
-            var pen = new Pen(Color.Black);
             if (Selection.Visible)
-                e.Graphics.DrawRectangle(pen,
-                    Selection.X - 3, Selection.Y - 3,
-                    Selection.W + 6, Selection.H + 6);
-            if (MoverA.Visible)
-                e.Graphics.DrawRectangle(pen,
-                    MoverA.X - 3, MoverA.Y - 3,
-                    MoverA.W,     MoverA.H);
-            if (MoverB.Visible)
-                e.Graphics.DrawRectangle(pen,
-                    MoverB.X - 3, MoverB.Y - 3,
-                    MoverB.W,     MoverB.H);
+            {
+                e.Graphics.DrawRectangle(FramePen,
+                    Selection.X,     Selection.Y,
+                    Selection.W - 1, Selection.H - 1);
+                if (MoverA.Visible)
+                    e.Graphics.DrawRectangle(FramePen,
+                        MoverA.X,     MoverA.Y,
+                        MoverA.W - 1, MoverA.H - 1);
+                if (MoverB.Visible)
+                    e.Graphics.DrawRectangle(FramePen,
+                        MoverB.X,     MoverB.Y,
+                        MoverB.W - 1, MoverB.H - 1);
+            }
         }
         #endregion
 
@@ -670,25 +684,22 @@ namespace Schematix
             {
                 ContextMenuStrip = cmsElement;
                 if (MoverB.Visible &&
-                     MoverB.X - 3 <= e.X && e.X <= MoverB.X + MoverB.W &&
-                     MoverB.Y - 3 <= e.Y && e.Y <= MoverB.Y + MoverB.H)
+                    MoverB.X <= msXLast && msXLast < MoverB.X + MoverB.W &&
+                    MoverB.Y <= msYLast && msYLast < MoverB.Y + MoverB.H)
                     MoverB.Active = true;
                 else if (MoverA.Visible &&
-                    MoverA.X - 3 <= e.X && e.X <= MoverA.X + MoverA.W &&
-                    MoverA.Y - 3 <= e.Y && e.Y <= MoverA.Y + MoverA.H)
+                    MoverA.X <= msXLast && msXLast < MoverA.X + MoverA.W &&
+                    MoverA.Y <= msYLast && msYLast < MoverA.Y + MoverA.H)
                     MoverA.Active = true;
                 else if (Selection.Visible &&
-                    Selection.X - 3 <= e.X && e.X <= Selection.X + Selection.W + 6 &&
-                    Selection.Y - 3 <= e.Y && e.Y <= Selection.Y + Selection.H + 6)
+                    Selection.X <= msXLast && msXLast < Selection.X + Selection.W &&
+                    Selection.Y <= msYLast && msYLast < Selection.Y + Selection.H)
                 {
                     Selection.Active = true;
                     Cursor = Selection.Cursor;
                 }
                 else
                 {
-                    Selection.Visible =
-                    MoverA.Visible =
-                    MoverB.Visible = false;
                     if (Map.SelectAt(msXLast + Map.ScrollX, msYLast + Map.ScrollY) == null)
                     {
                         if (hScrollBar.LargeChange < hScrollBar.Maximum)
@@ -704,7 +715,8 @@ namespace Schematix
                         ContextMenuStrip = cmsMap;
                     }
                     else
-                        CheckFrames(true);
+                        Selection.Active = true;
+                    CheckFrames(true);
                 }
             }
             #endregion
@@ -730,7 +742,6 @@ namespace Schematix
                     // 
                     Map.Selected = Object;
                     Selection.Active = true;
-                    Cursor = Selection.Cursor;
                 }
                 else if (rbLink.Checked)
                 {
@@ -754,18 +765,11 @@ namespace Schematix
                             Link.DotAID = Link.DotA.ID;
                             Link.XA = Link.ObjectA.Left + Link.DotA.X;
                             Link.YA = Link.ObjectA.Top  + Link.DotA.Y;
-                        }
+                    }
                     // 
                     Map.Selected = Link;
-                    MoverA.X = Link.XA - Map.ScrollX;
-                    MoverA.Y = Link.YA - Map.ScrollY;
-                    MoverA.Visible = true;
-                    MoverB.X = Link.XB - Map.ScrollX;
-                    MoverB.Y = Link.YB - Map.ScrollY;
-                    MoverB.Active =
-                    MoverB.Visible = true;
                     MoverB.Cursor = Cursors.SizeAll;
-                    Cursor = MoverB.Cursor;
+                    MoverB.Active = true;
                 }
                 else
                 {
@@ -783,21 +787,13 @@ namespace Schematix
                     Map.SnapXY(ref Box.Left, ref Box.Top);
                     // 
                     Map.Selected = Box;
-                    MoverB.X = Box.Right  - Map.ScrollX;
-                    MoverB.Y = Box.Bottom - Map.ScrollY;
-                    MoverB.Active =
-                    MoverB.Visible = true;
                     MoverB.Cursor = Cursors.SizeNWSE;
-                    Cursor = MoverB.Cursor;
+                    MoverB.Active = true;
                 }
                 // Update
                 Map.Selected.Check();
                 Map.Draw(Map.Selected.Left - 8, Map.Selected.Top - 8, Map.Selected.Width + 16, Map.Selected.Height + 16);
-                Selection.X = Map.Selected.Left - Map.ScrollX;
-                Selection.Y = Map.Selected.Top  - Map.ScrollY;
-                Selection.W = Map.Selected.Width;
-                Selection.H = Map.Selected.Height;
-                Selection.Visible = true;
+                CheckFrames(true);
             }
             #endregion
 
@@ -810,16 +806,16 @@ namespace Schematix
             if (e.Button == MouseButtons.None)
             {
                 if (MoverB.Visible &&
-                     MoverB.X - 3 <= e.X && e.X <= MoverB.X + MoverB.W &&
-                     MoverB.Y - 3 <= e.Y && e.Y <= MoverB.Y + MoverB.H)
+                     MoverB.X <= e.X && e.X < MoverB.X + MoverB.W &&
+                     MoverB.Y <= e.Y && e.Y < MoverB.Y + MoverB.H)
                     Cursor = MoverB.Cursor;
                 else if (MoverA.Visible &&
-                    MoverA.X - 3 <= e.X && e.X <= MoverA.X + MoverA.W &&
-                    MoverA.Y - 3 <= e.Y && e.Y <= MoverA.Y + MoverA.H)
+                    MoverA.X <= e.X && e.X < MoverA.X + MoverA.W &&
+                    MoverA.Y <= e.Y && e.Y < MoverA.Y + MoverA.H)
                     Cursor = MoverA.Cursor;
                 else if (Selection.Visible &&
-                    Selection.X - 3 <= e.X && e.X <= Selection.X + Selection.W + 6 &&
-                    Selection.Y - 3 <= e.Y && e.Y <= Selection.Y + Selection.H + 6)
+                    Selection.X <= e.X && e.X < Selection.X + Selection.W &&
+                    Selection.Y <= e.Y && e.Y < Selection.Y + Selection.H)
                     Cursor = Cursors.Hand;
                 else
                     Cursor = (Map.AnythingAt(Map.ScrollX + e.X, Map.ScrollY + e.Y) == null) ? Cursors.Default : Cursors.Hand;
@@ -835,56 +831,9 @@ namespace Schematix
                 Map.SnapXY(ref msXn, ref msYn);
                 int dX = msXn - msXnLast,
                     dY = msYn - msYnLast;
-
-                // Move/Resize
-                #region Move element
-                if (Selection.Active)
-                {
-                    if (dX != 0 || dY != 0)
-                    {
-                        if (Map.Selected.IsObject)
-                        {
-                            (Map.Selected as xObject).X += dX;
-                            (Map.Selected as xObject).Y += dY;
-                        }
-                        else if (Map.Selected.IsBox)
-                        {
-                            (Map.Selected as xBox).Left += dX;
-                            (Map.Selected as xBox).Top  += dY;
-                        }
-                        else
-                        {
-                            //...
-                        }
-                    }
-                    else
-                        redraw = false;
-                }
-                #endregion
-
-                #region Move A point of line
-                else if (MoverA.Active)
-                {
-                    if (dX != 0 || dY != 0)
-                    {
-                        var Link = (Map.Selected as xLink);
-                        Link.XA += dX;
-                        Link.YA += dY;
-                        TryToBindToObject(Map,
-                            Map.ScrollX + e.X, Map.ScrollY + e.Y,
-                            ref Link.ObjectA, ref Link.ObjectAID,
-                            ref Link.DotA, ref Link.DotAID,
-                            ref Link.XA, ref Link.YA);
-                        MoverA.X = Link.XA - Map.ScrollX;
-                        MoverA.Y = Link.YA - Map.ScrollY;
-                    }
-                    else
-                        redraw = false;
-                }
-                #endregion
-
+                
                 #region Move B point of line / Resize box
-                else if (MoverB.Active)
+                if (MoverB.Active)
                 {
                     // Resize
                     if (Map.Selected.IsLink)
@@ -899,8 +848,6 @@ namespace Schematix
                                 ref Link.ObjectB, ref Link.ObjectBID,
                                 ref Link.DotB, ref Link.DotBID,
                                 ref Link.XB, ref Link.YB);
-                            MoverB.X = Link.XB - Map.ScrollX;
-                            MoverB.Y = Link.YB - Map.ScrollY;
                         }
                         else
                             redraw = false;
@@ -921,6 +868,50 @@ namespace Schematix
                         else
                             redraw = false;
                     }
+                }
+                #endregion
+
+                #region Move A point of line
+                else if (MoverA.Active)
+                {
+                    if (dX != 0 || dY != 0)
+                    {
+                        var Link = (Map.Selected as xLink);
+                        Link.XA += dX;
+                        Link.YA += dY;
+                        TryToBindToObject(Map,
+                            Map.ScrollX + e.X, Map.ScrollY + e.Y,
+                            ref Link.ObjectA, ref Link.ObjectAID,
+                            ref Link.DotA, ref Link.DotAID,
+                            ref Link.XA, ref Link.YA);
+                    }
+                    else
+                        redraw = false;
+                }
+                #endregion
+
+                #region Move element
+                else if (Selection.Active)
+                {
+                    if (dX != 0 || dY != 0)
+                    {
+                        if (Map.Selected.IsObject)
+                        {
+                            (Map.Selected as xObject).X += dX;
+                            (Map.Selected as xObject).Y += dY;
+                        }
+                        else if (Map.Selected.IsBox)
+                        {
+                            (Map.Selected as xBox).Left += dX;
+                            (Map.Selected as xBox).Top  += dY;
+                        }
+                        else
+                        {
+                            //...
+                        }
+                    }
+                    else
+                        redraw = false;
                 }
                 #endregion
 
@@ -957,29 +948,29 @@ namespace Schematix
 
         private void CheckFrames(bool full = false)
         {
-            if (Map.Selected == null)
+            if (Map.Selected == null || full)
             {
                 Selection.Visible =
                 MoverA.Visible =
                 MoverB.Visible = false;
-                return;
+                if (Map.Selected == null)
+                    return;
             }
-            Selection.X = Map.Selected.Left - Map.ScrollX;
-            Selection.Y = Map.Selected.Top  - Map.ScrollY;
-            Selection.W = Map.Selected.Width;
-            Selection.H = Map.Selected.Height;
+            Selection.X = Map.Selected.Left - Map.ScrollX - FRAME_PADDING;
+            Selection.Y = Map.Selected.Top  - Map.ScrollY - FRAME_PADDING;
+            Selection.W = Map.Selected.Width  + FRAME_PADDING * 2;
+            Selection.H = Map.Selected.Height + FRAME_PADDING * 2;
             if (full)
             {
                 Cursor = Selection.Cursor;
-                Selection.Active =
                 Selection.Visible = true;
             }
             if (Map.Selected.IsLink)
             {
-                MoverA.X = (Map.Selected as xLink).XA - Map.ScrollX;
-                MoverA.Y = (Map.Selected as xLink).YA - Map.ScrollY;
-                MoverB.X = (Map.Selected as xLink).XB - Map.ScrollX;
-                MoverB.Y = (Map.Selected as xLink).YB - Map.ScrollY;
+                MoverA.X = (Map.Selected as xLink).XA - Map.ScrollX - FRAME_PADDING;
+                MoverA.Y = (Map.Selected as xLink).YA - Map.ScrollY - FRAME_PADDING;
+                MoverB.X = (Map.Selected as xLink).XB - Map.ScrollX - FRAME_PADDING;
+                MoverB.Y = (Map.Selected as xLink).YB - Map.ScrollY - FRAME_PADDING;
                 if (full)
                 {
                     MoverA.Visible =
@@ -989,8 +980,8 @@ namespace Schematix
             }
             else if (Map.Selected.IsBox)
             {
-                MoverB.X = (Map.Selected as xBox).Right - Map.ScrollX;
-                MoverB.Y = (Map.Selected as xBox).Bottom - Map.ScrollY;
+                MoverB.X = (Map.Selected as xBox).Right  - Map.ScrollX - FRAME_PADDING - 1;
+                MoverB.Y = (Map.Selected as xBox).Bottom - Map.ScrollY - FRAME_PADDING - 1;
                 if (full)
                 {
                     MoverB.Visible = true;
@@ -1001,15 +992,15 @@ namespace Schematix
 
         private void MainForm_MouseUp(object sender, MouseEventArgs e)//Ok
         {
-            if (Selection.Active)
-            {
-                Cursor = Cursors.Hand;
-                Selection.Active = false;
-            }
+            if (MoverB.Active)
+                MoverB.Active = false;
             else if (MoverA.Active)
                 MoverA.Active = false;
-            else if (MoverB.Active)
-                MoverB.Active = false;
+            else if (Selection.Active)
+            {
+                Selection.Active = false;
+                Cursor = Cursors.Hand;
+            }
             else
                 Cursor = Cursors.Default;
         }

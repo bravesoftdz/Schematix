@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tcMaps = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPageAddNew = new System.Windows.Forms.TabPage();
             this.vScrollBar = new System.Windows.Forms.VScrollBar();
             this.hScrollBar = new System.Windows.Forms.HScrollBar();
             this.pnlMapOptions = new System.Windows.Forms.Panel();
@@ -86,7 +85,6 @@
             this.tcMaps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcMaps.Controls.Add(this.tabPage1);
-            this.tcMaps.Controls.Add(this.tabPageAddNew);
             this.tcMaps.Location = new System.Drawing.Point(0, 4);
             this.tcMaps.Name = "tcMaps";
             this.tcMaps.SelectedIndex = 0;
@@ -98,24 +96,15 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(440, 0);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "New";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPageAddNew
-            // 
-            this.tabPageAddNew.BackColor = System.Drawing.Color.Transparent;
-            this.tabPageAddNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tabPageAddNew.Location = new System.Drawing.Point(4, 22);
-            this.tabPageAddNew.Name = "tabPageAddNew";
-            this.tabPageAddNew.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAddNew.Size = new System.Drawing.Size(440, 0);
-            this.tabPageAddNew.TabIndex = 1;
-            this.tabPageAddNew.Text = "+";
-            this.tabPageAddNew.Enter += new System.EventHandler(this.tabPageAddNew_Enter);
+            this.tabPage1.TabIndex = 1;
+            this.tabPage1.Text = "+";
+            this.tabPage1.Enter += new System.EventHandler(this.tpAddNew_Enter);
             // 
             // vScrollBar
             // 
@@ -516,7 +505,7 @@
 
         #endregion
         private System.Windows.Forms.TabControl tcMaps;
-        private System.Windows.Forms.TabPage tabPageAddNew;
+        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.VScrollBar vScrollBar;
         private System.Windows.Forms.HScrollBar hScrollBar;
         private System.Windows.Forms.Panel pnlMapOptions;
@@ -537,12 +526,7 @@
         private System.Windows.Forms.OpenFileDialog dlgMapOpen;
         private System.Windows.Forms.SaveFileDialog dlgMapSave;
         private System.Windows.Forms.Button btnAbout;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Panel pnlMapFrame;
-        private System.Windows.Forms.RadioButton rbBox;
-        private System.Windows.Forms.RadioButton rbLink;
-        private System.Windows.Forms.RadioButton rbObject;
-        private System.Windows.Forms.RadioButton rbDefault;
         private System.Windows.Forms.Panel pnlTools;
         public System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Timer timerPing;
@@ -553,6 +537,10 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiElementDelete;
         private System.Windows.Forms.ToolStripMenuItem tsmiMapSaveAs;
         private System.Windows.Forms.ToolStripMenuItem tsmiElementOpenReference;
+        public System.Windows.Forms.RadioButton rbDefault;
+        public System.Windows.Forms.RadioButton rbBox;
+        public System.Windows.Forms.RadioButton rbLink;
+        public System.Windows.Forms.RadioButton rbObject;
     }
 }
 

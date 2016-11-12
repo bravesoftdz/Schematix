@@ -1071,8 +1071,8 @@ namespace Schematix
         {
             CheckEnd(ref ObjectA, ref ObjectAID, ref DotA, ref DotAID, ref XA, ref YA);
             CheckEnd(ref ObjectB, ref ObjectBID, ref DotB, ref DotBID, ref XB, ref YB);
-            Width  = Math.Abs(XB - XA);
-            Height = Math.Abs(YB - YA);
+            Width  = Math.Abs(XB - XA) + 1;
+            Height = Math.Abs(YB - YA) + 1;
             Left = ((XA < XB) ? XA : XB);
             Top  = ((YA < YB) ? YA : YB);
             base.Check();
@@ -1803,11 +1803,11 @@ namespace Schematix
 
         bool SetCanvas(int width, int height)
         {
+            Width  = width;
+            Height = height;
             if (Canvas != null)
                 if (Canvas.Width == width && Canvas.Height == height)
                     return false;
-            Width  = width;
-            Height = height;
             if (Canvas != null)
                 Canvas.Dispose();
             Canvas = new Bitmap(Width, Height);
